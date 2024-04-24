@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import AdminDashboard from "./PersediaanPage.jsx";
+import LoginPage from "./pages/auth_pages/LoginPage.jsx";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <AdminDashboard/>
+    <LoginPage/>
   </React.StrictMode>,
 )
