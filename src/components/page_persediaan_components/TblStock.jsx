@@ -1,13 +1,11 @@
 import SearchBar from "../components_reused/SearchBar.jsx";
+import DescPageComponent from "../components_reused/DescPageComponent.jsx";
 
-export default function TabelStock() {
+export default function TblStock() {
     return (
         <main className="flex-1 p-10 overflow-y-auto">
             <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
-                <div className="h-10 w-[100%] flex pt-2 pl-3 bg-[#F5F7F9] ">
-                    <img src="/assets_img/img_blue_elipse.png" className="h-5 mr-3"/>
-                    <p className="text-sm text-gray-600">Selamat datang di admin dashboard Anda.</p>
-                </div>
+                <DescPageComponent desc={"Selamat datang di admin dashboard Anda."}/>
 
                 <div className="bg-white h-[65px] flex pt-5 border-y-[3px] border-gray-200 justify-between">
                     <div className="flex">
@@ -52,12 +50,12 @@ export default function TabelStock() {
 
                 <div className="bg-white h-[50 px] flex py-3 px-6 justify-between pr-20
                         border-b-[3px] border-gray-200">
-                    <div className="flex font-semibold text-sm text-[#9CA4AE]">
+                    <div className="flex font-semibold text-xs text-[#9CA4AE]">
                         <p className="mr-10">No</p>
                         <p>Produk</p>
                     </div>
 
-                    <div className="flex font-semibold text-sm text-[#9CA4AE]">
+                    <div className="flex font-semibold text-xs text-[#9CA4AE]">
                         <img src="/assets_img/icon_row_table.png" className="mx-12"/>
                         <p>Harga Beli</p>
                         <img src="/assets_img/icon_row_table.png" className="mx-12"/>

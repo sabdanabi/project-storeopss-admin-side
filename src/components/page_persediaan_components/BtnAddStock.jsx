@@ -1,4 +1,4 @@
-export default function ButtonAddStock() {
+export default function BtnAddStock() {
     return (
         <div className="flex items-center justify-between h-20 border-b-[3px]
                 w-full px-6 py-4 bg-white border-gray-200">
