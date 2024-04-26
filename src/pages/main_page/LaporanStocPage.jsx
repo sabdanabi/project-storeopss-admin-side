@@ -4,8 +4,9 @@ import NamePageComponent from "../../components/components_reused/NamePageCompon
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
 import BtnBulanLaporanStock from "../../components/page_laporan_stock_components/btn_bulan/BtnBulanLaporanStock.jsx";
 import TblLaporanStock from "../../components/page_laporan_stock_components/TblLaporanStock.jsx";
+import SearchBar from "../../components/components_reused/SearchBar.jsx";
 
-export default function Test(){
+export default function LaporanStocPage(){
     return(
         <div className="flex h-screen overflow-hidden bg-gray-100">
             <SideNavbarComponent/>
@@ -17,6 +18,7 @@ export default function Test(){
                     <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
                         <DescPageComponent
                             desc={"Laporan stok ini mencakup periode dari tanggal 1 Maret 2024 hingga 31 Maret 2024."}/>
+                        <SearchBar/>
                         <BtnBulanLaporanStock/>
                         <TblLaporanStock/>
                     </div>

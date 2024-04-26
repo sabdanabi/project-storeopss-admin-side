@@ -1,10 +1,10 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import Test from "./pages/main_page/Test.jsx";
+import RiwayatTambahProdukPage from "./pages/main_page/RiwayatTambahProdukPage.jsx";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-      <Test/>
+      <RiwayatTambahProdukPage/>
   </React.StrictMode>,
 )
