@@ -1,36 +1,49 @@
+import {useState} from "react";
+import BtnBulanLaporanStock from "./btn_bulan/BtnBulanLaporanStock.jsx";
+import DummyTabelLaporanStock from "../../dummy/dummy_data_tabel/DummyTabelLaporanStock.jsx";
+
 export default function TblLaporanStock() {
+    const [selectedTab,setSelectedTab] = useState(0)
+
+
     return(
         <>
-            <div className="bg-white h-[50 px] flex py-3 px-6 justify-between pr-20
-                        border-b-[3px] border-gray-200">
-                <div className="flex font-semibold text-xs text-[#9CA4AE]">
-                    <p className="mr-10">No</p>
-                    <p>Produk</p>
-                </div>
+            <BtnBulanLaporanStock item={items} setSelectedTab={setSelectedTab}/>
 
-                <div className="flex font-semibold text-xs text-[#9CA4AE]">
-                    <img src="/assets_img/icon_row_table.png" className="mx-12"/>
-                    <p>Stock Awal</p>
-                    <img src="/assets_img/icon_row_table.png" className="mx-12"/>
-                    <p>Barang Masuk</p>
-                    <img src="/assets_img/icon_row_table.png" className="mx-12"/>
-                    <p>Barang Keluar</p>
-                    <img src="/assets_img/icon_row_table.png" className="mx-12"/>
-                    <p>Stock Akhir</p>
-                </div>
-            </div>
-
-            <div className="bg-white flex py-3 px-6">
-                <div className="flex font-bold text-sm">
-                    <p>1</p>
-                    <img src="/assets_img/img_kayu.png" className="h-12 mx-12"/>
-                    <p className="mr-60">Kayu</p>
-                    <p>Rp1000.000</p>
-                    <p className="mx-24">Rp30.000/pcs</p>
-                    <p className="mx-8">100pcs</p>
-                    <p className="ml-28">90pcs</p>
-                </div>
+            <div className="">
+                {items.map((item, index) => (
+                    <div key={index} className={`${selectedTab === index ? '' : 'hidden'}`}>
+                        {item.content}
+                    </div>
+                ))}
             </div>
         </>
     )
 }
+
+const items = [
+    {
+        title: 'Januari',
+        content: (
+            <div>
+                <DummyTabelLaporanStock/>
+            </div>
+        )
+    },
+    {
+        title: 'Februari',
+        content: (
+            <div>
+                <DummyTabelLaporanStock/>
+            </div>
+        )
+    },
+    {
+        title: 'Maret',
+        content: (
+            <div>
+                <DummyTabelLaporanStock/>
+            </div>
+        )
+    },
+]

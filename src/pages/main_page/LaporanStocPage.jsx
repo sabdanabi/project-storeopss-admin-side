@@ -2,7 +2,6 @@ import SideNavbarComponent from "../../components/components_reused/SideNavbarCo
 import PartTop from "../../components/components_reused/PartTop.jsx";
 import NamePageComponent from "../../components/components_reused/NamePageComponent.jsx";
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
-import BtnBulanLaporanStock from "../../components/page_laporan_stock_components/btn_bulan/BtnBulanLaporanStock.jsx";
 import TblLaporanStock from "../../components/page_laporan_stock_components/TblLaporanStock.jsx";
 import SearchBar from "../../components/components_reused/SearchBar.jsx";
 
@@ -19,7 +18,6 @@ export default function LaporanStocPage(){
                         <DescPageComponent
                             desc={"Laporan stok ini mencakup periode dari tanggal 1 Maret 2024 hingga 31 Maret 2024."}/>
                         <SearchBar/>
-                        <BtnBulanLaporanStock/>
                         <TblLaporanStock/>
                     </div>
                 </main>

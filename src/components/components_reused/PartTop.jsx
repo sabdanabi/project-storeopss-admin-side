@@ -1,4 +1,5 @@
 export default function PartTop() {
+
     return (
         <div className="flex flex-row-reverse items-center w-full px-6 py-4 bg-white border-b-[3px] border-gray-200">
             <button>
@@ -7,7 +8,7 @@ export default function PartTop() {
                     <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                 </svg>
             </button>
-            <a href="#"><img src="/assets_img/img_profile_picture.png" className="h-8 mx-4"/></a>
+            <a href="/profile"><img src="/assets_img/img_profile_picture.png" className="h-8 mx-4"/></a>
             <div className="h-7 border-l border-gray-300 ml-4"></div>
             <button>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
