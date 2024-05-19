@@ -14,7 +14,6 @@ export default function PersediaanPage() {
                 <PartTop/>
                 <BtnAddStock setOpen={setOpen} titlePage={"Produk"} titleBtn={"Product"}/>
                 <TblStock/>
-                <PopupTambahProduk open={open} onClose={() => setOpen(false)}/>
             </div>
         </div>
     );
