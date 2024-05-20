@@ -106,7 +106,7 @@ export default function RiwayatRestockProdukPage() {
                                     <p className="">Alamat</p>
                                     <p className="absolute left-28">:</p>
                                     <p className="font-semibold text-[#8C8BB4] absolute left-32">
-                                        Jl. Contoh No. 123, Kota Contoh, Negara Contoh</p>
+                                        Jl. Contoh No. 123, Kota Contoh, Indonesia</p>
                                 </div>
 
                                 <div className="flex text-[11px] font-medium text-[#403E8A] mb-5 relative">
