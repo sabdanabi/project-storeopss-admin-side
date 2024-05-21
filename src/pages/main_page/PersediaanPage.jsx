@@ -9,7 +9,7 @@ export default function PersediaanPage() {
             <SideNavbarComponent/>
             <div className="flex flex-col flex-1 w-full overflow-hidden">
                 <PartTop/>
-                <BtnAddStock titlePage={"Produk"} titleBtn={"Product"}/>
+                <BtnAddStock titlePage={"Produkk"} titleBtn={"Product"}/>
                 <TblStock/>
             </div>
         </div>
