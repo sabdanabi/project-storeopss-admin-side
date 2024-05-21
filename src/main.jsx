@@ -1,10 +1,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import './index.css'
-import LoginPage from "./pages/auth_pages/LoginPage.jsx";
+import App from "./App.jsx";
+import { ThemeProvider } from "@material-tailwind/react";
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <LoginPage/>
+      <ThemeProvider>
+          <App />
+      </ThemeProvider>
   </React.StrictMode>,
 )
