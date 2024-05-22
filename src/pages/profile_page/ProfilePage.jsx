@@ -25,7 +25,8 @@ export default function ProfilePage() {
                             <div className="bg-white w-[621px] h-72 rounded-lg p-8 ml-20">
                                 <div className="flex mb-4">
                                     <p className="text-xs text-[#8C95A4] mr-[400px]">Informasi Pengguna</p>
-                                    <button className="bg-[#F5365C] w-9 h-6 text-white rounded text-sm">Edit</button>
+                                    <button className="bg-[#F5365C] w-9 h-6 text-white rounded text-sm">
+                                        <a href="/login-page">Edit</a></button>
                                 </div>
 
                                 <div className="mb-3">
