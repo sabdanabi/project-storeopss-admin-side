@@ -4,7 +4,7 @@ export default function BtnRestockProduk() {
     return(
         <>
             <Popup trigger={
-                <button className="text-[10px] border-2 border-[#2F5F94] h-[33px] w-[68px] rounded-lg font-semibold">
+                <button className="text-[10px] border-2 border-[#2F5F94] h-[33px] w-[58px] rounded-lg font-semibold">
                     Resctok
                 </button>
             } modal nested>
@@ -13,7 +13,7 @@ export default function BtnRestockProduk() {
                         <div className="fixed inset-0 flex justify-center items-center h-screen bg-black/40">
                             <div className="bg-white rounded-xl shadow p-5 transition-all w-[600px] h-[620px]">
                                 <div className="flex justify-between">
-                                    <p className="font-semibold text-2xl mb-7 m-auto">Restock Produk</p>
+                                    <p className="font-semibold text-2xl mb-7 m-auto">Restock  Produk</p>
                                     <button onClick={() => close()} className="h-7">
                                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                              strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 text-red-600">
