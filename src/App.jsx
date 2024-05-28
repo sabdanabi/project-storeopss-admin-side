@@ -6,6 +6,8 @@ import RiwayatTambahProdukPage from "./pages/main_page/RiwayatTambahProdukPage.j
 import RiwayatRestockProdukPage from "./pages/main_page/RiwayatRestockProdukPage.jsx";
 import ProfilePage from "./pages/profile_page/ProfilePage.jsx";
 import TransaksiPage from "./pages/main_page/TransaksiPage.jsx";
+import NotaPage from "./pages/main_page/NotaPage.jsx";
+import LoginPage from "./pages/auth_pages/LoginPage.jsx";
 
 export default function App() {
     return (
@@ -18,6 +20,8 @@ export default function App() {
                 <Route path="/riwayat-restock-page" element={<RiwayatRestockProdukPage/>}/>
                 <Route path="/profile" element={<ProfilePage/>}/>
                 <Route path="/transaksi-page" element={<TransaksiPage/>}/>
+                <Route path="/nota-page" element={<NotaPage/>}/>
+                <Route path="/login-page" element={<LoginPage/>}/>
             </Routes>
         </Router>
     )

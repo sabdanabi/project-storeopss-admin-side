@@ -1,279 +1,74 @@
-export default function DummyTabelPersediaan() {
+import PropTypes from 'prop-types';
+import BtnRestockProduk from "../../components/page_persediaan_components/BtnRestockProduk.jsx";
+import BtnEditPorduk from "../../components/page_persediaan_components/BtnEditPorduk.jsx";
+import {BtnDeleteNew} from "../../components/page_persediaan_components/BtnDeleteNew.jsx";
+
+export default function DummyTabelPersediaan({ products, handleDelete, updateProductState}) {
     return (
-        <div className="bg-white flex
-                                border-b-[3px] border-gray-200 h-[420px] overflow-auto">
-            <table className="w-full h-12">
+        <div className="bg-white flex border-b-[3px] border-gray-200 h-[350px] overflow-auto">
+            <table className="w-full">
                 <thead className="h-12 border-b-2">
                 <tr className="text-sm text-[#9CA4AE]">
                     <td className="px-4">No</td>
                     <td>Produk</td>
-                    <td><img src="/assets_img/icon_row_table.png" className="mx-3" alt="sdf"/></td>
+                    <td><img src="/assets_img/icon_row_table.png" className="mx-3" alt="sort-icon" /></td>
                     <td>Harga Beli</td>
-                    <td><img src="/assets_img/icon_row_table.png" className="mr-3" alt="sdf"/></td>
+                    <td><img src="/assets_img/icon_row_table.png" className="mr-3" alt="sort-icon" /></td>
                     <td>Harga Jual</td>
-                    <td><img src="/assets_img/icon_row_table.png" className="mr-3" alt="sdf"/></td>
+                    <td><img src="/assets_img/icon_row_table.png" className="mr-3" alt="sort-icon" /></td>
                     <td>Stock</td>
-                    <td><img src="/assets_img/icon_row_table.png" className="mr-3" alt="sdf"/></td>
+                    <td><img src="/assets_img/icon_row_table.png" className="mr-3" alt="sort-icon" /></td>
                     <td>Terjual</td>
-                    <td><img src="/assets_img/icon_row_table.png" className="mr-5" alt="sdf"/></td>
+                    <td><img src="/assets_img/icon_row_table.png" className="mr-5" alt="sort-icon" /></td>
                     <td>Action</td>
                 </tr>
                 </thead>
-                <tbody className="font-semibold ">
-                <tr className=" border-b-2">
-                    <td className="px-4"><p className="mr-3">1</p></td>
-                    <td>
-                        <div className="flex py-3">
-                            <img src="/assets_img/img_kayu.png" className="h-12 mr-3" alt=""/>
-                            <p className="mr-24">Kayu</p>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>Rp1000.000</td>
-                    <td></td>
-                    <td>Rp30.000/pcs</td>
-                    <td></td>
-                    <td>100pcs</td>
-                    <td></td>
-                    <td>90pcs</td>
-                    <td></td>
-                    <td>
-                        <div className="flex gap-2">
-                            <button className="text-[10px] border-2 border-[#2F5F94]
-                                h-[33px] w-[68px] rounded-lg font-semibold ">Resctok
-                            </button>
-                            <button className="text-[10px] border-2 border-[#2F5F94]
-                                h-[33px] w-[68px] rounded-lg font-semibold ">Edit Produk
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr className=" border-b-2">
-                    <td className="px-4"><p className="mr-3">1</p></td>
-                    <td>
-                        <div className="flex py-3">
-                            <img src="/assets_img/img_kayu.png" className="h-12 mr-3" alt=""/>
-                            <p className="mr-24">Kayu</p>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>Rp1000.000</td>
-                    <td></td>
-                    <td>Rp30.000/pcs</td>
-                    <td></td>
-                    <td>100pcs</td>
-                    <td></td>
-                    <td>90pcs</td>
-                    <td></td>
-                    <td>
-                        <div className="flex gap-2">
-                            <button className="text-[10px] border-2 border-[#2F5F94]
-                                h-[33px] w-[68px] rounded-lg font-semibold ">Resctok
-                            </button>
-                            <button className="text-[10px] border-2 border-[#2F5F94]
-                                h-[33px] w-[68px] rounded-lg font-semibold ">Edit Produk
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr className=" border-b-2">
-                    <td className="px-4"><p className="mr-3">1</p></td>
-                    <td>
-                        <div className="flex py-3">
-                            <img src="/assets_img/img_kayu.png" className="h-12 mr-3" alt=""/>
-                            <p className="mr-24">Kayu</p>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>Rp1000.000</td>
-                    <td></td>
-                    <td>Rp30.000/pcs</td>
-                    <td></td>
-                    <td>100pcs</td>
-                    <td></td>
-                    <td>90pcs</td>
-                    <td></td>
-                    <td>
-                        <div className="flex gap-2">
-                            <button className="text-[10px] border-2 border-[#2F5F94]
-                                h-[33px] w-[68px] rounded-lg font-semibold ">Resctok
-                            </button>
-                            <button className="text-[10px] border-2 border-[#2F5F94]
-                                h-[33px] w-[68px] rounded-lg font-semibold ">Edit Produk
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr className=" border-b-2">
-                    <td className="px-4"><p className="mr-3">1</p></td>
-                    <td>
-                        <div className="flex py-3">
-                            <img src="/assets_img/img_kayu.png" className="h-12 mr-3" alt=""/>
-                            <p className="mr-24">Kayu</p>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>Rp1000.000</td>
-                    <td></td>
-                    <td>Rp30.000/pcs</td>
-                    <td></td>
-                    <td>100pcs</td>
-                    <td></td>
-                    <td>90pcs</td>
-                    <td></td>
-                    <td>
-                        <div className="flex gap-2">
-                            <button className="text-[10px] border-2 border-[#2F5F94]
-                                h-[33px] w-[68px] rounded-lg font-semibold ">Resctok
-                            </button>
-                            <button className="text-[10px] border-2 border-[#2F5F94]
-                                h-[33px] w-[68px] rounded-lg font-semibold ">Edit Produk
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr className=" border-b-2">
-                    <td className="px-4"><p className="mr-3">1</p></td>
-                    <td>
-                        <div className="flex py-3">
-                            <img src="/assets_img/img_kayu.png" className="h-12 mr-3" alt=""/>
-                            <p className="mr-24">Kayu</p>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>Rp1000.000</td>
-                    <td></td>
-                    <td>Rp30.000/pcs</td>
-                    <td></td>
-                    <td>100pcs</td>
-                    <td></td>
-                    <td>90pcs</td>
-                    <td></td>
-                    <td>
-                        <div className="flex gap-2">
-                            <button className="text-[10px] border-2 border-[#2F5F94]
-                                h-[33px] w-[68px] rounded-lg font-semibold ">Resctok
-                            </button>
-                            <button className="text-[10px] border-2 border-[#2F5F94]
-                                h-[33px] w-[68px] rounded-lg font-semibold ">Edit Produk
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr className=" border-b-2">
-                    <td className="px-4"><p className="mr-3">1</p></td>
-                    <td>
-                        <div className="flex py-3">
-                            <img src="/assets_img/img_kayu.png" className="h-12 mr-3" alt=""/>
-                            <p className="mr-24">Kayu</p>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>Rp1000.000</td>
-                    <td></td>
-                    <td>Rp30.000/pcs</td>
-                    <td></td>
-                    <td>100pcs</td>
-                    <td></td>
-                    <td>90pcs</td>
-                    <td></td>
-                    <td>
-                        <div className="flex gap-2">
-                            <button className="text-[10px] border-2 border-[#2F5F94]
-                                h-[33px] w-[68px] rounded-lg font-semibold ">Resctok
-                            </button>
-                            <button className="text-[10px] border-2 border-[#2F5F94]
-                                h-[33px] w-[68px] rounded-lg font-semibold ">Edit Produk
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr className=" border-b-2">
-                    <td className="px-4"><p className="mr-3">1</p></td>
-                    <td>
-                        <div className="flex py-3">
-                            <img src="/assets_img/img_kayu.png" className="h-12 mr-3" alt=""/>
-                            <p className="mr-24">Kayu</p>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>Rp1000.000</td>
-                    <td></td>
-                    <td>Rp30.000/pcs</td>
-                    <td></td>
-                    <td>100pcs</td>
-                    <td></td>
-                    <td>90pcs</td>
-                    <td></td>
-                    <td>
-                        <div className="flex gap-2">
-                            <button className="text-[10px] border-2 border-[#2F5F94]
-                                h-[33px] w-[68px] rounded-lg font-semibold ">Resctok
-                            </button>
-                            <button className="text-[10px] border-2 border-[#2F5F94]
-                                h-[33px] w-[68px] rounded-lg font-semibold ">Edit Produk
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr className=" border-b-2">
-                    <td className="px-4"><p className="mr-3">1</p></td>
-                    <td>
-                        <div className="flex py-3">
-                            <img src="/assets_img/img_kayu.png" className="h-12 mr-3" alt=""/>
-                            <p className="mr-24">Kayu</p>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>Rp1000.000</td>
-                    <td></td>
-                    <td>Rp30.000/pcs</td>
-                    <td></td>
-                    <td>100pcs</td>
-                    <td></td>
-                    <td>90pcs</td>
-                    <td></td>
-                    <td>
-                        <div className="flex gap-2">
-                            <button className="text-[10px] border-2 border-[#2F5F94]
-                                h-[33px] w-[68px] rounded-lg font-semibold ">Resctok
-                            </button>
-                            <button className="text-[10px] border-2 border-[#2F5F94]
-                                h-[33px] w-[68px] rounded-lg font-semibold ">Edit Produk
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr className=" border-b-2">
-                    <td className="px-4"><p className="mr-3">1</p></td>
-                    <td>
-                        <div className="flex py-3">
-                            <img src="/assets_img/img_kayu.png" className="h-12 mr-3" alt=""/>
-                            <p className="mr-24">Kayu</p>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>Rp1000.000</td>
-                    <td></td>
-                    <td>Rp30.000/pcs</td>
-                    <td></td>
-                    <td>100pcs</td>
-                    <td></td>
-                    <td>90pcs</td>
-                    <td></td>
-                    <td>
-                        <div className="flex gap-2">
-                            <button className="text-[10px] border-2 border-[#2F5F94]
-                                h-[33px] w-[68px] rounded-lg font-semibold ">Resctok
-                            </button>
-                            <button className="text-[10px] border-2 border-[#2F5F94]
-                                h-[33px] w-[68px] rounded-lg font-semibold ">Edit Produk
-                            </button>
-                        </div>
-                    </td>
-                </tr>
+                <tbody className="font-semibold">
+                {products.map((product, index) => (
+                    <tr className="border-b-2" key={product.id}>
+                        <td className="px-4"><p className="mr-3">{index + 1}</p></td>
+                        <td>
+                            <div className="flex py-3">
+                                <img src={product.image} className="h-12 mr-3" alt="product-image" />
+                                <p className="mr-24">{product.name}</p>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td>Rp{product.purchase_price}</td>
+                        <td></td>
+                        <td>Rp{product.selling_price}</td>
+                        <td></td>
+                        <td>{product.quantity}pcs/kg</td>
+                        <td></td>
+                        <td>{product.sold}</td>
+                        <td></td>
+                        <td>
+                            <div className="flex gap-2">
+                                <BtnRestockProduk />
+                                <BtnEditPorduk handleDelete={handleDelete} id={product.id}
+                                               updateProductsState={updateProductState}/>
+                                <BtnDeleteNew handleDelete={handleDelete} id={product.id}/>
+                            </div>
+                        </td>
+                    </tr>
+                ))}
                 </tbody>
             </table>
         </div>
-    )
+    );
 }
+
+DummyTabelPersediaan.propTypes = {
+    products: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        image: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        purchase_price: PropTypes.number.isRequired,
+        selling_price: PropTypes.number.isRequired,
+        quantity: PropTypes.number.isRequired,
+        sold: PropTypes.number.isRequired,
+    })).isRequired,
+    handleDelete: PropTypes.func.isRequired,
+    updateProductState: PropTypes.func.isRequired,
+
+};
