@@ -2,7 +2,7 @@ import {useEffect, useState} from "react";
 import PropTypes from "prop-types";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {editProduct,getProductById} from "../../services/StockService.jsx";
+import {editProduct,getProductById} from "../../../services/StockService.jsx";
 
 export default function FormEditProduk({ updateProductsState, id}) {
 

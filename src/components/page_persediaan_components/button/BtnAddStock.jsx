@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 import Popup from "reactjs-popup";
-import FormAddProduk from "./FormAddProduk.jsx";
+import FormAddProduk from "../form/FormAddProduk.jsx";
 
 export default function BtnAddStock({ titlePage, titleBtn, updateProductsState, addNewProduct }) {
     return (
