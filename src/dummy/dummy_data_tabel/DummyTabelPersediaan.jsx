@@ -17,8 +17,6 @@ export default function DummyTabelPersediaan({ products, handleDelete, updatePro
                     <td>Harga Jual</td>
                     <td><img src="/assets_img/icon_row_table.png" className="mr-3" alt="sort-icon" /></td>
                     <td>Stock</td>
-                    <td><img src="/assets_img/icon_row_table.png" className="mr-3" alt="sort-icon" /></td>
-                    <td>Terjual</td>
                     <td><img src="/assets_img/icon_row_table.png" className="mr-5" alt="sort-icon" /></td>
                     <td>Action</td>
                 </tr>
@@ -39,8 +37,6 @@ export default function DummyTabelPersediaan({ products, handleDelete, updatePro
                         <td>Rp{product.selling_price}</td>
                         <td></td>
                         <td>{product.quantity}pcs/kg</td>
-                        <td></td>
-                        <td>{product.sold}</td>
                         <td></td>
                         <td>
                             <div className="flex gap-2">

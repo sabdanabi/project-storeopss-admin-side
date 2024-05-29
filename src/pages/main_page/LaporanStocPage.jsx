@@ -4,8 +4,36 @@ import NamePageComponent from "../../components/components_reused/NamePageCompon
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
 import TblLaporanStock from "../../components/page_laporan_stock_components/TblLaporanStock.jsx";
 import SearchBar from "../../components/components_reused/SearchBar.jsx";
+import {useEffect, useState} from "react";
+import {getAllProduct} from "../../services/StockService.jsx";
 
 export default function LaporanStocPage(){
+    const [products, setProducts] = useState([]);
+    const [isAuth, setAuth] = useState(false);
+    const [isLoading, setLoading] = useState(true);
+    const [error, setError] = useState("");
+
+    const updateProductsState = async () => {
+        try {
+
+            setLoading(true);
+            const result = await getAllProduct();
+            setProducts(result.data);
+            setAuth(true);
+
+        } catch(e) {
+
+            console.log(e);
+            setError(e.response.data.error);
+
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        updateProductsState();
+    }, []);
     return(
         <div className="flex h-screen overflow-hidden bg-gray-100">
             <SideNavbarComponent/>
@@ -18,7 +46,17 @@ export default function LaporanStocPage(){
                         <DescPageComponent
                             desc={"Laporan stok ini mencakup periode dari tanggal 1 Maret 2024 hingga 31 Maret 2024."}/>
                         <SearchBar/>
-                        <TblLaporanStock/>
+                        {isLoading ? (
+                            <div className="flex items-center justify-center h-full">
+                                <p className="text-xl">Loading...</p>
+                            </div>
+                        ) : isAuth ? (
+                            <TblLaporanStock products={products}/>
+                        ) : (
+                            <div className="flex items-center justify-center h-full">
+                                <p className="text-xl">{ error }</p>
+                            </div>
+                        )}
                     </div>
                 </main>
             </div>
