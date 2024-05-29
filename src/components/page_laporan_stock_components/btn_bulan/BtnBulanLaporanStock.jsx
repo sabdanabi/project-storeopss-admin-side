@@ -1,23 +1,34 @@
-import BtnBulan from "./BtnBulan.jsx";
+import {useEffect, useRef} from "react";
+import PropTypes from "prop-types";
 
-export default function BtnBulanLaporanStock(){
+export default function BtnBulanLaporanStock({item, setSelectedTab}){
+
+    const firstBtnRef = useRef(null);
+
+    useEffect(() => {
+        if (firstBtnRef.current) {
+            firstBtnRef.current.focus();
+        }
+    }, []);
+
     return(
         <>
             <div className="bg-white h-[65px] flex pt-5 border-y-[3px] border-gray-200 justify-between">
                 <div className="flex">
 
-                    <BtnBulan bulan="Januari"/>
-                    <BtnBulan bulan="Februari"/>
-                    <BtnBulan bulan="Maret"/>
-                    <BtnBulan bulan="April"/>
-                    <BtnBulan bulan="Mei"/>
-                    <BtnBulan bulan="Juni"/>
-                    <BtnBulan bulan="Juli"/>
-                    <BtnBulan bulan="Agustus"/>
-                    <BtnBulan bulan="September"/>
-                    <BtnBulan bulan="Oktober"/>
-                    <BtnBulan bulan="November"/>
-                    <BtnBulan bulan="Desember"/>
+                    <div>
+                        {item.map((item, index) => (
+                            <button
+                                className="font-semibold hover:text-[#1A4F8B] text-sm text-[#8C95A4]
+                            hover:border-b-4 hover:border-[#1A4F8B] ml-10 focus:border-b-4 focus:border-[#1A4F8B] outline-none"
+                                key={index}
+                                ref={index === 0 ? firstBtnRef : null}
+                                onClick={() => setSelectedTab(index)}
+                            >
+                                {item.title}
+                            </button>
+                        ))}
+                    </div>
 
                 </div>
                 <button>
@@ -31,3 +42,11 @@ export default function BtnBulanLaporanStock(){
         </>
     )
 }
+
+
+BtnBulanLaporanStock.propTypes = {
+    item: PropTypes.arrayOf(PropTypes.shape({
+        title: PropTypes.string.isRequired,
+    })).isRequired,
+    setSelectedTab: PropTypes.func.isRequired, // Adding validation for setSelectedTab
+};

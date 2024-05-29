@@ -1,10 +1,17 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
+import { ChakraProvider } from '@chakra-ui/react'
 import './index.css'
-import RiwayatTambahProdukPage from "./pages/main_page/RiwayatTambahProdukPage.jsx";
+import App from "./App.jsx";
+import { ThemeProvider } from "@material-tailwind/react";
+
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-      <RiwayatTambahProdukPage/>
+      <ChakraProvider>
+          <ThemeProvider>
+              <App/>
+          </ThemeProvider>
+      </ChakraProvider>
   </React.StrictMode>,
 )
