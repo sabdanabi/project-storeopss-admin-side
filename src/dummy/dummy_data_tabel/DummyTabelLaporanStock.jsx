@@ -8,13 +8,13 @@ export default function DummyTabelLaporanStock() {
                     <td className="px-4">No</td>
                     <td>Produk</td>
                     <td><img src="/assets_img/icon_row_table.png" className="mx-3" alt="sdf"/></td>
-                    <td>Harga Beli</td>
+                    <td>Stok Awal</td>
                     <td><img src="/assets_img/icon_row_table.png" className="mr-3" alt="sdf"/></td>
-                    <td>Harga Jual</td>
+                    <td>Barang Masuk</td>
                     <td><img src="/assets_img/icon_row_table.png" className="mr-3" alt="sdf"/></td>
-                    <td>Stock</td>
+                    <td>Barang Keluar</td>
                     <td><img src="/assets_img/icon_row_table.png" className="mr-3" alt="sdf"/></td>
-                    <td>Terjual</td>
+                    <td>Stok Akhir</td>
                 </tr>
                 </thead>
                 <tbody className="font-semibold">
