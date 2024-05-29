@@ -10,6 +10,7 @@ export default function TransaksiPage() {
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState("");
 
+
     useEffect(() => {
         updateProductsState();
     }, []);

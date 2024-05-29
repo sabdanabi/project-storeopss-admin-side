@@ -31,11 +31,11 @@ export default function TblTransaksi({updateProductState, transaksi}) {
                                 <td>
                                     <div className="flex py-3">
                                         {/*<img src="/assets_img/img_kayu.png" className="h-12 mr-3" alt="product "/>*/}
-                                        <p className="mr-24">{transaction.name}</p>
+                                        <p className="mr-24">{transaction.customer.name}</p>
                                     </div>
                                 </td>
                                 <td></td>
-                                <td>{transaction.purchase_price}</td>
+                                <td>{transaction.date}</td>
                                 <td></td>
                                 <td>Rp30.000/pcs</td>
                                 <td></td>

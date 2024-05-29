@@ -5,7 +5,7 @@ const token = localStorage.getItem("token");
 
 const getAllTransaksi = async () => {
     try {
-        const response = await axios.get(`${baseUrl}/api/transactions`, {
+        const response = await axios.get(`${baseUrl}/api/transactions/income`, {
             headers: {
                 AUTHORIZATION: token,
                 "ngrok-skip-browser-warning": true
