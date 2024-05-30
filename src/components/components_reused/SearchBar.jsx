@@ -1,9 +1,12 @@
-export default function SearchBar() {
+
+export default function SearchBar({handleSearchChange, searchQuery}) {
     return (
         <div className="bg-white h-[65px] flex py-3 px-6 relative border-b-[3px] border-gray-200">
             <input
                 type="text"
                 placeholder="Cari Produk"
+                value={searchQuery}
+                onChange={handleSearchChange}
                 className="py-2 pl-11 pr-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2
                                 focus:ring-indigo-500 focus:border-transparent w-full"
             />
