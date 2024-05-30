@@ -85,6 +85,20 @@ const getProductById = async (productId) => {
     }
 };
 
+const getHistoryAddProduct = async () => {
+    try {
+        const response = await axios.get(`${baseUrl}/api/products/histories/add`, {
+            headers: {
+                AUTHORIZATION: token,
+                "ngrok-skip-browser-warning": true
+            },
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching product add history:', error);
+        throw error;
+    }
+};
 
 const handleAxiosError = (error) => {
     if (error.response) {
@@ -99,4 +113,5 @@ const handleAxiosError = (error) => {
     console.error('Error config:', error.config);
 };
 
-export { getAllProduct, addNewProduct, deleteProduct, editProduct, getProductById };
+export { getAllProduct, addNewProduct, deleteProduct,
+    editProduct, getProductById, getHistoryAddProduct };

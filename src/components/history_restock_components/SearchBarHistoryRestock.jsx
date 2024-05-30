@@ -1,5 +1,5 @@
 
-export default function SearchBar({handleSearchChange, searchQuery}) {
+export default function SearchBarHistoryRestock({handleSearchChange, searchQuery}) {
     return (
         <div className="bg-white h-[65px] flex py-3 px-6 relative border-b-[3px] border-gray-200">
             <input
