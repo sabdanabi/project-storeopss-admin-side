@@ -13,7 +13,7 @@ export function HistoryRestockCard({restockHistory}) {
     return (
         <>
             {restockHistory.map((entry) => (
-                <div className="bg-white w-96 py-2 px-2 rounded" key={entry.id}>
+                <div className="bg-white w-96 py-2 px-2 h-96 rounded" key={entry.id}>
                     <div className="flex mb-10 w-full relative">
                         <p className="font-semibold text-[#403E8A]">{entry.product.name}</p>
                         <p className="text-[10px] text-[#8C8BB4] absolute left-[290px] top-1">

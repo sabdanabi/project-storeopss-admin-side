@@ -47,7 +47,7 @@ export default function PersediaanPage() {
             <SideNavbarComponent/>
             <div className="flex flex-col flex-1 w-full overflow-hidden">
                 <PartTop/>
-                <BtnAddStock titlePage={"Produkk"} titleBtn={"Product"}
+                <BtnAddStock titlePage={"Produk"} titleBtn={"Product"}
                              updateProductsState={updateProductsState}
                              addNewProduct={addNewProduct}/>
                 {isLoading ? (

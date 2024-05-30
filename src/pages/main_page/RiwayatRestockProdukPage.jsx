@@ -42,7 +42,7 @@ export default function RiwayatRestockProdukPage() {
 
             <div className="flex flex-col flex-1 w-full">
                 <PartTop/>
-                <NamePageComponent nama={"Riwayat Pengisian Ulang Produk"}/>
+                <NamePageComponent nama={"Histori Pembaruan Stok"}/>
 
                 <main className="flex-1 p-5 overflow-y-auto">
                     <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
