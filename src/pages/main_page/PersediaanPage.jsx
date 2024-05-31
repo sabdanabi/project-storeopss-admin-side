@@ -12,6 +12,15 @@ export default function PersediaanPage() {
     const [isAuth, setAuth] = useState(false);
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const filteredHistory = products.filter((product) => {
+        return product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    });
 
     const updateProductsState = async () => {
         try {
@@ -55,7 +64,8 @@ export default function PersediaanPage() {
                         <p className="text-xl">Loading...</p>
                     </div>
                 ) : isAuth ? (
-                    <TblStock products={products} handleDelete={handleDelete} updateProductsState={updateProductsState}/>
+                    <TblStock products={filteredHistory} handleDelete={handleDelete} searchQuery={searchQuery}
+                              updateProductsState={updateProductsState} handleSearchChange={handleSearchChange}/>
                 ) : (
                     <div className="flex items-center justify-center h-full">
                         <p className="text-xl">{ error }</p>
