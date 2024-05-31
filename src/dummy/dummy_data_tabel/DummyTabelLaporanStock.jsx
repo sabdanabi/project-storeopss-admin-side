@@ -1,4 +1,4 @@
-export default function DummyTabelLaporanStock() {
+export default function DummyTabelLaporanStock({products}) {
     return (
         <div className="bg-white flex
                         border-b-[3px] border-gray-200 overflow-auto h-[420px]">
@@ -18,178 +18,26 @@ export default function DummyTabelLaporanStock() {
                 </tr>
                 </thead>
                 <tbody className="font-semibold">
-                <tr className=" border-b-2">
-                    <td className="px-4"><p className="mr-3">1</p></td>
-                    <td>
-                        <div className="flex py-3">
-                            <img src="/assets_img/img_kayu.png" className="h-12 mr-3" alt=""/>
-                            <p className="mr-24">Kayu</p>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>Rp1000.000</td>
-                    <td></td>
-                    <td>Rp30.000/pcs</td>
-                    <td></td>
-                    <td>100pcs</td>
-                    <td></td>
-                    <td>90pcs</td>
-                    <td></td>
-                </tr>
-                <tr className=" border-b-2">
-                    <td className="px-4"><p className="mr-3">1</p></td>
-                    <td>
-                        <div className="flex py-3">
-                            <img src="/assets_img/img_kayu.png" className="h-12 mr-3" alt=""/>
-                            <p className="mr-24">Kayu</p>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>Rp1000.000</td>
-                    <td></td>
-                    <td>Rp30.000/pcs</td>
-                    <td></td>
-                    <td>100pcs</td>
-                    <td></td>
-                    <td>90pcs</td>
-                </tr>
-                <tr className=" border-b-2">
-                    <td className="px-4"><p className="mr-3">1</p></td>
-                    <td>
-                        <div className="flex py-3">
-                            <img src="/assets_img/img_kayu.png" className="h-12 mr-3" alt=""/>
-                            <p className="mr-24">Kayu</p>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>Rp1000.000</td>
-                    <td></td>
-                    <td>Rp30.000/pcs</td>
-                    <td></td>
-                    <td>100pcs</td>
-                    <td></td>
-                    <td>90pcs</td>
-                </tr>
-                <tr className=" border-b-2">
-                    <td className="px-4"><p className="mr-3">1</p></td>
-                    <td>
-                        <div className="flex py-3">
-                            <img src="/assets_img/img_kayu.png" className="h-12 mr-3" alt=""/>
-                            <p className="mr-24">Kayu</p>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>Rp1000.000</td>
-                    <td></td>
-                    <td>Rp30.000/pcs</td>
-                    <td></td>
-                    <td>100pcs</td>
-                    <td></td>
-                    <td>90pcs</td>
-                </tr>
-                <tr className=" border-b-2">
-                    <td className="px-4"><p className="mr-3">1</p></td>
-                    <td>
-                        <div className="flex py-3">
-                            <img src="/assets_img/img_kayu.png" className="h-12 mr-3" alt=""/>
-                            <p className="mr-24">Kayu</p>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>Rp1000.000</td>
-                    <td></td>
-                    <td>Rp30.000/pcs</td>
-                    <td></td>
-                    <td>100pcs</td>
-                    <td></td>
-                    <td>90pcs</td>
-                </tr>
-                <tr className=" border-b-2">
-                    <td className="px-4"><p className="mr-3">1</p></td>
-                    <td>
-                        <div className="flex py-3">
-                            <img src="/assets_img/img_kayu.png" className="h-12 mr-3" alt=""/>
-                            <p className="mr-24">Kayu</p>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>Rp1000.000</td>
-                    <td></td>
-                    <td>Rp30.000/pcs</td>
-                    <td></td>
-                    <td>100pcs</td>
-                    <td></td>
-                    <td>90pcs</td>
-                </tr>
-                <tr className=" border-b-2">
-                    <td className="px-4"><p className="mr-3">1</p></td>
-                    <td>
-                        <div className="flex py-3">
-                            <img src="/assets_img/img_kayu.png" className="h-12 mr-3" alt=""/>
-                            <p className="mr-24">Kayu</p>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>Rp1000.000</td>
-                    <td></td>
-                    <td>Rp30.000/pcs</td>
-                    <td></td>
-                    <td>100pcs</td>
-                    <td></td>
-                    <td>90pcs</td>
-                </tr>
-                <tr className=" border-b-2">
-                    <td className="px-4"><p className="mr-3">1</p></td>
-                    <td>
-                        <div className="flex py-3">
-                            <img src="/assets_img/img_kayu.png" className="h-12 mr-3" alt=""/>
-                            <p className="mr-24">Kayu</p>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>Rp1000.000</td>
-                    <td></td>
-                    <td>Rp30.000/pcs</td>
-                    <td></td>
-                    <td>100pcs</td>
-                    <td></td>
-                    <td>90pcs</td>
-                </tr>
-                <tr className=" border-b-2">
-                    <td className="px-4"><p className="mr-3">1</p></td>
-                    <td>
-                        <div className="flex py-3">
-                            <img src="/assets_img/img_kayu.png" className="h-12 mr-3" alt=""/>
-                            <p className="mr-24">Kayu</p>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>Rp1000.000</td>
-                    <td></td>
-                    <td>Rp30.000/pcs</td>
-                    <td></td>
-                    <td>100pcs</td>
-                    <td></td>
-                    <td>90pcs</td>
-                </tr>
-                <tr className=" border-b-2">
-                    <td className="px-4"><p className="mr-3">1</p></td>
-                    <td>
-                        <div className="flex py-3">
-                            <img src="/assets_img/img_kayu.png" className="h-12 mr-3" alt=""/>
-                            <p className="mr-24">Kayu</p>
-                        </div>
-                    </td>
-                    <td></td>
-                    <td>Rp1000.000</td>
-                    <td></td>
-                    <td>Rp30.000/pcs</td>
-                    <td></td>
-                    <td>100pcs</td>
-                    <td></td>
-                    <td>90pcs</td>
-                </tr>
-
+                {products.map((product, index) => (
+                    <tr className=" border-b-2" key={product.id}>
+                        <td className="px-4"><p className="mr-3">{index + 1}</p></td>
+                        <td>
+                            <div className="flex py-3">
+                                <img src={product.image} className="h-12 mr-3" alt=""/>
+                                <p className="mr-24">{product.name}</p>
+                            </div>
+                        </td>
+                        <td></td>
+                        <td>Rp{product.purchase_price}</td>
+                        <td></td>
+                        <td>Rp{product.selling_price}</td>
+                        <td></td>
+                        <td>{product.quantity}pcs/kg</td>
+                        <td></td>
+                        <td>{product.sold}</td>
+                        <td></td>
+                    </tr>
+                ))}
                 </tbody>
             </table>
         </div>
