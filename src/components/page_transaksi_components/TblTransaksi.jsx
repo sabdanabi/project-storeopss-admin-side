@@ -1,12 +1,13 @@
 import DescPageComponent from "../components_reused/DescPageComponent.jsx";
 import FilterComponents from "./FilterComponents.jsx";
+import PropTypes from "prop-types";
 
-export default function TblTransaksi({updateProductState, transaksi}) {
+export default function TblTransaksi({ handleSearchChange, searchQuery, filteredTransaksi}) {
     return (
         <main className="flex-1 p-10 overflow-y-auto">
             <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
                 <DescPageComponent desc={"Selamat datang di admin dashboard Anda."}/>
-                <FilterComponents/>
+                <FilterComponents handleSearchChange={handleSearchChange} searchQuery={searchQuery}/>
                 <div className="bg-white
                                 border-b-[3px] border-gray-200 h-[420px] overflow-auto">
                     <table className="w-full h-12">
@@ -25,7 +26,7 @@ export default function TblTransaksi({updateProductState, transaksi}) {
                         </tr>
                         </thead>
                         <tbody className="font-semibold ">
-                        {transaksi.map((transaction, index) => (
+                        {filteredTransaksi.map((transaction, index) => (
                             <tr className=" border-b-2" key={transaction.id}>
                                 <td className="px-4"><p className="mr-3">{index + 1}</p></td>
                                 <td>
@@ -64,3 +65,9 @@ export default function TblTransaksi({updateProductState, transaksi}) {
         </main>
     )
 }
+
+TblTransaksi.propTypes = {
+    handleSearchChange: PropTypes.func.isRequired,
+    searchQuery: PropTypes.string.isRequired,
+    filteredTransaksi: PropTypes.array.isRequired
+};

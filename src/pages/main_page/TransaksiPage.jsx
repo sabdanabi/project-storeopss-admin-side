@@ -9,6 +9,15 @@ export default function TransaksiPage() {
     const [isAuth, setAuth] = useState(false);
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const filteredTransaksi = transaksi.filter((entry) => {
+        return entry.customer.name.toLowerCase().includes(searchQuery.toLowerCase());
+    });
 
 
     useEffect(() => {
@@ -44,7 +53,9 @@ export default function TransaksiPage() {
                         <p className="text-xl">Loading...</p>
                     </div>
                 ) : isAuth ? (
-                    <TblTransaksi transaksi={transaksi} updateProductState={updateProductsState}/>
+                    <TblTransaksi handleSearchChange={handleSearchChange}
+                                  filteredTransaksi={filteredTransaksi}
+                                  searchQuery={searchQuery}/>
                 ) : (
                     <div className="flex items-center justify-center h-full">
                         <p className="text-xl">{ error }</p>
