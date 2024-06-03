@@ -1,6 +1,8 @@
 import DescPageComponent from "../components_reused/DescPageComponent.jsx";
 import FilterComponents from "./FilterComponents.jsx";
 import PropTypes from "prop-types";
+import {BtnNotaTransaksi} from "./button/BtnNotaTransaksi.jsx";
+import {BtnEditTransaksi} from "./button/BtnEditTransaksi.jsx";
 
 export default function TblTransaksi({ handleSearchChange, searchQuery, filteredTransaksi}) {
     return (
@@ -48,12 +50,8 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                                 <td></td>
                                 <td>
                                     <div className="flex gap-4">
-                                        <button className="text-[10px] border-2 border-[#2F5F94]
-                                h-[33px] w-[68px] rounded-lg font-semibold ">Detail
-                                        </button>
-                                        <button className="text-[10px] border-2 border-[#2F5F94]
-                                h-[33px] w-[68px] rounded-lg font-semibold ">Edit
-                                        </button>
+                                        <BtnNotaTransaksi/>
+                                        <BtnEditTransaksi/>
                                     </div>
                                 </td>
                             </tr>
