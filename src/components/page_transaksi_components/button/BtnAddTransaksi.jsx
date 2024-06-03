@@ -6,7 +6,6 @@ export default function BtnAddTransaksi() {
     const [selectedValue, setSelectedValue] = useState('');
     const [selectedValueRD, setSelectedValueRD] = useState('');
 
-
     const handleRadioChange = (event) => {
         setSelectedValue(event.target.value);
     };

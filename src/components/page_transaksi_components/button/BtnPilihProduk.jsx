@@ -1,11 +1,40 @@
 import Popup from "reactjs-popup";
-import {useState} from "react";
+import {useEffect, useState} from "react";
+import {CardProduct} from "../CardProduct.jsx";
+import TblLaporanStock from "../../page_laporan_stock_components/TblLaporanStock.jsx";
+import {getAllProduct} from "../../../services/StockService.jsx";
 
 export function BtnPilihProduk() {
     const [isInnerPopupOpen, setInnerPopupOpen] = useState(false);
+    const [products, setProducts] = useState([]);
+    const [isAuth, setAuth] = useState(false);
+    const [isLoading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
     const openInnerPopup = () => setInnerPopupOpen(true);
     const closeInnerPopup = () => setInnerPopupOpen(false);
+    const updateProductsState = async () => {
+        try {
+
+            setLoading(true);
+            const result = await getAllProduct();
+            setProducts(result.data);
+            setAuth(true);
+
+        } catch(e) {
+
+            console.log(e);
+            setError(e.response.data.error);
+
+        } finally {
+            setLoading(false);
+        }
+    }
+
+    useEffect(() => {
+        updateProductsState();
+    }, []);
+
     return (
         <div>
             <button onClick={openInnerPopup} type={"button"}
@@ -31,26 +60,24 @@ export function BtnPilihProduk() {
                                     </button>
                                 </div>
 
-                                <div>
-                                    <div className="flex border-2 rounded-lg p-2">
-                                        <img src="/assets_img/img_kayu.png" alt="img produk"/>
-                                        <div className="ml-3">
-                                            <p className="font-semibold text-lg">Kayu</p>
-                                            <div className="flex text-xs font-medium text-[#727E91]">
-                                                <p className="mr-3">Harga</p>
-                                                <p>Rp30.000/Batang</p>
-                                            </div>
-                                            <div className="flex font-medium text-[#727E91]  text-xs">
-                                                <p className="mr-3">Stock</p>
-                                                <p>90 batang</p>
-                                            </div>
+                                <div className="overflow-auto h-64">
+                                    {isLoading ? (
+                                        <div className="flex items-center justify-center h-full">
+                                            <p className="text-xl">Loading...</p>
                                         </div>
-                                    </div>
+                                    ) : isAuth ? (
+                                        <CardProduct products={products}/>
+                                    ) : (
+                                        <div className="flex items-center justify-center h-full">
+                                            <p className="text-xl">{ error }</p>
+                                        </div>
+                                    )}
                                 </div>
-                                <button className="flex items-center px-7 py-2 bg-[#1A4F8B] group ml-72 mt-12
+
+                                <button className="flex ml-36 px-7 py-2 bg-[#1A4F8B] group mt-10
                                         rounded-lg shadow-sm hover:bg-gray-50 hover:border-[#1A4F8B] hover:border-2">
                                             <span
-                                                className="text-white font-medium text-sm group-hover:text-[#1A4F8B]">Simpan</span>
+                                                className="text-white font-medium text-sm group-hover:text-[#1A4F8B]">Pilih</span>
                                 </button>
                             </div>
                         </div>
