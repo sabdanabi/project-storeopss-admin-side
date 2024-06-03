@@ -1,7 +1,6 @@
 import Popup from "reactjs-popup";
 import {useEffect, useState} from "react";
 import {CardProduct} from "../CardProduct.jsx";
-import TblLaporanStock from "../../page_laporan_stock_components/TblLaporanStock.jsx";
 import {getAllProduct} from "../../../services/StockService.jsx";
 
 export function BtnPilihProduk() {

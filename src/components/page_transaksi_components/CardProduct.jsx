@@ -1,4 +1,5 @@
 import {useState} from "react";
+import PropTypes from "prop-types";
 
 export function CardProduct({products}) {
     const [count, setCount] = useState(1);
@@ -35,3 +36,12 @@ export function CardProduct({products}) {
         </>
     )
 }
+
+CardProduct.propTypes = {
+    products: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        name: PropTypes.string.isRequired,
+        selling_price: PropTypes.number.isRequired,
+        quantity: PropTypes.number.isRequired,
+    })).isRequired,
+};
