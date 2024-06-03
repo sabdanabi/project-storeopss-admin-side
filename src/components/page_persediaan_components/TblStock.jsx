@@ -2,7 +2,7 @@
 import DescPageComponent from "../components_reused/DescPageComponent.jsx";
 import TabsPagePersediaan from "../tabs_components/TabsPagePersediaan.jsx";
 import {useState} from "react";
-import DummyTabelPersediaan from "../../dummy/dummy_data_tabel/DummyTabelPersediaan.jsx";
+import TblProductStock from "../../dummy/dummy_data_tabel/TblProductStock.jsx";
 import PropTypes from "prop-types";
 import { ToastContainer} from "react-toastify";
 import {SearchBarStock} from "./SearchBarStock.jsx";
@@ -18,8 +18,7 @@ export default function TblStock({products, handleDelete, updateProductsState,ha
             content: (
                 <div>
                     <SearchBarStock handleSearchChange={handleSearchChange} products={searchQuery}/>
-                    <DummyTabelPersediaan products={products} handleDelete={handleDelete}
-                                          updateProductState={updateProductsState}/>
+                    <TblProductStock products={products} handleDelete={handleDelete} updateProductState={updateProductsState}/>
                 </div>
             ),
         },
@@ -28,9 +27,8 @@ export default function TblStock({products, handleDelete, updateProductsState,ha
             content: (
                 <div>
                     <SearchBarStock handleSearchChange={handleSearchChange} products={searchQuery}/>
-                    <DummyTabelPersediaan products={products.filter(product => product.quantity > 50)}
-                                          handleDelete={handleDelete}
-                                          updateProductState={updateProductsState}/>
+                    <TblProductStock products={products.filter(product => product.quantity > 50)} handleDelete={handleDelete}
+                                     updateProductState={updateProductsState}/>
                 </div>
             ),
         },
@@ -39,9 +37,8 @@ export default function TblStock({products, handleDelete, updateProductsState,ha
             content: (
                 <div>
                     <SearchBarStock handleSearchChange={handleSearchChange} products={searchQuery}/>
-                    <DummyTabelPersediaan products={products.filter(product => product.quantity > 0 && product.quantity <= 50)}
-                                          andleDelete={handleDelete} updateProductState={updateProductsState}
-                                          handleDelete={handleDelete}/>
+                    <TblProductStock products={products.filter(product => product.quantity > 0 && product.quantity <= 50)} handleDelete={handleDelete}
+                                     updateProductState={updateProductsState}/>
                 </div>
             ),
         },
@@ -50,9 +47,8 @@ export default function TblStock({products, handleDelete, updateProductsState,ha
             content: (
                 <div>
                     <SearchBarStock handleSearchChange={handleSearchChange} products={searchQuery}/>
-                    <DummyTabelPersediaan products={products.filter(product => product.quantity === 0)}
-                                          handleDelete={handleDelete}
-                                          updateProductState={updateProductsState}/>
+                    <TblProductStock products={products.filter(product => product.quantity === 0)} handleDelete={handleDelete}
+                                     updateProductState={updateProductsState}/>
                 </div>
             ),
         },

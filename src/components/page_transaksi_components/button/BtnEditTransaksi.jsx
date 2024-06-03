@@ -1,35 +1,15 @@
 import Popup from "reactjs-popup";
 import {Radio} from "@material-tailwind/react";
-import {useState} from "react";
-export default function BtnAddTransaksi() {
-    const [selectedValue, setSelectedValue] = useState('');
-    const [selectedValueRD, setSelectedValueRD] = useState('');
 
-    const handleRadioChange = (event) => {
-        setSelectedValue(event.target.value);
-    };
-
-    const handleRadioChangeRD2 = (event) => {
-        setSelectedValueRD(event.target.value);
-    };
-
-
-    return (<>
-        <div className="flex items-center justify-between h-20 border-b-[3px]
-                w-full px-6 py-4 bg-white border-gray-200">
-            <h1 className="text-2xl font-semibold text-gray-900">Transaksi</h1>
-            <Popup trigger=
-                       {<button className="flex items-center px-4 py-2 bg-[#1A4F8B] group
-                    rounded-lg shadow-sm hover:bg-gray-50 hover:border-[#1A4F8B] hover:border-2">
-                           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                                stroke="currentColor"
-                                className="w-6 h-6 mr-2 text-white group-hover:text-[#1A4F8B]">
-                               <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15"/>
-                           </svg>
-                           <span className="text-white font-semibold group-hover:text-[#1A4F8B]">Penjualan</span>
-                       </button>}
-                   modal nested>
-                {close => (<div className='modal'>
+export function BtnEditTransaksi() {
+    return (
+        <> <Popup trigger={
+            <button className="text-[10px] border-2 border-[#2F5F94]
+                    h-[33px] w-[68px] rounded-lg font-semibold ">Edit
+            </button>
+        } modal nested>
+            {close => (
+                <div className='modal'>
                     <div className="fixed inset-0 flex justify-center items-center h-screen bg-black/40">
                         <div className="bg-white rounded-xl shadow p-5 transition-all w-[850px] h-[670px]">
                             <form>
@@ -107,28 +87,28 @@ export default function BtnAddTransaksi() {
                                             <p className="font-medium">Status Transaksi</p>
                                             <div className="flex gap-10 mt-2">
                                                 <div
-                                                    className={`w-44 border-2 h-10 pb-10 rounded-md ${selectedValue === 'Lunas' ? 'border-blue-500' : 'border-gray-200'}`}
+                                                    className={`w-44 border-2 h-10 pb-10 rounded-md `}
                                                 >
                                                     <Radio
                                                         name="color"
                                                         value="Lunas"
                                                         color="blue"
                                                         label="Lunas"
-                                                        checked={selectedValue === 'Lunas'}
-                                                        onChange={handleRadioChange}
+                                                        // checked={selectedValue === 'Lunas'}
+                                                        // onChange={handleRadioChange}
                                                     />
                                                 </div>
 
                                                 <div
-                                                    className={`w-44 border-2 h-10 pb-10 rounded-md ${selectedValue === 'Belum Lunas' ? 'border-blue-500' : 'border-gray-200'}`}
+                                                    className={`w-44 border-2 h-10 pb-10 rounded-md `}
                                                 >
                                                     <Radio
                                                         name="color"
                                                         value="Belum Lunas"
                                                         color="blue"
                                                         label="Belum Lunas"
-                                                        checked={selectedValue === 'Belum Lunas'}
-                                                        onChange={handleRadioChange}
+                                                        // checked={selectedValue === 'Belum Lunas'}
+                                                        // onChange={handleRadioChange}
                                                     />
                                                 </div>
                                             </div>
@@ -153,20 +133,20 @@ export default function BtnAddTransaksi() {
                                                 <p className="font-medium">Status Transaksi</p>
                                                 <div className="flex gap-10 mt-2">
                                                     <div
-                                                        className={`w-44 border-2 h-10 pb-10 rounded-md ${selectedValueRD === 'Tunai' ? 'border-blue-500' : 'border-gray-200'}`}
+                                                        className={`w-44 border-2 h-10 pb-10 rounded-md`}
                                                     >
                                                         <Radio
                                                             name="color"
                                                             value="Tunai"
                                                             color="blue"
                                                             label={<span className="text-xs">Tunai</span>}
-                                                            checked={selectedValueRD === 'Tunai'}
-                                                            onChange={handleRadioChangeRD2}
+                                                            // checked={selectedValueRD === 'Tunai'}
+                                                            // onChange={handleRadioChangeRD2}
                                                         />
                                                     </div>
 
                                                     <div
-                                                        className={`w-44 border-2 h-10 pb-10 rounded-md ${selectedValueRD === 'Transfer Bank' ? 'border-blue-500' : 'border-gray-200'}`}
+                                                        className={`w-44 border-2 h-10 pb-10 rounded-md `}
                                                     >
                                                         <Radio
                                                             name="color"
@@ -174,8 +154,8 @@ export default function BtnAddTransaksi() {
                                                             color="blue"
                                                             label={<span
                                                                 className="text-xs">Transfer Bank</span>}
-                                                            checked={selectedValueRD === 'Transfer Bank'}
-                                                            onChange={handleRadioChangeRD2}
+                                                            // checked={selectedValueRD === 'Transfer Bank'}
+                                                            // onChange={handleRadioChangeRD2}
                                                         />
                                                     </div>
                                                 </div>
@@ -192,10 +172,8 @@ export default function BtnAddTransaksi() {
                             </form>
                         </div>
                     </div>
-                </div>)}
-            </Popup>
-        </div>
-
-
-    </>)
+                </div>
+            )}
+        </Popup></>
+    )
 }

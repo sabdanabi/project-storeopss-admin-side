@@ -11,6 +11,7 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
         quantity: "",
         purchasePrice: "",
         sellingPrice: "",
+        unit: "",
         image: null,
     });
 
@@ -24,6 +25,7 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
             formDataWithImage.append("quantity", formData.quantity);
             formDataWithImage.append("purchase_price", formData.purchasePrice);
             formDataWithImage.append("selling_price", formData.sellingPrice);
+            formDataWithImage.append("unit", formData.unit);
 
             if (formData.image) {
                 formDataWithImage.append("image", formData.image);
@@ -37,6 +39,7 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
                 quantity: "",
                 purchasePrice: "",
                 sellingPrice: "",
+                unit: "",
                 image: null,
             });
             refreshProducts();
@@ -90,7 +93,7 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
                             name="name"
                             value={formData.name}
                             onChange={handleChange}
-                            className="border-2 w-96 h-10 rounded-lg mt-3 text-xs p-3"
+                            className="border-2 w-96 h-8 rounded-lg mt-3 text-xs p-3"
                         />
                     </div>
 
@@ -103,7 +106,7 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
                             name="purchasePrice"
                             value={formData.purchasePrice}
                             onChange={handleChange}
-                            className="border-2 w-96 h-10 rounded-lg mt-3 text-xs p-3"
+                            className="border-2 w-96 h-8 rounded-lg mt-3 text-xs p-3"
                         />
                     </div>
 
@@ -116,12 +119,12 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
                             name="sellingPrice"
                             value={formData.sellingPrice}
                             onChange={handleChange}
-                            className="border-2 w-96 h-10 rounded-lg mt-3 text-xs p-3"
+                            className="border-2 w-96 h-8 rounded-lg mt-3 text-xs p-3"
                         />
                     </div>
 
                     <div className="mb-4">
-                        <label className="text-sm">Stock/pcs/kg</label>
+                        <label className="text-sm">Stock</label>
                         <br/>
                         <input
                             placeholder="Masukkan stock produk...."
@@ -129,7 +132,20 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
                             name="quantity"
                             value={formData.quantity}
                             onChange={handleChange}
-                            className="border-2 w-96 h-10 rounded-lg mt-3 text-xs p-3"
+                            className="border-2 w-96 h-8 rounded-lg mt-3 text-xs p-3"
+                        />
+                    </div>
+
+                    <div className="mb-4">
+                        <label className="text-sm">Unit /pcs/kg</label>
+                        <br/>
+                        <input
+                            placeholder="Masukkan unit produk...."
+                            type="text"
+                            name="unit"
+                            value={formData.unit}
+                            onChange={handleChange}
+                            className="border-2 w-96 h-8 rounded-lg mt-3 text-xs p-3"
                         />
                     </div>
 
@@ -142,7 +158,7 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
                             value={formData.category}
                             onChange={handleChange}
                             placeholder="Category"
-                            className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full h-8 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                         />
                     </div>
                 </div>

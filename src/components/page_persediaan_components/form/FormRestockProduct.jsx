@@ -27,6 +27,7 @@ export function FormRestockProduct({ id, updateProductsState }) {
             await restockProduct(id, formData);
             toast.success('Produk berhasil direstok.', { position: 'top-center', autoClose: 10000 });
             updateProductsState();
+
         } catch (error) {
             toast.error('Produk tidak ditemukan.', { position: 'top-center', autoClose: 10000 });
         }
@@ -168,6 +169,6 @@ export function FormRestockProduct({ id, updateProductsState }) {
 }
 
 FormRestockProduct.propTypes = {
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     updateProductsState: PropTypes.func.isRequired,
 };

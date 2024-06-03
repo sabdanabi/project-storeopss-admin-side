@@ -3,7 +3,7 @@ import FormEditProduk from "../form/FormEditProduk.jsx";
 import PropTypes from "prop-types";
 
 
-export default function BtnEditPorduk({updateProductsState, addNewProduct, id}) {
+export default function BtnEditPorduk({updateProductsState, id}) {
     return(
         <>
             <Popup trigger={
@@ -35,8 +35,7 @@ export default function BtnEditPorduk({updateProductsState, addNewProduct, id}) 
                                         </svg>
                                     </button>
                                 </div>
-                                <FormEditProduk addNewProduct={addNewProduct}
-                                                updateProductsState={updateProductsState}
+                                <FormEditProduk updateProductsState={updateProductsState}
                                                 id={id}/>
                             </div>
                         </div>
@@ -49,6 +48,5 @@ export default function BtnEditPorduk({updateProductsState, addNewProduct, id}) 
 
 BtnEditPorduk.propTypes = {
     updateProductsState: PropTypes.func.isRequired,
-    addNewProduct: PropTypes.func.isRequired,
     id: PropTypes.oneOfType([PropTypes.number]).isRequired,
 };

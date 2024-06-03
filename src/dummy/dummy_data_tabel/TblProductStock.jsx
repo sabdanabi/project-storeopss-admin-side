@@ -3,7 +3,7 @@ import BtnRestockProduk from "../../components/page_persediaan_components/button
 import BtnEditPorduk from "../../components/page_persediaan_components/button/BtnEditPorduk.jsx";
 import {BtnDeleteNew} from "../../components/page_persediaan_components/button/BtnDeleteNew.jsx";
 
-export default function DummyTabelPersediaan({ products, handleDelete, updateProductState}) {
+export default function TblProductStock({ products, handleDelete, updateProductState}) {
     return (
         <div className="bg-white flex border-b-[3px] border-gray-200 h-[350px] overflow-auto">
             <table className="w-full">
@@ -36,7 +36,7 @@ export default function DummyTabelPersediaan({ products, handleDelete, updatePro
                         <td></td>
                         <td>Rp{product.selling_price}</td>
                         <td></td>
-                        <td>{product.quantity}pcs/kg</td>
+                        <td>{product.quantity ?? 0}pcs/kg</td>
                         <td></td>
                         <td>
                             <div className="flex gap-2">
@@ -55,7 +55,7 @@ export default function DummyTabelPersediaan({ products, handleDelete, updatePro
     );
 }
 
-DummyTabelPersediaan.propTypes = {
+TblProductStock.propTypes = {
     products: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.number.isRequired,
         image: PropTypes.string.isRequired,
@@ -63,7 +63,6 @@ DummyTabelPersediaan.propTypes = {
         purchase_price: PropTypes.number.isRequired,
         selling_price: PropTypes.number.isRequired,
         quantity: PropTypes.number.isRequired,
-        sold: PropTypes.number.isRequired,
     })).isRequired,
     handleDelete: PropTypes.func.isRequired,
     updateProductState: PropTypes.func.isRequired,
