@@ -184,7 +184,7 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
                 </div>
             </div>
 
-            <div className="flex justify-center mt-3">
+            <div className="flex justify-center mt-10">
                 <button type="submit"
                         className="flex items-center justify-center px-4 py-2 bg-[#1A4F8B] group w-36
                                rounded-lg shadow-sm hover:bg-gray-50 hover:border-[#1A4F8B] hover:border-2">
