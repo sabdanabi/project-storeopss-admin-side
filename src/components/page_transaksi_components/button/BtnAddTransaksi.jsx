@@ -2,9 +2,12 @@ import Popup from "reactjs-popup";
 import {Radio} from "@material-tailwind/react";
 import {useState} from "react";
 import {BtnPilihProduk} from "./BtnPilihProduk.jsx";
+import {BtnDeleteProductTransaksi} from "./BtnDeleteProductTransaksi.jsx";
+import {toast, ToastContainer} from "react-toastify";
 export default function BtnAddTransaksi() {
     const [selectedValue, setSelectedValue] = useState('');
     const [selectedValueRD, setSelectedValueRD] = useState('');
+    const [selectedProducts, setSelectedProducts] = useState([]);
 
     const handleRadioChange = (event) => {
         setSelectedValue(event.target.value);
@@ -14,10 +17,20 @@ export default function BtnAddTransaksi() {
         setSelectedValueRD(event.target.value);
     };
 
+    const handleProductSelect = (products) => {
+        setSelectedProducts(products);
+    };
+
+    const handleDeleteProduct = (productId) => {
+        setSelectedProducts(selectedProducts.filter(product => product.id !== productId));
+        toast.success("Data berhasil dihapus!");
+    };
+
     return (<>
         <div className="flex items-center justify-between h-20 border-b-[3px]
                 w-full px-6 py-4 bg-white border-gray-200">
             <h1 className="text-2xl font-semibold text-gray-900">Transaksi</h1>
+            <ToastContainer position="top-center" />
             <Popup trigger=
                        {<button className="flex items-center px-4 py-2 bg-[#1A4F8B] group
                     rounded-lg shadow-sm hover:bg-gray-50 hover:border-[#1A4F8B] hover:border-2">
@@ -47,26 +60,35 @@ export default function BtnAddTransaksi() {
                                     </button>
                                 </div>
                                 <p className="font-medium mb-3">Pilih Produk</p>
-                                <BtnPilihProduk/>
-                                <div className="h-7 border-b-2 border-gray-300 mb-7"></div>
+                                <div className="flex gap-2">
+                                    <BtnPilihProduk onProductSelect={handleProductSelect}/>
+                                    <div className="grid grid-cols-3 gap-5
+                                     w-[700px] overflow-auto h-24 border p-3 rounded-lg ">
+                                        {selectedProducts.map((product) => (
+                                            <div className="flex border-2 rounded-lg pl-2 gap-5 h-16"
+                                                 key={product.id}>
+                                                <img src="/assets_img/img_kayu.png" alt="img produk"
+                                                     className="h-10 mt-2"/>
+                                                <div className="">
+                                                    <p className="font-semibold text-xs">{product.name}</p>
+                                                    <div className="flex text-[10px] font-medium text-[#727E91]">
+                                                        <p className="mr-3">Harga</p>
+                                                        <p>{product.selling_price}</p>
+                                                    </div>
+                                                    <div className="flex font-medium text-[#727E91] text-[10px]">
+                                                        <p className="mr-3">Stok</p>
+                                                        <p>{product.count}</p>
+                                                    </div>
+                                                </div>
+                                                <BtnDeleteProductTransaksi handleDeleteProduct={handleDeleteProduct} id={product.id}/>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                                <div className="h-7 border-b-2 border-gray-300 mb-5"></div>
 
                                 <div className="flex">
                                     <div className="text-sm">
-                                        <div className="mb-7">
-                                            <p className="font-medium">Tanggal</p>
-                                            <div className="p-1 w-96 border-b-2 border-[#828282] flex">
-                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                     viewBox="0 0 24 24" strokeWidth={1.5}
-                                                     stroke="currentColor"
-                                                     className="w-6 h-6 mt-2">
-                                                    <path strokeLinecap="round" strokeLinejoin="round"
-                                                          d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5"/>
-                                                </svg>
-                                                <input type="text"
-                                                       className="border-none focus:ring-white w-full"/>
-                                            </div>
-                                        </div>
-
                                         <div className="mb-7">
                                             <p className="font-medium mb-4">Catatan (Opsional)</p>
                                             <div className="flex w-96">
@@ -84,7 +106,7 @@ export default function BtnAddTransaksi() {
                                             </div>
                                         </div>
 
-                                        <div className="mb-7">
+                                        <div className="mb-4">
                                             <p className="font-medium">Kontak (Opsional)</p>
                                             <div className="p-1 w-96 border-b-2 border-[#828282] flex">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -104,9 +126,10 @@ export default function BtnAddTransaksi() {
                                             <p className="font-medium">Status Transaksi</p>
                                             <div className="flex gap-10 mt-2">
                                                 <div
-                                                    className={`w-44 border-2 h-10 pb-10 rounded-md ${selectedValue === 'Lunas' ? 'border-blue-500' : 'border-gray-200'}`}
+                                                    className={`w-28 border-2 h-5 pb-10 rounded-md ${selectedValue === 'Lunas' ? 'border-blue-500' : 'border-gray-200'}`}
                                                 >
                                                     <Radio
+                                                        className="w-4 h-4"
                                                         name="color"
                                                         value="Lunas"
                                                         color="blue"
@@ -117,9 +140,10 @@ export default function BtnAddTransaksi() {
                                                 </div>
 
                                                 <div
-                                                    className={`w-44 border-2 h-10 pb-10 rounded-md ${selectedValue === 'Belum Lunas' ? 'border-blue-500' : 'border-gray-200'}`}
+                                                    className={`w-28 border-2 h-5 pb-10 text-xs rounded-md ${selectedValue === 'Belum Lunas' ? 'border-blue-500' : 'border-gray-200'}`}
                                                 >
                                                     <Radio
+                                                        className="w-4 h-4"
                                                         name="color"
                                                         value="Belum Lunas"
                                                         color="blue"
@@ -179,7 +203,7 @@ export default function BtnAddTransaksi() {
                                             </div>
 
                                         </div>
-                                        <button className="flex items-center px-7 py-2 bg-[#1A4F8B] group ml-72 mt-12
+                                        <button className="flex items-center px-7 py-2 bg-[#1A4F8B] group ml-72 mt-9
                                         rounded-lg shadow-sm hover:bg-gray-50 hover:border-[#1A4F8B] hover:border-2">
                                             <span
                                                 className="text-white font-medium text-sm group-hover:text-[#1A4F8B]">Simpan</span>
