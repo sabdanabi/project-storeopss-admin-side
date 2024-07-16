@@ -4,7 +4,7 @@ import {useState} from "react";
 import {BtnPilihProduk} from "./BtnPilihProduk.jsx";
 import {BtnDeleteProductTransaksi} from "./BtnDeleteProductTransaksi.jsx";
 import {toast, ToastContainer} from "react-toastify";
-export default function BtnAddTransaksi({addIncome, transaksi}) {
+export default function BtnAddTransaksi({addIncome, updateProductsState}) {
     const [selectedValueRD1, setSelectedValueRD1] = useState('');
     const [selectedValueRD2, setSelectedValueRD2] = useState('');
     const [selectedProducts, setSelectedProducts] = useState([]);
@@ -66,13 +66,18 @@ export default function BtnAddTransaksi({addIncome, transaksi}) {
                 setSelectedValueRD1('');
                 setSelectedValueRD2('');
                 setSelectedProducts([]);
+                updateProductsState
             } else {
                 toast.error("Gagal menambahkan transaksi.");
             }
         } catch (error) {
+            console.error("Terjadi kesalahan saat menambahkan transaksi:", error);
             toast.error("Terjadi kesalahan saat menambahkan transaksi.");
         }
     };
+
+
+
 
 
 
@@ -173,7 +178,7 @@ export default function BtnAddTransaksi({addIncome, transaksi}) {
                                                           d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
                                                 </svg>
 
-                                                <input type="text"
+                                                <input type="number"
                                                        name="customer_phone"
                                                        value={formData.customer_phone}
                                                        onChange={handleChange}
@@ -188,9 +193,8 @@ export default function BtnAddTransaksi({addIncome, transaksi}) {
                                                     className={`w-28 border-2 h-5 pb-10 rounded-md ${selectedValueRD1 === 'Lunas' ? 'border-blue-500' : 'border-gray-200'}`}
                                                 >
                                                     <Radio
-                                                        id="option1"
+                                                        id="option1RD1"
                                                         className="w-4 h-4"
-                                                        name="color"
                                                         value="Lunas"
                                                         color="blue"
                                                         label="Lunas"
@@ -203,9 +207,8 @@ export default function BtnAddTransaksi({addIncome, transaksi}) {
                                                     className={`w-28 border-2 h-5 pb-10 text-xs rounded-md ${selectedValueRD1 === 'Belum Lunas' ? 'border-blue-500' : 'border-gray-200'}`}
                                                 >
                                                     <Radio
-                                                        id="option2"
+                                                        id="option2RD1"
                                                         className="w-4 h-4"
-                                                        name="color"
                                                         value="Belum Lunas"
                                                         color="blue"
                                                         label="Belum Lunas"
@@ -230,10 +233,10 @@ export default function BtnAddTransaksi({addIncome, transaksi}) {
 
                                             <label>Total Harga</label>
                                             <div className="border-b-2 border-[#828282] mb-7">
-                                                <div className="border-none focus:ring-white w-full">
+                                                <div className="border-none focus:ring-white w-full pt-7">
                                                     {selectedProducts.map((product) => (
                                                         <p key={product.id}>
-                                                            {product.quantity * product.count * product.selling_price}</p>
+                                                            Rp{product.quantity * product.count * product.selling_price}</p>
                                                     ))}
                                                 </div>
                                             </div>
@@ -246,7 +249,6 @@ export default function BtnAddTransaksi({addIncome, transaksi}) {
                                                     >
                                                         <Radio
                                                             id="option1rd2"
-                                                            name="optionrd2"
                                                             value="Tunai"
                                                             color="blue"
                                                             label={<span className="text-xs">Tunai</span>}
@@ -260,7 +262,6 @@ export default function BtnAddTransaksi({addIncome, transaksi}) {
                                                     >
                                                         <Radio
                                                             id="option2rd2"
-                                                            name="optionrd2"
                                                             value="Transfer Bank"
                                                             color="blue"
                                                             label={<span
