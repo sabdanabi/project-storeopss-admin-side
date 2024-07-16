@@ -14,10 +14,21 @@ export function BtnPilihProduk({ onProductSelect }) {
     const [checklist, setChecklist] = useState({});
 
     const incrementCount = (id) => {
-        setCounts((prevCounts) => ({
-            ...prevCounts,
-            [id]: (prevCounts[id] || 0) + 1
-        }));
+        setCounts((prevCounts) => {
+            const product = PilihProduct.find((product) => product.id === id);
+            if (product && prevCounts[id] < product.quantity) {
+                return {
+                    ...prevCounts,
+                    [id]: (prevCounts[id] || 0) + 1
+                };
+            } else {
+                setWarning("Stok habis.");
+                setTimeout(() => {
+                    setWarning("");
+                }, 2000);
+                return prevCounts;
+            }
+        });
     };
 
     const decrementCount = (id) => {
@@ -47,7 +58,7 @@ export function BtnPilihProduk({ onProductSelect }) {
             setWarning("Tentukan quantity sebelum memilih produk.");
             setTimeout(() => {
                 setWarning("");
-            }, 3000);
+            }, 2000);
         }
     };
 

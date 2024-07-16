@@ -3,7 +3,7 @@ import PartTop from "../../components/components_reused/PartTop.jsx";
 import TblTransaksi from "../../components/page_transaksi_components/TblTransaksi.jsx";
 import BtnAddTransaksi from "../../components/page_transaksi_components/button/BtnAddTransaksi.jsx";
 import {useEffect, useState} from "react";
-import {getAllTransaksi} from "../../services/TransaksiService.jsx";
+import {getAllTransaksi, addIncome} from "../../services/TransaksiService.jsx";
 export default function TransaksiPage() {
     const [transaksi, setTransaksi] = useState([]);
     const [isAuth, setAuth] = useState(false);
@@ -47,7 +47,7 @@ export default function TransaksiPage() {
             <SideNavbarComponent/>
             <div className="flex flex-col flex-1 w-full overflow-hidden">
                 <PartTop/>
-                <BtnAddTransaksi/>
+                <BtnAddTransaksi addIncome={addIncome}/>
 
                 {isLoading ? (
                     <div className="flex items-center justify-center h-full">

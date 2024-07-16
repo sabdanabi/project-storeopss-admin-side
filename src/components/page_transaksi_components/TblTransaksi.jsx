@@ -40,7 +40,7 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                                 <td></td>
                                 <td>{transaction.date}</td>
                                 <td></td>
-                                <td>Rp30.000/pcs</td>
+                                <td>Rp{transaction.selling_price}</td>
                                 <td></td>
                                 <td>
                                     <div className="bg-[#BEDBCF] flex justify-center py-1 rounded">

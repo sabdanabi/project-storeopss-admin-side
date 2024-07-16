@@ -4,17 +4,28 @@ import {useState} from "react";
 import {BtnPilihProduk} from "./BtnPilihProduk.jsx";
 import {BtnDeleteProductTransaksi} from "./BtnDeleteProductTransaksi.jsx";
 import {toast, ToastContainer} from "react-toastify";
-export default function BtnAddTransaksi() {
-    const [selectedValue, setSelectedValue] = useState('');
-    const [selectedValueRD, setSelectedValueRD] = useState('');
+export default function BtnAddTransaksi({addIncome}) {
+    const [selectedValueRD1, setSelectedValueRD1] = useState('');
+    const [selectedValueRD2, setSelectedValueRD2] = useState('');
     const [selectedProducts, setSelectedProducts] = useState([]);
+    const [formData, setFormData] = useState({
+        note: '',
+        customer_phone: '',
+        customer_name: '',
+        status: '',
+        payment_method: ''
+    });
+
+
 
     const handleRadioChange = (event) => {
-        setSelectedValue(event.target.value);
+        setSelectedValueRD1(event.target.value);
+        setFormData({ ...formData, status: event.target.value });
     };
 
     const handleRadioChangeRD2 = (event) => {
-        setSelectedValueRD(event.target.value);
+        setSelectedValueRD2(event.target.value);
+        setFormData({ ...formData, payment_method: event.target.value });
     };
 
     const handleProductSelect = (products) => {
@@ -25,6 +36,46 @@ export default function BtnAddTransaksi() {
         setSelectedProducts(selectedProducts.filter(product => product.id !== productId));
         toast.success("Data berhasil dihapus!");
     };
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData({ ...formData, [name]: value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const productList = selectedProducts.map(product => ({
+            id: product.id,
+            quantity: product.quantity || 1, // Pastikan quantity ada atau default ke 1
+        }));
+        const data = {
+            ...formData,
+            status: selectedValueRD1,
+            payment_method: selectedValueRD2,
+            products: productList,
+        };
+        try {
+            const response = await addIncome(data);
+            if (response.success) {
+                toast.success("Transaksi berhasil ditambahkan!");
+                setFormData({
+                    note: '',
+                    customer_phone: '',
+                    customer_name: '',
+                });
+                setSelectedValueRD1('');
+                setSelectedValueRD2('');
+                setSelectedProducts([]);
+            } else {
+                toast.error("Gagal menambahkan transaksi.");
+            }
+        } catch (error) {
+            toast.error("Terjadi kesalahan saat menambahkan transaksi.");
+        }
+    };
+
+
+
 
     return (<>
         <div className="flex items-center justify-between h-20 border-b-[3px]
@@ -45,7 +96,7 @@ export default function BtnAddTransaksi() {
                 {close => (<div className='modal'>
                     <div className="fixed inset-0 flex justify-center items-center h-screen bg-black/40">
                         <div className="bg-white rounded-xl shadow p-5 transition-all w-[850px] h-[670px]">
-                            <form>
+                            <form onSubmit={handleSubmit}>
                                 <div className="flex justify-between">
                                     <p className="font-semibold text-2xl mb-7">Penjualan</p>
                                     <button onClick={() => close()}
@@ -99,10 +150,15 @@ export default function BtnAddTransaksi() {
                                                     <path strokeLinecap="round" strokeLinejoin="round"
                                                           d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"/>
                                                 </svg>
-                                                <textarea id="note" rows="5"
+                                                <textarea id="note"
+                                                          rows="5"
                                                           className="w-full p-3 border border-gray-300
                                                               rounded-md focus:outline-none focus:border-blue-500 h-20 text-sm"
-                                                          placeholder="Tulis catatan Anda di sini..."></textarea>
+                                                          placeholder="Tulis catatan Anda di sini..."
+                                                          name="note"
+                                                          value={formData.note}
+                                                          onChange={handleChange}
+                                                ></textarea>
                                             </div>
                                         </div>
 
@@ -118,6 +174,9 @@ export default function BtnAddTransaksi() {
                                                 </svg>
 
                                                 <input type="text"
+                                                       name="customer_phone"
+                                                       value={formData.customer_phone}
+                                                       onChange={handleChange}
                                                        className="border-none focus:ring-white w-full"/>
                                             </div>
                                         </div>
@@ -126,29 +185,31 @@ export default function BtnAddTransaksi() {
                                             <p className="font-medium">Status Transaksi</p>
                                             <div className="flex gap-10 mt-2">
                                                 <div
-                                                    className={`w-28 border-2 h-5 pb-10 rounded-md ${selectedValue === 'Lunas' ? 'border-blue-500' : 'border-gray-200'}`}
+                                                    className={`w-28 border-2 h-5 pb-10 rounded-md ${selectedValueRD1 === 'Lunas' ? 'border-blue-500' : 'border-gray-200'}`}
                                                 >
                                                     <Radio
+                                                        id="option1"
                                                         className="w-4 h-4"
                                                         name="color"
                                                         value="Lunas"
                                                         color="blue"
                                                         label="Lunas"
-                                                        checked={selectedValue === 'Lunas'}
+                                                        checked={selectedValueRD1 === 'Lunas'}
                                                         onChange={handleRadioChange}
                                                     />
                                                 </div>
 
                                                 <div
-                                                    className={`w-28 border-2 h-5 pb-10 text-xs rounded-md ${selectedValue === 'Belum Lunas' ? 'border-blue-500' : 'border-gray-200'}`}
+                                                    className={`w-28 border-2 h-5 pb-10 text-xs rounded-md ${selectedValueRD1 === 'Belum Lunas' ? 'border-blue-500' : 'border-gray-200'}`}
                                                 >
                                                     <Radio
+                                                        id="option2"
                                                         className="w-4 h-4"
                                                         name="color"
                                                         value="Belum Lunas"
                                                         color="blue"
                                                         label="Belum Lunas"
-                                                        checked={selectedValue === 'Belum Lunas'}
+                                                        checked={selectedValueRD1 === 'Belum Lunas'}
                                                         onChange={handleRadioChange}
                                                     />
                                                 </div>
@@ -161,41 +222,49 @@ export default function BtnAddTransaksi() {
                                             <label>Nama Pelanggan</label>
                                             <div className="border-b-2 border-[#828282] flex mb-7">
                                                 <input type="text"
+                                                       name="customer_name"
+                                                       value={formData.customer_name}
+                                                       onChange={handleChange}
                                                        className="border-none focus:ring-white w-full"/>
                                             </div>
 
                                             <label>Total Harga</label>
                                             <div className="border-b-2 border-[#828282] mb-7">
-                                                <input type="text"
+                                                <input type="number"
+                                                       name="totalPrice"
+                                                       value={formData.totalPrice}
+                                                       onChange={handleChange}
                                                        className="border-none focus:ring-white w-full"/>
                                             </div>
 
                                             <div className="">
-                                                <p className="font-medium">Status Transaksi</p>
+                                                <p className="font-medium">Metode Pembayaran</p>
                                                 <div className="flex gap-10 mt-2">
                                                     <div
-                                                        className={`w-44 border-2 h-10 pb-10 rounded-md ${selectedValueRD === 'Tunai' ? 'border-blue-500' : 'border-gray-200'}`}
+                                                        className={`w-44 border-2 h-10 pb-10 rounded-md ${selectedValueRD2 === 'Tunai' ? 'border-blue-500' : 'border-gray-200'}`}
                                                     >
                                                         <Radio
-                                                            name="color"
+                                                            id="option1rd2"
+                                                            name="optionrd2"
                                                             value="Tunai"
                                                             color="blue"
                                                             label={<span className="text-xs">Tunai</span>}
-                                                            checked={selectedValueRD === 'Tunai'}
+                                                            checked={selectedValueRD2 === 'Tunai'}
                                                             onChange={handleRadioChangeRD2}
                                                         />
                                                     </div>
 
                                                     <div
-                                                        className={`w-44 border-2 h-10 pb-10 rounded-md ${selectedValueRD === 'Transfer Bank' ? 'border-blue-500' : 'border-gray-200'}`}
+                                                        className={`w-44 border-2 h-10 pb-10 rounded-md ${selectedValueRD2 === 'Transfer Bank' ? 'border-blue-500' : 'border-gray-200'}`}
                                                     >
                                                         <Radio
-                                                            name="color"
+                                                            id="option2rd2"
+                                                            name="optionrd2"
                                                             value="Transfer Bank"
                                                             color="blue"
                                                             label={<span
                                                                 className="text-xs">Transfer Bank</span>}
-                                                            checked={selectedValueRD === 'Transfer Bank'}
+                                                            checked={selectedValueRD2 === 'Transfer Bank'}
                                                             onChange={handleRadioChangeRD2}
                                                         />
                                                     </div>
@@ -204,7 +273,7 @@ export default function BtnAddTransaksi() {
 
                                         </div>
                                         <button className="flex items-center px-7 py-2 bg-[#1A4F8B] group ml-72 mt-9
-                                        rounded-lg shadow-sm hover:bg-gray-50 hover:border-[#1A4F8B] hover:border-2">
+                                        rounded-lg shadow-sm hover:bg-gray-50 hover:border-[#1A4F8B] hover:border-2" type="submit">
                                             <span
                                                 className="text-white font-medium text-sm group-hover:text-[#1A4F8B]">Simpan</span>
                                         </button>
