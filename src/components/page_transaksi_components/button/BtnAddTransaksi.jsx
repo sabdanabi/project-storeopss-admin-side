@@ -56,7 +56,7 @@ export default function BtnAddTransaksi({addIncome, updateProductsState}) {
         };
         try {
             const response = await addIncome(data);
-            if (response.success) {
+            if (response.message === "Transaksi berhasil dicatat.") {
                 toast.success("Transaksi berhasil ditambahkan!");
                 setFormData({
                     note: '',
@@ -66,7 +66,7 @@ export default function BtnAddTransaksi({addIncome, updateProductsState}) {
                 setSelectedValueRD1('');
                 setSelectedValueRD2('');
                 setSelectedProducts([]);
-                updateProductsState
+                updateProductsState();
             } else {
                 toast.error("Gagal menambahkan transaksi.");
             }
@@ -75,12 +75,6 @@ export default function BtnAddTransaksi({addIncome, updateProductsState}) {
             toast.error("Terjadi kesalahan saat menambahkan transaksi.");
         }
     };
-
-
-
-
-
-
 
     return (<>
         <div className="flex items-center justify-between h-20 border-b-[3px]
