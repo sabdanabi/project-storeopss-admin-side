@@ -4,7 +4,7 @@ import {useState} from "react";
 import {BtnPilihProduk} from "./BtnPilihProduk.jsx";
 import {BtnDeleteProductTransaksi} from "./BtnDeleteProductTransaksi.jsx";
 import {toast, ToastContainer} from "react-toastify";
-export default function BtnAddTransaksi({addIncome}) {
+export default function BtnAddTransaksi({addIncome, transaksi}) {
     const [selectedValueRD1, setSelectedValueRD1] = useState('');
     const [selectedValueRD2, setSelectedValueRD2] = useState('');
     const [selectedProducts, setSelectedProducts] = useState([]);
@@ -46,7 +46,7 @@ export default function BtnAddTransaksi({addIncome}) {
         e.preventDefault();
         const productList = selectedProducts.map(product => ({
             id: product.id,
-            quantity: product.quantity || 1, // Pastikan quantity ada atau default ke 1
+            quantity: product.quantity,
         }));
         const data = {
             ...formData,
@@ -230,11 +230,12 @@ export default function BtnAddTransaksi({addIncome}) {
 
                                             <label>Total Harga</label>
                                             <div className="border-b-2 border-[#828282] mb-7">
-                                                <input type="number"
-                                                       name="totalPrice"
-                                                       value={formData.totalPrice}
-                                                       onChange={handleChange}
-                                                       className="border-none focus:ring-white w-full"/>
+                                                <div className="border-none focus:ring-white w-full">
+                                                    {selectedProducts.map((product) => (
+                                                        <p key={product.id}>
+                                                            {product.quantity * product.count * product.selling_price}</p>
+                                                    ))}
+                                                </div>
                                             </div>
 
                                             <div className="">

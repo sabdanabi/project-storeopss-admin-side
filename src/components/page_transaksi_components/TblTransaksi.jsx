@@ -3,7 +3,6 @@ import FilterComponents from "./FilterComponents.jsx";
 import PropTypes from "prop-types";
 import {BtnNotaTransaksi} from "./button/BtnNotaTransaksi.jsx";
 import {BtnEditTransaksi} from "./button/BtnEditTransaksi.jsx";
-
 export default function TblTransaksi({ handleSearchChange, searchQuery, filteredTransaksi}) {
     return (
         <main className="flex-1 p-10 overflow-y-auto">
@@ -48,7 +47,7 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                                     </div>
                                 </td>
                                 <td></td>
-                                <td>
+                                <td className="flex">
                                     <div className="flex gap-4">
                                         <BtnNotaTransaksi/>
                                         <BtnEditTransaksi/>

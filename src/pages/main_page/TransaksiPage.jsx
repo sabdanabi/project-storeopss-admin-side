@@ -47,7 +47,7 @@ export default function TransaksiPage() {
             <SideNavbarComponent/>
             <div className="flex flex-col flex-1 w-full overflow-hidden">
                 <PartTop/>
-                <BtnAddTransaksi addIncome={addIncome}/>
+                <BtnAddTransaksi addIncome={addIncome} transaksi={transaksi}/>
 
                 {isLoading ? (
                     <div className="flex items-center justify-center h-full">
