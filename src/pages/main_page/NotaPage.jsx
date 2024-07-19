@@ -5,7 +5,7 @@ import DescPageComponent from "../../components/components_reused/DescPageCompon
 import FilterComponentsNotaPage from "../../components/components_reused/FilterComponentsNotaPage.jsx";
 
 export default function NotaPage() {
-    return (
+    return(
         <div className="flex h-screen overflow-hidden bg-gray-100">
             <SideNavbarComponent />
             <div className="flex flex-col flex-1 w-full">
