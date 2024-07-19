@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import BtnRestockProduk from "../../components/page_persediaan_components/BtnRestockProduk.jsx";
-import BtnEditPorduk from "../../components/page_persediaan_components/BtnEditPorduk.jsx";
-import {BtnDeleteNew} from "../../components/page_persediaan_components/BtnDeleteNew.jsx";
+import BtnRestockProduk from "../../components/page_persediaan_components/button/BtnRestockProduk.jsx";
+import BtnEditPorduk from "../../components/page_persediaan_components/button/BtnEditPorduk.jsx";
+import {BtnDeleteNew} from "../../components/page_persediaan_components/button/BtnDeleteNew.jsx";
 
 export default function TblProductStock({ products, handleDelete, updateProductState}) {
     return (
@@ -40,8 +40,9 @@ export default function TblProductStock({ products, handleDelete, updateProductS
                         <td></td>
                         <td>
                             <div className="flex gap-2">
-                                <BtnRestockProduk />
-                                <BtnEditPorduk handleDelete={handleDelete} id={product.id}
+                                <BtnRestockProduk id={product.id}
+                                                  updateProductsState={updateProductState}/>
+                                <BtnEditPorduk id={product.id}
                                                updateProductsState={updateProductState}/>
                                 <BtnDeleteNew handleDelete={handleDelete} id={product.id}/>
                             </div>

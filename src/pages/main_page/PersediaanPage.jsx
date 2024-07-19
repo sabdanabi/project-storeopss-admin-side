@@ -1,7 +1,7 @@
-import SideNavbarComponent from "../../components/components_reused/SideNavbarComponent.jsx";
+ import SideNavbarComponent from "../../components/components_reused/SideNavbarComponent.jsx";
 import PartTop from "../../components/components_reused/PartTop.jsx";
 import TblStock from "../../components/page_persediaan_components/TblStock.jsx";
-import BtnAddStock from "../../components/page_persediaan_components/BtnAddStock.jsx";
+import BtnAddStock from "../../components/page_persediaan_components/button/BtnAddStock.jsx";
 import {useEffect, useState} from "react";
 import {getAllProduct, addNewProduct, deleteProduct} from "../../services/StockService.jsx";
 import {toast } from "react-toastify";
@@ -12,6 +12,15 @@ export default function PersediaanPage() {
     const [isAuth, setAuth] = useState(false);
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const filteredHistory = products.filter((product) => {
+        return product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    });
 
     const updateProductsState = async () => {
         try {
@@ -47,7 +56,7 @@ export default function PersediaanPage() {
             <SideNavbarComponent/>
             <div className="flex flex-col flex-1 w-full overflow-hidden">
                 <PartTop/>
-                <BtnAddStock titlePage={"Produkk"} titleBtn={"Product"}
+                <BtnAddStock titlePage={"Produk"} titleBtn={"Product"}
                              updateProductsState={updateProductsState}
                              addNewProduct={addNewProduct}/>
                 {isLoading ? (
@@ -55,7 +64,8 @@ export default function PersediaanPage() {
                         <p className="text-xl">Loading...</p>
                     </div>
                 ) : isAuth ? (
-                    <TblStock products={products} handleDelete={handleDelete} updateProductsState={updateProductsState}/>
+                    <TblStock products={filteredHistory} handleDelete={handleDelete} searchQuery={searchQuery}
+                              updateProductsState={updateProductsState} handleSearchChange={handleSearchChange}/>
                 ) : (
                     <div className="flex items-center justify-center h-full">
                         <p className="text-xl">{ error }</p>

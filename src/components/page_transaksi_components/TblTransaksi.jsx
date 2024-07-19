@@ -16,8 +16,8 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                         <thead className="h-12 border-b-2">
                         <tr className="text-sm text-[#9CA4AE]">
                             <td className="px-4">No</td>
-                            <td>Produk</td>
-                            <td><img src="/assets_img/icon_row_table.png" className="mx-3" alt="sdf" /></td>
+                            <td>Pembeli</td>
+                            <td><img src="/assets_img/icon_row_table.png" className="mx-3" alt="sdf"/></td>
                             <td>Tanggal</td>
                             <td><img src="/assets_img/icon_row_table.png" className="mr-3" alt="sdf" /></td>
                             <td>Total Harga</td>

@@ -1,5 +1,5 @@
 import Popup from "reactjs-popup";
-import FormEditProduk from "./FormEditProduk.jsx";
+import FormEditProduk from "../form/FormEditProduk.jsx";
 import PropTypes from "prop-types";
 
 
@@ -48,5 +48,5 @@ export default function BtnEditPorduk({updateProductsState, id}) {
 
 BtnEditPorduk.propTypes = {
     updateProductsState: PropTypes.func.isRequired,
-    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
+    id: PropTypes.oneOfType([PropTypes.number]).isRequired,
 };

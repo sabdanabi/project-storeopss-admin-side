@@ -1,13 +1,14 @@
-import SearchBar from "../components_reused/SearchBar.jsx";
+
 import DescPageComponent from "../components_reused/DescPageComponent.jsx";
 import TabsPagePersediaan from "../tabs_components/TabsPagePersediaan.jsx";
 import {useState} from "react";
 import TblProductStock from "../../dummy/dummy_data_tabel/TblProductStock.jsx";
 import PropTypes from "prop-types";
 import { ToastContainer} from "react-toastify";
+import {SearchBarStock} from "./SearchBarStock.jsx";
 
 
-export default function TblStock({products, handleDelete, updateProductsState}) {
+export default function TblStock({products, handleDelete, updateProductsState,handleSearchChange, searchQuery}) {
 
     const [selectedTab,setSelectedTab] = useState(0)
 
@@ -16,7 +17,7 @@ export default function TblStock({products, handleDelete, updateProductsState}) 
             title: 'Semua Produk',
             content: (
                 <div>
-                    <SearchBar />
+                    <SearchBarStock handleSearchChange={handleSearchChange} products={searchQuery}/>
                     <TblProductStock products={products} handleDelete={handleDelete} updateProductState={updateProductsState}/>
                 </div>
             ),
@@ -25,7 +26,7 @@ export default function TblStock({products, handleDelete, updateProductsState}) 
             title: 'Stock Tinggi',
             content: (
                 <div>
-                    <SearchBar />
+                    <SearchBarStock handleSearchChange={handleSearchChange} products={searchQuery}/>
                     <TblProductStock products={products.filter(product => product.quantity > 50)} handleDelete={handleDelete}
                                      updateProductState={updateProductsState}/>
                 </div>
@@ -35,7 +36,7 @@ export default function TblStock({products, handleDelete, updateProductsState}) 
             title: 'Stock Rendah',
             content: (
                 <div>
-                    <SearchBar />
+                    <SearchBarStock handleSearchChange={handleSearchChange} products={searchQuery}/>
                     <TblProductStock products={products.filter(product => product.quantity > 0 && product.quantity <= 50)} handleDelete={handleDelete}
                                      updateProductState={updateProductsState}/>
                 </div>
@@ -45,7 +46,7 @@ export default function TblStock({products, handleDelete, updateProductsState}) 
             title: 'Stock Habis',
             content: (
                 <div>
-                    <SearchBar />
+                    <SearchBarStock handleSearchChange={handleSearchChange} products={searchQuery}/>
                     <TblProductStock products={products.filter(product => product.quantity === 0)} handleDelete={handleDelete}
                                      updateProductState={updateProductsState}/>
                 </div>
@@ -85,4 +86,5 @@ TblStock.propTypes = {
     })).isRequired,
     handleDelete: PropTypes.func.isRequired,
     updateProductsState: PropTypes.func.isRequired,
+    handleSearchChange: PropTypes.func.isRequired,
 };

@@ -89,7 +89,7 @@ export default function SideNavbarComponent() {
 
                             <a href="/riwayat-tambah-produk-page"
                                className={`block py-2 pl-3 pr-4 text-sm font-medium text-[#8C95A4] rounded-lg group-hover:text-white
-                                    ${isRiwayatTambahProdukPage ? 'text-white' : ''}`}>Riwayat Tambah Produk</a>
+                                    ${isRiwayatTambahProdukPage ? 'text-white' : ''}`}>History Masuk Produk</a>
                         </div>
 
                         <div className={`flex w-[100%] hover:bg-[#1A4F8B] pl-5 h-11 rounded-lg mb-2 group 
@@ -104,7 +104,7 @@ export default function SideNavbarComponent() {
 
                             <a href="/riwayat-restock-page"
                                className={`block py-2 pl-3 pr-4 text-sm font-medium text-[#8C95A4] rounded-lg group-hover:text-white
-                               ${isRiwayatRestockPage ? 'text-white' : ''}`}>Riwayat Pengisian Ulang</a>
+                               ${isRiwayatRestockPage ? 'text-white' : ''}`}>Histori Pembaruan Stok</a>
                         </div>
 
                         <div className={`flex w-[100%] hover:bg-[#1A4F8B] pl-5 h-11 rounded-lg mb-2 group 

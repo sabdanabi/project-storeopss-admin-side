@@ -1,3 +1,5 @@
+import PropTypes from "prop-types";
+
 export default function DummyTabelLaporanStock({products}) {
     return (
         <div className="bg-white flex
@@ -8,13 +10,13 @@ export default function DummyTabelLaporanStock({products}) {
                     <td className="px-4">No</td>
                     <td>Produk</td>
                     <td><img src="/assets_img/icon_row_table.png" className="mx-3" alt="sdf"/></td>
-                    <td>Harga Beli</td>
+                    <td>Stok Awal</td>
                     <td><img src="/assets_img/icon_row_table.png" className="mr-3" alt="sdf"/></td>
-                    <td>Harga Jual</td>
+                    <td>Barang Masuk</td>
                     <td><img src="/assets_img/icon_row_table.png" className="mr-3" alt="sdf"/></td>
-                    <td>Stock</td>
+                    <td>Barang Keluar</td>
                     <td><img src="/assets_img/icon_row_table.png" className="mr-3" alt="sdf"/></td>
-                    <td>Terjual</td>
+                    <td>Stok Akhir</td>
                 </tr>
                 </thead>
                 <tbody className="font-semibold">
@@ -43,3 +45,14 @@ export default function DummyTabelLaporanStock({products}) {
         </div>
     )
 }
+
+DummyTabelLaporanStock.propTypes = {
+    products: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number.isRequired,
+        image: PropTypes.string.isRequired,
+        name: PropTypes.string.isRequired,
+        purchase_price: PropTypes.number.isRequired,
+        selling_price: PropTypes.number.isRequired,
+        quantity: PropTypes.number.isRequired,
+    })).isRequired,
+};

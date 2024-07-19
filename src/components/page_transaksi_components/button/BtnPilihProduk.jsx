@@ -1,6 +1,6 @@
 import Popup from "reactjs-popup";
-import { useEffect, useState } from "react";
 import { getAllProduct } from "../../../services/StockService.jsx";
+import {useEffect, useState} from "react";
 
 export function BtnPilihProduk({ onProductSelect }) {
     const [isInnerPopupOpen, setInnerPopupOpen] = useState(false);
