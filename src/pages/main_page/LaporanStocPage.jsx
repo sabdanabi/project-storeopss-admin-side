@@ -4,7 +4,7 @@ import PartTop from "../../components/components_reused/PartTop.jsx";
 import NamePageComponent from "../../components/components_reused/NamePageComponent.jsx";
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
 import TblLaporanStock from "../../components/page_laporan_stock_components/TblLaporanStock.jsx";
-import SearchBar from "../../components/components_reused/SearchBar.jsx";
+import FilterComponentsNotaPage from "../../components/components_reused/FilterComponentsNotaPage.jsx";
 import { getAllProduct } from "../../services/StockService.jsx";
 
 export default function LaporanStockPage() {
@@ -41,7 +41,7 @@ export default function LaporanStockPage() {
                 <main className="flex-1 p-10 overflow-y-auto">
                     <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
                         <DescPageComponent desc={"Laporan stok ini mencakup periode dari tanggal 1 Maret 2024 hingga 31 Maret 2024."} />
-                        <SearchBar />
+                        <FilterComponentsNotaPage />
                         {isLoading ? (
                             <div className="flex items-center justify-center h-full">
                                 <p className="text-xl">Loading...</p>

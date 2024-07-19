@@ -2,7 +2,7 @@ import SideNavbarComponent from "../../components/components_reused/SideNavbarCo
 import PartTop from "../../components/components_reused/PartTop.jsx";
 import NamePageComponent from "../../components/components_reused/NamePageComponent.jsx";
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
-import SearchBar from "../../components/components_reused/SearchBar.jsx";
+import FilterComponentsNotaPage from "../../components/components_reused/FilterComponentsNotaPage.jsx";
 
 export default function NotaPage() {
     return (
@@ -15,7 +15,7 @@ export default function NotaPage() {
                 <main className="flex-1 p-5 overflow-y-auto">
                     <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
                         <DescPageComponent desc={"Nota pada setiap pembelian"} />
-                        <SearchBar />
+                        <FilterComponentsNotaPage />
 
                         <div className="bg-[#EEF0F5] justify-between p-3 border-b-[3px] border-gray-200 grid grid-cols-3 gap-5 overflow-auto h-[440px]">
                             <div className="bg-white w-96 py-2 px-1 rounded">
