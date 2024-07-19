@@ -6,6 +6,7 @@ import SearchBar from "../../components/components_reused/SearchBar.jsx";
 
 export default function NotaPage() {
     return(
+
         <div className="flex h-screen overflow-hidden bg-gray-100">
             <SideNavbarComponent/>
 
