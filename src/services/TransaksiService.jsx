@@ -40,4 +40,50 @@ const addIncome = async (data) => {
     }
 };
 
-export { getAllTransaksi, addIncome };
+// const getDetailIncomeTransaction = async () => {
+//     try {
+//         const response = await axios.get(`${baseUrl}/api/transactions/income`, {
+//             headers: {
+//                 AUTHORIZATION: token,
+//                 "Content-Type": "application/json",
+//                 "ngrok-skip-browser-warning": true
+//             }
+//         });
+//
+//         return response.data;
+//     } catch (error) {
+//         if (error.response && error.response.data) {
+//             return error.response.data;
+//         } else {
+//             console.error('Error fetching transaction details:', error.message);
+//             return { error: 'Failed to fetch transaction details' };
+//         }
+//     }
+// };
+
+
+const updateStatusTransaction = async (transactionId, status) => {
+    try {
+        const response = await axios.post(`${baseUrl}/api/transactions/status/${transactionId}`, {
+            status: status
+        }, {
+            headers: {
+                AUTHORIZATION: token,
+                "Content-Type": "application/json",
+                "ngrok-skip-browser-warning": true
+            }
+        });
+
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.data) {
+            return error.response.data;
+        } else {
+            console.error('Error:', error.message);
+            return { error: 'Failed to update transaction status.' };
+        }
+    }
+};
+
+
+export { getAllTransaksi, addIncome, updateStatusTransaction};
