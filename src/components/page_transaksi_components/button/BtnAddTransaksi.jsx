@@ -46,7 +46,7 @@ export default function BtnAddTransaksi({addIncome, updateProductsState}) {
         e.preventDefault();
         const productList = selectedProducts.map(product => ({
             id: product.id,
-            quantity: product.quantity,
+            quantity: product.count,
         }));
         const data = {
             ...formData,

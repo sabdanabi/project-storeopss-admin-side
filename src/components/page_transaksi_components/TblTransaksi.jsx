@@ -29,7 +29,7 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                         </thead>
                         <tbody className="font-semibold">
                         {filteredTransaksi.map((transaction, index) => {
-                            console.log(transaction.status);
+                            // console.log(transaction.status);
                             return (
                                 <tr className="border-b-2" key={transaction.id}>
                                     <td className="px-4"><p className="mr-3">{index + 1}</p></td>
