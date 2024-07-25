@@ -87,4 +87,5 @@ TblStock.propTypes = {
     handleDelete: PropTypes.func.isRequired,
     updateProductsState: PropTypes.func.isRequired,
     handleSearchChange: PropTypes.func.isRequired,
+    searchQuery: PropTypes.func.isRequired,
 };

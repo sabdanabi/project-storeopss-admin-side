@@ -27,7 +27,8 @@ export default function TblProductStock({ products, handleDelete, updateProductS
                         <td className="px-4"><p className="mr-3">{index + 1}</p></td>
                         <td>
                             <div className="flex py-3">
-                                <img src={product.image} className="h-12 mr-3" alt="product-image" />
+                                <img src={product.image ? product.image : "/assets_img/placeholder_image.jpg"} className="h-12 mr-3" alt="product-image" />
+
                                 <p className="mr-24">{product.name}</p>
                             </div>
                         </td>

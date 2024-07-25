@@ -4,6 +4,7 @@ import {useState} from "react";
 import {BtnPilihProduk} from "./BtnPilihProduk.jsx";
 import {BtnDeleteProductTransaksi} from "./BtnDeleteProductTransaksi.jsx";
 import {toast, ToastContainer} from "react-toastify";
+import PropTypes from "prop-types";
 export default function BtnAddTransaksi({addIncome, updateProductsState}) {
     const [selectedValueRD1, setSelectedValueRD1] = useState('');
     const [selectedValueRD2, setSelectedValueRD2] = useState('');
@@ -46,7 +47,7 @@ export default function BtnAddTransaksi({addIncome, updateProductsState}) {
         e.preventDefault();
         const productList = selectedProducts.map(product => ({
             id: product.id,
-            quantity: product.quantity,
+            quantity: product.count,
         }));
         const data = {
             ...formData,
@@ -285,3 +286,8 @@ export default function BtnAddTransaksi({addIncome, updateProductsState}) {
 
     </>)
 }
+
+BtnAddTransaksi.propTypes = {
+    addIncome: PropTypes.func.isRequired,
+    updateProductsState: PropTypes.func.isRequired,
+};
