@@ -84,7 +84,7 @@ export function HistoryRestockCard({restockHistory}) {
                         <hr className="my-1 border-t-1 border-black mb-3"/>
                         <div className="flex text-xs bg-[#BEDBCF] w-36 ml-56 py-3 px-3">
                             <p className="mr-10">Total</p>
-                            <p>Rp{entry.product.total_puchase_price}</p>
+                            <p className="flex-grow">Rp{entry.product.total_puchase_price}</p>
                         </div>
                     </div>
                 </div>

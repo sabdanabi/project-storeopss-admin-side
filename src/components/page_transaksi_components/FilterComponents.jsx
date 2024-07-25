@@ -6,8 +6,16 @@ import {
     MenuItem,
     Button,
 } from '@chakra-ui/react'
+import {useState} from "react";
 
 export default function FilterComponents({handleSearchChange, searchQuery, handleStatusFilterChange}) {
+
+    const [selectedStatus, setSelectedStatus] = useState('Status Transaksi')
+
+    const onStatusChange = (status) => {
+        setSelectedStatus(status);
+        handleStatusFilterChange(status);
+    }
     return (
         <div className="bg-white h-[65px] flex py-3 px-6 relative border-b-[3px] border-gray-200 gap-5">
             <div className="w-[800px]">
@@ -33,12 +41,12 @@ export default function FilterComponents({handleSearchChange, searchQuery, handl
                         <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                     </svg>
                 }>
-                    <p className="text-xs font-medium mr-10 text-[#727E91]">Status Transaksi</p>
+                    <p className="text-xs font-medium mr-10 text-[#727E91]">{selectedStatus}</p>
                 </MenuButton>
                 <MenuList>
-                    <MenuItem onClick={() => handleStatusFilterChange('Semua')}>Semua</MenuItem>
-                    <MenuItem onClick={() => handleStatusFilterChange('Lunas')}>Lunas</MenuItem>
-                    <MenuItem onClick={() => handleStatusFilterChange('Belum lunas')}>Belum Lunas</MenuItem>
+                    <MenuItem onClick={() => onStatusChange('Semua')}>Semua</MenuItem>
+                    <MenuItem onClick={() => onStatusChange('Lunas')}>Lunas</MenuItem>
+                    <MenuItem onClick={() => onStatusChange('Belum lunas')}>Belum Lunas</MenuItem>
                 </MenuList>
             </Menu>
         </div>
