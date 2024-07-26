@@ -18,7 +18,7 @@ export default function FilterComponents({handleSearchChange, searchQuery, handl
     }
     return (
         <div className="bg-white h-[65px] flex py-3 px-6 relative border-b-[3px] border-gray-200 gap-5">
-            <div className="w-[800px]">
+            <div className="w-[950px]">
                 <input
                     type="text"
                     placeholder="Cari Produk"
