@@ -1,11 +1,12 @@
  import SideNavbarComponent from "../../components/components_reused/SideNavbarComponent.jsx";
 import PartTop from "../../components/components_reused/PartTop.jsx";
 import TblStock from "../../components/page_persediaan_components/TblStock.jsx";
-import BtnAddStock from "../../components/page_persediaan_components/button/BtnAddStock.jsx";
+import PopUpAddStock from "../../components/page_persediaan_components/button/PopUpAddStock.jsx";
 import {useEffect, useState} from "react";
-import {getAllProduct, addNewProduct, deleteProduct} from "../../services/StockService.jsx";
+import {getAllProduct, addNewProduct, deleteProduct, importProductExcel} from "../../services/StockService.jsx";
 import {toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
+ import {BtnDropDownAddStock} from "../../components/page_persediaan_components/button/BtnDropDownAddStock.jsx";
 
 export default function PersediaanPage() {
     const [products, setProducts] = useState([]);
@@ -56,9 +57,13 @@ export default function PersediaanPage() {
             <SideNavbarComponent/>
             <div className="flex flex-col flex-1 w-full overflow-hidden">
                 <PartTop/>
-                <BtnAddStock titlePage={"Produk"} titleBtn={"Product"}
-                             updateProductsState={updateProductsState}
-                             addNewProduct={addNewProduct}/>
+
+                <BtnDropDownAddStock updateProductsState={updateProductsState}
+                                     addNewProduct={addNewProduct} importProductExcel={importProductExcel}/>
+
+                {/*<BtnAddStock titlePage={"Produk"} titleBtn={"Product"}*/}
+                {/*             updateProductsState={updateProductsState}*/}
+                {/*             addNewProduct={addNewProduct}/>*/}
                 {isLoading ? (
                     <div className="flex items-center justify-center h-full">
                         <p className="text-xl">Loading...</p>

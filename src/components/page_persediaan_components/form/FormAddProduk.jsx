@@ -3,8 +3,6 @@ import PropTypes from "prop-types";
 import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 export default function FormAddProduk({ refreshProducts, addNewProduct}) {
-    // const [isOpen, setIsOpen] = useState(false);
-    // const [selectedItem, setSelectedItem] = useState(null);
     const [formData, setFormData] = useState({
         name: "",
         category: "",

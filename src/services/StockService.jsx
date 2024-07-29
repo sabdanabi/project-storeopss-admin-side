@@ -100,6 +100,21 @@ const getHistoryAddProduct = async () => {
     }
 };
 
+const importProductExcel = async (formData) => {
+    try {
+        const response = await axios.post(`${baseUrl}/api/products/import`, formData, {
+            headers: {
+                AUTHORIZATION: token,
+                "Content-Type": "multipart/form-data",
+                "ngrok-skip-browser-warning": true
+            },
+        });
+        return response.data;
+    } catch (error) {
+        handleAxiosError(error);
+    }
+};
+
 const handleAxiosError = (error) => {
     if (error.response) {
         console.error('Error response:', error.response.data);
@@ -114,4 +129,4 @@ const handleAxiosError = (error) => {
 };
 
 export { getAllProduct, addNewProduct, deleteProduct,
-    editProduct, getProductById, getHistoryAddProduct };
+    editProduct, getProductById, getHistoryAddProduct, importProductExcel  };
