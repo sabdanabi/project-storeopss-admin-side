@@ -1,6 +1,7 @@
 import Popup from "reactjs-popup";
 import { getAllProduct } from "../../../services/StockService.jsx";
 import {useEffect, useState} from "react";
+import PropTypes from "prop-types";
 
 export function BtnPilihProduk({ onProductSelect }) {
     const [isInnerPopupOpen, setInnerPopupOpen] = useState(false);
@@ -178,4 +179,9 @@ export function BtnPilihProduk({ onProductSelect }) {
             </Popup>
         </div>
     );
+}
+
+
+BtnPilihProduk.propTypes = {
+    onProductSelect : PropTypes.func.isRequired,
 }

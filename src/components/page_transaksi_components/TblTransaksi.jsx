@@ -45,7 +45,7 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                                     <td></td>
                                     <td>
                                         <div className={`flex justify-center py-1 rounded ${transaction.status === 'Belum lunas' ? 'bg-[#FFA9B3]' : 'bg-[#BEDBCF]'}`}>
-                                            <p className={`text-sm ${transaction.status === 'Belum lunas' ? 'text-[#7A3636]' : 'text-[#2B713A]'}`}>
+                                            <p className={`text-sm lg:text-xs ${transaction.status === 'Belum lunas' ? 'text-[#7A3636]' : 'text-[#2B713A]'}`}>
                                                 {transaction.status}
                                             </p>
                                         </div>

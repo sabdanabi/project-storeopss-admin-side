@@ -2,10 +2,10 @@ import SideNavbarComponent from "../../components/components_reused/SideNavbarCo
 import PartTop from "../../components/components_reused/PartTop.jsx";
 import NamePageComponent from "../../components/components_reused/NamePageComponent.jsx";
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
-import FilterComponentsNotaPage from "../../components/components_reused/FilterComponentsNotaPage.jsx";
 import {useEffect, useState} from "react";
 import {CardHistoryAddProduct} from "../../components/history_add_product_components/CardHistoryAddProduct.jsx";
 import {getHistoryAddProduct} from "../../services/StockService.jsx";
+import {FilterNewProduct} from "../../components/history_add_product_components/FilterNewProduct.jsx";
 
 export default function RiwayatTambahProdukPage() {
     const [addProductHistory, setaddProductHistory] = useState([]);
@@ -60,7 +60,7 @@ export default function RiwayatTambahProdukPage() {
                     <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
                         <DescPageComponent
                             desc={"Riwayat tambah produk anda dari waktu ke waktu."}/>
-                        <FilterComponentsNotaPage handleSearchChange={handleSearchChange} searchQuery={searchQuery}/>
+                        <FilterNewProduct handleSearchChange={handleSearchChange} searchQuery={searchQuery}/>
 
                         <div className="bg-[#EEF0F5] justify-between p-3
                         border-b-[3px] border-gray-200 grid grid-cols-3 gap-4 overflow-auto h-[410px]">

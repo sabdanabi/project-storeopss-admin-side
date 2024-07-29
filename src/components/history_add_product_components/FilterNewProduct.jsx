@@ -1,9 +1,8 @@
-import {Button, Menu, MenuButton, MenuItem, MenuList} from "@chakra-ui/react";
 import {useState} from "react";
+import {Button, Menu, MenuButton, MenuItem, MenuList} from "@chakra-ui/react";
 
-export default function SearchBarHistoryRestock({handleSearchChange, searchQuery}) {
-
-    const [selectedStatus, setSelectedStatus] = useState('Filter Produk')
+export function FilterNewProduct({searchQuery, handleSearchChange}) {
+    const [selectedStatus, setSelectedStatus] = useState('Filter Produk Baru')
 
     const onStatusChange = (status) => {
         setSelectedStatus(status);
@@ -11,7 +10,7 @@ export default function SearchBarHistoryRestock({handleSearchChange, searchQuery
     }
 
     return (
-        <div className="bg-white h-[65px] flex py-3 px-6 relative border-b-[3px] border-gray-200">
+        <div className="bg-white h-[65px] py-3 px-6 relative border-b-[3px] border-gray-200 flex">
             <input
                 type="text"
                 placeholder="Cari Produk"
