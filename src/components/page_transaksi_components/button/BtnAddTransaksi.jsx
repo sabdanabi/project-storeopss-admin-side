@@ -5,7 +5,7 @@ import {BtnPilihProduk} from "./BtnPilihProduk.jsx";
 import {BtnDeleteProductTransaksi} from "./BtnDeleteProductTransaksi.jsx";
 import {toast, ToastContainer} from "react-toastify";
 import PropTypes from "prop-types";
-export default function BtnAddTransaksi({addIncome, updateProductsState}) {
+export default function BtnAddTransaksi({addIncome, updateProductsState,}) {
     const [selectedValueRD1, setSelectedValueRD1] = useState('');
     const [selectedValueRD2, setSelectedValueRD2] = useState('');
     const [selectedProducts, setSelectedProducts] = useState([]);
@@ -118,7 +118,7 @@ export default function BtnAddTransaksi({addIncome, updateProductsState}) {
                                         {selectedProducts.map((product) => (
                                             <div className="flex border-2 rounded-lg pl-2 gap-5 h-16"
                                                  key={product.id}>
-                                                <img src="/assets_img/img_kayu.png" alt="img produk"
+                                                <img src={product.image ? product.image : "/assets_img/placeholder_image.jpg"} alt="img produk"
                                                      className="h-10 mt-2"/>
                                                 <div className="">
                                                     <p className="font-semibold text-xs">{product.name}</p>

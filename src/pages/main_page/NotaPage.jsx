@@ -5,6 +5,7 @@ import DescPageComponent from "../../components/components_reused/DescPageCompon
 import FilterComponentsNotaPage from "../../components/components_reused/FilterComponentsNotaPage.jsx";
 import {useEffect, useState} from "react";
 import {getAllTransaksi} from "../../services/TransaksiService.jsx";
+import {Spinner} from "@chakra-ui/react";
 
 export default function NotaPage() {
     const [nota, setNota] = useState([]);
@@ -57,20 +58,26 @@ export default function NotaPage() {
                 <PartTop />
                 <NamePageComponent nama={"Nota"} />
 
-                <main className="flex-1 p-5 overflow-y-auto">
-                    <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
-                        <DescPageComponent desc={"Nota pada setiap pembelian"} />
-                        <FilterComponentsNotaPage
-                            searchQuery={searchQuery}
-                            handleSearchChange={handleSearchChange}
-                            handleStatusFilterChange={handleStatusFilterChange}
+                {isLoading ? (
+                    <div className="flex items-center justify-center h-full">
+                        <Spinner
+                            thickness='4px'
+                            speed='0.65s'
+                            emptyColor='gray.200'
+                            color='blue.500'
+                            size='xl'
                         />
+                    </div>
+                ): isAuth ? (
+                    <main className="flex-1 p-5 overflow-y-auto">
+                        <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
+                            <DescPageComponent desc={"Nota pada setiap pembelian"}/>
+                            <FilterComponentsNotaPage
+                                searchQuery={searchQuery}
+                                handleSearchChange={handleSearchChange}
+                                handleStatusFilterChange={handleStatusFilterChange}
+                            />
 
-                        {isLoading ? (
-                            <div className="flex items-center justify-center h-full">
-                                <p className="text-xl">Loading...</p>
-                            </div>
-                        ): isAuth ? (
                             <div className="bg-[#EEF0F5] justify-between p-3 border-b-[3px] border-gray-200 grid grid-cols-3 gap-5 overflow-auto h-[440px]">
                                 {filteredNota.map((nota) => (
                                     <div key={nota.id} className="bg-white w-96 py-2 px-1 rounded">
@@ -145,13 +152,14 @@ export default function NotaPage() {
                                     </div>
                                 ))}
                             </div>
-                        ) : (
-                            <div className="flex items-center justify-center h-full">
-                                <p className="text-xl">{error}</p>
-                            </div>
-                        )}
+                        </div>
+                    </main>
+                ) : (
+                    <div className="flex items-center justify-center h-full">
+                        <p className="text-xl">{error}</p>
                     </div>
-                </main>
+                )}
+
             </div>
         </div>
     );

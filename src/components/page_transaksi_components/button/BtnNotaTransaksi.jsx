@@ -1,10 +1,46 @@
 import PropTypes from 'prop-types';
 import Popup from 'reactjs-popup';
+import html2pdf from 'html2pdf.js';
 
 export function BtnNotaTransaksi({ filteredTransaksi }) {
     function calculateTotal(products) {
         return products.reduce((total, product) => total + product.quantity * product.price, 0);
     }
+
+    // const handlePrint = () => {
+    //     const element = document.getElementById('notaTransaksi');
+    //     const opt = {
+    //         margin: 1,
+    //         filename: `Nota_${filteredTransaksi.customer ? filteredTransaksi.customer.name : 'unknown'}.pdf`,
+    //         image: { type: 'jpeg', quality: 0.98 },
+    //         html2canvas: { scale: 2 },
+    //         jsPDF: { unit: 'mm', format: [80, 297], orientation: 'portrait' } // Mengatur ukuran kertas untuk thermal printer 80mm
+    //     };
+    //     html2pdf().from(element).set(opt).save();
+    // };
+
+    // const handlePrint = () => {
+    //     const printContents = document.getElementById('notaTransaksi').innerHTML;
+    //     const originalContents = document.body.innerHTML;
+    //     document.body.innerHTML = printContents;
+    //     window.print();
+    //     document.body.innerHTML = originalContents;
+    //     window.location.reload(); // reload halaman setelah cetak untuk memastikan komponen React dimuat ulang
+    // };
+
+
+    const handlePrintPDF = () => {
+        const element = document.getElementById('notaTransaksi');
+        const opt = {
+            margin: [0, 0, 0, 0], // Margin PDF
+            filename: 'nota-transaksi.pdf',
+            image: { type: 'jpeg', quality: 0.98 },
+            html2canvas: { scale: 2 },
+            jsPDF: { unit: 'mm', format: [80, 297], orientation: 'portrait' } // Format 80mm x 297mm
+        };
+        html2pdf().set(opt).from(element).save();
+    };
+
 
     return (
         <Popup
@@ -18,7 +54,8 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
         >
             {close => (
                 <div className="modal">
-                    <div className="bg-white rounded-xl shadow p-5 transition-all max-w-[750px] max-h-[610px] overflow-auto">
+                    <div
+                        className="bg-white rounded-xl shadow p-5 transition-all max-w-[750px] max-h-[610px] overflow-auto">
                         <div className="flex justify-between">
                             <p className="font-semibold text-2xl mb-7">Nota</p>
                             <button onClick={() => close()} className="h-7">
@@ -38,48 +75,49 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
                                 </svg>
                             </button>
                         </div>
+
                         <div className="flex justify-center p-3">
-                            <div className="bg-white w-96 py-2 px-1 rounded drop-shadow-lg">
+                            <div id="notaTransaksi" className="bg-white w-96 py-2 px-1 rounded drop-shadow-lg">
                                 <div className="flex mb-10 w-full relative">
-                                    <p className="mr-32 font-semibold text-[#403E8A]">
-                                        {filteredTransaksi.customer ? filteredTransaksi.customer.name : '-'}
+                                    <p className="mr-32 font-semibold text-black">
+                                        Adel Jaya
                                     </p>
                                 </div>
-                                <div className="flex text-[11px] font-medium text-[#403E8A] mb-2 relative">
+                                <div className="flex text-[11px] font-medium text-black mb-2 relative">
                                     <p>Tanggal</p>
                                     <p className="absolute left-28">:</p>
-                                    <p className="font-semibold text-[#8C8BB4] absolute left-32">
+                                    <p className="font-semibold text-black absolute left-32">
                                         {filteredTransaksi.date}
                                     </p>
                                 </div>
-                                <div className="flex text-[11px] font-medium text-[#403E8A] mb-2 relative">
+                                <div className="flex text-[11px] font-medium text-black mb-2 relative">
                                     <p>Status</p>
                                     <p className="absolute left-28">:</p>
                                     <div className={`flex justify-center p-1 px-4 rounded absolute left-32 
                                         ${filteredTransaksi.status === 'Belum lunas' ? 'bg-[#FFA9B3]' : 'bg-[#BEDBCF]'}`}>
-                                        <p className={`text-sm ${filteredTransaksi.status === 'Belum lunas' ? 'text-[#7A3636]' : 'text-[#2B713A]'}`}>
+                                        <p className={`text-sm ${filteredTransaksi.status === 'Belum lunas' ? 'text-black' : 'text-black'}`}>
                                             {filteredTransaksi.status}
                                         </p>
                                     </div>
                                 </div>
-                                <div className="flex text-[11px] font-medium text-[#403E8A] mb-5 relative mt-5">
+                                <div className="flex text-[11px] font-medium ttext-black mb-5 relative mt-5">
                                     <p>Pelanggan</p>
                                     <p className="absolute left-28">:</p>
-                                    <p className="font-semibold text-[#8C8BB4] absolute left-32">
+                                    <p className="font-semibold text-black absolute left-32">
                                         {filteredTransaksi.customer ? filteredTransaksi.customer.name : '-'}
                                     </p>
                                 </div>
-                                <div className="flex text-[11px] font-medium text-[#403E8A] mb-2 relative">
+                                <div className="flex text-[11px] font-medium text-black mb-2 relative">
                                     <p>Metode Pembayaran</p>
                                     <p className="absolute left-28">:</p>
-                                    <p className="font-semibold text-[#8C8BB4] absolute left-32">
+                                    <p className="font-semibold text-black absolute left-32">
                                         {filteredTransaksi.payment_method ? filteredTransaksi.payment_method : '-'}
                                     </p>
                                 </div>
-                                <div className="flex text-[11px] font-medium text-[#403E8A] mb-2 relative">
+                                <div className="flex text-[11px] font-medium text-black mb-2 relative">
                                     <p>Catatan</p>
                                     <p className="absolute left-28">:</p>
-                                    <p className="font-semibold text-[#8C8BB4] absolute left-32">
+                                    <p className="font-semibold text-black absolute left-32">
                                         {filteredTransaksi.additional_cost ? filteredTransaksi.additional_cost : '-'}
                                     </p>
                                 </div>
@@ -108,7 +146,9 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
                                 </div>
                             </div>
                         </div>
-                        <button className="flex items-center px-7 py-2 bg-[#1A4F8B] ml-40 rounded-lg shadow-sm hover:bg-gray-50 hover:border-[#1A4F8B] hover:border-2">
+
+                        <button onClick={handlePrintPDF}
+                                className="flex items-center px-7 py-2 bg-[#1A4F8B] ml-40 rounded-lg shadow-sm hover:bg-gray-50 hover:border-[#1A4F8B] hover:border-2">
                             <span className="text-white font-medium text-sm group-hover:text-[#1A4F8B]">Cetak</span>
                         </button>
                     </div>
@@ -137,4 +177,3 @@ BtnNotaTransaksi.propTypes = {
     }).isRequired,
 };
 
-export default BtnNotaTransaksi;
