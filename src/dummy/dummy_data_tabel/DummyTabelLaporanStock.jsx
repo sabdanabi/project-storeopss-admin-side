@@ -30,13 +30,13 @@ export default function DummyTabelLaporanStock({products}) {
                             </div>
                         </td>
                         <td></td>
-                        <td>Rp{product.purchase_price}</td>
+                        <td>{product.first_quantity}</td>
                         <td></td>
-                        <td>Rp{product.selling_price}</td>
+                        <td>{product.last_quantity}</td>
                         <td></td>
-                        <td>{product.quantity}pcs/kg</td>
+                        <td>{product.incoming_quantity}</td>
                         <td></td>
-                        <td>{product.sold}</td>
+                        <td>{product.outgoing_quantity}</td>
                         <td></td>
                     </tr>
                 ))}
