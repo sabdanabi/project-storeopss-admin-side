@@ -1,7 +1,6 @@
  import SideNavbarComponent from "../../components/components_reused/SideNavbarComponent.jsx";
 import PartTop from "../../components/components_reused/PartTop.jsx";
 import TblStock from "../../components/page_persediaan_components/TblStock.jsx";
-import PopUpAddStock from "../../components/page_persediaan_components/button/PopUpAddStock.jsx";
 import {useEffect, useState} from "react";
 import {getAllProduct, addNewProduct, deleteProduct, importProductExcel} from "../../services/StockService.jsx";
 import {toast } from "react-toastify";

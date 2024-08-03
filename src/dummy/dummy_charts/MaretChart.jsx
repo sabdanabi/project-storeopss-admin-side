@@ -56,7 +56,6 @@ export default function MaretChart()  {
                 <BarChart
                     width={500}
                     height={300}
-                    data={data}
                     margin={{right: 40}}
                 >
                     <CartesianGrid strokeDasharray="3 3"/>
