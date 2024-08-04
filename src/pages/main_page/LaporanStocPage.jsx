@@ -6,6 +6,7 @@ import DescPageComponent from "../../components/components_reused/DescPageCompon
 import TblLaporanStock from "../../components/page_laporan_stock_components/TblLaporanStock.jsx";
 import FilterComponentsNotaPage from "../../components/components_reused/FilterComponentsNotaPage.jsx";
 import { getAllProduct } from "../../services/StockService.jsx";
+import {getRecapProduct} from "../../services/RecapProductService.jsx";
 
 export default function LaporanStockPage() {
     const [products, setProducts] = useState([]);
@@ -16,12 +17,18 @@ export default function LaporanStockPage() {
     const updateProductsState = async () => {
         try {
             setLoading(true);
-            const result = await getAllProduct();
-            setProducts(result.data);
-            setAuth(true);
-        } catch(e) {
+            const result = await getRecapProduct();
+            if (result.error) {
+                setError(result.error);
+                setAuth(false);
+            } else {
+                setProducts(result.data);
+                setAuth(true);
+            }
+        } catch (e) {
             console.log(e);
             setError(e.response.data.error);
+            setAuth(false);
         } finally {
             setLoading(false);
         }
