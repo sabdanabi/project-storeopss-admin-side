@@ -32,11 +32,11 @@ export default function DummyTabelLaporanStock({products}) {
                         <td></td>
                         <td>{product.first_quantity}</td>
                         <td></td>
-                        <td>{product.last_quantity}</td>
-                        <td></td>
                         <td>{product.incoming_quantity}</td>
                         <td></td>
                         <td>{product.outgoing_quantity}</td>
+                        <td></td>
+                        <td>{product.last_quantity}</td>
                         <td></td>
                     </tr>
                 ))}

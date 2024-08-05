@@ -1,8 +1,9 @@
 import PropTypes from "prop-types";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 
 export default function TabsPageStatistic({item, setSelectedTab}) {
     const firstBtnRef = useRef(null);
+    const [activeTab, setActiveTab] = useState(0);
 
 
     useEffect(() => {
@@ -10,6 +11,11 @@ export default function TabsPageStatistic({item, setSelectedTab}) {
             firstBtnRef.current.focus();
         }
     }, []);
+
+    const handleTabClick = (index) => {
+        setSelectedTab(index);
+        setActiveTab(index);
+    };
     return(
         <div className="bg-white h-[65px] flex pt-5 border-y-[3px] border-gray-200 justify-between">
             <div className="flex">
@@ -17,11 +23,11 @@ export default function TabsPageStatistic({item, setSelectedTab}) {
                 <div>
                     {item.map((item, index) => (
                         <button
-                            className="font-semibold hover:text-[#1A4F8B] text-sm text-[#8C95A4]
-                            hover:border-b-4 hover:border-[#1A4F8B] ml-10 focus:border-b-4 focus:border-[#1A4F8B] outline-none"
+                            className={`font-semibold text-sm text-[#8C95A4] mr-5 ml-5 outline-none
+                                ${activeTab === index ? 'border-b-4 border-[#1A4F8B]' : 'hover:border-b-4 hover:border-[#1A4F8B] focus:outline-none'}`}
                             key={index}
                             ref={index === 0 ? firstBtnRef : null}
-                            onClick={() => setSelectedTab(index)}
+                            onClick={() => handleTabClick(index)}
                         >
                             {item.title}
                         </button>

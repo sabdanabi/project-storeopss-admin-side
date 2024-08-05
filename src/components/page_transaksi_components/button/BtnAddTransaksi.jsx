@@ -116,10 +116,10 @@ export default function BtnAddTransaksi({addIncome, updateProductsState,}) {
                                     <div className="grid grid-cols-3 gap-5
                                      w-[700px] overflow-auto h-24 border p-3 rounded-lg ">
                                         {selectedProducts.map((product) => (
-                                            <div className="flex border-2 rounded-lg pl-2 gap-5 h-16"
+                                            <div className="flex border-2 rounded-lg p-2 gap-5 h-16"
                                                  key={product.id}>
-                                                <img src={product.image ? product.image : "/assets_img/placeholder_image.jpg"} alt="img produk"
-                                                     className="h-10 mt-2"/>
+                                                {/*<img src={product.image ? product.image : "/assets_img/placeholder_image.jpg"} alt="img produk"*/}
+                                                {/*     className="h-10 mt-2"/>*/}
                                                 <div className="">
                                                     <p className="font-semibold text-xs">{product.name}</p>
                                                     <div className="flex text-[10px] font-medium text-[#727E91]">
@@ -231,7 +231,8 @@ export default function BtnAddTransaksi({addIncome, updateProductsState,}) {
                                                 <div className="border-none focus:ring-white w-full pt-7">
                                                     {selectedProducts.map((product) => (
                                                         <p key={product.id}>
-                                                            Rp{product.quantity * product.count * product.selling_price}</p>
+                                                            Rp{product.selling_price * product.count}
+                                                        </p>
                                                     ))}
                                                 </div>
                                             </div>
