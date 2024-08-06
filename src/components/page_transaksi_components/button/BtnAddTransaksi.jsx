@@ -8,6 +8,7 @@ import PropTypes from "prop-types";
 export default function BtnAddTransaksi({addIncome, updateProductsState,}) {
     const [selectedValueRD1, setSelectedValueRD1] = useState('');
     const [selectedValueRD2, setSelectedValueRD2] = useState('');
+    const [selectedValueRD3, setSelectedValueRD3] = useState('');
     const [selectedProducts, setSelectedProducts] = useState([]);
     const [formData, setFormData] = useState({
         note: '',
@@ -76,6 +77,21 @@ export default function BtnAddTransaksi({addIncome, updateProductsState,}) {
             toast.error("Terjadi kesalahan saat menambahkan transaksi.");
         }
     };
+
+    const resetForm = () => {
+        setFormData({
+            note: '',
+            customer_phone: '',
+            customer_name: '',
+            status: '',
+            payment_method: ''
+        });
+        setSelectedValueRD1('');
+        setSelectedValueRD2('');
+        setSelectedProducts([]);
+    };
+
+    const totalHarga = selectedProducts.reduce((total, product) => total + product.selling_price * product.count, 0);
 
     return (<>
         <div className="flex items-center justify-between h-20 border-b-[3px]
@@ -181,7 +197,7 @@ export default function BtnAddTransaksi({addIncome, updateProductsState,}) {
                                             </div>
                                         </div>
 
-                                        <div className="mb-7">
+                                        <div className="mb-5">
                                             <p className="font-medium">Status Transaksi</p>
                                             <div className="flex gap-10 mt-2">
                                                 <div
@@ -213,6 +229,39 @@ export default function BtnAddTransaksi({addIncome, updateProductsState,}) {
                                                 </div>
                                             </div>
                                         </div>
+                                        {/*<div className="">*/}
+                                        {/*    <p className="font-medium">Status Nota</p>*/}
+                                        {/*    <div className="flex gap-10 mt-2">*/}
+                                        {/*        <div*/}
+                                        {/*            className={`w-28 border-2 h-5 pb-10 rounded-md ${selectedValueRD3 === 'Dikirim' ? 'border-blue-500' : 'border-gray-200'}`}*/}
+                                        {/*        >*/}
+                                        {/*            <Radio*/}
+                                        {/*                id="option1RD1"*/}
+                                        {/*                className="w-4 h-4"*/}
+                                        {/*                value="Dikirim"*/}
+                                        {/*                color="blue"*/}
+                                        {/*                label="Dikirim"*/}
+                                        {/*                checked={selectedValueRD3 === 'Dikirim'}*/}
+                                        {/*                // onChange={handleRadioChange}*/}
+                                        {/*            />*/}
+                                        {/*        </div>*/}
+
+                                        {/*        <div*/}
+                                        {/*            className={`w-28 border-2 h-5 pb-10 text-xs rounded-md ${selectedValueRD3 === 'Diambil Ditempat' ? 'border-blue-500' : 'border-gray-200'}`}*/}
+                                        {/*        >*/}
+                                        {/*            <Radio*/}
+                                        {/*                id="option2RD1"*/}
+                                        {/*                className="w-4 h-4"*/}
+                                        {/*                value="Diambil Ditempat"*/}
+                                        {/*                color="blue"*/}
+                                        {/*                label="Diambil Ditempat"*/}
+                                        {/*                checked={selectedValueRD3 === 'Diambil Ditempat'}*/}
+                                        {/*                // onChange={handleRadioChange}*/}
+                                        {/*            />*/}
+                                        {/*        </div>*/}
+                                        {/*    </div>*/}
+                                        {/*</div>*/}
+
                                     </div>
 
                                     <div>
@@ -229,11 +278,7 @@ export default function BtnAddTransaksi({addIncome, updateProductsState,}) {
                                             <label>Total Harga</label>
                                             <div className="border-b-2 border-[#828282] mb-7">
                                                 <div className="border-none focus:ring-white w-full pt-7">
-                                                    {selectedProducts.map((product) => (
-                                                        <p key={product.id}>
-                                                            Rp{product.selling_price * product.count}
-                                                        </p>
-                                                    ))}
+                                                    <p>{totalHarga}</p>
                                                 </div>
                                             </div>
 

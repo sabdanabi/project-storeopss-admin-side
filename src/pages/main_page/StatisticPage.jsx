@@ -6,7 +6,6 @@ import DescPageComponent from "../../components/components_reused/DescPageCompon
 import BarChartComponent from "../../components/chart_components/BarChartComponent.jsx";
 import { getStatisticProductSell } from "../../services/StatisticService.jsx";
 import {Spinner} from "@chakra-ui/react";
-import TblTransaksi from "../../components/page_transaksi_components/TblTransaksi.jsx";
 
 export default function StatisticPage() {
     const [data, setData] = useState([]);
