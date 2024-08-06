@@ -45,7 +45,7 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
     return (
         <Popup
             trigger={
-                <button className="text-[10px] border-2 border-[#2F5F94] h-[33px] w-[68px] rounded-lg font-semibold">
+                <button className="text-[10px] hover:bg-[#d7e0e8] text-blue-gray-500 bg-[#dde6efc6] h-[33px] w-[68px] rounded-lg font-semibold">
                     Nota
                 </button>
             }

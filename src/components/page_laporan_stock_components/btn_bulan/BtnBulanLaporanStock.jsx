@@ -24,8 +24,8 @@ export default function BtnBulanLaporanStock({item, setSelectedTab}){
                     <div>
                         {item.map((item, index) => (
                             <button
-                                className={`font-semibold text-sm text-[#8C95A4] mr-5 ml-5 outline-none
-                                    ${activeTab === index ? 'border-b-4 border-[#1A4F8B]' : 'hover:border-b-4 hover:border-[#1A4F8B] focus:outline-none'}`}
+                                className={`font-medium text-[16px] text-sm text-[#8C95A4] mr-5 ml-5 outline-none
+                                ${activeTab === index ? 'text-light-blue-900' : 'hover:text hover:text-light-blue-900 focus:outline-none'}`}
                                 key={index}
                                 ref={index === 0 ? firstBtnRef : null}
                                 onClick={() => handleTabClick(index)}                            >

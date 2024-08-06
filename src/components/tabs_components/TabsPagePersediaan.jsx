@@ -25,8 +25,8 @@ export default function TabsPagePersediaan({ items, setSelectedTab }) {
                             key={index}
                             ref={index === 0 ? firstBtnRef : null}
                             onClick={() => handleTabClick(index)}
-                            className={`font-semibold text-[#1A4F8B] mr-10 outline-none
-                                ${activeTab === index ? 'border-b-4 border-[#1A4F8B]' : 'hover:border-b-4 hover:border-[#1A4F8B] focus:outline-none'}`}
+                            className={`font-semibold text-blue-gray-700 mr-10 outline-none
+                                ${activeTab === index ? 'text-light-blue-900' : 'hover:text hover:text-light-blue-900 focus:outline-none'}`}
                         >
                             {item.title}
                         </button>
