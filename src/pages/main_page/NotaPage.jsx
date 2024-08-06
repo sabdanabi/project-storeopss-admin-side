@@ -85,95 +85,52 @@ export default function NotaPage() {
                                             <p className="font-semibold text-[17px] text-blue-gray-700">Toko Adel Jaya</p>
                                             <p className="text-[14px] text-[#2B713A] font-semibold">Selesai</p>
                                         </div>
-
                                         <div className="flex flex-col text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
                                             <p className="font-semibold text-blue-gray-700">Resi kostumer {nota.customer.name}</p>
                                             <p className="font-semibold text-[#8C8BB4] ">{nota.date}</p>
                                         </div>
-                                        <hr className="my-1 mt-5 border-t-2 border-blue-gray-300 mb-3 border-dashed" />
+                                        <hr className="my-1 mt-5 border-t-2 border-blue-gray-300 mb-1 border-dashed" />
+                                        <hr className="my-1 mt-0 border-t-2 border-blue-gray-300 mb-3 border-dashed" />
+
                                         <div>
-                                            <div className="flex text-xs bg-[#EEEEEE] py-4 px-6 font-semibold">
-                                                <p>Produk</p>
-                                                <p className="mx-14">Jumlah</p>
-                                                <p className="mr-14">Harga</p>
-                                                <p>Subtotal</p>
-                                            </div>
                                             {nota.products && nota.products.length > 0 ? nota.products.map((product, index) => (
-                                                <div key={index} className="text-xs py-4 px-6">
-                                                    <ul className="flex">
-                                                        <li>{product.name}</li>
-                                                        <li className="mx-16">{product.quantity}</li>
-                                                        <li className="mr-10">Rp{product.price}</li>
-                                                        <li>Rp{product.quantity * product.price}</li>
-                                                    </ul>
+                                                <div key={index} className="justify-between flex ml-4 text-[15px] font-medium text-blue-gray-700">
+                                                    <div className="flex">
+                                                        <p className="mr-2">x{product.quantity}</p>
+                                                        <p>{product.name}</p>
+                                                    </div>
+                                                    <p className="mr-4">
+                                                        {(product.price * product.quantity).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}
+                                                    </p>
                                                 </div>
                                             )) : (
                                                 <div className="text-xs py-4 px-6">
                                                     <p>Produk tidak tersedia</p>
                                                 </div>
                                             )}
-                                            <div className="flex text-xs bg-[#BEDBCF] ml-56 py-3 px-3">
-                                                <p className="mr-10">Total</p>
-                                                <p className="flex-grow">Rp{nota.products ? calculateTotal(nota.products) : 0}</p>
-                                            </div>
-
                                         </div>
-                                        <div className="flex text-[11px] font-medium text-[#403E8A] mb-2 relative mt-5">
-                                            <p>Status</p>
-                                            <p className="absolute left-28">:</p>
-                                            <div className={`bg-[#BEDBCF] flex justify-center p-1 px-4 rounded absolute left-32 
-                                            ${nota.status === 'Belum lunas' ? 'bg-[#FFA9B3]' : 'bg-[#BEDBCF]'}`}>
+                                        <hr className="my-1 mt-3 border-t-2 border-blue-gray-300 mb-3 border-dashed" />
+                                        <div className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
+                                            <p className="font-semibold text-blue-gray-900">Total</p>
+                                            <p className="text-[15px] font-semibold text-blue-gray-900">
+                                                {nota.products ? `${calculateTotal(nota.products).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}` : ''}
+                                            </p>
+                                        </div>
+                                        <hr className="my-1 mt-3 border-t-2 border-blue-gray-300 mb-3 border-dashed" />
+                                        <div className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
+                                            <p className="font-semibold text-blue-gray-700">Metode Pembayaran</p>
+                                            <p className="text-[15px] font-semibold text-blue-gray-700">
+                                                {nota.payment_method}
+                                            </p>
+                                        </div>
+                                        <div className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-2 relative ml-4 mb-3 mr-4">
+                                            <p className="font-semibold text-blue-gray-700">Status</p>
+                                            <div className={` 
+                                            ${nota.status}`}>
                                                 <p className={`text-sm  
                                                 ${nota.status === 'Belum lunas' ? 'text-[#7A3636]' : 'text-[#2B713A]'}`}>{nota.status}</p>
                                             </div>
                                         </div>
-
-                                        <div className="flex text-[11px] font-medium text-[#403E8A] mb-5 relative mt-5">
-                                            <p>Pelanggan</p>
-                                            <p className="absolute left-28">:</p>
-                                            <p className="font-semibold text-[#8C8BB4] absolute left-32">{nota.customer.name}</p>
-                                        </div>
-
-                                        <div className="flex text-[11px] font-medium text-[#403E8A] mb-2 relative">
-                                            <p>Metode Pembayaran</p>
-                                            <p className="absolute left-28">:</p>
-                                            <p className="font-semibold text-[#8C8BB4] absolute left-32">{nota.payment_method}</p>
-                                        </div>
-
-                                        <div className="flex text-[11px] font-medium text-[#403E8A] mb-2 relative">
-                                            <p>Catatan</p>
-                                            <p className="absolute left-28">:</p>
-                                            <p className="font-semibold text-[#8C8BB4] absolute left-32">-</p>
-                                        </div>
-
-                                        <div>
-                                            <div className="flex text-xs bg-[#EEEEEE] py-4 px-6 font-semibold">
-                                                <p>Produk</p>
-                                                <p className="mx-14">Jumlah</p>
-                                                <p className="mr-14">Harga</p>
-                                                <p>Subtotal</p>
-                                            </div>
-                                            {nota.products && nota.products.length > 0 ? nota.products.map((product, index) => (
-                                                <div key={index} className="text-xs py-4 px-6">
-                                                    <ul className="flex">
-                                                        <li>{product.name}</li>
-                                                        <li className="mx-16">{product.quantity}</li>
-                                                        <li className="mr-10">Rp{product.price}</li>
-                                                        <li>Rp{product.quantity * product.price}</li>
-                                                    </ul>
-                                                </div>
-                                            )) : (
-                                                <div className="text-xs py-4 px-6">
-                                                    <p>Produk tidak tersedia</p>
-                                                </div>
-                                            )}
-                                            <div className="flex text-xs bg-[#BEDBCF] ml-56 py-3 px-3">
-                                                <p className="mr-10">Total</p>
-                                                <p className="flex-grow">Rp{nota.products ? calculateTotal(nota.products) : 0}</p>
-                                            </div>
-
-                                        </div>
-
                                     </div>
                                 ))}
                             </div>
