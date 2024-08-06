@@ -6,6 +6,8 @@ import {useEffect, useState} from "react";
 import {getAllRestockHistory} from "../../services/RestockService.jsx";
 import {HistoryRestockCard} from "../../components/history_restock_components/HistoryRestockCard.jsx";
 import SearchBarHistoryRestock from "../../components/history_restock_components/SearchBarHistoryRestock.jsx";
+import { Spinner } from '@chakra-ui/react'
+
 
 export default function RiwayatRestockProdukPage() {
     const [restockHistory, setRestockHistory] = useState([]);
@@ -54,29 +56,36 @@ export default function RiwayatRestockProdukPage() {
             <div className="flex flex-col flex-1 w-full">
                 <PartTop/>
                 <NamePageComponent nama={"Histori Pembaruan Stok"}/>
-
-                <main className="flex-1 p-5 overflow-y-auto">
-                    <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
-                        <DescPageComponent
-                            desc={"Riwayat pengisian ulang produk anda dari waktu ke waktu"}/>
-                        <SearchBarHistoryRestock handleSearchChange={handleSearchChange} searchQuery={searchQuery}/>
-
-                        <div className="bg-[#EEF0F5] justify-between p-3
-                        border-b-[3px] border-gray-200 grid grid-cols-3 gap-5 overflow-auto h-[440px]">
-                            {isLoading ? (
-                                <div className="flex items-center justify-center h-full">
-                                    <p className="text-xl">Loading...</p>
-                                </div>
-                            ) : isAuth ? (
-                                <HistoryRestockCard restockHistory={filteredHistory}/>
-                            ) : (
-                                <div className="flex items-center justify-center h-full">
-                                    <p className="text-xl">{ error }</p>
-                                </div>
-                            )}
-                        </div>
+                {isLoading ? (
+                    <div className="flex items-center justify-center h-full">
+                        <Spinner
+                            thickness='4px'
+                            speed='0.65s'
+                            emptyColor='gray.200'
+                            color='blue.500'
+                            size='xl'
+                        />
                     </div>
-                </main>
+                ) : isAuth ? (
+                    <main className="flex-1 p-5 overflow-y-auto">
+                        <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
+                            <DescPageComponent
+                                desc={"Riwayat pengisian ulang produk anda dari waktu ke waktu"}/>
+                            <SearchBarHistoryRestock handleSearchChange={handleSearchChange} searchQuery={searchQuery}/>
+
+                            <div className="bg-[#EEF0F5] justify-between p-3
+                        border-b-[3px] border-gray-200 grid grid-cols-3 gap-5 overflow-auto h-[440px]">
+                                <HistoryRestockCard restockHistory={filteredHistory}/>
+                            </div>
+                        </div>
+                    </main>
+                ) : (
+                    <div className="flex items-center justify-center h-full">
+                        <p className="text-xl">{ error }</p>
+                    </div>
+                )}
+
+
             </div>
         </div>
     )

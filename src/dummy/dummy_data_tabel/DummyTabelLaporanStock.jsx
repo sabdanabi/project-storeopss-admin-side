@@ -30,13 +30,13 @@ export default function DummyTabelLaporanStock({products}) {
                             </div>
                         </td>
                         <td></td>
-                        <td>Rp{product.purchase_price}</td>
+                        <td>{product.first_quantity}</td>
                         <td></td>
-                        <td>Rp{product.selling_price}</td>
+                        <td>{product.incoming_quantity}</td>
                         <td></td>
-                        <td>{product.quantity}pcs/kg</td>
+                        <td>{product.outgoing_quantity}</td>
                         <td></td>
-                        <td>{product.sold}</td>
+                        <td>{product.last_quantity}</td>
                         <td></td>
                     </tr>
                 ))}
@@ -49,10 +49,10 @@ export default function DummyTabelLaporanStock({products}) {
 DummyTabelLaporanStock.propTypes = {
     products: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
+        // image: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
-        purchase_price: PropTypes.number.isRequired,
-        selling_price: PropTypes.number.isRequired,
-        quantity: PropTypes.number.isRequired,
+        // purchase_price: PropTypes.number.isRequired,
+        // selling_price: PropTypes.number.isRequired,
+        // quantity: PropTypes.number.isRequired,
     })).isRequired,
 };

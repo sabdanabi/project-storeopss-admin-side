@@ -4,6 +4,8 @@ import TblTransaksi from "../../components/page_transaksi_components/TblTransaks
 import BtnAddTransaksi from "../../components/page_transaksi_components/button/BtnAddTransaksi.jsx";
 import { useEffect, useState } from "react";
 import { getAllTransaksi, addIncome } from "../../services/TransaksiService.jsx";
+import { Spinner } from '@chakra-ui/react'
+
 
 export default function TransaksiPage() {
     const [transaksi, setTransaksi] = useState([]);
@@ -51,12 +53,18 @@ export default function TransaksiPage() {
             <SideNavbarComponent />
             <div className="flex flex-col flex-1 w-full overflow-hidden">
                 <PartTop />
-                <BtnAddTransaksi addIncome={addIncome} updateProductsState={updateProductsState} />
+                <BtnAddTransaksi addIncome={addIncome}
+                                 updateProductsState={updateProductsState}/>
 
                 {isLoading ? (
                     <div className="flex items-center justify-center h-full">
-                        <p className="text-xl">Loading...</p>
-                    </div>
+                        <Spinner
+                            thickness='4px'
+                            speed='0.65s'
+                            emptyColor='gray.200'
+                            color='blue.500'
+                            size='xl'
+                        />                    </div>
                 ) : isAuth ? (
                     <TblTransaksi
                         handleSearchChange={handleSearchChange}

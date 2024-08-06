@@ -6,45 +6,31 @@ import {
 const data = [
     {
         name: 'Page A',
-        uv: 1000,
-        pv: 2000,
-        amt: 3000,
+        amt: 100,
     },
     {
         name: 'Page B',
-        uv: 1500,
-        pv: 2500,
-        amt: 3500,
+        amt: 20,
     },
     {
         name: 'Page C',
-        uv: 2000,
-        pv: 3000,
-        amt: 4000,
+        amt: 10,
     },
     {
         name: 'Page D',
-        uv: 2500,
-        pv: 3500,
-        amt: 4500,
+        amt: 50,
     },
     {
         name: 'Page E',
-        uv: 3000,
-        pv: 4000,
-        amt: 5000,
+        amt: 300,
     },
     {
         name: 'Page F',
-        uv: 3500,
-        pv: 4500,
-        amt: 5500,
+        amt: 50,
     },
     {
         name: 'Page G',
-        uv: 4000,
-        pv: 5000,
-        amt: 6000,
+        amt: 200,
     },
 ];
 
@@ -55,7 +41,6 @@ export default function FebruariChart()  {
                 <BarChart
                     width={500}
                     height={300}
-                    data={data}
                     margin={{right: 40}}
                 >
                     <CartesianGrid strokeDasharray="3 3"/>

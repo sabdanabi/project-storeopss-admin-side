@@ -1,12 +1,12 @@
  import SideNavbarComponent from "../../components/components_reused/SideNavbarComponent.jsx";
 import PartTop from "../../components/components_reused/PartTop.jsx";
 import TblStock from "../../components/page_persediaan_components/TblStock.jsx";
-import PopUpAddStock from "../../components/page_persediaan_components/button/PopUpAddStock.jsx";
 import {useEffect, useState} from "react";
 import {getAllProduct, addNewProduct, deleteProduct, importProductExcel} from "../../services/StockService.jsx";
 import {toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
- import {BtnDropDownAddStock} from "../../components/page_persediaan_components/button/BtnDropDownAddStock.jsx";
+import {BtnDropDownAddStock} from "../../components/page_persediaan_components/button/BtnDropDownAddStock.jsx";
+import { Spinner } from '@chakra-ui/react'
 
 export default function PersediaanPage() {
     const [products, setProducts] = useState([]);
@@ -66,7 +66,13 @@ export default function PersediaanPage() {
                 {/*             addNewProduct={addNewProduct}/>*/}
                 {isLoading ? (
                     <div className="flex items-center justify-center h-full">
-                        <p className="text-xl">Loading...</p>
+                        <Spinner
+                            thickness='4px'
+                            speed='0.65s'
+                            emptyColor='gray.200'
+                            color='blue.500'
+                            size='xl'
+                        />
                     </div>
                 ) : isAuth ? (
                     <TblStock products={filteredHistory} handleDelete={handleDelete} searchQuery={searchQuery}

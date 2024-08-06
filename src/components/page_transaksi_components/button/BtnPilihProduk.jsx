@@ -2,21 +2,30 @@ import Popup from "reactjs-popup";
 import { getAllProduct } from "../../../services/StockService.jsx";
 import {useEffect, useState} from "react";
 import PropTypes from "prop-types";
+import {FilterAddTransaksi} from "../FilterAddTransaksi.jsx";
 
-export function BtnPilihProduk({ onProductSelect }) {
+export function BtnPilihProduk({ onProductSelect}) {
     const [isInnerPopupOpen, setInnerPopupOpen] = useState(false);
-    const [PilihProduct, setPilihProduct] = useState([]);
+    const [pilihProduct, setPilihProduct] = useState([]);
     const [isAuth, setAuth] = useState(false);
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [warning, setWarning] = useState("");
-
     const [counts, setCounts] = useState({});
     const [checklist, setChecklist] = useState({});
+    const [searchQuery, setSearchQuery] = useState('');
+
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const filteredProduct = pilihProduct.filter((product) => {
+        return product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    });
 
     const incrementCount = (id) => {
         setCounts((prevCounts) => {
-            const product = PilihProduct.find((product) => product.id === id);
+            const product = pilihProduct.find((product) => product.id === id);
             if (product && prevCounts[id] < product.quantity) {
                 return {
                     ...prevCounts,
@@ -64,15 +73,16 @@ export function BtnPilihProduk({ onProductSelect }) {
     };
 
     const handleSelect = () => {
-        const selectedProducts = PilihProduct.filter((product) => checklist[product.id]).map((product) => ({
+        const selectedProducts = pilihProduct.filter((product) => checklist[product.id]).map((product) => ({
             ...product,
             count: counts[product.id] || 0
         }));
         onProductSelect(selectedProducts);
+        closeInnerPopup();
     };
 
     const openInnerPopup = () => {
-        setWarning("");  // Reset warning message
+        setWarning("");
         setInnerPopupOpen(true);
     };
     const closeInnerPopup = () => setInnerPopupOpen(false);
@@ -96,15 +106,15 @@ export function BtnPilihProduk({ onProductSelect }) {
     }, []);
 
     useEffect(() => {
-        setCounts(PilihProduct.reduce((acc, product) => {
+        setCounts(pilihProduct.reduce((acc, product) => {
             acc[product.id] = 0;
             return acc;
         }, {}));
-        setChecklist(PilihProduct.reduce((acc, product) => {
+        setChecklist(pilihProduct.reduce((acc, product) => {
             acc[product.id] = false;
             return acc;
         }, {}));
-    }, [PilihProduct]);
+    }, [pilihProduct]);
 
     return (
         <div>
@@ -124,6 +134,8 @@ export function BtnPilihProduk({ onProductSelect }) {
                                         </svg>
                                     </button>
                                 </div>
+
+                                <FilterAddTransaksi searchQuery={searchQuery} handleSearchChange={handleSearchChange}/>
                                 <div>
                                     <div className="overflow-auto h-64">
                                         {isLoading ? (
@@ -132,9 +144,9 @@ export function BtnPilihProduk({ onProductSelect }) {
                                             </div>
                                         ) : isAuth ? (
                                             <div>
-                                                {PilihProduct.map((product) => (
+                                                {filteredProduct.map((product) => (
                                                     <div className="flex border-2 rounded-lg p-2 gap-5 mt-5 relative" key={product.id}>
-                                                        <img src="/assets_img/img_kayu.png" alt="img produk" className=""/>
+                                                        {/*<img src={product.image ? product.image : "/assets_img/placeholder_image.jpg"} className="h-10 mt-2" alt="img produk"/>*/}
                                                         <div className="">
                                                             <p className="font-semibold">{product.name}</p>
                                                             <div className="flex text-xs font-medium text-[#727E91]">

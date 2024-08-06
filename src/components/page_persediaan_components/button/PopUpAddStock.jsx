@@ -44,10 +44,8 @@ export default function PopUpAddStock({updateProductsState, addNewProduct, close
 }
 
 PopUpAddStock.propTypes = {
-    titlePage: PropTypes.string.isRequired,
-    titleBtn: PropTypes.string.isRequired,
     updateProductsState: PropTypes.func.isRequired,
     addNewProduct: PropTypes.func.isRequired,
     closePopup: PropTypes.func.isRequired,
-    isPopupOpen: PropTypes.func.isRequired,
+    isPopupOpen: PropTypes.bool.isRequired,
 };

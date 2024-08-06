@@ -1,9 +1,9 @@
 import PropTypes from "prop-types";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function TabsPagePersediaan({ items, setSelectedTab }) {
+    const [activeTab, setActiveTab] = useState(0);
     const firstBtnRef = useRef(null);
-
 
     useEffect(() => {
         if (firstBtnRef.current) {
@@ -11,17 +11,22 @@ export default function TabsPagePersediaan({ items, setSelectedTab }) {
         }
     }, []);
 
+    const handleTabClick = (index) => {
+        setSelectedTab(index);
+        setActiveTab(index);
+    };
+
     return (
         <div className="bg-white h-[65px] flex pt-5 border-y-[3px] border-gray-200 justify-between">
             <div className="flex">
-                <div className="ml-8 ">
+                <div className="ml-8">
                     {items.map((item, index) => (
                         <button
                             key={index}
                             ref={index === 0 ? firstBtnRef : null}
-                            onClick={() => setSelectedTab(index)}
-                            className="font-semibold text-[#1A4F8B] mr-10
-                            hover:border-b-4 hover:border-[#1A4F8B] focus:border-b-4 focus:border-[#1A4F8B] outline-none"
+                            onClick={() => handleTabClick(index)}
+                            className={`font-semibold text-[#1A4F8B] mr-10 outline-none
+                                ${activeTab === index ? 'border-b-4 border-[#1A4F8B]' : 'hover:border-b-4 hover:border-[#1A4F8B] focus:outline-none'}`}
                         >
                             {item.title}
                         </button>
