@@ -19,13 +19,13 @@ export default function TabsPagePersediaan({ items, setSelectedTab }) {
     return (
         <div className="bg-white h-[65px] flex pt-5 border-y-[3px] border-gray-200 justify-between">
             <div className="flex">
-                <div className="ml-8">
+                <div className="ml-6">
                     {items.map((item, index) => (
                         <button
                             key={index}
                             ref={index === 0 ? firstBtnRef : null}
                             onClick={() => handleTabClick(index)}
-                            className={`font-semibold text-blue-gray-700 mr-10 outline-none
+                            className={`font-semibold text-blue-gray-700 mr-10 text-[14px] outline-none
                                 ${activeTab === index ? 'text-light-blue-900' : 'hover:text hover:text-light-blue-900 focus:outline-none'}`}
                         >
                             {item.title}

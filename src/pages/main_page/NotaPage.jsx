@@ -56,7 +56,7 @@ export default function NotaPage() {
             <SideNavbarComponent />
             <div className="flex flex-col flex-1 w-full">
                 <PartTop />
-                <NamePageComponent nama={"Nota"} />
+                <NamePageComponent nama={"Riwayat Nota"} />
 
                 {isLoading ? (
                     <div className="flex items-center justify-center h-full">
@@ -78,7 +78,7 @@ export default function NotaPage() {
                                 handleStatusFilterChange={handleStatusFilterChange}
                             />
 
-                            <div className="bg-[#EEF0F5] p-3 border-b-[3px] border-gray-200 grid grid-cols-4 gap-5 overflow-auto">
+                            <div className="bg-[#EEF0F5] p-3 border-b-[3px] border-gray-200 grid grid-cols-4 gap-5 overflow-auto h-[686px]">
                                 {filteredNota.map((nota) => (
                                     <div key={nota.id} className="bg-white w-85 py-2 px-1 rounded-[10px] shadow-md">
                                         <div className="flex ml-4 mr-5 mt-3 justify-between items-center">
@@ -89,8 +89,8 @@ export default function NotaPage() {
                                             <p className="font-semibold text-blue-gray-700">Resi kostumer {nota.customer.name}</p>
                                             <p className="font-semibold text-[#8C8BB4] ">{nota.date}</p>
                                         </div>
-                                        <hr className="my-1 mt-5 border-t-2 border-blue-gray-300 mb-1 border-dashed" />
-                                        <hr className="my-1 mt-0 border-t-2 border-blue-gray-300 mb-3 border-dashed" />
+                                        <hr className="my-1 mt-5 border-t-1 ml-4 mr-4 border-blue-gray-300 mb-1 border-dashed" />
+                                        <hr className="my-1 mt-0 border-t-1  ml-4 mr-4 border-blue-gray-300 mb-3 border-dashed" />
 
                                         <div>
                                             {nota.products && nota.products.length > 0 ? nota.products.map((product, index) => (
@@ -109,14 +109,14 @@ export default function NotaPage() {
                                                 </div>
                                             )}
                                         </div>
-                                        <hr className="my-1 mt-3 border-t-2 border-blue-gray-300 mb-3 border-dashed" />
+                                        <hr className="my-1 mt-3 border-t-1  ml-4 mr-4 border-blue-gray-300 mb-3 border-dashed" />
                                         <div className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
                                             <p className="font-semibold text-blue-gray-900">Total</p>
                                             <p className="text-[15px] font-semibold text-blue-gray-900">
                                                 {nota.products ? `${calculateTotal(nota.products).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}` : ''}
                                             </p>
                                         </div>
-                                        <hr className="my-1 mt-3 border-t-2 border-blue-gray-300 mb-3 border-dashed" />
+                                        <hr className="my-1 mt-3 border-t-1  ml-4 mr-4 border-blue-gray-300 mb-3 border-dashed" />
                                         <div className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
                                             <p className="font-semibold text-blue-gray-700">Metode Pembayaran</p>
                                             <p className="text-[15px] font-semibold text-blue-gray-700">

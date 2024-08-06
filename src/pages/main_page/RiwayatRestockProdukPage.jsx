@@ -55,7 +55,7 @@ export default function RiwayatRestockProdukPage() {
 
             <div className="flex flex-col flex-1 w-full">
                 <PartTop/>
-                <NamePageComponent nama={"Histori Pembaruan Stok"}/>
+                <NamePageComponent nama={"Riwayat Pembaruan Stok"}/>
                 {isLoading ? (
                     <div className="flex items-center justify-center h-full">
                         <Spinner
@@ -73,8 +73,8 @@ export default function RiwayatRestockProdukPage() {
                                 desc={"Riwayat pengisian ulang produk anda dari waktu ke waktu"}/>
                             <SearchBarHistoryRestock handleSearchChange={handleSearchChange} searchQuery={searchQuery}/>
 
-                            <div className="bg-[#EEF0F5] justify-between p-3
-                        border-b-[3px] border-gray-200 grid grid-cols-3 gap-5 overflow-auto h-[440px]">
+                            <div className="bg-[#EEF0F5] justify-between p-3  h-[686px] 
+                        border-b-[3px] border-gray-200 grid grid-cols-3 gap-5 overflow-auto">
                                 <HistoryRestockCard restockHistory={filteredHistory}/>
                             </div>
                         </div>

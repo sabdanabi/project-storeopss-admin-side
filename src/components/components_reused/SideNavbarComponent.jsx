@@ -60,11 +60,11 @@ export default function SideNavbarComponent() {
                            ${isLaporanPage ? 'text-light-blue-800 ' : ''}`}>Laporan Stock</a>
                         </div>
 
-                        <div className="flex w-[100%] pl-5 h-11 rounded-lg text-[#8C95A4]">
+                        <div className="flex w-[100%] pl-5 mt-5 rounded-lg text-[13px] text-[#8C95A4]">
                             <p>LAINNYA</p>
                         </div>
 
-                        <div className={`flex w-[100%] hover:bg-[#F2F6FF] pl-5 h-11 rounded-lg mb-2 group 
+                        <div className={`flex w-[100%] hover:bg-[#F2F6FF] pl-5 mt-5 rounded-lg mb-2 group 
                         ${isStatisticPage ? 'bg-[#F2F6FF]' : ''}`}>
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                                  stroke="currentColor" className={`text-[#8C95A4] w-6 h-7 mt-2 group-hover:text-light-blue-800  
@@ -75,7 +75,7 @@ export default function SideNavbarComponent() {
 
                             <a href="/statistic-page"
                                className={`block py-3 pl-3 pr-4 text-sm font-medium text-[#8C95A4] rounded-lg group-hover:text-light-blue-800  
-                               ${isStatisticPage ? 'text-light-blue-800 ' : ''}`}>Statistic</a>
+                               ${isStatisticPage ? 'text-light-blue-800 ' : ''}`}>Statistik</a>
                         </div>
 
                         <div className={`flex w-[100%] hover:bg-[#F2F6FF] pl-5 h-11 rounded-lg mb-2 group 
@@ -89,7 +89,7 @@ export default function SideNavbarComponent() {
 
                             <a href="/riwayat-tambah-produk-page"
                                className={`block py-3 pl-3 pr-4 text-sm font-medium text-[#8C95A4] rounded-lg group-hover:text-light-blue-800 
-                                    ${isRiwayatTambahProdukPage ? 'text-light-blue-800 ' : ''}`}>History Masuk Produk</a>
+                                    ${isRiwayatTambahProdukPage ? 'text-light-blue-800 ' : ''}`}>Riwayat Produk Masuk</a>
                         </div>
 
                         <div className={`flex w-[100%] hover:bg-[#F2F6FF] pl-5 h-11 rounded-lg mb-2 group 
@@ -104,7 +104,7 @@ export default function SideNavbarComponent() {
 
                             <a href="/riwayat-restock-page"
                                className={`block py-3 pl-3 pr-4 text-sm font-medium text-[#8C95A4] rounded-lg group-hover:text-light-blue-800 
-                               ${isRiwayatRestockPage ? 'text-light-blue-800 ' : ''}`}>Histori Pembaruan Stok</a>
+                               ${isRiwayatRestockPage ? 'text-light-blue-800 ' : ''}`}>Riwayat Pembaruan Stok</a>
                         </div>
 
                         <div className={`flex w-[100%] hover:bg-[#F2F6FF] pl-5 h-11 rounded-lg mb-2 group 
@@ -119,7 +119,7 @@ export default function SideNavbarComponent() {
 
                             <a href="/nota-page"
                                className={`block py-3 pl-3 pr-4 text-sm font-medium text-[#8C95A4] rounded-lg group-hover:text-light-blue-800 
-                               ${isNotaPage ? 'text-light-blue-800 ' : ''}`}>Nota</a>
+                               ${isNotaPage ? 'text-light-blue-800 ' : ''}`}>Riwayat Nota</a>
                         </div>
                     </nav>
                 </div>

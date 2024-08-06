@@ -54,9 +54,11 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                                         </td>
                                         <td></td>
                                         <td className="flex py-3">
-                                            <div className="">
+                                            <div className="flex  items-center">
                                                 <BtnNotaTransaksi filteredTransaksi={transaction} />
-                                                {/* <BtnEditTransaksi transactionId={transaction.id} updateProductsState={updateProductsState} /> */}
+                                                <div className="ml-5">
+                                                <BtnEditTransaksi transactionId={transaction.id} updateProductsState={updateProductsState} /> 
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>

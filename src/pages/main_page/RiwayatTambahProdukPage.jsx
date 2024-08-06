@@ -55,7 +55,7 @@ export default function RiwayatTambahProdukPage() {
 
             <div className="flex flex-col flex-1 w-full">
                 <PartTop/>
-                <NamePageComponent nama={"History Produk Masuk"}/>
+                <NamePageComponent nama={"Riwayat Tambah Produk"}/>
                 {isLoading ? (
                     <div className="flex items-center justify-center h-full">
                         <Spinner
