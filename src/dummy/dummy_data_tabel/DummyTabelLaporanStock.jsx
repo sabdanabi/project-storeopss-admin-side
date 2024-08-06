@@ -49,10 +49,10 @@ export default function DummyTabelLaporanStock({products}) {
 DummyTabelLaporanStock.propTypes = {
     products: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.number.isRequired,
-        image: PropTypes.string.isRequired,
+        // image: PropTypes.string.isRequired,
         name: PropTypes.string.isRequired,
-        purchase_price: PropTypes.number.isRequired,
-        selling_price: PropTypes.number.isRequired,
-        quantity: PropTypes.number.isRequired,
+        // purchase_price: PropTypes.number.isRequired,
+        // selling_price: PropTypes.number.isRequired,
+        // quantity: PropTypes.number.isRequired,
     })).isRequired,
 };
