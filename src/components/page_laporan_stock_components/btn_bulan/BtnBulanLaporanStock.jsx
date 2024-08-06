@@ -1,8 +1,8 @@
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 import PropTypes from "prop-types";
 
 export default function BtnBulanLaporanStock({item, setSelectedTab}){
-
+    const [activeTab, setActiveTab] = useState(0);
     const firstBtnRef = useRef(null);
 
     useEffect(() => {
@@ -10,6 +10,11 @@ export default function BtnBulanLaporanStock({item, setSelectedTab}){
             firstBtnRef.current.focus();
         }
     }, []);
+
+    const handleTabClick = (index) => {
+        setSelectedTab(index);
+        setActiveTab(index);
+    };
 
     return(
         <>
@@ -19,12 +24,11 @@ export default function BtnBulanLaporanStock({item, setSelectedTab}){
                     <div>
                         {item.map((item, index) => (
                             <button
-                                className="font-semibold hover:text-[#1A4F8B] text-sm text-[#8C95A4]
-                            hover:border-b-4 hover:border-[#1A4F8B] ml-10 focus:border-b-4 focus:border-[#1A4F8B] outline-none"
+                                className={`font-medium text-[16px] text-sm text-[#8C95A4] mr-5 ml-5 outline-none
+                                ${activeTab === index ? 'text-light-blue-900' : 'hover:text hover:text-light-blue-900 focus:outline-none'}`}
                                 key={index}
                                 ref={index === 0 ? firstBtnRef : null}
-                                onClick={() => setSelectedTab(index)}
-                            >
+                                onClick={() => handleTabClick(index)}                            >
                                 {item.title}
                             </button>
                         ))}

@@ -77,6 +77,7 @@ export function BtnPilihProduk({ onProductSelect}) {
             count: counts[product.id] || 0
         }));
         onProductSelect(selectedProducts);
+        closeInnerPopup();
     };
 
     const openInnerPopup = () => {
@@ -144,7 +145,7 @@ export function BtnPilihProduk({ onProductSelect}) {
                                             <div>
                                                 {filteredProduct.map((product) => (
                                                     <div className="flex border-2 rounded-lg p-2 gap-5 mt-5 relative" key={product.id}>
-                                                        <img src={product.image ? product.image : "/assets_img/placeholder_image.jpg"} className="h-10 mt-2" alt="img produk"/>
+                                                        {/*<img src={product.image ? product.image : "/assets_img/placeholder_image.jpg"} className="h-10 mt-2" alt="img produk"/>*/}
                                                         <div className="">
                                                             <p className="font-semibold">{product.name}</p>
                                                             <div className="flex text-xs font-medium text-[#727E91]">

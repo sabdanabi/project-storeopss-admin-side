@@ -8,11 +8,11 @@ export function FormRestockProduct({ id, updateProductsState }) {
     const [formData, setFormData] = useState({
         quantity: '',
         total_purchase_price: '',
-        destination_address: '',
+        // destination_address: '',
         supplier_name: '',
         supplier_address: '',
         supplier_phone: '',
-        shipping_method: '',
+        // shipping_method: '',
         payment_method: ''
     });
 
@@ -68,7 +68,7 @@ export function FormRestockProduct({ id, updateProductsState }) {
                         </div>
 
                         <div className="mb-4">
-                            <label className="text-sm">Stock/pcs/kg</label>
+                            <label className="text-sm">Stock/unit</label>
                             <br/>
                             <input
                                 placeholder="Masukkan stock produk...."
@@ -81,19 +81,19 @@ export function FormRestockProduct({ id, updateProductsState }) {
                             />
                         </div>
 
-                        <div className="mb-4">
-                            <label className="text-sm">Alamat Tujuan</label>
-                            <br/>
-                            <input
-                                placeholder="Masukkan alamat tujuan...."
-                                type="text"
-                                name="destination_address"
-                                value={formData.destination_address}
-                                onChange={handleChange}
-                                required
-                                className="border-2 w-full h-10 rounded-lg mt-3 text-xs p-3"
-                            />
-                        </div>
+                        {/*<div className="mb-4">*/}
+                        {/*    <label className="text-sm">Alamat Tujuan</label>*/}
+                        {/*    <br/>*/}
+                        {/*    <input*/}
+                        {/*        placeholder="Masukkan alamat tujuan...."*/}
+                        {/*        type="text"*/}
+                        {/*        name="destination_address"*/}
+                        {/*        value={formData.destination_address}*/}
+                        {/*        onChange={handleChange}*/}
+                        {/*        required*/}
+                        {/*        className="border-2 w-full h-10 rounded-lg mt-3 text-xs p-3"*/}
+                        {/*    />*/}
+                        {/*</div>*/}
                     </div>
 
                     <div className="w-64">
@@ -125,19 +125,19 @@ export function FormRestockProduct({ id, updateProductsState }) {
                             />
                         </div>
 
-                        <div className="mb-4">
-                            <label className="text-sm">Metode Pengiriman</label>
-                            <br/>
-                            <input
-                                placeholder="Masukkan metode pengiriman...."
-                                type="text"
-                                name="shipping_method"
-                                value={formData.shipping_method}
-                                onChange={handleChange}
-                                required
-                                className="border-2 w-full h-10 rounded-lg mt-3 text-xs p-3"
-                            />
-                        </div>
+                        {/*<div className="mb-4">*/}
+                        {/*    <label className="text-sm">Metode Pengiriman</label>*/}
+                        {/*    <br/>*/}
+                        {/*    <input*/}
+                        {/*        placeholder="Masukkan metode pengiriman...."*/}
+                        {/*        type="text"*/}
+                        {/*        name="shipping_method"*/}
+                        {/*        value={formData.shipping_method}*/}
+                        {/*        onChange={handleChange}*/}
+                        {/*        required*/}
+                        {/*        className="border-2 w-full h-10 rounded-lg mt-3 text-xs p-3"*/}
+                        {/*    />*/}
+                        {/*</div>*/}
 
                         <div className="mb-4">
                             <label className="text-sm">Metode Pembayaran</label>

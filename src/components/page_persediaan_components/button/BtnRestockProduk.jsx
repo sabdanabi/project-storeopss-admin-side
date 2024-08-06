@@ -6,8 +6,8 @@ export default function BtnRestockProduk({id, updateProductsState}) {
     return(
         <>
             <Popup trigger={
-                <button className="text-[10px] border-2 border-[#2F5F94] h-[33px] w-[58px] rounded-lg font-semibold">
-                    Resctok
+                <button className="text-[11px] hover:bg-[#d7e0e8] text-blue-gray-500 mr-3 bg-[#dde6efc6] h-[35px] w-[71px] rounded-lg font-medium">
+                    Restock
                 </button>
             } modal nested>
                 {close => (

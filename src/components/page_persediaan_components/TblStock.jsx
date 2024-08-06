@@ -1,4 +1,3 @@
-
 import DescPageComponent from "../components_reused/DescPageComponent.jsx";
 import TabsPagePersediaan from "../tabs_components/TabsPagePersediaan.jsx";
 import {useState} from "react";
@@ -87,5 +86,5 @@ TblStock.propTypes = {
     handleDelete: PropTypes.func.isRequired,
     updateProductsState: PropTypes.func.isRequired,
     handleSearchChange: PropTypes.func.isRequired,
-    searchQuery: PropTypes.func.isRequired,
+    searchQuery: PropTypes.string.isRequired,
 };

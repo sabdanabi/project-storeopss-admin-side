@@ -40,18 +40,18 @@ export function HistoryRestockCard({restockHistory}) {
                             {entry.supplier.phone}</p>
                     </div>
 
-                    <div className="flex text-[11px] font-medium text-[#403E8A] mb-2 relative">
-                        <p className="">Metode Pengiriman</p>
-                        <p className="absolute left-28">:</p>
-                        <p className="font-semibold text-[#8C8BB4] absolute left-32">{entry.shipping_method}</p>
-                    </div>
+                    {/*<div className="flex text-[11px] font-medium text-[#403E8A] mb-2 relative">*/}
+                    {/*    <p className="">Metode Pengiriman</p>*/}
+                    {/*    <p className="absolute left-28">:</p>*/}
+                    {/*    <p className="font-semibold text-[#8C8BB4] absolute left-32">{entry.shipping_method}</p>*/}
+                    {/*</div>*/}
 
-                    <div className="flex text-[11px] font-medium text-[#403E8A] mb-2 relative">
-                        <p className="">Alamat Tujuan</p>
-                        <p className="absolute left-28">:</p>
-                        <p className="font-semibold text-[#8C8BB4] absolute left-32">
-                            {entry.supplier.address}</p>
-                    </div>
+                    {/*<div className="flex text-[11px] font-medium text-[#403E8A] mb-2 relative">*/}
+                    {/*    <p className="">Alamat Tujuan</p>*/}
+                    {/*    <p className="absolute left-28">:</p>*/}
+                    {/*    <p className="font-semibold text-[#8C8BB4] absolute left-32">*/}
+                    {/*        {entry.supplier.address}</p>*/}
+                    {/*</div>*/}
 
                     <div className="flex text-[11px] font-medium text-[#403E8A] mb-5 relative">
                         <p className="">Metode Pembayaran</p>

@@ -11,7 +11,7 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                 <DescPageComponent desc={"Selamat datang di admin dashboard Anda."} />
                 <FilterComponents handleSearchChange={handleSearchChange} searchQuery={searchQuery}
                     handleStatusFilterChange={handleStatusFilterChange} />
-                <div className="bg-white border-b-[3px] border-gray-200 h-[420px] overflow-auto">
+                <div className="bg-white border-b-[3px] border-gray-200 overflow-auto">
                     <table className="w-full h-12">
                         <thead className="h-12 border-b-2">
                             <tr className="text-sm text-[#9CA4AE]">
@@ -31,7 +31,7 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                             {filteredTransaksi.map((transaction, index) => {
                                 console.log(transaction.status);
                                 return (
-                                    <tr className="border-b-2 " key={transaction.id}>
+                                    <tr className="border-b-2 h-18 " key={transaction.id}>
                                         <td className="px-4 "><p className="mr-3 text-blue-gray-700">{index + 1}</p></td>
                                         <td>
                                             <div className="flex py-3">
