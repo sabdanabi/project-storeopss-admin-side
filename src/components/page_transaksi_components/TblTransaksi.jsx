@@ -1,10 +1,21 @@
+import React, { useState } from 'react';
 import DescPageComponent from "../components_reused/DescPageComponent.jsx";
 import FilterComponents from "./FilterComponents.jsx";
 import PropTypes from "prop-types";
 import { BtnNotaTransaksi } from "./button/BtnNotaTransaksi.jsx";
 import { BtnEditTransaksi } from "./button/BtnEditTransaksi.jsx";
+import Pagination from '../components_reused/Pagination.jsx';
 
 export default function TblTransaksi({ handleSearchChange, searchQuery, filteredTransaksi, updateProductsState, handleStatusFilterChange }) {
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 8;
+
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentTransaksi = filteredTransaksi.slice(indexOfFirstItem, indexOfLastItem);
+
+    const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
+
     return (
         <main className="flex-1 p-10 overflow-y-auto">
             <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
@@ -28,50 +39,47 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                             </tr>
                         </thead>
                         <tbody className="font-semibold">
-                            {filteredTransaksi.map((transaction, index) => {
-                                console.log(transaction.status);
-                                const totalHarga = transaction.products.reduce((total, product) => total + (product.price * product.quantity), 0);
-                                return (
-                                    <tr className="border-b-2 h-18 " key={transaction.id}>
-                                        <td className="px-4 "><p className="mr-3 text-blue-gray-700">{index + 1}</p></td>
-                                        <td>
-                                            <div className="flex py-3">
-                                                <p className="mr-24 text-blue-gray-700">{transaction.customer.name}</p>
-                                            </div>
-                                        </td>
-                                        <td></td>
-                                        <td><p className=" text-blue-gray-700">{transaction.date}</p>
-                                        </td>
-                                        <td></td>
-                                        <td>
-                                            <p key={transaction.id} className="text-blue-gray-700">
-                                                {totalHarga.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}
+                            {currentTransaksi.map((transaction, index) => (
+                                <tr className="border-b-2 h-18" key={transaction.id}>
+                                    <td className="px-4"><p className="mr-3 text-blue-gray-700">{indexOfFirstItem + index + 1}</p></td>
+                                    <td>
+                                        <div className="flex py-3">
+                                            <p className="mr-24 text-blue-gray-700">{transaction.customer.name}</p>
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td><p className="text-blue-gray-700">{transaction.date}</p></td>
+                                    <td></td>
+                                    <td><p className="text-blue-gray-700"> Rp{transaction.selling_price}</p></td>
+                                    <td></td>
+                                    <td>
+                                        <div className={`flex justify-center py-1 rounded ${transaction.status === 'Belum lunas' ? 'bg-[#FFA9B3]' : 'bg-[#BEDBCF]'}`}>
+                                            <p className={`text-sm ${transaction.status === 'Belum lunas' ? 'text-[#7A3636]' : 'text-[#2B713A]'}`}>
+                                                {transaction.status}
                                             </p>
-                                        </td>
-                                        <td></td>
-                                        <td>
-                                            <div className={`flex justify-center py-1 rounded ${transaction.status === 'Belum lunas' ? 'bg-[#FFA9B3]' : 'bg-[#BEDBCF]'}`}>
-                                                <p className={`text-sm ${transaction.status === 'Belum lunas' ? 'text-[#7A3636]' : 'text-[#2B713A]'}`}>
-                                                    {transaction.status}
-                                                </p>
-                                            </div>
-                                        </td>
-                                        <td></td>
-                                        <td className="flex py-3">
-                                            <div className="flex  items-center">
-                                                <BtnNotaTransaksi filteredTransaksi={transaction} />
-                                                <div className="ml-5">
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                    <td className="flex py-3">
+                                        <div className="flex items-center">
+                                            <BtnNotaTransaksi filteredTransaksi={transaction} />
+                                            <div className="ml-5">
                                                 <BtnEditTransaksi transactionId={transaction.id} updateProductsState={updateProductsState} /> 
-                                                </div>
                                             </div>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
+                                        </div>
+                                    </td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </div>
             </div>
+            <Pagination
+                    itemsPerPage={itemsPerPage}
+                    totalItems={filteredTransaksi.length}
+                    currentPage={currentPage}
+                    handlePageChange={handlePageChange}
+                />
         </main>
     );
 }
@@ -89,4 +97,5 @@ TblTransaksi.propTypes = {
         status: PropTypes.string.isRequired,
     })).isRequired,
     updateProductsState: PropTypes.func.isRequired,
+    handleStatusFilterChange: PropTypes.func.isRequired,
 };
