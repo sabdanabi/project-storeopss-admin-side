@@ -78,7 +78,7 @@ export default function NotaPage() {
                                 handleStatusFilterChange={handleStatusFilterChange}
                             />
 
-                            <div className="bg-[#EEF0F5] p-3 border-b-[3px] border-gray-200 grid grid-cols-4 gap-5 overflow-auto h-[686px]">
+                            <div className="bg-[#EEF0F5] p-3 border-b-[3px] border-gray-200 grid grid-cols-4 gap-5 overflow-auto h-full">
                                 {filteredNota.map((nota) => (
                                     <div key={nota.id} className="bg-white w-85 py-2 px-1 rounded-[10px] shadow-md">
                                         <div className="flex ml-4 mr-5 mt-3 justify-between items-center">

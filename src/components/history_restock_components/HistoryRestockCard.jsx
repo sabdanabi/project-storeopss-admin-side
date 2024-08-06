@@ -75,7 +75,7 @@ export function HistoryRestockCard({ restockHistory }) {
                         <p className="">:</p>
                         <p className="font-semibold text-[#8C8BB4] ml-3 text-[13px]">{entry.product.new_quantity} pcs/kg</p>
                     </div>
-                    <div className="flex text-xs mb-5 font-medium  text-[#403E8A] relative ml-4 mr-4 ">
+                    <div className="flex text-xs  font-medium  text-[#403E8A]  mb-5 relative ml-4 mr-4 ">
                         <p className="text-[13px] text-blue-gray-500 w-[140px]">Harga</p>
                         <p className="">:</p>
                         <p className="font-semibold text-[#8C8BB4] ml-3 text-[13px]"> {(entry.product.total_puchase_price).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</p>

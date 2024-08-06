@@ -7,14 +7,7 @@ import {
 } from '@chakra-ui/react'
 import {useState} from "react";
 
-export default function FilterComponentsNotaPage({handleSearchChange, searchQuery, handleStatusFilterChange, handleDayFilterChange}) {
-
-    const [selectedStatus, setSelectedStatus] = useState('Status Transaksi')
-
-    const onStatusChange = (status) => {
-        setSelectedStatus(status);
-        handleStatusFilterChange(status);
-    }
+export default function FilterComponentNewPro({handleSearchChange, searchQuery, handleDayFilterChange}) {
 
     const [selectedDay, setSelectedDay] = useState("Pilih Waktu")
     const onFilterChange = (dayFilter)  => {
@@ -37,25 +30,8 @@ export default function FilterComponentsNotaPage({handleSearchChange, searchQuer
                 <path strokeLinecap="round" strokeLinejoin="round"
                       d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
             </svg>
-            <div className='mr-4'>
-            <Menu>
-                <MenuButton as={Button} rightIcon={
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                         stroke="currentColor" className="w-5 h-5 text-[#727E91]">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
-                    </svg>
-                }>
-                    <p className="text-xs font-medium mr-10 text-[#727E91]">{selectedStatus}</p>
-                </MenuButton>
-                <MenuList>
-                    <MenuItem onClick={() => onStatusChange('Semua')}>Semua</MenuItem>
-                    <MenuItem onClick={() => onStatusChange('Lunas')}>Lunas</MenuItem>
-                    <MenuItem onClick={() => onStatusChange('Belum lunas')}>Belum Lunas</MenuItem>
-                </MenuList>
-            </Menu>
-            </div>
            
-           <div>
+           <div className='mr-4 ml-4'>
            <Menu>
                 <MenuButton as={Button} rightIcon={
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
