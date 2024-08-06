@@ -30,6 +30,7 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                         <tbody className="font-semibold">
                             {filteredTransaksi.map((transaction, index) => {
                                 console.log(transaction.status);
+                                const totalHarga = transaction.products.reduce((total, product) => total + (product.price * product.quantity), 0);
                                 return (
                                     <tr className="border-b-2 h-18 " key={transaction.id}>
                                         <td className="px-4 "><p className="mr-3 text-blue-gray-700">{index + 1}</p></td>
@@ -42,8 +43,11 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                                         <td><p className=" text-blue-gray-700">{transaction.date}</p>
                                         </td>
                                         <td></td>
-                                        <td><p className="text-blue-gray-700"> Rp{transaction.selling_price}</p>
-                                           </td>
+                                        <td>
+                                            <p key={transaction.id} className="text-blue-gray-700">
+                                                {totalHarga.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}
+                                            </p>
+                                        </td>
                                         <td></td>
                                         <td>
                                             <div className={`flex justify-center py-1 rounded ${transaction.status === 'Belum lunas' ? 'bg-[#FFA9B3]' : 'bg-[#BEDBCF]'}`}>

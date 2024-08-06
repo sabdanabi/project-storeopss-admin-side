@@ -4,6 +4,8 @@ export function CardHistoryAddProduct({addProductHistory}) {
     return (
         <>
             {addProductHistory.map((entry, index) => (
+
+
                 <div className="bg-white w-85 py-3 px-2 rounded-[8px] h-48 shadow-md" key={`${entry.id}-${index}`}>
                     <div className="flex mb-5 ml-4 mr-4 justify-between items-center">
                         <p className=" font-semibold  text-[20px] text-blue-gray-600">Riwayat Tambah Produk</p>
