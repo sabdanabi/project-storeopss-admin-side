@@ -55,7 +55,7 @@ export default function RiwayatTambahProdukPage() {
 
             <div className="flex flex-col flex-1 w-full">
                 <PartTop/>
-                <NamePageComponent nama={"History Masuk Produk"}/>
+                <NamePageComponent nama={"History Produk Masuk"}/>
                 {isLoading ? (
                     <div className="flex items-center justify-center h-full">
                         <Spinner
@@ -74,7 +74,7 @@ export default function RiwayatTambahProdukPage() {
                             <FilterProductBaru handleSearchChange={handleSearchChange} searchQuery={searchQuery}/>
 
                             <div className="bg-[#EEF0F5] justify-between p-3
-                        border-b-[3px] border-gray-200 grid grid-cols-3 gap-4 overflow-auto h-[410px]">
+                        border-b-[3px] border-gray-200 grid grid-cols-3 gap-4 overflow-auto">
                                 <CardHistoryAddProduct addProductHistory={filteredHistory}/>
                             </div>
                         </div>

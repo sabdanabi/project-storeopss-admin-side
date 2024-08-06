@@ -8,13 +8,19 @@ import {
 } from '@chakra-ui/react'
 import {useState} from "react";
 
-export default function FilterComponents({handleSearchChange, searchQuery, handleStatusFilterChange}) {
+export default function FilterComponents({handleSearchChange, searchQuery, handleStatusFilterChange, handleDayFilterChange}) {
 
     const [selectedStatus, setSelectedStatus] = useState('Status Transaksi')
 
     const onStatusChange = (status) => {
         setSelectedStatus(status);
         handleStatusFilterChange(status);
+    }
+
+    const [selectedDay, setSelectedDay] = useState("Pilih Waktu")
+    const onFilterChange = (dayFilter)  => {
+        setSelectedDay(dayFilter);
+        handleDayFilterChange(dayFilter);
     }
     return (
         <div className="bg-white h-[65px] flex py-3 px-6 relative border-b-[3px] border-gray-200 gap-5">
@@ -41,12 +47,30 @@ export default function FilterComponents({handleSearchChange, searchQuery, handl
                         <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                     </svg>
                 }>
-                    <p className="text-xs font-medium mr-10 text-[#727E91]">{selectedStatus}</p>
+                    <p className="text-[14px] font-normal mr-10 text-[#727E91]">{selectedStatus}</p>
                 </MenuButton>
                 <MenuList>
-                    <MenuItem onClick={() => onStatusChange('Semua')}>Semua</MenuItem>
-                    <MenuItem onClick={() => onStatusChange('Lunas')}>Lunas</MenuItem>
-                    <MenuItem onClick={() => onStatusChange('Belum lunas')}>Belum Lunas</MenuItem>
+                    <p className="text-[14px]"><MenuItem onClick={() => onStatusChange('Semua')}>Semua</MenuItem></p>
+                    <p className="text-[14px]"><MenuItem onClick={() => onStatusChange('Lunas')}>Lunas</MenuItem></p>
+                    <p className="text-[14px]"><MenuItem onClick={() => onStatusChange('Belum lunas')}>Belum Lunas</MenuItem></p>
+                </MenuList>
+            </Menu>
+
+            <Menu>
+                <MenuButton as={Button} rightIcon={
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+                         stroke="currentColor" className="w-5 h-5 text-[#727E91]">
+                        <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
+                    </svg>
+                }>
+                    <p className="text-[14px] font-normal mr-10 text-[#727E91]">{selectedDay}</p>
+                </MenuButton>
+                <MenuList>
+                    <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('Hari ini')}>Hari ini</MenuItem></p>
+                    <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('1 Minggu')}>1 Minggu</MenuItem></p>
+                    <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('1 Bulan')}>1 Bulan</MenuItem></p>
+                    <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('Pilih tanggal')}>Pilih tanggal</MenuItem></p>
+                    <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('Pilih antara tanggal')}>Pilih antara tanggal</MenuItem></p>
                 </MenuList>
             </Menu>
         </div>
@@ -56,4 +80,5 @@ export default function FilterComponents({handleSearchChange, searchQuery, handl
 FilterComponents.propTypes = {
     handleSearchChange: PropTypes.func.isRequired,
     searchQuery: PropTypes.string.isRequired,
+    handleDayFilterChange: PropTypes.func.isRequired,
 };

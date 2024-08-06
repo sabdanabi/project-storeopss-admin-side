@@ -1,11 +1,12 @@
 import Popup from "reactjs-popup";
-import {Radio} from "@material-tailwind/react";
-import {useState} from "react";
-import {BtnPilihProduk} from "./BtnPilihProduk.jsx";
-import {BtnDeleteProductTransaksi} from "./BtnDeleteProductTransaksi.jsx";
-import {toast, ToastContainer} from "react-toastify";
+import { Radio } from "@material-tailwind/react";
+import { useState } from "react";
+import { BtnPilihProduk } from "./BtnPilihProduk.jsx";
+import { BtnDeleteProductTransaksi } from "./BtnDeleteProductTransaksi.jsx";
+import { toast, ToastContainer } from "react-toastify";
 import PropTypes from "prop-types";
-export default function BtnAddTransaksi({addIncome, updateProductsState,}) {
+
+export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
     const [selectedValueRD1, setSelectedValueRD1] = useState('');
     const [selectedValueRD2, setSelectedValueRD2] = useState('');
     const [selectedValueRD3, setSelectedValueRD3] = useState('');
@@ -17,8 +18,6 @@ export default function BtnAddTransaksi({addIncome, updateProductsState,}) {
         status: '',
         payment_method: ''
     });
-
-
 
     const handleRadioChange = (event) => {
         setSelectedValueRD1(event.target.value);
@@ -77,6 +76,7 @@ export default function BtnAddTransaksi({addIncome, updateProductsState,}) {
             toast.error("Terjadi kesalahan saat menambahkan transaksi.");
         }
     };
+
 
     const resetForm = () => {
         setFormData({
@@ -319,18 +319,18 @@ export default function BtnAddTransaksi({addIncome, updateProductsState,}) {
                                         rounded-lg shadow-sm hover:bg-gray-50 hover:border-[#1A4F8B] hover:border-2" type="submit">
                                             <span
                                                 className="text-white font-medium text-sm group-hover:text-[#1A4F8B]">Simpan</span>
-                                        </button>
+                                            </button>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>)}
+                )}
             </Popup>
         </div>
-
-
-    </>)
+        </>
+    );
 }
 
 BtnAddTransaksi.propTypes = {
