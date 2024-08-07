@@ -50,7 +50,7 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                                     <td></td>
                                     <td><p className="text-blue-gray-700">{transaction.date}</p></td>
                                     <td></td>
-                                    <td><p className="text-blue-gray-700"> Rp{transaction.selling_price}</p></td>
+                                    <td><p className="text-blue-gray-700"> {(transaction.selling_price).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</p></td>
                                     <td></td>
                                     <td>
                                         <div className={`flex justify-center py-1 rounded ${transaction.status === 'Belum lunas' ? 'bg-[#FFA9B3]' : 'bg-[#BEDBCF]'}`}>

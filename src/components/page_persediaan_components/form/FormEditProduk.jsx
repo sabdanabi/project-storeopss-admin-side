@@ -76,7 +76,7 @@ export default function FormEditProduk({ updateProductsState, id}) {
         <form onSubmit={handleSubmit}>
             <ToastContainer position="top-center"/>
             <div className="flex gap-10">
-                <div>
+                    <div>
                     <div className="mb-4">
                         <label className="text-sm">Nama Produk</label>
                         <br/>
@@ -115,7 +115,9 @@ export default function FormEditProduk({ updateProductsState, id}) {
                             className="border-2 w-96 h-8 rounded-lg mt-3 text-xs p-3"
                         />
                     </div>
+                    </div>
 
+                    <div>
                     <div className="mb-4">
                         <label className="text-sm">Stock/pcs/kg</label>
                         <br/>
@@ -156,7 +158,7 @@ export default function FormEditProduk({ updateProductsState, id}) {
                     </div>
                 </div>
 
-                <div>
+                {/* <div>
                     <label className="text-sm">Foto Produk</label>
                     <br/>
                     <div className="relative w-96 h-96 rounded-lg mt-3 overflow-hidden border-2">
@@ -174,7 +176,7 @@ export default function FormEditProduk({ updateProductsState, id}) {
                             className="absolute inset-0 opacity-0 cursor-pointer"
                         />
                     </div>
-                </div>
+                </div> */}
             </div>
 
             <div className="flex justify-center mt-3">

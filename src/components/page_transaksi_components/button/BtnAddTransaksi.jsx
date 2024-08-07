@@ -77,20 +77,6 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
         }
     };
 
-
-    const resetForm = () => {
-        setFormData({
-            note: '',
-            customer_phone: '',
-            customer_name: '',
-            status: '',
-            payment_method: ''
-        });
-        setSelectedValueRD1('');
-        setSelectedValueRD2('');
-        setSelectedProducts([]);
-    };
-
     const totalHarga = selectedProducts.reduce((total, product) => total + product.selling_price * product.count, 0);
 
     return (
@@ -111,7 +97,7 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                 {close => (
                     <div className='modal'>
                         <div className="fixed inset-0 flex justify-center items-center h-screen bg-black/40">
-                            <div className="bg-white rounded-xl shadow p-5 transition-all w-[850px] h-[670px]">
+                            <div className="bg-white rounded-xl shadow p-5 transition-all w-[880px] h-[670px]">
                                 <form onSubmit={handleSubmit}>
                                     <div className="flex justify-between">
                                         <p className="font-semibold text-2xl mb-7">Penjualan</p>
@@ -126,8 +112,8 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                         <BtnPilihProduk onProductSelect={handleProductSelect} />
                                         <div className="grid grid-cols-3 gap-5 w-[700px] overflow-auto h-24 border p-3 rounded-lg ">
                                             {selectedProducts.map((product) => (
-                                                <div className="flex border-2 rounded-lg pl-2 gap-5 h-16" key={product.id}>
-                                                    <img src={product.image ? product.image : "/assets_img/placeholder_image.jpg"} alt="img produk" className="h-10 mt-2" />
+                                                <div className="flex border-2 rounded-lg p-2 gap-5 h-16" key={product.id}>
+                                                    {/* <img src={product.image ? product.image : "/assets_img/placeholder_image.jpg"} alt="img produk" className="h-10 mt-2" /> */}
                                                     <div>
                                                         <p className="font-semibold text-xs">{product.name}</p>
                                                         <div className="flex text-[10px] font-medium text-[#727E91]">
@@ -179,7 +165,7 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                                     />
                                                 </div>
                                             </div>
-                                            <div className="mb-7">
+                                            <div className="mb-4">
                                                 <p className="font-medium">Status Transaksi</p>
                                                 <div className="flex gap-10 mt-2">
                                                     <div className={`w-28 border-2 h-5 pb-10 rounded-md ${selectedValueRD1 === 'Lunas' ? 'border-blue-500' : 'border-gray-200'}`}>
@@ -206,6 +192,34 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                                     </div>
                                                 </div>
                                             </div>
+
+                                            <div className="mb-7">
+                                                <p className="font-medium">Opsi Pengambilan</p>
+                                                <div className="flex gap-10 mt-2">
+                                                    <div className={`w-28 border-2 h-5 pb-10 rounded-md ${selectedValueRD3 === 'Dikirim' ? 'border-blue-500' : 'border-gray-200'}`}>
+                                                        <Radio
+                                                            id="option1RD1"
+                                                            className="w-4 h-4"
+                                                            value="Dikirim"
+                                                            color="blue"
+                                                            label="Dikirim"
+                                                            checked={selectedValueRD3 === 'Dikirim'}
+                                                            // onChange={handleRadioChange}
+                                                        />
+                                                    </div>
+                                                    <div className={`w-28 border-2 h-5 pb-10 text-xs rounded-md ${selectedValueRD3 === 'Diambil di Toko' ? 'border-blue-500' : 'border-gray-200'}`}>
+                                                        <Radio
+                                                            id="option2RD1"
+                                                            className="w-4 h-4"
+                                                            value="Diambil di Toko"
+                                                            color="blue"
+                                                            label="Diambil di Toko"
+                                                            checked={selectedValueRD3 === 'Diambil di Toko'}
+                                                            // onChange={handleRadioChange}
+                                                        />
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div>
                                             <div className="p-5 w-[335px] h-80 shadow-xl ml-16">
@@ -222,11 +236,7 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                                 <label>Total Harga</label>
                                                 <div className="border-b-2 border-[#828282] mb-7">
                                                     <div className="border-none focus:ring-white w-full pt-7">
-                                                        {selectedProducts.map((product) => (
-                                                            <p key={product.id}>
-                                                                Rp{product.selling_price * product.count}
-                                                            </p>
-                                                        ))}
+                                                        <p>{totalHarga}</p>
                                                     </div>
                                                 </div>
                                                 <div>
