@@ -4,17 +4,11 @@ export function CardHistoryAddProduct({addProductHistory}) {
     return (
         <>
             {addProductHistory.map((entry, index) => (
-                <div className="bg-white w-96 py-3 px-3 rounded h-48" key={`${entry.id}-${index}`}>
+                <div className="bg-white w-96 py-3 px-3 rounded h-56" key={`${entry.id}-${index}`}>
                     <div className="flex mb-10">
                         <p className="mr-32 font-semibold text-[#403E8A]">Riwayat Tambah Produk</p>
                         <p className="text-[10px] mt-1 text-[#8C8BB4]">{entry.date}</p>
                     </div>
-
-                    <div className="bg-white w-85 py-3 px-2 rounded-[8px] h-48 shadow-md" key={`${entry.id}-${index}`}>
-                        <div className="flex mb-5 ml-4 mr-4 justify-between items-center">
-                            <p className=" font-semibold  text-[20px] text-blue-gray-600">Riwayat Tambah Produk</p>
-                            <p className="text-[12px] font-normal text-blue-gray-300 ">{entry.date}</p>
-                        </div>
 
                         <div className="flex text-xs font-medium text-[#403E8A] mb-2 relative ml-4 mr-4">
                             <p className="text-[13px] text-blue-gray-500">Nama Produk</p>
@@ -42,7 +36,6 @@ export function CardHistoryAddProduct({addProductHistory}) {
                                 saat
                                 ditambahkan)</p>
                         </div>
-                    </div>
                 </div>
             ))}
         </>

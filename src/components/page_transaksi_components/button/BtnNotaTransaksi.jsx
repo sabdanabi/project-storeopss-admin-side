@@ -36,7 +36,7 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
             filename: 'nota-transaksi.pdf',
             image: { type: 'jpeg', quality: 0.98 },
             html2canvas: { scale: 2 },
-            jsPDF: { unit: 'mm', format: [80, 297], orientation: 'portrait' } // Format 80mm x 297mm
+            jsPDF: { unit: 'mm', format: [80, 100], orientation: 'portrait' } // Format 80mm x 297mm
         };
         html2pdf().set(opt).from(element).save();
     };
@@ -76,72 +76,69 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
                             </button>
                         </div>
 
-                        <div className="flex justify-center p-3">
-                            <div id="notaTransaksi" className="bg-white w-96 py-2 px-1 rounded drop-shadow-lg">
-                                <div className="flex mb-10 w-full relative">
-                                    <p className="mr-32 font-semibold text-black">
-                                        Adel Jaya
-                                    </p>
+                        <div className="flex justify-center p-3 w-96">
+                            <div id={"notaTransaksi"}
+                                 className="bg-white w-72 py-2 px-1 rounded-[10px] shadow-md">
+                                <div className="flex ml-4 mr-5 mt-3 justify-between items-center">
+                                    <p className="font-semibold text-[17px] text-blue-gray-700">Toko Adel Jaya</p>
+                                    <p className="text-[14px] text-[#2B713A] font-semibold">Selesai</p>
                                 </div>
-                                <div className="flex text-[11px] font-medium text-black mb-2 relative">
-                                    <p>Tanggal</p>
-                                    <p className="absolute left-28">:</p>
-                                    <p className="font-semibold text-black absolute left-32">
-                                        {filteredTransaksi.date}
-                                    </p>
+                                <div
+                                    className="flex flex-col text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
+                                    <p className="font-semibold text-blue-gray-700">Resi
+                                        kostumer {filteredTransaksi.customer.name}</p>
+                                    <p className="font-semibold text-[#8C8BB4] ">{filteredTransaksi.date}</p>
                                 </div>
-                                <div className="flex text-[11px] font-medium text-black mb-2 relative">
-                                    <p>Status</p>
-                                    <p className="absolute left-28">:</p>
-                                    <div className={`flex justify-center p-1 px-4 rounded absolute left-32 
-                                        ${filteredTransaksi.status === 'Belum lunas' ? 'bg-[#FFA9B3]' : 'bg-[#BEDBCF]'}`}>
-                                        <p className={`text-sm ${filteredTransaksi.status === 'Belum lunas' ? 'text-black' : 'text-black'}`}>
-                                            {filteredTransaksi.status}
-                                        </p>
-                                    </div>
-                                </div>
-                                <div className="flex text-[11px] font-medium ttext-black mb-5 relative mt-5">
-                                    <p>Pelanggan</p>
-                                    <p className="absolute left-28">:</p>
-                                    <p className="font-semibold text-black absolute left-32">
-                                        {filteredTransaksi.customer ? filteredTransaksi.customer.name : '-'}
-                                    </p>
-                                </div>
-                                <div className="flex text-[11px] font-medium text-black mb-2 relative">
-                                    <p>Metode Pembayaran</p>
-                                    <p className="absolute left-28">:</p>
-                                    <p className="font-semibold text-black absolute left-32">
-                                        {filteredTransaksi.payment_method ? filteredTransaksi.payment_method : '-'}
-                                    </p>
-                                </div>
-                                <div className="flex text-[11px] font-medium text-black mb-2 relative">
-                                    <p>Catatan</p>
-                                    <p className="absolute left-28">:</p>
-                                    <p className="font-semibold text-black absolute left-32">
-                                        {filteredTransaksi.additional_cost ? filteredTransaksi.additional_cost : '-'}
-                                    </p>
-                                </div>
+                                <hr className="my-1 mt-5 border-t-2 border-blue-gray-300 mb-1 border-dashed"/>
+                                <hr className="my-1 mt-0 border-t-2 border-blue-gray-300 mb-3 border-dashed"/>
+
                                 <div>
-                                    <div className="flex text-xs bg-[#EEEEEE] py-4 px-6 font-semibold">
-                                        <p>Produk</p>
-                                        <p className="mx-14">Jumlah</p>
-                                        <p className="mr-14">Harga</p>
-                                        <p>Subtotal</p>
-                                    </div>
-                                    {filteredTransaksi.products.map((product, index) => (
-                                        <div key={index} className="text-xs py-4 px-6">
-                                            <ul className="flex">
-                                                <li>{product.name}</li>
-                                                <li className="mx-16">{product.quantity}</li>
-                                                <li className="mr-10">Rp{product.price}</li>
-                                                <li>Rp{product.quantity * product.price}</li>
-                                            </ul>
+                                    {filteredTransaksi.products && filteredTransaksi.products.length > 0 ? filteredTransaksi.products.map((product, index) => (
+                                        <div key={index}
+                                             className="justify-between flex ml-4 text-[15px] font-medium text-blue-gray-700">
+                                            <div className="flex">
+                                                <p className="mr-2">x{product.quantity}</p>
+                                                <p>{product.name}</p>
+                                            </div>
+                                            <p className="mr-4">
+                                                {(product.price * product.quantity).toLocaleString('id-ID', {
+                                                    style: 'currency',
+                                                    currency: 'IDR'
+                                                })}
+                                            </p>
                                         </div>
-                                    ))}
-                                    <hr className="my-1 border-t-1 border-black mb-3" />
-                                    <div className="flex text-xs bg-[#BEDBCF] w-36 ml-56 py-3 px-3">
-                                        <p className="mr-10">Total</p>
-                                        <p>Rp{calculateTotal(filteredTransaksi.products)}</p>
+                                    )) : (
+                                        <div className="text-xs py-4 px-6">
+                                            <p>Produk tidak tersedia</p>
+                                        </div>
+                                    )}
+                                </div>
+                                <hr className="my-1 mt-3 border-t-2 border-blue-gray-300 mb-3 border-dashed"/>
+                                <div
+                                    className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
+                                    <p className="font-semibold text-blue-gray-900">Total</p>
+                                    <p className="text-[15px] font-semibold text-blue-gray-900">
+                                        {filteredTransaksi.products ? `${calculateTotal(filteredTransaksi.products).toLocaleString('id-ID', {
+                                            style: 'currency',
+                                            currency: 'IDR'
+                                        })}` : ''}
+                                    </p>
+                                </div>
+                                <hr className="my-1 mt-3 border-t-2 border-blue-gray-300 mb-3 border-dashed"/>
+                                <div
+                                    className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
+                                    <p className="font-semibold text-blue-gray-700">Metode Pembayaran</p>
+                                    <p className="text-[15px] font-semibold text-blue-gray-700">
+                                        {filteredTransaksi.payment_method}
+                                    </p>
+                                </div>
+                                <div
+                                    className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-2 relative ml-4 mb-3 mr-4">
+                                    <p className="font-semibold text-blue-gray-700">Status</p>
+                                    <div className={` 
+                                            ${filteredTransaksi.status}`}>
+                                        <p className={`text-sm  
+                                                ${filteredTransaksi.status === 'Belum lunas' ? 'text-[#7A3636]' : 'text-[#2B713A]'}`}>{filteredTransaksi.status}</p>
                                     </div>
                                 </div>
                             </div>
