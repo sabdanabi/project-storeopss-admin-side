@@ -7,7 +7,7 @@ export function AgustusChart({statistics}) {
                 <BarChart
                     width={500}
                     height={300}
-                    data={statistics}
+                    data={statistics.data}
                     margin={{right: 40}}
                 >
                     <CartesianGrid strokeDasharray="3 3"/>
