@@ -68,8 +68,10 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                 setSelectedValueRD2('');
                 setSelectedProducts([]);
                 updateProductsState();
+                resetForm()
             } else {
                 toast.error("Gagal menambahkan transaksi.");
+
             }
         } catch (error) {
             console.error("Terjadi kesalahan saat menambahkan transaksi:", error);
