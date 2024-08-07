@@ -2,7 +2,6 @@ import DescPageComponent from "../components_reused/DescPageComponent.jsx";
 import FilterComponents from "./FilterComponents.jsx";
 import PropTypes from "prop-types";
 import { BtnNotaTransaksi } from "./button/BtnNotaTransaksi.jsx";
-import { BtnEditTransaksi } from "./button/BtnEditTransaksi.jsx";
 
 export default function TblTransaksi({ handleSearchChange, searchQuery, filteredTransaksi, updateProductsState, handleStatusFilterChange }) {
     return (
