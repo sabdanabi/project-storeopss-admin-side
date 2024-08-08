@@ -1,6 +1,7 @@
 import Popup from "reactjs-popup";
 import { getAllProduct } from "../../../services/StockService.jsx";
 import {useEffect, useState} from "react";
+import PropTypes from "prop-types";
 import {FilterAddTransaksi} from "../FilterAddTransaksi.jsx";
 
 export function BtnPilihProduk({ onProductSelect}) {
@@ -190,4 +191,9 @@ export function BtnPilihProduk({ onProductSelect}) {
             </Popup>
         </div>
     );
+}
+
+
+BtnPilihProduk.propTypes = {
+    onProductSelect : PropTypes.func.isRequired,
 }

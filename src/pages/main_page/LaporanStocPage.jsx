@@ -45,7 +45,7 @@ export default function LaporanStockPage() {
             <SideNavbarComponent />
             <div className="flex flex-col flex-1 w-full">
                 <PartTop />
-                <NamePageComponent nama={"Laporan Stock"} />
+                <NamePageComponent nama={"Laporan Stock"} subtitle={"dapatkan laporan stock anda secara real time"}/>
                 {isLoading ? (
                     <div className="flex items-center justify-center h-full">
                         <Spinner

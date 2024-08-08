@@ -2,7 +2,7 @@
 export function TestTabel({products}) {
     return (
         <div className="bg-white flex
-                        border-b-[3px] border-gray-200 overflow-auto h-[420px]">
+                        border-b-[3px] border-gray-200 overflow-auto">
             <table className="w-full ">
                 <thead className="h-12 border-b-2">
                 <tr className="text-sm text-[#9CA4AE]">

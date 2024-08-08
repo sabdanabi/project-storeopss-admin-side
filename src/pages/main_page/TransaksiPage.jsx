@@ -1,4 +1,4 @@
-import SideNavbarComponent from "../../components/components_reused/SideNavbarComponent.jsx";
+ import SideNavbarComponent from "../../components/components_reused/SideNavbarComponent.jsx";
 import PartTop from "../../components/components_reused/PartTop.jsx";
 import TblTransaksi from "../../components/page_transaksi_components/TblTransaksi.jsx";
 import BtnAddTransaksi from "../../components/page_transaksi_components/button/BtnAddTransaksi.jsx";
