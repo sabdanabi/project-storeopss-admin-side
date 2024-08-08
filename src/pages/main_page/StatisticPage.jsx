@@ -49,7 +49,7 @@ export default function StatisticPage() {
 
             <div className="flex flex-col flex-1 w-full">
                 <PartTop/>
-                <NamePageComponent nama={"Statistic Produk"}/>
+                <NamePageComponent nama={"Statistik Produk"}/>
 
                 {loading ? (
                     <div className="flex items-center justify-center h-full">

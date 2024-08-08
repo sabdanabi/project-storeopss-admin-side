@@ -15,19 +15,17 @@ export function CardHistoryAddProduct({addProductHistory}) {
                             <p className="absolute left-28">:</p>
                             <p className="font-semibold text-[#8C8BB4] text-[13px] absolute left-32">{entry.name}</p>
                         </div>
+                    <div className="flex text-xs font-medium text-[#403E8A] mb-2 relative mt-3 ml-4 mr-4">
+                        <p className="text-[13px]  text-blue-gray-500">Harga Beli</p>
+                        <p className="absolute left-28">:</p>
+                        <p className="font-semibold text-[#8C8BB4] text-[13px] absolute left-32">{(entry.purchase_price).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })} total</p>
+                    </div>
 
-                        <div className="flex text-xs font-medium text-[#403E8A] mb-2 relative mt-3 ml-4 mr-4">
-                            <p className="text-[13px]  text-blue-gray-500">Harga Beli</p>
-                            <p className="absolute left-28">:</p>
-                            <p className="font-semibold text-[#8C8BB4] text-[13px] absolute left-32">Rp {entry.purchase_price} total</p>
-                        </div>
-
-                        <div className="flex text-xs font-medium text-[#403E8A] mb-2 relative mt-3 ml-4 mr-4">
-                            <p className="text-[13px]  text-blue-gray-500">Harga Jual</p>
-                            <p className="absolute left-28">:</p>
-                            <p className="font-semibold text-[#8C8BB4] text-[13px] absolute left-32">Rp {entry.selling_price} /
-                                pcs/kg</p>
-                        </div>
+                    <div className="flex text-xs font-medium text-[#403E8A] mb-2 relative mt-3 ml-4 mr-4">
+                        <p className="text-[13px]  text-blue-gray-500">Harga Jual</p>
+                        <p className="absolute left-28">:</p>
+                        <p className="font-semibold text-[#8C8BB4] text-[13px] absolute left-32">{(entry.selling_price).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })} / pcs/kg</p>
+                    </div>
 
                         <div className="flex text-xs font-medium text-[#403E8A] mb-2 relative mt-3 ml-4 mr-4">
                             <p className="text-[13px]  text-blue-gray-500">Stock Produk</p>

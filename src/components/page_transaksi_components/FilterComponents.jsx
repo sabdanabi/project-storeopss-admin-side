@@ -43,11 +43,11 @@ export default function FilterComponents({handleSearchChange, searchQuery, handl
             <Menu>
                 <MenuButton as={Button} rightIcon={
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                         stroke="currentColor" className="w-5 h-5 text-[#727E91]">
+                         stroke="currentColor" className="w-5 h-5 text-[#727E91] lg:hidden xl:block">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                     </svg>
                 }>
-                    <p className="text-[14px] font-normal mr-10 text-[#727E91]">{selectedStatus}</p>
+                    <p className="text-[14px] font-normal mr-10 text-[#727E91] lg:text-xs xl:text-sm">{selectedStatus}</p>
                 </MenuButton>
                 <MenuList>
                     <p className="text-[14px]"><MenuItem onClick={() => onStatusChange('Semua')}>Semua</MenuItem></p>
@@ -59,7 +59,7 @@ export default function FilterComponents({handleSearchChange, searchQuery, handl
             <Menu>
                 <MenuButton as={Button} rightIcon={
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                         stroke="currentColor" className="w-5 h-5 text-[#727E91]">
+                         stroke="currentColor" className="w-5 h-5 text-[#727E91] lg:hidden xl:block">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                     </svg>
                 }>
