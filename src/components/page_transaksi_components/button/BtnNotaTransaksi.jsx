@@ -18,22 +18,30 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
                                 body, html {
                                     margin: 0;
                                     padding: 0;
-                                    width: 58mm;
+                                    width: 50mm;
+                                    height: auto;
                                 }
                                 .notaTransaksi {
                                     width: 58mm;
                                     margin: 0;
-                                    padding: 0;
+                                    max-height: 100%;
+                                    padding: 0;  
                                 }
                                 .flex {
                                     display: flex;
                                     justify-content: space-between;
+                                    align-items: center;
                                 }
                                 .bold {
-                                    font-weight: 600;
+                                    font-weight: 400;
                                 }
                                 * {
                                     box-sizing: border-box;
+                                }
+                                hr {
+                                border: 0;
+                                height: 2px; 
+                                background: black; 
                                 }
                             }
                         </style>
@@ -93,7 +101,7 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
                                 <p className="text-[14px] text-[#2B713A] font-semibold bold">Selesai</p>
                             </div>
                             <div
-                                className="flex flex-col text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
+                                className="text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
                                 <p className="font-semibold text-blue-gray-700 bold">Resi kostumer {filteredTransaksi.customer.name}</p>
                                 <p className="font-semibold text-[#8C8BB4] bold">{filteredTransaksi.date}</p>
                             </div>
@@ -140,7 +148,7 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
                                     {filteredTransaksi.payment_method}
                                 </p>
                             </div>
-                            <div
+                            <div id="status"
                                 className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-2 relative ml-4 mb-3 mr-4">
                                 <p className="font-semibold text-blue-gray-700 bold">Status</p>
                                 <div className={` 
