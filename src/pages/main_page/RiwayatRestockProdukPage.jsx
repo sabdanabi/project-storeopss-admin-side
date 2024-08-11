@@ -15,7 +15,7 @@ export default function RiwayatRestockProdukPage() {
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const [statusFilter, setStatusFilter] = useState(''); 
+    const [statusFilter, setStatusFilter] = useState('');
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
@@ -67,7 +67,7 @@ export default function RiwayatRestockProdukPage() {
                         />
                     </div>
                 ) : isAuth ? (
-                    <main className="flex-1 p-5 overflow-y-auto">
+                    <main className="flex-1 pt-10 pl-10 pr-10 overflow-y-auto">
                         <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
                             <DescPageComponent
                                 desc={"Riwayat pengisian ulang produk anda dari waktu ke waktu"} />
@@ -77,7 +77,7 @@ export default function RiwayatRestockProdukPage() {
                                 handleStatusFilterChange={handleStatusFilterChange}
                             />
 
-                            <div className="bg-[#EEF0F5] p-3 h-full border-b-[3px] border-gray-200 grid grid-cols-3 gap-5 overflow-auto">
+                            <div className="flex items-center justify-center h-full">
                                 <HistoryRestockCard restockHistory={filteredHistory} />
                             </div>
                         </div>
