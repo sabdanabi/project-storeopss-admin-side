@@ -1,5 +1,5 @@
 import DescPageComponent from "../components_reused/DescPageComponent.jsx";
-import FilterComponents from "./FilterComponents.jsx";
+import FilterComponents from "./filter_components/FilterComponents.jsx";
 import PropTypes from "prop-types";
 import { BtnNotaTransaksi } from "./button/BtnNotaTransaksi.jsx";
 import { BtnEditTransaksi } from "./button/BtnEditTransaksi.jsx";

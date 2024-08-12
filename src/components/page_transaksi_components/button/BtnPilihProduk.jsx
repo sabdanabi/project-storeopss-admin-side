@@ -2,7 +2,7 @@ import Popup from "reactjs-popup";
 import { getAllProduct } from "../../../services/StockService.jsx";
 import {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {FilterAddTransaksi} from "../FilterAddTransaksi.jsx";
+import {FilterAddTransaksi} from "../filter_components/FilterAddTransaksi.jsx";
 
 export function BtnPilihProduk({ onProductSelect}) {
     const [isInnerPopupOpen, setInnerPopupOpen] = useState(false);

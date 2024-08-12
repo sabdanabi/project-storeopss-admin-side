@@ -5,7 +5,7 @@ import IconEdit2 from "../../components_reused/Icon/EditIcon.jsx";
 
 
 
-export default function BtnEditPorduk({updateProductsState, id}) {
+export default function  BtnEditPorduk({updateProductsState, id}) {
     return(
         <>
             <Popup trigger={
@@ -16,7 +16,7 @@ export default function BtnEditPorduk({updateProductsState, id}) {
                         <div className="fixed inset-0 flex justify-center items-center h-screen bg-black/40">
                             <div className="bg-white rounded-xl shadow p-5 transition-all w-[900px] h-[450px]">
                                 <div className="flex justify-between">
-                                    <p className="font-semibold text-2xl mb-7 m-auto">Edit Produk</p>
+                                    {/*<p className="font-semibold text-2xl mb-7 m-auto">Edit Produk</p>*/}
                                     <button onClick={() => close()} className="h-7">
                                         <svg
                                             xmlns="http://www.w3.org/2000/svg"

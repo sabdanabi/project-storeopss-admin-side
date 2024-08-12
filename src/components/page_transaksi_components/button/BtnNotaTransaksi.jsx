@@ -53,6 +53,11 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
             `);
             printWindow.document.close();
             printWindow.print();
+
+            printWindow.onafterprint = () => {
+                closePopup();
+                window.location.reload();
+            };
         } else {
             console.error("Element with ID 'notaTransaksi' not found.");
         }
@@ -158,7 +163,7 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
                                 </div>
                             </div>
                         </div>
-                        <button onClick={printNotaTransaksi}
+                        <button onClick={() => printNotaTransaksi(close)}
                                 className="flex items-center px-7 py-2 bg-[#1A4F8B] ml-40 rounded-lg shadow-sm hover:bg-gray-50 hover:border-[#1A4F8B] hover:border-2">
                             <span className="text-white font-medium text-sm group-hover:text-[#1A4F8B]">Cetak</span>
                         </button>

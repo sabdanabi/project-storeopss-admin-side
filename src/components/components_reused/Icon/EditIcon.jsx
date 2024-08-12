@@ -1,4 +1,3 @@
-import * as React from "react";
 
 function IconEdit2(props) {
   return (
@@ -9,8 +8,8 @@ function IconEdit2(props) {
       strokeLinejoin="round"
       strokeWidth={2}
       viewBox="0 0 24 24"
-      height="23px"
-      width="23px"
+      height="16px"
+      width="16px"
       style={{ cursor: 'pointer' }}
       {...props}
     >

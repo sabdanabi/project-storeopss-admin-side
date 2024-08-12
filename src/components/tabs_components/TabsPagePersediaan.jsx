@@ -46,6 +46,7 @@ export default function TabsPagePersediaan({ items, setSelectedTab, data, search
                         ))}
                     </div>
                 </div>
+
                 <div className='mr-6 text-[14px]'>
                     <Menu>
                         <MenuButton as={Button} rightIcon={

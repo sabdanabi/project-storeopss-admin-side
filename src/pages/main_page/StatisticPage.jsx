@@ -3,9 +3,10 @@ import SideNavbarComponent from "../../components/components_reused/SideNavbarCo
 import PartTop from "../../components/components_reused/PartTop.jsx";
 import NamePageComponent from "../../components/components_reused/NamePageComponent.jsx";
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
-import BarChartComponent from "../../components/chart_components/BarChartComponent.jsx";
+import BarChartComponent from "../../components/statistic_page_components/BarChartComponent.jsx";
 import { getStatisticProductSell } from "../../services/StatisticService.jsx";
 import {Spinner} from "@chakra-ui/react";
+import {FilterRecapProductComponent} from "../../components/statistic_page_components/FilterRecapProductComponent.jsx";
 
 export default function StatisticPage() {
     const [data, setData] = useState([]);
@@ -65,6 +66,7 @@ export default function StatisticPage() {
                         <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
                             <DescPageComponent
                                 desc={`Laporan stok ini mencakup recap product pada bulan .`}/>
+                            <FilterRecapProductComponent/>
                             <BarChartComponent statistics={data}/>
                         </div>
                     </main>
