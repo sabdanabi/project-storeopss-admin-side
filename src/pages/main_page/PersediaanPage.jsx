@@ -71,6 +71,7 @@ export default function PersediaanPage() {
                 ) : isAuth ? (
                     <TblStock products={filteredHistory} handleDelete={handleDelete} searchQuery={searchQuery}
                               updateProductsState={updateProductsState} handleSearchChange={handleSearchChange}/>
+
                 ) : (
                     <div className="flex items-center justify-center h-full">
                         <p className="text-xl">{ error }</p>
