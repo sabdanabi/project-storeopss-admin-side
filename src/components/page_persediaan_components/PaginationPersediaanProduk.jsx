@@ -25,10 +25,10 @@ export function PaginationPersediaanProduk({meta, onPageChange}) {
                             onClick={() => onPageChange(link.url ? new URL(link.url).searchParams.get('page') : current_page)}
                             isDisabled={!link.url}
                             colorScheme={link.active ? "blue" : "gray"}
-                            size="sm" // Mengatur ukuran tombol
-                            w="45px" // Mengatur lebar tombol
-                            h="25px" // Mengatur tinggi tombol
-                            m={2} // Mengatur margin antara tombol
+                            size="sm"
+                            w="50px"
+                            h="25px"
+                            m={3}
                         >
                             <Text dangerouslySetInnerHTML={{ __html: link.label }} />
                         </Button>
