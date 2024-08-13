@@ -66,17 +66,17 @@ export default function RiwayatTambahProdukPage() {
                         />
                     </div>
                 ) : isAuth ? (
-                    <main className="flex-1 p-5 overflow-y-auto">
-                        <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
-                            <DescPageComponent
+                    <main className="flex-1 p-10 overflow-y-auto">
+            <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
+            <DescPageComponent
                                 desc={"Riwayat tambah produk anda dari waktu ke waktu."} />
                             <FilterComponentNewPro
                                 searchQuery={searchQuery}
                                 handleSearchChange={handleSearchChange}
                                 handleStatusFilterChange={handleStatusFilterChange}
                             />
-                            <div className="bg-[#EEF0F5] p-3 border-b-[3px] border-gray-200 grid grid-cols-3 gap-4 overflow-auto">
-                                <CardHistoryAddProduct addProductHistory={filteredHistory} />
+                <div className="bg-white border-b-[3px] border-gray-200 overflow-auto">
+                <CardHistoryAddProduct addProductHistory={filteredHistory} />
                             </div>
                         </div>
                     </main>

@@ -1,43 +1,91 @@
+import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-export function CardHistoryAddProduct({addProductHistory}) {
+export function CardHistoryAddProduct({ addProductHistory }) {
+    const [selectedEntry, setSelectedEntry] = useState(null);
+
+    const handleDetailClick = (entry) => {
+        setSelectedEntry(entry);
+    };
+
+    const handleCloseModal = () => {
+        setSelectedEntry(null);
+    };
+
     return (
         <>
-            {addProductHistory.map((entry, index) => (
-                <div className="bg-white w-96 py-3 px-3 rounded h-56" key={`${entry.id}-${index}`}>
-                    <div className="flex mb-10">
-                        <p className="mr-32 font-semibold text-[#403E8A]">Riwayat Tambah Produk</p>
-                        <p className="text-[10px] mt-1 text-[#8C8BB4]">{entry.date}</p>
-                    </div>
+            <table className="w-full h-12">
+                <thead className="h-12 border-b-2">
+                    <tr className="text-sm text-[#9CA4AE]">
+                        <td className="px-4">No</td>
+                        <td className="px-4">Nama Produk</td>
+                        <td className="px-4">Tanggal</td>
+                        <td className="px-4">Stok</td>
+                        <td className="px-4">Aksi</td>
+                    </tr>
+                </thead>
+                <tbody className="font-semibold text-blue-gray-700">
+                    {addProductHistory.map((entry, index) => (
+                        <tr className="border-b-2 h-18" key={`${entry.id}-${index}`}>
+                            <td className="px-4"><p className="mr-3">{index + 1}</p></td>
+                            <td className="py-2 px-4 border-b">{entry.name}</td>
+                            <td className="py-2 px-4 border-b">{entry.date}</td>
+                            <td className="py-2 px-4 border-b">{entry.quantity}</td>
+                            <td className="py-2 px-4 border-b">
+                                <button
+                                    className="text-[10px] hover:bg-[#d7e0e8] text-blue-gray-500 bg-[#dde6efc6] h-[33px] w-[68px] rounded-lg font-semibold"
+                                    onClick={() => handleDetailClick(entry)}
+                                >
+                                    Detail
+                                </button>
+                            </td>
+                        </tr>
+                    ))}
+                </tbody>
+            </table>
 
-                        <div className="flex text-xs font-medium text-[#403E8A] mb-2 relative ml-4 mr-4">
-                            <p className="text-[13px] text-blue-gray-500">Nama Produk</p>
-                            <p className="absolute left-28">:</p>
-                            <p className="font-semibold text-[#8C8BB4] text-[13px] absolute left-32">{entry.name}</p>
+            {selectedEntry && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                    <div className="bg-white p-4 rounded-lg max-w-lg w-full">
+                        <div className="flex justify-between items-center mb-4">
+                        <p className="font-semibold text-[20px] text-blue-gray-600">Riwayat Tambah Produk</p>
+                            <button
+                                className="text-red-500 font-bold"
+                                onClick={handleCloseModal}
+                            >
+                                X
+                            </button>
                         </div>
-                    <div className="flex text-xs font-medium text-[#403E8A] mb-2 relative mt-3 ml-4 mr-4">
-                        <p className="text-[13px]  text-blue-gray-500">Harga Beli</p>
-                        <p className="absolute left-28">:</p>
-                        <p className="font-semibold text-[#8C8BB4] text-[13px] absolute left-32">{(entry.purchase_price).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })} total</p>
-                    </div>
 
-                    <div className="flex text-xs font-medium text-[#403E8A] mb-2 relative mt-3 ml-4 mr-4">
-                        <p className="text-[13px]  text-blue-gray-500">Harga Jual</p>
-                        <p className="absolute left-28">:</p>
-                        <p className="font-semibold text-[#8C8BB4] text-[13px] absolute left-32">{(entry.selling_price).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })} / pcs/kg</p>
-                    </div>
+                        <div className="bg-white w-85 py-3 px-2 rounded-[8px] shadow-md">
+                        <div className="flex justify-between items-center mb-4">
+                            <p className="font-semibold ml-4  text-[#8C8BB4] text-[15px]">{selectedEntry.name}</p>
+                            <p className="text-[12px] font-normal text-blue-gray-300">{selectedEntry.date}</p>
+                            </div>
 
-                        <div className="flex text-xs font-medium text-[#403E8A] mb-2 relative mt-3 ml-4 mr-4">
-                            <p className="text-[13px]  text-blue-gray-500">Stock Produk</p>
-                            <p className="absolute left-28">:</p>
-                            <p className="font-semibold text-[#8C8BB4] text-[13px] absolute left-32">{entry.quantity}(Stok
-                                saat
-                                ditambahkan)</p>
+                            <div className="flex text-xs font-medium text-[#403E8A] mb-2 relative mt-3 ml-4 mr-4">
+                                <p className="text-[13px] text-blue-gray-500">Harga Beli</p>
+                                <p className="absolute left-28">:</p>
+                                <p className="font-semibold text-[#8C8BB4] text-[13px] absolute left-32">Rp {selectedEntry.purchase_price.toLocaleString('id-ID')}</p>
+                            </div>
+
+                            <div className="flex text-xs font-medium text-[#403E8A] mb-2 relative mt-3 ml-4 mr-4">
+                                <p className="text-[13px] text-blue-gray-500">Harga Jual</p>
+                                <p className="absolute left-28">:</p>
+                                <p className="font-semibold text-[#8C8BB4] text-[13px] absolute left-32">Rp {selectedEntry.selling_price.toLocaleString('id-ID')} / pcs/kg</p>
+                            </div>
+
+                            <div className="flex text-xs font-medium text-[#403E8A] mb-2 relative mt-3 ml-4 mr-4">
+                                <p className="text-[13px] text-blue-gray-500">Stock Produk</p>
+                                <p className="absolute left-28">:</p>
+                                <p className="font-semibold text-[#8C8BB4] text-[13px] absolute left-32">{selectedEntry.quantity} (Stok saat ditambahkan)</p>
+                            </div>
                         </div>
+                    </div>
                 </div>
-            ))}
+            )}
         </>
-    )
+    );
 }
 
 CardHistoryAddProduct.propTypes = {
