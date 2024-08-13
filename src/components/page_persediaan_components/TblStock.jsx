@@ -7,7 +7,7 @@ import { ToastContainer} from "react-toastify";
 import {SearchBarStock} from "./SearchBarStock.jsx";
 
 
-export default function TblStock({products, handleDelete, updateProductsState,handleSearchChange, searchQuery}) {
+export default function TblStock({products, handleDelete, updateProductsState,handleSearchChange, searchQuery, exportToExcel}) {
 
     const [selectedTab,setSelectedTab] = useState(0)
 
@@ -58,7 +58,7 @@ export default function TblStock({products, handleDelete, updateProductsState,ha
             <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
                 <DescPageComponent desc={"Selamat datang di admin dashboard Anda."}/>
 
-                <TabsPagePersediaan items={items} setSelectedTab={setSelectedTab}/>
+                <TabsPagePersediaan items={items} setSelectedTab={setSelectedTab} exportToExcel={exportToExcel}/>
 
                 <div>
                     {items.map((item, index) => (

@@ -5,33 +5,48 @@ export function PaginationPersediaanProduk({meta, onPageChange}) {
     const { current_page, last_page, links } = meta || {};
 
     return (
-        <Flex justifyContent="center"  align="center" mt={4}>
-            <Button
-                onClick={() => onPageChange(1)}
-                isDisabled={current_page === 1}
-            >
-                First
-            </Button>
-            <Box>
-                {links && links.map((link, index) => (
-                    <Button
-                        key={index}
-                        mx={1}
-                        onClick={() => onPageChange(link.url ? new URL(link.url).searchParams.get('page') : current_page)}
-                        isDisabled={!link.url}
-                        colorScheme={link.active ? "blue" : "gray"}
-                    >
-                        <Text dangerouslySetInnerHTML={{ __html: link.label }} />
-                    </Button>
-                ))}
-            </Box>
-            <Button
-                onClick={() => onPageChange(last_page)}
-                isDisabled={current_page === last_page}
-            >
-                Last
-            </Button>
-        </Flex>
+        <div className="">
+            <Flex justifyContent="center"  align="center" mt={4}>
+                <Button
+                    onClick={() => onPageChange(1)}
+                    isDisabled={current_page === 1}
+                    size="sm"
+                    w="70px"
+                    h="30px"
+                    p={2}
+                    mr={2}
+                >
+                    First
+                </Button>
+                <Box>
+                    {links && links.map((link, index) => (
+                        <Button
+                            key={index}
+                            onClick={() => onPageChange(link.url ? new URL(link.url).searchParams.get('page') : current_page)}
+                            isDisabled={!link.url}
+                            colorScheme={link.active ? "blue" : "gray"}
+                            size="sm" // Mengatur ukuran tombol
+                            w="45px" // Mengatur lebar tombol
+                            h="25px" // Mengatur tinggi tombol
+                            m={2} // Mengatur margin antara tombol
+                        >
+                            <Text dangerouslySetInnerHTML={{ __html: link.label }} />
+                        </Button>
+                    ))}
+                </Box>
+                <Button
+                    onClick={() => onPageChange(last_page)}
+                    isDisabled={current_page === last_page}
+                    size="sm"
+                    w="70px"
+                    h="30px"
+                    p={2}
+                    ml={2}
+                >
+                    Last
+                </Button>
+            </Flex>
+        </div>
     )
 }
 

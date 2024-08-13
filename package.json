@@ -25,7 +25,8 @@
     "react-router-dom": "^6.23.0",
     "react-toastify": "^10.0.5",
     "reactjs-popup": "^2.0.6",
-    "recharts": "^2.12.6"
+    "recharts": "^2.12.6",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",

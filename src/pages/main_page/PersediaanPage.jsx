@@ -7,7 +7,8 @@ import {toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import {BtnDropDownAddStock} from "../../components/page_persediaan_components/button/BtnDropDownAddStock.jsx";
 import { Spinner } from '@chakra-ui/react'
- import {PaginationPersediaanProduk} from "../../components/page_persediaan_components/PaginationPersediaanProduk.jsx";
+import {PaginationPersediaanProduk} from "../../components/page_persediaan_components/PaginationPersediaanProduk.jsx";
+import * as XLSX from 'xlsx';
 
 export default function PersediaanPage() {
     const [products, setProducts] = useState([]);
@@ -16,19 +17,6 @@ export default function PersediaanPage() {
     const [error, setError] = useState("");
     const [searchQuery, setSearchQuery] = useState('');
     const [meta, setMeta] = useState({});
-
-    const handleSearchChange = (e) => {
-        setSearchQuery(e.target.value);
-    };
-
-    const filteredHistory = products.filter((product) => {
-        return product.name.toLowerCase().includes(searchQuery.toLowerCase());
-    });
-
-    const handlePageChange = (page) => {
-        fetchProducts(page);
-    };
-
 
     const fetchProducts = async (page = 1) => {
         try {
@@ -47,6 +35,35 @@ export default function PersediaanPage() {
             setLoading(false);
         }
     }
+
+    const exportToExcel = () => {
+        const dataToExport = products.map((product, index) => ({
+            No: index + 1,
+            Produk: product.name,
+            'Harga Beli': product.purchase_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }),
+            'Harga Jual': product.selling_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }),
+            Stock: product.quantity ?? 0
+        }));
+
+        const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Produk Stock");
+
+        XLSX.writeFile(workbook, "Produk_Stock.xlsx");
+    };
+
+
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const filteredHistory = products.filter((product) => {
+        return product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    });
+
+    const handlePageChange = (page) => {
+        fetchProducts(page);
+    };
 
     const handleDelete = async (productId) => {
         await deleteProduct(productId);
@@ -88,7 +105,8 @@ export default function PersediaanPage() {
                 ) : isAuth ? (
                     <div>
                         <TblStock products={filteredHistory} handleDelete={handleDelete} searchQuery={searchQuery}
-                                  updateProductsState={updateProductState} handleSearchChange={handleSearchChange}/>
+                                  updateProductsState={updateProductState} handleSearchChange={handleSearchChange}
+                                  exportToExcel={exportToExcel}/>
                         <PaginationPersediaanProduk  meta={meta} onPageChange={handlePageChange}/>
                     </div>
                 ) : (
