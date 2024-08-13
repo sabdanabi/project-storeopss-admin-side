@@ -54,7 +54,7 @@ export default function TblStock({products, handleDelete, updateProductsState,ha
     ];
 
     return (
-        <main className="flex-1 pt-10 pl-10 pr-10 overflow-y-auto">
+        <main className="flex-1 pt-6 pl-10 pr-10 overflow-y-auto">
             <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
                 <DescPageComponent desc={"Selamat datang di admin dashboard Anda."}/>
 

@@ -1,10 +1,10 @@
 import DescPageComponent from "../components_reused/DescPageComponent.jsx";
+import FilterComponents from "./filter_components/FilterComponents.jsx";
 import PropTypes from "prop-types";
 import { BtnNotaTransaksi } from "./button/BtnNotaTransaksi.jsx";
 import { BtnEditTransaksi } from "./button/BtnEditTransaksi.jsx";
 import Pagination from '../components_reused/Pagination.jsx';
 import {useState} from "react";
-import FilterComponents from "../components_reused/FilterComponent.jsx";
 
 export default function TblTransaksi({ handleSearchChange, searchQuery, filteredTransaksi, updateProductsState, handleStatusFilterChange }) {
     const [currentPage, setCurrentPage] = useState(1);

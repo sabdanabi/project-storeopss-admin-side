@@ -5,9 +5,9 @@ import { BtnDeleteNew } from "../../components/page_persediaan_components/button
 
 export default function TblProductStock({ products, handleDelete, updateProductState }) {
     return (
-        <div className="bg-white flex border-b-[3px] border-gray-200 overflow-auto">
+        <div className="bg-white flex border-b-[3px] border-gray-200 overflow-auto h-80">
             <table className="w-full">
-                <thead className="h-12 border-b-2">
+                <thead className="h-10 border-b-2">
                     <tr className="text-sm text-[#9CA4AE]">
                         <td className="px-4">No</td>
                         <td>Produk</td>
@@ -23,7 +23,7 @@ export default function TblProductStock({ products, handleDelete, updateProductS
                 </thead>
                 <tbody className="font-semibold text-blue-gray-700">    
                     {products.map((product, index) => (
-                        <tr className="border-b-2 h-18" key={product.id}>
+                        <tr className="border-b-2 h-13 text-xs" key={product.id}>
                             <td className="px-4"><p className="mr-3">{index + 1}</p></td>
                             <td>
                                 <div className="flex py-3">

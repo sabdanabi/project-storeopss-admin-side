@@ -19,13 +19,16 @@ const addNewProduct = async (formData) => {
 };
 
 
-const getAllProduct = async () => {
+const getAllProduct = async (page = 1) =>  {
     try {
         const response = await axios.get(`${baseUrl}/api/products`, {
             headers: {
                 AUTHORIZATION: token,
                 "ngrok-skip-browser-warning": true
             },
+            params: {
+                page: page
+            }
         });
         return response.data;
     } catch (error) {

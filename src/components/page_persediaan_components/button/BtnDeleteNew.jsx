@@ -20,15 +20,15 @@ export function BtnDeleteNew({ id, handleDelete }) {
             <Button
                 colorScheme='red'
                 onClick={onOpen}
-                width='auto'
-                height='auto'
-                p={0}
+                width='10px'     // Sesuaikan lebar tombol
+                height='10px'
+                p={3}
                 variant='ghost'
                 aria-label='Delete'
                 _hover={{}}  
                 _focus={{}}  
             >
-                <IconTrash />
+                <IconTrash boxSize={1}/>
             </Button>
 
             <AlertDialog
