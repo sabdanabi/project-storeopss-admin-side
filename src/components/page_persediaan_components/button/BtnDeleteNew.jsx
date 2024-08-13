@@ -9,17 +9,26 @@ import {
     Button,
     useDisclosure,
 } from '@chakra-ui/react';
+import IconTrash from '../../components_reused/Icon/DeleteIcon'; // Import your delete icon
 
-export function BtnDeleteNew({id, handleDelete}) {
+export function BtnDeleteNew({ id, handleDelete }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
     const cancelRef = React.useRef();
 
     return (
         <>
-            <Button colorScheme='red' onClick={onOpen} width='20' fontSize='12px'>
-                Hapus
-                <br/>
-                Produk
+            <Button
+                colorScheme='red'
+                onClick={onOpen}
+                width='10px'     // Sesuaikan lebar tombol
+                height='10px'
+                p={3}
+                variant='ghost'
+                aria-label='Delete'
+                _hover={{}}  
+                _focus={{}}  
+            >
+                <IconTrash boxSize={1}/>
             </Button>
 
             <AlertDialog
@@ -30,7 +39,7 @@ export function BtnDeleteNew({id, handleDelete}) {
                 <AlertDialogOverlay>
                     <AlertDialogContent>
                         <AlertDialogHeader fontSize='lg' fontWeight='bold'>
-                            Delete Customer
+                            Delete Item
                         </AlertDialogHeader>
 
                         <AlertDialogBody>

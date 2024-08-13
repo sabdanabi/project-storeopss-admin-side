@@ -1,12 +1,14 @@
  import SideNavbarComponent from "../../components/components_reused/SideNavbarComponent.jsx";
 import PartTop from "../../components/components_reused/PartTop.jsx";
 import TblStock from "../../components/page_persediaan_components/TblStock.jsx";
-import PopUpAddStock from "../../components/page_persediaan_components/button/PopUpAddStock.jsx";
 import {useEffect, useState} from "react";
 import {getAllProduct, addNewProduct, deleteProduct, importProductExcel} from "../../services/StockService.jsx";
 import {toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
- import {BtnDropDownAddStock} from "../../components/page_persediaan_components/button/BtnDropDownAddStock.jsx";
+import {BtnDropDownAddStock} from "../../components/page_persediaan_components/button/BtnDropDownAddStock.jsx";
+import { Spinner } from '@chakra-ui/react'
+import {PaginationPersediaanProduk} from "../../components/page_persediaan_components/PaginationPersediaanProduk.jsx";
+import * as XLSX from 'xlsx';
 
 export default function PersediaanPage() {
     const [products, setProducts] = useState([]);
@@ -14,23 +16,16 @@ export default function PersediaanPage() {
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [searchQuery, setSearchQuery] = useState('');
+    const [meta, setMeta] = useState({});
 
-    const handleSearchChange = (e) => {
-        setSearchQuery(e.target.value);
-    };
-
-    const filteredHistory = products.filter((product) => {
-        return product.name.toLowerCase().includes(searchQuery.toLowerCase());
-    });
-
-    const updateProductsState = async () => {
+    const fetchProducts = async (page = 1) => {
         try {
 
             setLoading(true);
-            const result = await getAllProduct();
+            const result = await getAllProduct(page);
             setProducts(result.data);
             setAuth(true);
-
+            setMeta(result.meta);
         } catch(e) {
 
             console.log(e);
@@ -41,6 +36,35 @@ export default function PersediaanPage() {
         }
     }
 
+    const exportToExcel = () => {
+        const dataToExport = products.map((product, index) => ({
+            No: index + 1,
+            Produk: product.name,
+            'Harga Beli': product.purchase_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }),
+            'Harga Jual': product.selling_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }),
+            Stock: product.quantity ?? 0
+        }));
+
+        const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Produk Stock");
+
+        XLSX.writeFile(workbook, "Produk_Stock.xlsx");
+    };
+
+
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const filteredHistory = products.filter((product) => {
+        return product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    });
+
+    const handlePageChange = (page) => {
+        fetchProducts(page);
+    };
+
     const handleDelete = async (productId) => {
         await deleteProduct(productId);
         setProducts(products.filter(product => product.id !== productId));
@@ -48,8 +72,12 @@ export default function PersediaanPage() {
     };
 
     useEffect(() => {
-        updateProductsState();
+        fetchProducts();
     }, []);
+
+    const updateProductState = () => {
+        fetchProducts(meta.current_page); // Refresh data
+    };
 
 
     return (
@@ -58,26 +86,36 @@ export default function PersediaanPage() {
             <div className="flex flex-col flex-1 w-full overflow-hidden">
                 <PartTop/>
 
-                <BtnDropDownAddStock updateProductsState={updateProductsState}
+                <BtnDropDownAddStock updateProductsState={updateProductState}
                                      addNewProduct={addNewProduct} importProductExcel={importProductExcel}/>
 
                 {/*<BtnAddStock titlePage={"Produk"} titleBtn={"Product"}*/}
-                {/*             updateProductsState={updateProductsState}*/}
+                {/*             fetchProducts={fetchProducts}*/}
                 {/*             addNewProduct={addNewProduct}/>*/}
                 {isLoading ? (
                     <div className="flex items-center justify-center h-full">
-                        <p className="text-xl">Loading...</p>
+                        <Spinner
+                            thickness='4px'
+                            speed='0.65s'
+                            emptyColor='gray.200'
+                            color='blue.500'
+                            size='xl'
+                        />
                     </div>
                 ) : isAuth ? (
-                    <TblStock products={filteredHistory} handleDelete={handleDelete} searchQuery={searchQuery}
-                              updateProductsState={updateProductsState} handleSearchChange={handleSearchChange}/>
-
+                    <div>
+                        <TblStock products={filteredHistory} handleDelete={handleDelete} searchQuery={searchQuery}
+                                  updateProductsState={updateProductState} handleSearchChange={handleSearchChange}
+                                  exportToExcel={exportToExcel}/>
+                        <PaginationPersediaanProduk  meta={meta} onPageChange={handlePageChange}/>
+                    </div>
                 ) : (
                     <div className="flex items-center justify-center h-full">
                         <p className="text-xl">{ error }</p>
                     </div>
                 )}
             </div>
+
         </div>
     );
 }

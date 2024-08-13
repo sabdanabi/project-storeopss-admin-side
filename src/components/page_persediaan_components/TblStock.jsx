@@ -1,4 +1,3 @@
-
 import DescPageComponent from "../components_reused/DescPageComponent.jsx";
 import TabsPagePersediaan from "../tabs_components/TabsPagePersediaan.jsx";
 import {useState} from "react";
@@ -8,7 +7,7 @@ import { ToastContainer} from "react-toastify";
 import {SearchBarStock} from "./SearchBarStock.jsx";
 
 
-export default function TblStock({products, handleDelete, updateProductsState,handleSearchChange, searchQuery}) {
+export default function TblStock({products, handleDelete, updateProductsState,handleSearchChange, searchQuery, exportToExcel}) {
 
     const [selectedTab,setSelectedTab] = useState(0)
 
@@ -55,11 +54,11 @@ export default function TblStock({products, handleDelete, updateProductsState,ha
     ];
 
     return (
-        <main className="flex-1 pt-10 pl-10 pr-10 overflow-y-auto">
+        <main className="flex-1 pt-6 pl-10 pr-10 overflow-y-auto">
             <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
                 <DescPageComponent desc={"Selamat datang di admin dashboard Anda."}/>
 
-                <TabsPagePersediaan items={items} setSelectedTab={setSelectedTab}/>
+                <TabsPagePersediaan items={items} setSelectedTab={setSelectedTab} exportToExcel={exportToExcel}/>
 
                 <div>
                     {items.map((item, index) => (
@@ -87,5 +86,5 @@ TblStock.propTypes = {
     handleDelete: PropTypes.func.isRequired,
     updateProductsState: PropTypes.func.isRequired,
     handleSearchChange: PropTypes.func.isRequired,
-    searchQuery: PropTypes.func.isRequired,
+    searchQuery: PropTypes.string.isRequired,
 };

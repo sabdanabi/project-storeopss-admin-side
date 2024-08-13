@@ -18,19 +18,22 @@
     "flowbite": "^2.3.0",
     "flowbite-react": "^0.9.0",
     "framer-motion": "^11.2.6",
+    "html2pdf.js": "^0.10.2",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.0",
     "react-toastify": "^10.0.5",
     "reactjs-popup": "^2.0.6",
-    "recharts": "^2.12.6"
+    "recharts": "^2.12.6",
+    "xlsx": "^0.18.5"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@vitejs/plugin-react": "^4.2.1",
     "autoprefixer": "^10.4.19",
+    "daisyui": "^4.12.10",
     "eslint": "^8.57.0",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-react-hooks": "^4.6.0",

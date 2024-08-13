@@ -2,3 +2,48 @@
 @tailwind components;
 @tailwind utilities;
 
+@media print {
+    body * {
+        visibility: hidden;
+    }
+    #notaTransaksi, #notaTransaksi * {
+        visibility: visible;
+    }
+    #notaTransaksi {
+        position: absolute;
+        left: 0;
+        top: 0;
+        width: 58mm;
+        margin: 0;
+        padding: 0;
+    }
+
+    #notaTransaksi .font-semibold {
+        font-size: 10px;
+    }
+    #notaTransaksi .text-blue-gray-700 {
+        font-size: 10px;
+    }
+    #notaTransaksi .text-blue-gray-300 {
+        font-size: 8px;
+    }
+    #notaTransaksi .text-blue-gray-900 {
+        font-size: 10px;
+    }
+    #notaTransaksi .text-\[#2B713A\] {
+        font-size: 10px;
+    }
+    #notaTransaksi .text-\[#7A3636\] {
+        font-size: 10px;
+    }
+}
+
+@layer components {
+    .name-page-sideBar-style {
+        @apply block py-3 pl-3 pr-4 text-sm font-medium text-[#8C95A4] rounded-lg group-hover:text-light-blue-800 lg:hidden xl:block;
+    }
+
+}
+
+
+

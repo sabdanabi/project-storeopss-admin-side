@@ -3,8 +3,9 @@ import PartTop from "../../components/components_reused/PartTop.jsx";
 import NamePageComponent from "../../components/components_reused/NamePageComponent.jsx";
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
 import FilterComponentsNotaPage from "../../components/components_reused/FilterComponentsNotaPage.jsx";
-import {useEffect, useState} from "react";
-import {getAllTransaksi} from "../../services/TransaksiService.jsx";
+import { useEffect, useState } from "react";
+import { getAllTransaksi } from "../../services/TransaksiService.jsx";
+import { Spinner } from "@chakra-ui/react";
 
 export default function NotaPage() {
     const [nota, setNota] = useState([]);
@@ -50,108 +51,97 @@ export default function NotaPage() {
         return products.reduce((total, product) => total + product.quantity * product.price, 0);
     }
 
-    return(
+    return (
         <div className="flex h-screen overflow-hidden bg-gray-100">
             <SideNavbarComponent />
             <div className="flex flex-col flex-1 w-full">
                 <PartTop />
-                <NamePageComponent nama={"Nota"} />
+                <NamePageComponent nama={"Riwayat Nota"} />
 
-                <main className="flex-1 p-5 overflow-y-auto">
-                    <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
-                        <DescPageComponent desc={"Nota pada setiap pembelian"} />
-                        <FilterComponentsNotaPage
-                            searchQuery={searchQuery}
-                            handleSearchChange={handleSearchChange}
-                            handleStatusFilterChange={handleStatusFilterChange}
+                {isLoading ? (
+                    <div className="flex items-center justify-center h-full">
+                        <Spinner
+                            thickness='4px'
+                            speed='0.65s'
+                            emptyColor='gray.200'
+                            color='blue.500'
+                            size='xl'
                         />
+                    </div>
+                ) : isAuth ? (
+                    <main className="flex-1 p-5 overflow-y-auto">
+                        <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
+                            <DescPageComponent desc={"Nota pada setiap pembelian"} />
+                            <FilterComponentsNotaPage
+                                searchQuery={searchQuery}
+                                handleSearchChange={handleSearchChange}
+                                handleStatusFilterChange={handleStatusFilterChange}
+                            />
 
-                        {isLoading ? (
-                            <div className="flex items-center justify-center h-full">
-                                <p className="text-xl">Loading...</p>
-                            </div>
-                        ): isAuth ? (
-                            <div className="bg-[#EEF0F5] justify-between p-3 border-b-[3px] border-gray-200 grid grid-cols-3 gap-5 overflow-auto h-[440px]">
+                            <div className="bg-[#EEF0F5] p-3 border-b-[3px] border-gray-200 grid grid-cols-4 gap-5 overflow-auto h-full">
                                 {filteredNota.map((nota) => (
-                                    <div key={nota.id} className="bg-white w-96 py-2 px-1 rounded">
-                                        <div className="flex mb-10 w-full relative">
-                                            <p className="mr-32 font-semibold text-[#403E8A]">Adel Jaya</p>
-                                            <p className="text-[14px] text-[#2B713A] font-semibold absolute left-[310px] top-1">Selesai</p>
+                                    <div key={nota.id} className="bg-white w-85 py-2 px-1 rounded-[10px] shadow-md">
+                                        <div className="flex ml-4 mr-5 mt-3 justify-between items-center">
+                                            <p className="font-semibold text-[17px] text-blue-gray-700">Toko Adel Jaya</p>
+                                            <p className="text-[14px] text-[#2B713A] font-semibold">Selesai</p>
                                         </div>
-
-                                        <div className="flex text-[11px] font-medium text-[#403E8A] mb-2 relative">
-                                            <p>Tanggal waktu</p>
-                                            <p className="absolute left-28">:</p>
-                                            <p className="font-semibold text-[#8C8BB4] absolute left-32">{nota.date}</p>
+                                        <div className="flex flex-col text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
+                                            <p className="font-semibold text-blue-gray-700">Resi kostumer {nota.customer.name}</p>
+                                            <p className="font-semibold text-[#8C8BB4] ">{nota.date}</p>
                                         </div>
-
-                                        <div className="flex text-[11px] font-medium text-[#403E8A] mb-2 relative">
-                                            <p>Status</p>
-                                            <p className="absolute left-28">:</p>
-                                            <div className={`bg-[#BEDBCF] flex justify-center p-1 px-4 rounded absolute left-32 
-                                            ${nota.status === 'Belum lunas' ? 'bg-[#FFA9B3]' : 'bg-[#BEDBCF]'}`}>
-                                                <p className={`text-sm  
-                                                ${nota.status === 'Belum lunas' ? 'text-[#7A3636]' : 'text-[#2B713A]'}`}>{nota.status}</p>
-                                            </div>
-                                        </div>
-
-                                        <div className="flex text-[11px] font-medium text-[#403E8A] mb-5 relative mt-5">
-                                            <p>Pelanggan</p>
-                                            <p className="absolute left-28">:</p>
-                                            <p className="font-semibold text-[#8C8BB4] absolute left-32">{nota.customer.name}</p>
-                                        </div>
-
-                                        <div className="flex text-[11px] font-medium text-[#403E8A] mb-2 relative">
-                                            <p>Metode Pembayaran</p>
-                                            <p className="absolute left-28">:</p>
-                                            <p className="font-semibold text-[#8C8BB4] absolute left-32">{nota.payment_method}</p>
-                                        </div>
-
-                                        <div className="flex text-[11px] font-medium text-[#403E8A] mb-2 relative">
-                                            <p>Catatan</p>
-                                            <p className="absolute left-28">:</p>
-                                            <p className="font-semibold text-[#8C8BB4] absolute left-32">-</p>
-                                        </div>
+                                        <hr className="my-1 mt-5 border-t-1 ml-4 mr-4 border-blue-gray-300 mb-1 border-dashed" />
+                                        <hr className="my-1 mt-0 border-t-1  ml-4 mr-4 border-blue-gray-300 mb-3 border-dashed" />
 
                                         <div>
-                                            <div className="flex text-xs bg-[#EEEEEE] py-4 px-6 font-semibold">
-                                                <p>Produk</p>
-                                                <p className="mx-14">Jumlah</p>
-                                                <p className="mr-14">Harga</p>
-                                                <p>Subtotal</p>
-                                            </div>
                                             {nota.products && nota.products.length > 0 ? nota.products.map((product, index) => (
-                                                <div key={index} className="text-xs py-4 px-6">
-                                                    <ul className="flex">
-                                                        <li>{product.name}</li>
-                                                        <li className="mx-16">{product.quantity}</li>
-                                                        <li className="mr-10">Rp{product.price}</li>
-                                                        <li>Rp{product.quantity * product.price}</li>
-                                                    </ul>
+                                                <div key={index} className="justify-between flex ml-4 text-[15px] font-medium text-blue-gray-700">
+                                                    <div className="flex">
+                                                        <p className="mr-2">x{product.quantity}</p>
+                                                        <p>{product.name}</p>
+                                                    </div>
+                                                    <p className="mr-4">
+                                                        {(product.price * product.quantity).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}
+                                                    </p>
                                                 </div>
                                             )) : (
                                                 <div className="text-xs py-4 px-6">
                                                     <p>Produk tidak tersedia</p>
                                                 </div>
                                             )}
-                                            <hr className="my-1 border-t-1 border-black mb-3"/>
-                                            <div className="flex text-xs bg-[#BEDBCF] ml-56 py-3 px-3">
-                                                <p className="mr-10">Total</p>
-                                                <p className="flex-grow">Rp{nota.products ? calculateTotal(nota.products) : 0}</p>
-                                            </div>
-
                                         </div>
-
+                                        <hr className="my-1 mt-3 border-t-1  ml-4 mr-4 border-blue-gray-300 mb-3 border-dashed" />
+                                        <div className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
+                                            <p className="font-semibold text-blue-gray-900">Total</p>
+                                            <p className="text-[15px] font-semibold text-blue-gray-900">
+                                                {nota.products ? `${calculateTotal(nota.products).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}` : ''}
+                                            </p>
+                                        </div>
+                                        <hr className="my-1 mt-3 border-t-1  ml-4 mr-4 border-blue-gray-300 mb-3 border-dashed" />
+                                        <div className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
+                                            <p className="font-semibold text-blue-gray-700">Metode Pembayaran</p>
+                                            <p className="text-[15px] font-semibold text-blue-gray-700">
+                                                {nota.payment_method}
+                                            </p>
+                                        </div>
+                                        <div className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-2 relative ml-4 mb-3 mr-4">
+                                            <p className="font-semibold text-blue-gray-700">Status</p>
+                                            <div className={` 
+                                            ${nota.status}`}>
+                                                <p className={`text-sm  
+                                                ${nota.status === 'Belum lunas' ? 'text-[#7A3636]' : 'text-[#2B713A]'}`}>{nota.status}</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 ))}
                             </div>
-                        ) : (
-                            <div className="flex items-center justify-center h-full">
-                                <p className="text-xl">{error}</p>
-                            </div>
-                        )}
+                        </div>
+                    </main>
+                ) : (
+                    <div className="flex items-center justify-center h-full">
+                        <p className="text-xl">{error}</p>
                     </div>
-                </main>
+                )}
+
             </div>
         </div>
     );
