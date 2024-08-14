@@ -8,6 +8,7 @@ import { HistoryRestockCard } from "../../components/history_restock_components/
 import SearchBarHistoryRestock from "../../components/history_restock_components/SearchBarHistoryRestock.jsx";
 import { Spinner } from '@chakra-ui/react';
 import FilterComponentRestock from "../../components/components_reused/FilterComponentRestock.jsx";
+import {PaginationHistoryRestock} from "../../components/history_restock_components/PaginationHistoryRestock.jsx";
 
 export default function RiwayatRestockProdukPage() {
     const [restockHistory, setRestockHistory] = useState([]);
@@ -15,7 +16,8 @@ export default function RiwayatRestockProdukPage() {
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const [statusFilter, setStatusFilter] = useState(''); 
+    const [statusFilter, setStatusFilter] = useState('');
+    const [pagination, setPagination] = useState({});
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
@@ -32,17 +34,23 @@ export default function RiwayatRestockProdukPage() {
         return (matchesName || matchesDate) && matchesStatus;
     });
 
-    const fetchRestockHistory = async () => {
+    const fetchRestockHistory = async (page = 1) => {
         try {
             setLoading(true);
-            const data = await getAllRestockHistory();
+            const data = await getAllRestockHistory(page);
             setRestockHistory(data.data);
             setAuth(true);
+            setPagination(data.meta);
+
         } catch (error) {
             setError(error.message);
         } finally {
             setLoading(false);
         }
+    };
+
+    const handlePageChange = (page) => {
+        fetchRestockHistory(page);
     };
 
     useEffect(() => {
@@ -81,6 +89,7 @@ export default function RiwayatRestockProdukPage() {
                                 <HistoryRestockCard restockHistory={filteredHistory} />
                             </div>
                         </div>
+                        <PaginationHistoryRestock pagination={pagination} onPageChange={handlePageChange}/>
                     </main>
                 ) : (
                     <div className="flex items-center justify-center h-full">
