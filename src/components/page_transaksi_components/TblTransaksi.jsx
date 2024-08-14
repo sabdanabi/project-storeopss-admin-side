@@ -1,5 +1,5 @@
 import DescPageComponent from "../components_reused/DescPageComponent.jsx";
-import FilterComponents from "./filter_components/FilterComponents.jsx";
+import FilterTransaksiComponents from "./filter_components/FilterTransaksiComponents.jsx";
 import PropTypes from "prop-types";
 import { BtnNotaTransaksi } from "./button/BtnNotaTransaksi.jsx";
 import { BtnEditTransaksi } from "./button/BtnEditTransaksi.jsx";
@@ -20,8 +20,8 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
         <main className="flex-1 p-10 overflow-y-auto">
             <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
                 <DescPageComponent desc={"Selamat datang di admin dashboard Anda."} />
-                <FilterComponents handleSearchChange={handleSearchChange} searchQuery={searchQuery}
-                    handleStatusFilterChange={handleStatusFilterChange} />
+                <FilterTransaksiComponents handleSearchChange={handleSearchChange} searchQuery={searchQuery}
+                                           handleStatusFilterChange={handleStatusFilterChange} />
                 <div className="bg-white border-b-[3px] border-gray-200 overflow-auto">
                     <table className="w-full h-12">
                         <thead className="h-12 border-b-2">
