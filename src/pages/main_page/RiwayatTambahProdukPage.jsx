@@ -7,6 +7,9 @@ import { CardHistoryAddProduct } from "../../components/history_add_product_comp
 import { getHistoryAddProduct } from "../../services/StockService.jsx";
 import { Spinner } from '@chakra-ui/react';
 import FilterComponentNewPro from "../../components/components_reused/FilterComponentNewPro.jsx";
+import {
+    PaginationRiwayatTambahProduk
+} from "../../components/history_add_product_components/PaginationRiwayatTambahProduk.jsx";
 
 export default function RiwayatTambahProdukPage() {
     const [addProductHistory, setAddProductHistory] = useState([]);
@@ -15,6 +18,8 @@ export default function RiwayatTambahProdukPage() {
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState('');
+    const [pagination, setPagination] = useState({});
+
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
@@ -31,17 +36,22 @@ export default function RiwayatTambahProdukPage() {
         return (matchesName || matchesDate) && matchesStatus;
     });
 
-    const fetchAddProductHistory = async () => {
+    const fetchAddProductHistory = async (page = 1) => {
         try {
             setLoading(true);
-            const data = await getHistoryAddProduct();
+            const data = await getHistoryAddProduct(page);
             setAddProductHistory(data.data);
             setAuth(true);
+            setPagination(data.meta);
         } catch (error) {
             setError(error.message);
         } finally {
             setLoading(false);
         }
+    };
+
+    const handlePageChange = (page) => {
+        fetchAddProductHistory(page);
     };
 
     useEffect(() => {
@@ -68,8 +78,7 @@ export default function RiwayatTambahProdukPage() {
                 ) : isAuth ? (
                     <main className="flex-1 p-10 overflow-y-auto">
             <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
-            <DescPageComponent
-                                desc={"Riwayat tambah produk anda dari waktu ke waktu."} />
+            <DescPageComponent desc={"Riwayat tambah produk anda dari waktu ke waktu."} />
                             <FilterComponentNewPro
                                 searchQuery={searchQuery}
                                 handleSearchChange={handleSearchChange}
@@ -78,7 +87,10 @@ export default function RiwayatTambahProdukPage() {
                 <div className="bg-white border-b-[3px] border-gray-200 overflow-auto">
                 <CardHistoryAddProduct addProductHistory={filteredHistory} />
                             </div>
-                        </div>
+
+            </div>
+                        <PaginationRiwayatTambahProduk pagination={pagination} onPageChange={handlePageChange}/>
+
                     </main>
                 ) : (
                     <div className="flex items-center justify-center h-full">

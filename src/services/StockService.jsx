@@ -88,20 +88,24 @@ const getProductById = async (productId) => {
     }
 };
 
-const getHistoryAddProduct = async () => {
+const getHistoryAddProduct = async (page = 1) => {
     try {
         const response = await axios.get(`${baseUrl}/api/products/histories/add`, {
             headers: {
                 AUTHORIZATION: token,
                 "ngrok-skip-browser-warning": true
             },
+            params: {
+                page: page
+            }
         });
         return response.data;
     } catch (error) {
-        console.error('Error fetching product add history:', error);
+        handleAxiosError(error);
         throw error;
     }
 };
+
 
 const importProductExcel = async (formData) => {
     try {

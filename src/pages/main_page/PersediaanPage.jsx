@@ -16,7 +16,7 @@ export default function PersediaanPage() {
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [searchQuery, setSearchQuery] = useState('');
-    const [meta, setMeta] = useState({});
+    const [pagination, setPagination] = useState({});
 
     const fetchProducts = async (page = 1) => {
         try {
@@ -25,7 +25,7 @@ export default function PersediaanPage() {
             const result = await getAllProduct(page);
             setProducts(result.data);
             setAuth(true);
-            setMeta(result.meta);
+            setPagination(result.meta);
         } catch(e) {
 
             console.log(e);
@@ -76,7 +76,7 @@ export default function PersediaanPage() {
     }, []);
 
     const updateProductState = () => {
-        fetchProducts(meta.current_page); // Refresh data
+        fetchProducts(pagination.current_page);
     };
 
 
@@ -107,7 +107,7 @@ export default function PersediaanPage() {
                         <TblStock products={filteredHistory} handleDelete={handleDelete} searchQuery={searchQuery}
                                   updateProductsState={updateProductState} handleSearchChange={handleSearchChange}
                                   exportToExcel={exportToExcel}/>
-                        <PaginationPersediaanProduk  meta={meta} onPageChange={handlePageChange}/>
+                        <PaginationPersediaanProduk  meta={pagination} onPageChange={handlePageChange}/>
                     </div>
                 ) : (
                     <div className="flex items-center justify-center h-full">
