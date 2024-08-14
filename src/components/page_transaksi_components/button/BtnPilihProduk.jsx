@@ -2,7 +2,7 @@ import Popup from "reactjs-popup";
 import { getAllProduct } from "../../../services/StockService.jsx";
 import {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import {FilterAddTransaksi} from "../filter_components/FilterAddTransaksi.jsx";
+import {FilterProdukAddTransaksi} from "../filter_components/FilterProdukAddTransaksi.jsx";
 
 export function BtnPilihProduk({ onProductSelect}) {
     const [isInnerPopupOpen, setInnerPopupOpen] = useState(false);
@@ -135,7 +135,7 @@ export function BtnPilihProduk({ onProductSelect}) {
                                     </button>
                                 </div>
 
-                                <FilterAddTransaksi searchQuery={searchQuery} handleSearchChange={handleSearchChange}/>
+                                <FilterProdukAddTransaksi searchQuery={searchQuery} handleSearchChange={handleSearchChange} />
                                 <div>
                                     <div className="overflow-auto h-64">
                                         {isLoading ? (
