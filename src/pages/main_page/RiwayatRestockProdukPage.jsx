@@ -5,7 +5,6 @@ import DescPageComponent from "../../components/components_reused/DescPageCompon
 import { useEffect, useState } from "react";
 import { getAllRestockHistory } from "../../services/RestockService.jsx";
 import { HistoryRestockCard } from "../../components/history_restock_components/HistoryRestockCard.jsx";
-import SearchBarHistoryRestock from "../../components/history_restock_components/SearchBarHistoryRestock.jsx";
 import { Spinner } from '@chakra-ui/react';
 import FilterComponentRestock from "../../components/components_reused/FilterComponentRestock.jsx";
 import {PaginationHistoryRestock} from "../../components/history_restock_components/PaginationHistoryRestock.jsx";
@@ -75,7 +74,7 @@ export default function RiwayatRestockProdukPage() {
                         />
                     </div>
                 ) : isAuth ? (
-                    <main className="flex-1 p-5 overflow-y-auto">
+                    <main className="flex-1 pt-5 px-10 overflow-y-auto">
                         <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
                             <DescPageComponent
                                 desc={"Riwayat pengisian ulang produk anda dari waktu ke waktu"} />
@@ -85,7 +84,7 @@ export default function RiwayatRestockProdukPage() {
                                 handleStatusFilterChange={handleStatusFilterChange}
                             />
 
-                            <div className="bg-[#EEF0F5] p-3 h-full border-b-[3px] border-gray-200 grid grid-cols-3 gap-5 overflow-auto">
+                            <div className="flex items-center justify-center h-full h-96">
                                 <HistoryRestockCard restockHistory={filteredHistory} />
                             </div>
                         </div>
