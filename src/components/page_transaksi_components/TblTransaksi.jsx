@@ -3,26 +3,18 @@ import FilterTransaksiComponents from "./filter_components/FilterTransaksiCompon
 import PropTypes from "prop-types";
 import { BtnNotaTransaksi } from "./button/BtnNotaTransaksi.jsx";
 import { BtnEditTransaksi } from "./button/BtnEditTransaksi.jsx";
-import Pagination from '../components_reused/Pagination.jsx';
-import {useState} from "react";
 
-export default function TblTransaksi({ handleSearchChange, searchQuery, filteredTransaksi, updateProductsState, handleStatusFilterChange }) {
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 9;
-
-    const indexOfLastItem = currentPage * itemsPerPage;
-    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentTransaksi = filteredTransaksi.slice(indexOfFirstItem, indexOfLastItem);
-
-    const handlePageChange = (pageNumber) => setCurrentPage(pageNumber);
+export default function TblTransaksi({ handleSearchChange, searchQuery, filteredTransaksi, updateProductsState, handleStatusFilterChange,
+                                     pagination}) {
+    const { current_page, per_page } = pagination || {};
 
     return (
-        <main className="flex-1 p-10 overflow-y-auto">
-            <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
+        <main className="flex-1 pt-5 px-10">
+            <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200" >
                 <DescPageComponent desc={"Selamat datang di admin dashboard Anda."} />
                 <FilterTransaksiComponents handleSearchChange={handleSearchChange} searchQuery={searchQuery}
                                            handleStatusFilterChange={handleStatusFilterChange} />
-                <div className="bg-white border-b-[3px] border-gray-200 overflow-auto">
+                <div className="bg-white border-b-[3px] border-gray-200  overflow-y-auto h-96">
                     <table className="w-full h-12">
                         <thead className="h-12 border-b-2">
                             <tr className="text-sm text-[#9CA4AE]">
@@ -39,9 +31,9 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                             </tr>
                         </thead>
                         <tbody className="font-semibold">
-                            {currentTransaksi.map((transaction, index) => (
+                            {filteredTransaksi.map((transaction, index) => (
                                 <tr className="border-b-2 h-18" key={transaction.id}>
-                                    <td className="px-4"><p className="mr-3 text-blue-gray-700">{indexOfFirstItem + index + 1}</p></td>
+                                    <td className="px-4"><p className="mr-3 text-blue-gray-700">{(current_page - 1) * per_page + index + 1}</p></td>
                                     <td>
                                         <div className="flex py-3">
                                             <p className="mr-24 text-blue-gray-700">{transaction.customer.name}</p>
@@ -74,12 +66,6 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                     </table>
                 </div>
             </div>
-            <Pagination
-                    itemsPerPage={itemsPerPage}
-                    totalItems={filteredTransaksi.length}
-                    currentPage={currentPage}
-                    handlePageChange={handlePageChange}
-                />
         </main>
     );
 }

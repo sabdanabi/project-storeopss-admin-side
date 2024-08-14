@@ -84,8 +84,8 @@ export default function RiwayatRestockProdukPage() {
                                 handleStatusFilterChange={handleStatusFilterChange}
                             />
 
-                            <div className="flex items-center justify-center h-full h-96">
-                                <HistoryRestockCard restockHistory={filteredHistory} />
+                            <div className="flex justify-center h-96">
+                                <HistoryRestockCard restockHistory={filteredHistory} pagination={pagination} />
                             </div>
                         </div>
                         <PaginationHistoryRestock pagination={pagination} onPageChange={handlePageChange}/>

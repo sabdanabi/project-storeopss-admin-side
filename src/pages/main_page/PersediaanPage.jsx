@@ -106,7 +106,7 @@ export default function PersediaanPage() {
                     <div>
                         <TblStock products={filteredHistory} handleDelete={handleDelete} searchQuery={searchQuery}
                                   updateProductsState={updateProductState} handleSearchChange={handleSearchChange}
-                                  exportToExcel={exportToExcel}/>
+                                  exportToExcel={exportToExcel} pagination={pagination}/>
                         <PaginationPersediaanProduk  meta={pagination} onPageChange={handlePageChange}/>
                     </div>
                 ) : (

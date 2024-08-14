@@ -3,7 +3,10 @@ import BtnRestockProduk from "../../components/page_persediaan_components/button
 import BtnEditPorduk from "../../components/page_persediaan_components/button/BtnEditPorduk.jsx";
 import { BtnDeleteNew } from "../../components/page_persediaan_components/button/BtnDeleteNew.jsx";
 
-export default function TblProductStock({ products, handleDelete, updateProductState }) {
+export default function TblProductStock({ products, handleDelete, updateProductState, pagination }) {
+
+    const { current_page, per_page } = pagination || {};
+
     return (
         <div className="bg-white flex border-b-[3px] border-gray-200 overflow-auto h-80">
             <table className="w-full">
@@ -24,7 +27,7 @@ export default function TblProductStock({ products, handleDelete, updateProductS
                 <tbody className="font-semibold text-blue-gray-700">    
                     {products.map((product, index) => (
                         <tr className="border-b-2 h-13 text-xs" key={product.id}>
-                            <td className="px-4"><p className="mr-3">{index + 1}</p></td>
+                            <td className="px-4"><p className="mr-3">{(current_page - 1) * per_page + index + 1}</p></td>
                             <td>
                                 <div className="flex py-3">
                                     {/*<img src={product.image ? product.image : "/assets_img/placeholder_image.jpg"} className="h-12 mr-3" alt="product-image" />*/}

@@ -7,7 +7,7 @@ import { ToastContainer} from "react-toastify";
 import {SearchBarStock} from "./SearchBarStock.jsx";
 
 
-export default function TblStock({products, handleDelete, updateProductsState,handleSearchChange, searchQuery, exportToExcel}) {
+export default function TblStock({products, handleDelete, updateProductsState,handleSearchChange, searchQuery, exportToExcel, pagination}) {
 
     const [selectedTab,setSelectedTab] = useState(0)
 
@@ -17,7 +17,7 @@ export default function TblStock({products, handleDelete, updateProductsState,ha
             content: (
                 <div>
                     <SearchBarStock handleSearchChange={handleSearchChange} products={searchQuery}/>
-                    <TblProductStock products={products} handleDelete={handleDelete} updateProductState={updateProductsState}/>
+                    <TblProductStock products={products} handleDelete={handleDelete} updateProductState={updateProductsState} pagination={pagination}/>
                 </div>
             ),
         },

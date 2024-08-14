@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-export function CardHistoryAddProduct({ addProductHistory }) {
+export function CardHistoryAddProduct({ addProductHistory, pagination }) {
     const [selectedEntry, setSelectedEntry] = useState(null);
+    const { current_page, per_page } = pagination || {};
 
     const handleDetailClick = (entry) => {
         setSelectedEntry(entry);
@@ -27,7 +28,7 @@ export function CardHistoryAddProduct({ addProductHistory }) {
                 <tbody className="font-semibold text-blue-gray-700">
                     {addProductHistory.map((entry, index) => (
                         <tr className="border-b-2 h-18" key={`${entry.id}-${index}`}>
-                            <td className="px-4"><p className="mr-3">{index + 1}</p></td>
+                            <td className="px-4"><p className="mr-3">{(current_page - 1) * per_page + index + 1}</p></td>
                             <td className="py-2 px-4 border-b">{entry.name}</td>
                             <td className="py-2 px-4 border-b">{entry.date}</td>
                             <td className="py-2 px-4 border-b">{entry.quantity}</td>

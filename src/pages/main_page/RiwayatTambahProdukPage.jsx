@@ -1,15 +1,13 @@
+import { useEffect, useState } from "react";
+import { Spinner } from "@chakra-ui/react";
 import SideNavbarComponent from "../../components/components_reused/SideNavbarComponent.jsx";
 import PartTop from "../../components/components_reused/PartTop.jsx";
 import NamePageComponent from "../../components/components_reused/NamePageComponent.jsx";
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
-import { useEffect, useState } from "react";
 import { CardHistoryAddProduct } from "../../components/history_add_product_components/CardHistoryAddProduct.jsx";
 import { getHistoryAddProduct } from "../../services/StockService.jsx";
-import { Spinner } from '@chakra-ui/react';
-import FilterComponentNewPro from "../../components/components_reused/FilterComponentNewPro.jsx";
-import {
-    PaginationRiwayatTambahProduk
-} from "../../components/history_add_product_components/PaginationRiwayatTambahProduk.jsx";
+import { PaginationRiwayatTambahProduk } from "../../components/history_add_product_components/PaginationRiwayatTambahProduk.jsx";
+import FilterComponentNewProduk from "../../components/components_reused/FilterComponentNewProduk.jsx";
 
 export default function RiwayatTambahProdukPage() {
     const [addProductHistory, setAddProductHistory] = useState([]);
@@ -20,15 +18,16 @@ export default function RiwayatTambahProdukPage() {
     const [statusFilter, setStatusFilter] = useState('');
     const [pagination, setPagination] = useState({});
 
-
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
 
+    // Mengelola perubahan filter status
     const handleStatusFilterChange = (status) => {
         setStatusFilter(status);
     };
 
+    // Filter riwayat berdasarkan pencarian dan status
     const filteredHistory = addProductHistory.filter((entry) => {
         const matchesName = entry.name.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesDate = entry.date.includes(searchQuery);
@@ -36,6 +35,7 @@ export default function RiwayatTambahProdukPage() {
         return (matchesName || matchesDate) && matchesStatus;
     });
 
+    // Mengambil data riwayat tambah produk dari API
     const fetchAddProductHistory = async (page = 1) => {
         try {
             setLoading(true);
@@ -50,10 +50,12 @@ export default function RiwayatTambahProdukPage() {
         }
     };
 
+    // Mengelola perubahan halaman pada pagination
     const handlePageChange = (page) => {
         fetchAddProductHistory(page);
     };
 
+    // Mengambil data riwayat ketika komponen di-mount
     useEffect(() => {
         fetchAddProductHistory();
     }, []);
@@ -64,33 +66,31 @@ export default function RiwayatTambahProdukPage() {
 
             <div className="flex flex-col flex-1 w-full">
                 <PartTop />
-                <NamePageComponent nama={"Riwayat Tambah Produk"} />
+                <NamePageComponent nama="Riwayat Tambah Produk" />
                 {isLoading ? (
                     <div className="flex items-center justify-center h-full">
                         <Spinner
-                            thickness='4px'
-                            speed='0.65s'
-                            emptyColor='gray.200'
-                            color='blue.500'
-                            size='xl'
+                            thickness="4px"
+                            speed="0.65s"
+                            emptyColor="gray.200"
+                            color="blue.500"
+                            size="xl"
                         />
                     </div>
                 ) : isAuth ? (
                     <main className="flex-1 pt-5 px-10 overflow-y-auto">
-            <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
-            <DescPageComponent desc={"Riwayat tambah produk anda dari waktu ke waktu."} />
-                            <FilterComponentNewPro
+                        <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
+                            <DescPageComponent desc="Riwayat tambah produk anda dari waktu ke waktu." />
+                            <FilterComponentNewProduk
                                 searchQuery={searchQuery}
                                 handleSearchChange={handleSearchChange}
                                 handleStatusFilterChange={handleStatusFilterChange}
                             />
-                <div className="bg-white border-b-[3px] border-gray-200 overflow-auto h-96">
-                <CardHistoryAddProduct addProductHistory={filteredHistory} />
+                            <div className="bg-white border-b-[3px] border-gray-200 overflow-auto h-96">
+                                <CardHistoryAddProduct addProductHistory={filteredHistory} pagination={pagination} />
                             </div>
-
-            </div>
-                        <PaginationRiwayatTambahProduk pagination={pagination} onPageChange={handlePageChange}/>
-
+                        </div>
+                        <PaginationRiwayatTambahProduk pagination={pagination} onPageChange={handlePageChange} />
                     </main>
                 ) : (
                     <div className="flex items-center justify-center h-full">

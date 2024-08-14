@@ -1,8 +1,9 @@
-import React, { useState } from "react";
 import PropTypes from "prop-types";
+import {useState} from "react";
 
-export function HistoryRestockCard({ restockHistory }) {
+export function HistoryRestockCard({ restockHistory, pagination }) {
     const [selectedEntry, setSelectedEntry] = useState(null);
+    const { current_page, per_page } = pagination || {};
 
     const handleDetailClick = (entry) => {
         setSelectedEntry(entry);
@@ -28,7 +29,7 @@ export function HistoryRestockCard({ restockHistory }) {
                 <tbody className="font-semibold text-blue-gray-700">
                     {restockHistory.map((entry, index) => (
                         <tr className="border-b-2 h-18" key={`${entry.id}-${index}`}>
-                            <td className="px-4">{index + 1}</td>
+                            <td className="px-4">{(current_page - 1) * per_page + index + 1}</td>
                             <td className="py-2 px-4 border-b">{entry.product.name}</td>
                             <td className="py-2 px-4 border-b">{entry.date}</td>         
                             <td className="py-2 px-4 border-b">{entry.supplier.name}</td>          
@@ -121,4 +122,15 @@ export function HistoryRestockCard({ restockHistory }) {
 
 HistoryRestockCard.propTypes = {
     restockHistory: PropTypes.array.isRequired,
+    pagination: PropTypes.shape({
+        current_page: PropTypes.number.isRequired,
+        last_page: PropTypes.number.isRequired,
+        links: PropTypes.arrayOf(
+            PropTypes.shape({
+                url: PropTypes.string,
+                label: PropTypes.string.isRequired,
+                active: PropTypes.bool.isRequired,
+            })
+        ).isRequired,
+    }).isRequired,
 };
