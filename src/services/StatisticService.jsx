@@ -4,11 +4,15 @@ import axios from "axios";
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const token = localStorage.getItem("token");
 
-const getStatisticProductSell = async (sort = 'asc') => {
+
+const getStatisticProductSell = async (year = null, month = null, sort = 'asc', page = 1) => {
     try {
         const response = await axios.get(`${baseUrl}/api/transactions/income/statistic`, {
             params: {
+                year,
+                month,
                 sort,
+                page
             },
             headers: {
                 AUTHORIZATION: token,
@@ -20,6 +24,7 @@ const getStatisticProductSell = async (sort = 'asc') => {
         handleAxiosError(error);
     }
 };
+
 
 const handleAxiosError = (error) => {
     if (error.response) {

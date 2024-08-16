@@ -3,9 +3,9 @@ import FebruariChart from "../../dummy/dummy_charts/FebruariChart.jsx";
 import MaretChart from "../../dummy/dummy_charts/MaretChart.jsx";
 import TabsPageStatistic from "../tabs_components/TabsPageStatistic.jsx";
 import {useState} from "react";
-import {AgustusChart} from "../../dummy/dummy_charts/AgustusChart.jsx";
+import {BarChartProductSell} from "../../dummy/dummy_charts/BarChartProductSell.jsx";
 
-export default function BarChartComponent({statistics}){
+export default function BarChartComponent({data}){
     const [selectedTab,setSelectedTab] = useState(0)
 
     const items = [
@@ -54,7 +54,7 @@ export default function BarChartComponent({statistics}){
         {
             title:"Agustus",
             content:(
-                <AgustusChart statistics={statistics}/>
+                <BarChartProductSell data={data}/>
             ),
         },
         {

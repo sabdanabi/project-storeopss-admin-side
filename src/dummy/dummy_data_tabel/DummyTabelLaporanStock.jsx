@@ -2,9 +2,8 @@ import PropTypes from "prop-types";
 
 export default function DummyTabelLaporanStock({products}) {
     return (
-        <div className="bg-white flex
-                        border-b-[3px] border-gray-200 overflow-auto">
-            <table className="w-full ">
+        <div className="bg-white flex border-b-[3px] border-gray-200 overflow-auto h-96">
+            <table className="w-full">
                 <thead className="h-12 border-b-2">
                 <tr className="text-sm text-[#9CA4AE]">
                     <td className="px-4">No</td>

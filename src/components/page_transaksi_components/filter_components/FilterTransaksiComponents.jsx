@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react'
 import {useState} from "react";
 
-export default function FilterTransaksiComponents({handleSearchChange, searchQuery, handleStatusFilterChange, handleDayFilterChange}) {
+export default function FilterTransaksiComponents({handleSearchChange, searchQuery, handleStatusFilterChange,}) {
 
     const [selectedStatus, setSelectedStatus] = useState('Status Transaksi')
 
