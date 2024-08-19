@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@media print {
+    @page {
+        size: auto; /* Ukuran otomatis sesuai dengan konten */
+        margin: 0; /* Margin 0 untuk menghindari area putih */
+    }
+
+    body {
+        margin: 0; /* Margin 0 untuk memastikan PDF tanpa ruang kosong */
+    }
+
+    #notaTransaksi {
+        width: auto;
+        height: auto; /* Tinggi otomatis untuk menyesuaikan dengan konten */
+    }
+}
+
+
+
+
