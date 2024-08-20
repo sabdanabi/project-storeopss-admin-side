@@ -7,7 +7,7 @@ import {
 } from '@chakra-ui/react'
 import {useState} from "react";
 
-export default function FilterComponentNewPro({handleSearchChange, searchQuery, handleDayFilterChange}) {
+export default function FilterComponentNewProduk({handleSearchChange, searchQuery, handleDayFilterChange}) {
 
     const [selectedDay, setSelectedDay] = useState("Pilih Waktu")
     const onFilterChange = (dayFilter)  => {

@@ -1,10 +1,11 @@
-import SideNavbarComponent from "../../components/components_reused/SideNavbarComponent.jsx";
+ import SideNavbarComponent from "../../components/components_reused/SideNavbarComponent.jsx";
 import PartTop from "../../components/components_reused/PartTop.jsx";
 import TblTransaksi from "../../components/page_transaksi_components/TblTransaksi.jsx";
 import BtnAddTransaksi from "../../components/page_transaksi_components/button/BtnAddTransaksi.jsx";
 import { useEffect, useState } from "react";
 import { getAllTransaksi, addIncome } from "../../services/TransaksiService.jsx";
 import { Spinner } from '@chakra-ui/react'
+ import {PaginationTransaksiProduk} from "../../components/page_transaksi_components/PaginationTransaksiProduk.jsx";
 
 
 export default function TransaksiPage() {
@@ -14,6 +15,7 @@ export default function TransaksiPage() {
     const [error, setError] = useState("");
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredStatus, setFilteredStatus] = useState(null);
+    const [pagination, setPagination] = useState({});
 
 
     const handleSearchChange = (e) => {
@@ -27,15 +29,16 @@ export default function TransaksiPage() {
     }) : [];
 
     useEffect(() => {
-        updateProductsState();
+        fetchDataTranksaksi();
     }, []);
 
-    const updateProductsState = async () => {
+    const fetchDataTranksaksi = async (page = 1) => {
         try {
             setLoading(true);
-            const result = await getAllTransaksi();
+            const result = await getAllTransaksi(page);
             setTransaksi(result.data);
             setAuth(true);
+            setPagination(result.meta);
         } catch (e) {
             console.log(e);
             setError(e.response?.data?.error || 'Unknown error occurred');
@@ -44,6 +47,13 @@ export default function TransaksiPage() {
         }
     };
 
+    const handlePageChange = (page) => {
+        fetchDataTranksaksi(page);
+    };
+
+    const updateProductState = () => {
+        fetchDataTranksaksi(pagination.current_page);
+    };
     const handleStatusFilterChange = (status) => {
         setFilteredStatus(status === 'Semua' ? null : status);
     };
@@ -52,32 +62,26 @@ export default function TransaksiPage() {
         <div className="flex h-screen overflow-hidden bg-gray-100">
             <SideNavbarComponent />
             <div className="flex flex-col flex-1 w-full overflow-hidden">
-                <PartTop />
+                <PartTop/>
                 <BtnAddTransaksi addIncome={addIncome}
-                                 updateProductsState={updateProductsState}/>
+                                 updateProductsState={fetchDataTranksaksi}/>
 
-                {isLoading ? (
-                    <div className="flex items-center justify-center h-full">
-                        <Spinner
-                            thickness='4px'
-                            speed='0.65s'
-                            emptyColor='gray.200'
-                            color='blue.500'
-                            size='xl'
-                        />                    </div>
-                ) : isAuth ? (
+                <div>
                     <TblTransaksi
                         handleSearchChange={handleSearchChange}
                         filteredTransaksi={filteredTransaksi}
                         searchQuery={searchQuery}
-                        updateProductsState={updateProductsState}
+                        updateProductsState={updateProductState}
                         handleStatusFilterChange={handleStatusFilterChange}
+                        pagination={pagination}
+                        error={error}
+                        isAuth={isAuth}
+                        isLoading={isLoading}
                     />
-                ) : (
-                    <div className="flex items-center justify-center h-full">
-                        <p className="text-xl">{error}</p>
-                    </div>
-                )}
+                    <PaginationTransaksiProduk pagination={pagination} onPageChange={handlePageChange}/>
+                </div>
+
+
             </div>
         </div>
     );

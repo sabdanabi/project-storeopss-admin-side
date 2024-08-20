@@ -3,13 +3,16 @@ import axios from "axios";
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const token = localStorage.getItem("token");
 
-const getRecapProduct = async () => {
+const getRecapProduct = async (page = 1) => {
     try {
         const response = await axios.get(`${baseUrl}/api/products/recap`, {
             headers: {
                 AUTHORIZATION: token,
                 "ngrok-skip-browser-warning": true
             },
+            params: {
+                page: page
+            }
         });
         return response.data;
     } catch (error) {

@@ -1,7 +1,8 @@
 import Popup from "reactjs-popup";
-import { getAllProduct } from "../../../services/StockService.jsx";
 import {useEffect, useState} from "react";
-import {FilterAddTransaksi} from "../FilterAddTransaksi.jsx";
+import PropTypes from "prop-types";
+import {FilterProdukAddTransaksi} from "../filter_components/FilterProdukAddTransaksi.jsx";
+import {getAllProductTransaktion} from "../../../services/TransaksiService.jsx";
 
 export function BtnPilihProduk({ onProductSelect}) {
     const [isInnerPopupOpen, setInnerPopupOpen] = useState(false);
@@ -89,7 +90,7 @@ export function BtnPilihProduk({ onProductSelect}) {
     const updateProductsState = async () => {
         try {
             setLoading(true);
-            const result = await getAllProduct();
+            const result = await getAllProductTransaktion();
             setPilihProduct(result.data);
             setAuth(true);
         } catch (e) {
@@ -134,7 +135,7 @@ export function BtnPilihProduk({ onProductSelect}) {
                                     </button>
                                 </div>
 
-                                <FilterAddTransaksi searchQuery={searchQuery} handleSearchChange={handleSearchChange}/>
+                                <FilterProdukAddTransaksi searchQuery={searchQuery} handleSearchChange={handleSearchChange} />
                                 <div>
                                     <div className="overflow-auto h-64">
                                         {isLoading ? (
@@ -190,4 +191,9 @@ export function BtnPilihProduk({ onProductSelect}) {
             </Popup>
         </div>
     );
+}
+
+
+BtnPilihProduk.propTypes = {
+    onProductSelect : PropTypes.func.isRequired,
 }

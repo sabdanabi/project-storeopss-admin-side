@@ -20,12 +20,15 @@ const restockProduct = async (productId, restockData) => {
     }
 }
 
-const getAllRestockHistory = async () => {
+const getAllRestockHistory = async (page = 1) => {
     try {
         const response = await axios.get(`${baseUrl}/api/products/histories/restock`, {
             headers: {
                 Authorization: token,
                 'ngrok-skip-browser-warning': true
+            },
+            params: {
+                page: page
             }
         });
         return response.data;

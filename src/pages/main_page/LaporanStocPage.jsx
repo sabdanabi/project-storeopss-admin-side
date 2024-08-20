@@ -9,20 +9,26 @@ import {
     FilterComponentLaporanPage
 } from "../../components/page_laporan_stock_components/FilterComponentLaporanPage.jsx";
 import {Spinner} from "@chakra-ui/react";
+import {PaginationRecapProduct} from "../../components/page_laporan_stock_components/PaginationRecapProduct.jsx";
+import DummyTabelLaporanStock from "../../dummy/dummy_data_tabel/DummyTabelLaporanStock.jsx";
 
 export default function LaporanStockPage() {
     const [products, setProducts] = useState([]);
     const [isAuth, setAuth] = useState(false);
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState("");
+    const [pagination, setPagination] = useState({});
 
-    const updateProductsState = async () => {
+
+    const fetchRecapProducts = async (page = 1) => {
         try {
             setLoading(true);
-            const result = await getRecapProduct();
+            const result = await getRecapProduct(page);
             if (result.error) {
                 setError(result.error);
                 setAuth(false);
+                setPagination(result.meta);
+
             } else {
                 setProducts(result.data);
                 setAuth(true);
@@ -36,8 +42,12 @@ export default function LaporanStockPage() {
         }
     };
 
+    const handlePageChange = (page) => {
+        fetchRecapProducts(page);
+    };
+
     useEffect(() => {
-        updateProductsState();
+        fetchRecapProducts(pagination.current_page);
     }, []);
 
     return (
@@ -57,11 +67,11 @@ export default function LaporanStockPage() {
                         />
                     </div>
                 ) : isAuth ? (
-                    <main className="flex-1 p-10 overflow-y-auto">
+                    <main className="flex-1 px-10 pt-5 ">
                         <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
                             <DescPageComponent desc={"Laporan stok ini mencakup periode dari tanggal 1 Maret 2024 hingga 31 Maret 2024."} />
                             <FilterComponentLaporanPage/>
-                            <TblLaporanStock products={products} />
+                            <DummyTabelLaporanStock products={products} />
                         </div>
                     </main>
                 ) : (
@@ -69,6 +79,8 @@ export default function LaporanStockPage() {
                         <p className="text-xl">{error}</p>
                     </div>
                 )}
+
+                <PaginationRecapProduct pagination={pagination} onPageChange={handlePageChange}/>
             </div>
         </div>
     );

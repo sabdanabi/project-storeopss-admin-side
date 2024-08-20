@@ -79,10 +79,23 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
         }
     };
 
+    const resetForm = () => {
+        setFormData({
+            note: '',
+            customer_phone: '',
+            customer_name: '',
+            status: '',
+            payment_method: ''
+        });
+        setSelectedValueRD1('');
+        setSelectedValueRD2('');
+        setSelectedProducts([]);
+    };
+
     const totalHarga = selectedProducts.reduce((total, product) => total + product.selling_price * product.count, 0);
 
     return (
-        <div className="flex items-center justify-between h-20 border-b-[3px] w-full px-6 py-4 bg-white border-gray-200">
+        <div className="flex items-center justify-between h-16 border-b-[3px] w-full px-6 py-4 bg-white border-gray-200">
             <div className="flex items-center">
                 <h1 className="text-2xl font-semibold text-blue-gray-800">Transaksi</h1>
                 <h6 className="text-[15px] font-regular text-gray-500 ml-4 mt-2">catat penjualan anda dengan mudah</h6>

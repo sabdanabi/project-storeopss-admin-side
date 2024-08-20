@@ -6,6 +6,7 @@ import FilterComponentsNotaPage from "../../components/components_reused/FilterC
 import { useEffect, useState } from "react";
 import { getAllTransaksi } from "../../services/TransaksiService.jsx";
 import { Spinner } from "@chakra-ui/react";
+import {PagintionRiwayatNota} from "../../components/riwayat_nota_components/PagintionRiwayatNota.jsx";
 
 export default function NotaPage() {
     const [nota, setNota] = useState([]);
@@ -15,6 +16,8 @@ export default function NotaPage() {
     const [searchQuery, setSearchQuery] = useState('');
     const [filteredStatus, setFilteredStatus] = useState(null);
     const [selectedNota, setSelectedNota] = useState(null);
+    const [pagination, setPagination] = useState({});
+    const { current_page, per_page } = pagination || {};
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
@@ -27,21 +30,26 @@ export default function NotaPage() {
     }) : [];
 
     useEffect(() => {
-        updateProductsState();
+        fetchNotaTransaksi();
     }, []);
 
-    const updateProductsState = async () => {
+    const fetchNotaTransaksi = async (page = 1) => {
         try {
             setLoading(true);
-            const result = await getAllTransaksi();
+            const result = await getAllTransaksi(page);
             setNota(result.data);
             setAuth(true);
+            setPagination(result.meta);
         } catch (e) {
             console.error(e);
             setError(e.response?.data?.error || 'Unknown error occurred');
         } finally {
             setLoading(false);
         }
+    };
+
+    const handlePageChange = (page) => {
+        fetchNotaTransaksi(page);
     };
 
     const handleStatusFilterChange = (status) => {
@@ -78,7 +86,7 @@ export default function NotaPage() {
                         />
                     </div>
                 ) : isAuth ? (
-                    <main className="flex-1 p-10 overflow-y-auto">
+                    <main className="flex-1 px-10 pt-5 overflow-y-auto">
                         <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
                             <DescPageComponent desc={"Nota pada setiap pembelian"} />
                             <FilterComponentsNotaPage
@@ -87,7 +95,7 @@ export default function NotaPage() {
                                 handleStatusFilterChange={handleStatusFilterChange}
                             />
 
-                            <div className="bg-white border-b-[3px] border-gray-200 overflow-auto">
+                            <div className="bg-white border-b-[3px] border-gray-200 overflow-auto h-96">
                                 <table className="w-full h-12">
                                     <thead className="h-12 border-b-2">
                                         <tr className="text-sm text-[#9CA4AE]">
@@ -102,7 +110,7 @@ export default function NotaPage() {
                                     <tbody className="text-sm font-semibold text-blue-gray-700">
                                         {filteredNota.map((nota, index) => (
                                             <tr className="border-b-2 h-18" key={`${nota.id}-${index}`}>
-                                                <td className="px-4">{index + 1}</td>
+                                                <td className="px-4">{(current_page - 1) * per_page + index + 1}</td>
                                                 <td className="px-4 py-2">{nota.store_name || 'Toko Adel Jaya'}</td>
                                                 <td className="px-4 py-2">{nota.customer.name}</td>
                                                 <td className="px-4 py-2">{nota.date}</td>
@@ -199,12 +207,16 @@ export default function NotaPage() {
 
                             </div>
                         </div>
+                        <PagintionRiwayatNota pagination={pagination} onPageChange={handlePageChange}/>
+
                     </main>
+
                 ) : (
                     <div className="flex items-center justify-center h-full">
                         <p className="text-xl">{error}</p>
                     </div>
                 )}
+
             </div>
         </div>
     );
