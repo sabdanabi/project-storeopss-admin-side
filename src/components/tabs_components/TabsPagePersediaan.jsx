@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 //     MenuList,
 //     MenuItem,
 //     Button,
-// } from '@chakra-ui/react';
+// } from '@chakra-ui/reacxt';
 
 export default function TabsPagePersediaan({ items, setSelectedTab, exportToExcel, products}) {
     const [activeTab, setActiveTab] = useState(0);

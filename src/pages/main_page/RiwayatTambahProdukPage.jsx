@@ -65,38 +65,39 @@ export default function RiwayatTambahProdukPage() {
             <SideNavbarComponent />
 
             <div className="flex flex-col flex-1 w-full">
-                <PartTop />
-                <NamePageComponent nama="Riwayat Tambah Produk" />
-                {isLoading ? (
-                    <div className="flex items-center justify-center h-full">
-                        <Spinner
-                            thickness="4px"
-                            speed="0.65s"
-                            emptyColor="gray.200"
-                            color="blue.500"
-                            size="xl"
+                <PartTop/>
+                <NamePageComponent nama="Riwayat Tambah Produk"/>
+                <main className="flex-1 pt-5 px-10 overflow-y-auto">
+                    <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
+                        <DescPageComponent desc="Riwayat tambah produk anda dari waktu ke waktu."/>
+                        <FilterComponentNewProduk
+                            searchQuery={searchQuery}
+                            handleSearchChange={handleSearchChange}
+                            handleStatusFilterChange={handleStatusFilterChange}
                         />
-                    </div>
-                ) : isAuth ? (
-                    <main className="flex-1 pt-5 px-10 overflow-y-auto">
-                        <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
-                            <DescPageComponent desc="Riwayat tambah produk anda dari waktu ke waktu." />
-                            <FilterComponentNewProduk
-                                searchQuery={searchQuery}
-                                handleSearchChange={handleSearchChange}
-                                handleStatusFilterChange={handleStatusFilterChange}
-                            />
-                            <div className="bg-white border-b-[3px] border-gray-200 overflow-auto h-96">
-                                <CardHistoryAddProduct addProductHistory={filteredHistory} pagination={pagination} />
-                            </div>
+                        <div className="bg-white border-b-[3px] border-gray-200 overflow-auto h-96">
+                            {isLoading ? (
+                                <div className="flex items-center justify-center h-full">
+                                    <Spinner
+                                        thickness="4px"
+                                        speed="0.65s"
+                                        emptyColor="gray.200"
+                                        color="blue.500"
+                                        size="xl"
+                                    />
+                                </div>
+                            ) : isAuth ? (
+                                <CardHistoryAddProduct addProductHistory={filteredHistory} pagination={pagination}/>
+                            ) : (
+                                <div className="flex items-center justify-center h-full">
+                                    <p className="text-xl">{error}</p>
+                                </div>
+                            )}
                         </div>
-                        <PaginationRiwayatTambahProduk pagination={pagination} onPageChange={handlePageChange} />
-                    </main>
-                ) : (
-                    <div className="flex items-center justify-center h-full">
-                        <p className="text-xl">{error}</p>
                     </div>
-                )}
+                    <PaginationRiwayatTambahProduk pagination={pagination} onPageChange={handlePageChange}/>
+                </main>
+
             </div>
         </div>
     );

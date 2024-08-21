@@ -49,41 +49,44 @@ export default function StatisticPage() {
         <div className="flex h-screen overflow-hidden bg-gray-100">
             <SideNavbarComponent />
             <div className="flex flex-col flex-1 w-full">
-                <PartTop />
-                <NamePageComponent nama={"Statistik Produk"} />
-                {loading ? (
-                    <div className="flex items-center justify-center h-full">
-                        <Spinner
-                            thickness='4px'
-                            speed='0.65s'
-                            emptyColor='gray.200'
-                            color='blue.500'
-                            size='xl'
-                        />
-                    </div>
-                ) : isAuth ? (
-                    <div>
-                        <main className="flex-1 pt-5 px-10 overflow-y-auto">
-                            <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200 h-[520px]">
-                                <DescPageComponent
-                                    desc={`Laporan stok ini mencakup recap product pada bulan ${selectedMonth} ${selectedYear}.`} />
-                                <FilterRecapProductComponent onFilterChange={handleFilterChange} />
-                                {data.length > 0 ? (
-                                    <BarChartProductSell data={data} />
-                                ) : (
-                                    <div className="flex items-center justify-center h-full">
-                                        <p className="text-xl">No Data</p>
-                                    </div>
-                                )}
-                            </div>
-                        </main>
-                        <PaginationBarChartProductSell pagination={pagination} onPageChange={handlePageChange} />
-                    </div>
-                ) : (
-                    <div className="flex items-center justify-center h-full">
-                        <p className="text-xl">{error}</p>
-                    </div>
-                )}
+                <PartTop/>
+                <NamePageComponent nama={"Statistik Produk"}/>
+                <div>
+                    <main className="flex-1 pt-5 px-10 overflow-y-auto">
+                        <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200 h-[520px]">
+                            <DescPageComponent
+                                desc={`Laporan stok ini mencakup recap product pada bulan ${selectedMonth} ${selectedYear}.`}/>
+                            <FilterRecapProductComponent onFilterChange={handleFilterChange}/>
+                            {loading ? (
+                                <div className="flex items-center justify-center h-full">
+                                    <Spinner
+                                        thickness='4px'
+                                        speed='0.65s'
+                                        emptyColor='gray.200'
+                                        color='blue.500'
+                                        size='xl'
+                                    />
+                                </div>
+                            ) : isAuth ? (
+                                <div>
+                                    {data.length > 0 ? (
+                                        <BarChartProductSell data={data}/>
+                                    ) : (
+                                        <div className="flex items-center justify-center h-full">
+                                            <p className="text-xl">No Data</p>
+                                        </div>
+                                    )}
+                                </div>
+                            ) : (
+                                <div className="flex items-center justify-center h-full">
+                                    <p className="text-xl">{error}</p>
+                                </div>
+                            )}
+                        </div>
+                    </main>
+                    <PaginationBarChartProductSell pagination={pagination} onPageChange={handlePageChange}/>
+                </div>
+
             </div>
         </div>
     );
