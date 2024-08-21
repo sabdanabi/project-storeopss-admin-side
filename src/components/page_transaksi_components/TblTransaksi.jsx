@@ -38,7 +38,7 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                                 <td>Action</td>
                             </tr>
                         </thead>
-                        <tbody className="font-semibold">
+                        <tbody className="font-semibold text-[15px]">
                             {currentTransaksi.map((transaction, index) => (
                                 <tr className="border-b-2 h-18" key={transaction.id}>
                                     <td className="px-4"><p className="mr-3 text-blue-gray-700">{indexOfFirstItem + index + 1}</p></td>

@@ -30,7 +30,7 @@ export default function TabsPagePersediaan({ items, setSelectedTab, data, search
 
     return (
         <div>
-            <div className="bg-white h-[65px] flex pt-0 border-y-[3px] border-gray-200 justify-between  items-center">
+            <div className="bg-white h-[65px] flex pt-0 border-y-[3px] border-gray-200 justify-between items-center">
                 <div className="flex">
                     <div className="ml-6">
                         {items.map((item, index) => (

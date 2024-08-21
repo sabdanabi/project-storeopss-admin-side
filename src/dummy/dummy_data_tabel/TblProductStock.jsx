@@ -21,7 +21,7 @@ export default function TblProductStock({ products, handleDelete, updateProductS
                         <td>Action</td>
                     </tr>
                 </thead>
-                <tbody className="font-semibold text-blue-gray-700">    
+                <tbody className="font-semibold text-[15px] text-blue-gray-700">    
                     {products.map((product, index) => (
                         <tr className="border-b-2 h-18" key={product.id}>
                             <td className="px-4"><p className="mr-3">{index + 1}</p></td>

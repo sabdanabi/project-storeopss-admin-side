@@ -99,7 +99,7 @@ export default function NotaPage() {
                                             <td className="px-4">Aksi</td>
                                         </tr>
                                     </thead>
-                                    <tbody className="text-sm font-semibold text-blue-gray-700">
+                                    <tbody className="text-[15px] font-semibold text-blue-gray-700">
                                         {filteredNota.map((nota, index) => (
                                             <tr className="border-b-2 h-18" key={`${nota.id}-${index}`}>
                                                 <td className="px-4">{index + 1}</td>

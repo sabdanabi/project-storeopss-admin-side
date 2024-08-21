@@ -25,7 +25,7 @@ export function HistoryRestockCard({ restockHistory }) {
                         <td className="px-4">Aksi</td>
                     </tr>
                 </thead>
-                <tbody className="font-semibold text-blue-gray-700">
+                <tbody className="font-semibold text-[15px] text-blue-gray-700">
                     {restockHistory.map((entry, index) => (
                         <tr className="border-b-2 h-18" key={`${entry.id}-${index}`}>
                             <td className="px-4">{index + 1}</td>
