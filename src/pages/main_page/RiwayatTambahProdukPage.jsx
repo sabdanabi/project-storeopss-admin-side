@@ -50,7 +50,6 @@ export default function RiwayatTambahProdukPage() {
         }
     };
 
-    // Mengelola perubahan halaman pada pagination
     const handlePageChange = (page) => {
         fetchAddProductHistory(page);
     };

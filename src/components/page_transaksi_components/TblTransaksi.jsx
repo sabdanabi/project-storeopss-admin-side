@@ -102,4 +102,11 @@ TblTransaksi.propTypes = {
     })).isRequired,
     updateProductsState: PropTypes.func.isRequired,
     handleStatusFilterChange: PropTypes.func.isRequired,
+    pagination: PropTypes.shape({
+        current_page: PropTypes.number,
+        per_page: PropTypes.number
+    }),
+    isLoading: PropTypes.bool.isRequired,
+    isAuth: PropTypes.bool.isRequired,
+    error: PropTypes.string,
 };
