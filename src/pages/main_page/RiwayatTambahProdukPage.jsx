@@ -55,7 +55,6 @@ export default function RiwayatTambahProdukPage() {
         fetchAddProductHistory(page);
     };
 
-    // Mengambil data riwayat ketika komponen di-mount
     useEffect(() => {
         fetchAddProductHistory();
     }, []);
