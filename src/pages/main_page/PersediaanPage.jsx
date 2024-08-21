@@ -1,14 +1,15 @@
- import SideNavbarComponent from "../../components/components_reused/SideNavbarComponent.jsx";
+import SideNavbarComponent from "../../components/components_reused/SideNavbarComponent.jsx";
 import PartTop from "../../components/components_reused/PartTop.jsx";
 import TblStock from "../../components/page_persediaan_components/TblStock.jsx";
-import {useEffect, useState} from "react";
-import {getAllProduct, addNewProduct, deleteProduct, importProductExcel} from "../../services/StockService.jsx";
-import {toast } from "react-toastify";
+import { useEffect, useState } from "react";
+import { getAllProduct, addNewProduct, deleteProduct, importProductExcel } from "../../services/StockService.jsx";
+import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-import {BtnDropDownAddStock} from "../../components/page_persediaan_components/button/BtnDropDownAddStock.jsx";
-import { Spinner } from '@chakra-ui/react'
-import {PaginationPersediaanProduk} from "../../components/page_persediaan_components/PaginationPersediaanProduk.jsx";
+import { BtnDropDownAddStock } from "../../components/page_persediaan_components/button/BtnDropDownAddStock.jsx";
+import { Spinner } from '@chakra-ui/react';
+import { PaginationPersediaanProduk } from "../../components/page_persediaan_components/PaginationPersediaanProduk.jsx";
 import * as XLSX from 'xlsx';
+import { getAllProductTransaktion } from "../../services/TransaksiService.jsx";
 
 export default function PersediaanPage() {
     const [products, setProducts] = useState([]);
@@ -18,26 +19,44 @@ export default function PersediaanPage() {
     const [searchQuery, setSearchQuery] = useState('');
     const [pagination, setPagination] = useState({});
 
+    const [pilihProduct, setPilihProduct] = useState([]);
+
     const fetchProducts = async (page = 1) => {
         try {
-
             setLoading(true);
             const result = await getAllProduct(page);
             setProducts(result.data);
             setAuth(true);
             setPagination(result.meta);
-        } catch(e) {
-
+        } catch (e) {
             console.log(e);
             setError(e.response.data.error);
-
         } finally {
             setLoading(false);
         }
-    }
+    };
 
-    const exportToExcel = () => {
-        const dataToExport = products.map((product, index) => ({
+    const updateProductsState = async () => {
+        try {
+            setLoading(true);
+            const result = await getAllProductTransaktion();
+            setPilihProduct(result.data);
+            setAuth(true);
+        } catch (e) {
+            console.log(e);
+            setError(e.response.data.error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const exportToExcel = async () => {
+        if (pilihProduct.length === 0) {
+            await updateProductsState();
+        }
+        console.log(pilihProduct);  // Tambahkan ini untuk memeriksa data
+
+        const dataToExport = pilihProduct.map((product, index) => ({
             No: index + 1,
             Produk: product.name,
             'Harga Beli': product.purchase_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }),
@@ -79,27 +98,34 @@ export default function PersediaanPage() {
         fetchProducts(pagination.current_page);
     };
 
-
     return (
         <div className="flex h-screen overflow-hidden bg-gray-100">
-            <SideNavbarComponent/>
+            <SideNavbarComponent />
             <div className="flex flex-col flex-1 w-full overflow-hidden">
-                <PartTop/>
+                <PartTop />
 
-                <BtnDropDownAddStock updateProductsState={updateProductState}
-                                     addNewProduct={addNewProduct} importProductExcel={importProductExcel}/>
+                <BtnDropDownAddStock
+                    updateProductsState={updateProductState}
+                    addNewProduct={addNewProduct}
+                    importProductExcel={importProductExcel}
+                />
 
                 <div>
-                    <TblStock products={filteredHistory} handleDelete={handleDelete} searchQuery={searchQuery}
-                              updateProductsState={updateProductState} handleSearchChange={handleSearchChange}
-                              exportToExcel={exportToExcel} pagination={pagination} isLoading={isLoading} isAuth={isAuth}
-                              error={error}
+                    <TblStock
+                        products={filteredHistory}
+                        handleDelete={handleDelete}
+                        searchQuery={searchQuery}
+                        updateProductsState={updateProductState}
+                        handleSearchChange={handleSearchChange}
+                        exportToExcel={exportToExcel}
+                        pagination={pagination}
+                        isLoading={isLoading}
+                        isAuth={isAuth}
+                        error={error}
                     />
-                    <PaginationPersediaanProduk meta={pagination} onPageChange={handlePageChange}/>
+                    <PaginationPersediaanProduk meta={pagination} onPageChange={handlePageChange} />
                 </div>
-
             </div>
-
         </div>
     );
 }

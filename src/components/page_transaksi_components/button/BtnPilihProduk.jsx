@@ -93,6 +93,7 @@ export function BtnPilihProduk({ onProductSelect}) {
             const result = await getAllProductTransaktion();
             setPilihProduct(result.data);
             setAuth(true);
+            console.log(pilihProduct)
         } catch (e) {
             console.log(e);
             setError(e.response.data.error);

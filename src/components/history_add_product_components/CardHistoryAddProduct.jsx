@@ -1,9 +1,8 @@
-import React, { useState } from "react";
 import PropTypes from "prop-types";
+import {useState} from "react";
 
-export function CardHistoryAddProduct({ addProductHistory, pagination }) {
-    const [selectedEntry, setSelectedEntry] = useState(null);
-    const { current_page, per_page } = pagination || {};
+export function CardHistoryAddProduct({ addProductHistory, pagination, selectedEntry, current_page,
+                                          setSelectedEntry, per_page }) {
 
     const handleDetailClick = (entry) => {
         setSelectedEntry(entry);

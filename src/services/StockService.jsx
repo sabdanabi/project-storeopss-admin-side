@@ -106,6 +106,21 @@ const getHistoryAddProduct = async (page = 1) => {
     }
 };
 
+const getHistoryAddProductAll = async () => {
+    try {
+        const response = await axios.get(`${baseUrl}/api/products/histories/add?paginate=false`, {
+            headers: {
+                AUTHORIZATION: token,
+                "ngrok-skip-browser-warning": true
+            },
+        });
+        return response.data;
+    } catch (error) {
+        handleAxiosError(error);
+        throw error;
+    }
+};
+
 
 const importProductExcel = async (formData) => {
     try {
@@ -136,4 +151,5 @@ const handleAxiosError = (error) => {
 };
 
 export { getAllProduct, addNewProduct, deleteProduct,
-    editProduct, getProductById, getHistoryAddProduct, importProductExcel  };
+    editProduct, getProductById, getHistoryAddProduct, importProductExcel,
+    getHistoryAddProductAll};

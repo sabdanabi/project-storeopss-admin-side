@@ -8,6 +8,7 @@ import { CardHistoryAddProduct } from "../../components/history_add_product_comp
 import { getHistoryAddProduct } from "../../services/StockService.jsx";
 import { PaginationRiwayatTambahProduk } from "../../components/history_add_product_components/PaginationRiwayatTambahProduk.jsx";
 import FilterComponentNewProduk from "../../components/components_reused/FilterComponentNewProduk.jsx";
+import * as XLSX from "xlsx";
 
 export default function RiwayatTambahProdukPage() {
     const [addProductHistory, setAddProductHistory] = useState([]);
@@ -17,17 +18,17 @@ export default function RiwayatTambahProdukPage() {
     const [searchQuery, setSearchQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState('');
     const [pagination, setPagination] = useState({});
+    const [selectedEntry, setSelectedEntry] = useState(null);
+    const { current_page, per_page } = pagination || {};
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
 
-    // Mengelola perubahan filter status
     const handleStatusFilterChange = (status) => {
         setStatusFilter(status);
     };
 
-    // Filter riwayat berdasarkan pencarian dan status
     const filteredHistory = addProductHistory.filter((entry) => {
         const matchesName = entry.name.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesDate = entry.date.includes(searchQuery);
@@ -35,7 +36,6 @@ export default function RiwayatTambahProdukPage() {
         return (matchesName || matchesDate) && matchesStatus;
     });
 
-    // Mengambil data riwayat tambah produk dari API
     const fetchAddProductHistory = async (page = 1) => {
         try {
             setLoading(true);
@@ -48,6 +48,59 @@ export default function RiwayatTambahProdukPage() {
         } finally {
             setLoading(false);
         }
+    };
+
+    const fetchAllPages = async () => {
+        let allData = [];
+        let currentPage = 1;
+        let totalPages = 1;
+
+        try {
+            setLoading(true);
+            do {
+                const data = await getHistoryAddProduct(currentPage);
+                allData = [...allData, ...data.data];
+                currentPage = data.meta.current_page + 1;
+                totalPages = data.meta.last_page;
+            } while (currentPage <= totalPages);
+            setAddProductHistory(allData);
+        } catch (error) {
+            setError(error.message);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const exportToExcel = async () => {
+        await fetchAllPages(); // Pastikan semua halaman data diambil
+
+        const tableData = addProductHistory.map((entry, index) => ({
+            No: index + 1, // Penomoran berdasarkan total data
+            "Nama Produk": entry.name,
+            Tanggal: entry.date,
+            Stok: entry.quantity,
+            "Harga Beli": entry.purchase_price,
+            "Harga Jual": entry.selling_price,
+        }));
+
+        const popupData = selectedEntry ? [{
+            "Nama Produk": selectedEntry.name,
+            "Tanggal": selectedEntry.date,
+            "Harga Beli": selectedEntry.purchase_price,
+            "Harga Jual": selectedEntry.selling_price,
+            "Stok Produk": selectedEntry.quantity,
+        }] : [];
+
+        const worksheet = XLSX.utils.json_to_sheet(tableData);
+        const worksheetPopup = XLSX.utils.json_to_sheet(popupData);
+
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Data Tabel");
+        if (selectedEntry) {
+            XLSX.utils.book_append_sheet(workbook, worksheetPopup, "Data Popup");
+        }
+
+        XLSX.writeFile(workbook, "RiwayatTambahProduk.xlsx");
     };
 
     const handlePageChange = (page) => {
@@ -63,15 +116,16 @@ export default function RiwayatTambahProdukPage() {
             <SideNavbarComponent />
 
             <div className="flex flex-col flex-1 w-full">
-                <PartTop/>
-                <NamePageComponent nama="Riwayat Tambah Produk"/>
+                <PartTop />
+                <NamePageComponent nama="Riwayat Tambah Produk" />
                 <main className="flex-1 pt-5 px-10 overflow-y-auto">
                     <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
-                        <DescPageComponent desc="Riwayat tambah produk anda dari waktu ke waktu."/>
+                        <DescPageComponent desc="Riwayat tambah produk anda dari waktu ke waktu." />
                         <FilterComponentNewProduk
                             searchQuery={searchQuery}
                             handleSearchChange={handleSearchChange}
                             handleStatusFilterChange={handleStatusFilterChange}
+                            exportToExcel={exportToExcel}
                         />
                         <div className="bg-white border-b-[3px] border-gray-200 overflow-auto h-96">
                             {isLoading ? (
@@ -85,7 +139,14 @@ export default function RiwayatTambahProdukPage() {
                                     />
                                 </div>
                             ) : isAuth ? (
-                                <CardHistoryAddProduct addProductHistory={filteredHistory} pagination={pagination}/>
+                                <CardHistoryAddProduct
+                                    addProductHistory={filteredHistory}
+                                    pagination={pagination}
+                                    selectedEntry={selectedEntry}
+                                    setSelectedEntry={setSelectedEntry}
+                                    current_page={current_page}
+                                    per_page={per_page}
+                                />
                             ) : (
                                 <div className="flex items-center justify-center h-full">
                                     <p className="text-xl">{error}</p>
@@ -93,9 +154,8 @@ export default function RiwayatTambahProdukPage() {
                             )}
                         </div>
                     </div>
-                    <PaginationRiwayatTambahProduk pagination={pagination} onPageChange={handlePageChange}/>
+                    <PaginationRiwayatTambahProduk pagination={pagination} onPageChange={handlePageChange} />
                 </main>
-
             </div>
         </div>
     );
