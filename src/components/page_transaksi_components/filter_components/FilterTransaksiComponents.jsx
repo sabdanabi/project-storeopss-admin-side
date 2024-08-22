@@ -17,11 +17,11 @@ export default function FilterTransaksiComponents({handleSearchChange, searchQue
         handleStatusFilterChange(status);
     }
 
-    const [selectedDay, setSelectedDay] = useState("Pilih Waktu")
-    const onFilterChange = (dayFilter)  => {
-        setSelectedDay(dayFilter);
-        handleDayFilterChange(dayFilter);
-    }
+    // const [selectedDay, setSelectedDay] = useState("Pilih Waktu")
+    // // const onFilterChange = (dayFilter)  => {
+    // //     setSelectedDay(dayFilter);
+    // //     handleDayFilterChange(dayFilter);
+    // // }
     return (
         <div className="bg-white h-[65px] flex py-3 px-6 relative border-b-[3px] border-gray-200 gap-5">
             <div className="w-[950px]">
@@ -56,23 +56,23 @@ export default function FilterTransaksiComponents({handleSearchChange, searchQue
                 </MenuList>
             </Menu>
 
-            <Menu>
-                <MenuButton as={Button} rightIcon={
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                         stroke="currentColor" className="w-5 h-5 text-[#727E91] lg:hidden xl:block">
-                        <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
-                    </svg>
-                }>
-                    <p className="text-[14px] font-normal mr-10 text-[#727E91]">{selectedDay}</p>
-                </MenuButton>
-                <MenuList>
-                    <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('Hari ini')}>Hari ini</MenuItem></p>
-                    <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('1 Minggu')}>1 Minggu</MenuItem></p>
-                    <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('1 Bulan')}>1 Bulan</MenuItem></p>
-                    <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('Pilih tanggal')}>Pilih tanggal</MenuItem></p>
-                    <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('Pilih antara tanggal')}>Pilih antara tanggal</MenuItem></p>
-                </MenuList>
-            </Menu>
+            {/*<Menu>*/}
+            {/*    <MenuButton as={Button} rightIcon={*/}
+            {/*        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}*/}
+            {/*             stroke="currentColor" className="w-5 h-5 text-[#727E91] lg:hidden xl:block">*/}
+            {/*            <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>*/}
+            {/*        </svg>*/}
+            {/*    }>*/}
+            {/*        <p className="text-[14px] font-normal mr-10 text-[#727E91]">{selectedDay}</p>*/}
+            {/*    </MenuButton>*/}
+            {/*    <MenuList>*/}
+            {/*        <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('Hari ini')}>Hari ini</MenuItem></p>*/}
+            {/*        <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('1 Minggu')}>1 Minggu</MenuItem></p>*/}
+            {/*        <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('1 Bulan')}>1 Bulan</MenuItem></p>*/}
+            {/*        <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('Pilih tanggal')}>Pilih tanggal</MenuItem></p>*/}
+            {/*        <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('Pilih antara tanggal')}>Pilih antara tanggal</MenuItem></p>*/}
+            {/*    </MenuList>*/}
+            {/*</Menu>*/}
         </div>
     )
 }
@@ -80,5 +80,6 @@ export default function FilterTransaksiComponents({handleSearchChange, searchQue
 FilterTransaksiComponents.propTypes = {
     handleSearchChange: PropTypes.func.isRequired,
     searchQuery: PropTypes.string.isRequired,
-    handleDayFilterChange: PropTypes.func.isRequired,
+    handleDayFilterChange: PropTypes.func,
+    handleStatusFilterChange:PropTypes.func
 };

@@ -6,6 +6,7 @@ import {
     Button,
 } from '@chakra-ui/react'
 import {useState} from "react";
+import PropTypes from "prop-types";
 
 export default function FilterComponentNewProduk({handleSearchChange, searchQuery, handleDayFilterChange, exportToExcel}) {
 
@@ -56,7 +57,7 @@ export default function FilterComponentNewProduk({handleSearchChange, searchQuer
                 </Menu>
             </div>
             <button onClick={exportToExcel}
-                    className=" bg-white w-32 h-7 rounded-md flex justify-center pt-[2px] ml-3 mt-1
+                    className=" bg-white w-32 h-8.5 rounded-md flex justify-center items-center ml-3
                          border-2 border-[#1a4f8b]">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                      stroke="currentColor" className="size-5 text-[#1a4f8b] mr-2">
@@ -68,3 +69,10 @@ export default function FilterComponentNewProduk({handleSearchChange, searchQuer
         </div>
     )
 }
+
+FilterComponentNewProduk.propTypes = {
+    handleSearchChange: PropTypes.func.isRequired,
+    searchQuery: PropTypes.string.isRequired,
+    handleDayFilterChange: PropTypes.func,
+    exportToExcel: PropTypes.func.isRequired,
+};

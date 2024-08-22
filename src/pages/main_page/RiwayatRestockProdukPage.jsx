@@ -3,11 +3,12 @@ import PartTop from "../../components/components_reused/PartTop.jsx";
 import NamePageComponent from "../../components/components_reused/NamePageComponent.jsx";
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
 import { useEffect, useState } from "react";
-import { getAllRestockHistory } from "../../services/RestockService.jsx";
+import {getAllRestockHistory, getRestockHistory} from "../../services/RestockService.jsx";
 import { HistoryRestockCard } from "../../components/history_restock_components/HistoryRestockCard.jsx";
 import { Spinner } from '@chakra-ui/react';
 import FilterComponentRestock from "../../components/components_reused/FilterComponentRestock.jsx";
 import {PaginationHistoryRestock} from "../../components/history_restock_components/PaginationHistoryRestock.jsx";
+import * as XLSX from "xlsx";
 
 export default function RiwayatRestockProdukPage() {
     const [restockHistory, setRestockHistory] = useState([]);
@@ -36,7 +37,7 @@ export default function RiwayatRestockProdukPage() {
     const fetchRestockHistory = async (page = 1) => {
         try {
             setLoading(true);
-            const data = await getAllRestockHistory(page);
+            const data = await getRestockHistory(page);
             setRestockHistory(data.data);
             setAuth(true);
             setPagination(data.meta);
@@ -46,6 +47,37 @@ export default function RiwayatRestockProdukPage() {
         } finally {
             setLoading(false);
         }
+    };
+
+    const fetchAllRestockHistory = async () => {
+        try {
+            setLoading(true);
+            const result = await getAllRestockHistory();
+            setAuth(true);
+            return result;
+        } catch (e) {
+            console.log(e);
+            setError(e.response.data.error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const exportToExcel = async () => {
+        const result = await fetchAllRestockHistory();
+        const dataToExport = result.data.map((entry, index) => ({
+            No: index + 1,
+            Nama_Produk: entry.name,
+            Tanggal: entry.date,
+            Pemasok: entry.supplier.name,
+            Jumlah: entry.product.new_quantity,
+        }));
+
+        const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Riwayat_Tambah_Produk");
+
+        XLSX.writeFile(workbook, "Riwayat_Tambah_Produk.xlsx");
     };
 
     const handlePageChange = (page) => {
@@ -71,6 +103,7 @@ export default function RiwayatRestockProdukPage() {
                             searchQuery={searchQuery}
                             handleSearchChange={handleSearchChange}
                             handleStatusFilterChange={handleStatusFilterChange}
+                            exportToExcel={exportToExcel}
                         />
 
                         <div className="flex justify-center h-96">

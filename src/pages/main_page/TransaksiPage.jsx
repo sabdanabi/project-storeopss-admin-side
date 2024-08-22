@@ -4,7 +4,6 @@ import TblTransaksi from "../../components/page_transaksi_components/TblTransaks
 import BtnAddTransaksi from "../../components/page_transaksi_components/button/BtnAddTransaksi.jsx";
 import { useEffect, useState } from "react";
 import { getAllTransaksi, addIncome } from "../../services/TransaksiService.jsx";
-import { Spinner } from '@chakra-ui/react'
  import {PaginationTransaksiProduk} from "../../components/page_transaksi_components/PaginationTransaksiProduk.jsx";
 
 
@@ -22,15 +21,27 @@ export default function TransaksiPage() {
         setSearchQuery(e.target.value);
     };
 
+    useEffect(() => {
+        fetchDataTranksaksi();
+    }, []);
+
+    const handlePageChange = (page) => {
+        fetchDataTranksaksi(page);
+    };
+
+    const updateProductState = () => {
+        fetchDataTranksaksi(pagination.current_page);
+    };
+
+    const handleStatusFilterChange = (status) => {
+        setFilteredStatus(status === 'Semua' ? null : status);
+    };
+
     const filteredTransaksi = transaksi.length > 0 ? transaksi.filter((entry) => {
         const nameMatch = entry.customer.name.toLowerCase().includes(searchQuery.toLowerCase());
         const statusMatch = !filteredStatus || entry.status === filteredStatus;
         return nameMatch && statusMatch;
     }) : [];
-
-    useEffect(() => {
-        fetchDataTranksaksi();
-    }, []);
 
     const fetchDataTranksaksi = async (page = 1) => {
         try {
@@ -45,17 +56,6 @@ export default function TransaksiPage() {
         } finally {
             setLoading(false);
         }
-    };
-
-    const handlePageChange = (page) => {
-        fetchDataTranksaksi(page);
-    };
-
-    const updateProductState = () => {
-        fetchDataTranksaksi(pagination.current_page);
-    };
-    const handleStatusFilterChange = (status) => {
-        setFilteredStatus(status === 'Semua' ? null : status);
     };
 
     return (

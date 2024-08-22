@@ -5,7 +5,7 @@ import PartTop from "../../components/components_reused/PartTop.jsx";
 import NamePageComponent from "../../components/components_reused/NamePageComponent.jsx";
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
 import { CardHistoryAddProduct } from "../../components/history_add_product_components/CardHistoryAddProduct.jsx";
-import { getHistoryAddProduct } from "../../services/StockService.jsx";
+import {getHistoryAddProduct, getHistoryAddProductAll} from "../../services/StockService.jsx";
 import { PaginationRiwayatTambahProduk } from "../../components/history_add_product_components/PaginationRiwayatTambahProduk.jsx";
 import FilterComponentNewProduk from "../../components/components_reused/FilterComponentNewProduk.jsx";
 import * as XLSX from "xlsx";
@@ -50,58 +50,41 @@ export default function RiwayatTambahProdukPage() {
         }
     };
 
-    const fetchAllPages = async () => {
-        let allData = [];
-        let currentPage = 1;
-        let totalPages = 1;
-
+    const fetchAllHistoryAddProduct = async () => {
         try {
             setLoading(true);
-            do {
-                const data = await getHistoryAddProduct(currentPage);
-                allData = [...allData, ...data.data];
-                currentPage = data.meta.current_page + 1;
-                totalPages = data.meta.last_page;
-            } while (currentPage <= totalPages);
-            setAddProductHistory(allData);
-        } catch (error) {
-            setError(error.message);
+            const result = await getHistoryAddProductAll();
+            setAuth(true);
+            return result;
+        } catch (e) {
+            console.log(e);
+            setError(e.response.data.error);
         } finally {
             setLoading(false);
         }
     };
 
-    const exportToExcel = async () => {
-        await fetchAllPages(); // Pastikan semua halaman data diambil
 
-        const tableData = addProductHistory.map((entry, index) => ({
-            No: index + 1, // Penomoran berdasarkan total data
-            "Nama Produk": entry.name,
+    const exportToExcel = async () => {
+        const result = await fetchAllHistoryAddProduct();
+        const dataToExport = result.data.map((entry, index) => ({
+            No: index + 1,
+            Nama_Produk: entry.name,
             Tanggal: entry.date,
-            Stok: entry.quantity,
-            "Harga Beli": entry.purchase_price,
-            "Harga Jual": entry.selling_price,
+            Harga_Beli: entry.purchase_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }),
+            Harga_Jual: entry.selling_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }),
+            Stock_Produk: entry.quantity,
         }));
 
-        const popupData = selectedEntry ? [{
-            "Nama Produk": selectedEntry.name,
-            "Tanggal": selectedEntry.date,
-            "Harga Beli": selectedEntry.purchase_price,
-            "Harga Jual": selectedEntry.selling_price,
-            "Stok Produk": selectedEntry.quantity,
-        }] : [];
-
-        const worksheet = XLSX.utils.json_to_sheet(tableData);
-        const worksheetPopup = XLSX.utils.json_to_sheet(popupData);
-
+        const worksheet = XLSX.utils.json_to_sheet(dataToExport);
         const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Data Tabel");
-        if (selectedEntry) {
-            XLSX.utils.book_append_sheet(workbook, worksheetPopup, "Data Popup");
-        }
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Riwayat_Tambah_Produk");
 
-        XLSX.writeFile(workbook, "RiwayatTambahProduk.xlsx");
+        XLSX.writeFile(workbook, "Riwayat_Tambah_Produk.xlsx");
     };
+
+
+
 
     const handlePageChange = (page) => {
         fetchAddProductHistory(page);

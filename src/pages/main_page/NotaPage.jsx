@@ -4,9 +4,10 @@ import NamePageComponent from "../../components/components_reused/NamePageCompon
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
 import FilterComponentsNotaPage from "../../components/components_reused/FilterComponentsNotaPage.jsx";
 import { useEffect, useState } from "react";
-import { getAllTransaksi } from "../../services/TransaksiService.jsx";
+import {getAllNotaTransaksi, getAllProductTransaktion, getAllTransaksi} from "../../services/TransaksiService.jsx";
 import { Spinner } from "@chakra-ui/react";
 import {PagintionRiwayatNota} from "../../components/riwayat_nota_components/PagintionRiwayatNota.jsx";
+import * as XLSX from "xlsx";
 
 export default function NotaPage() {
     const [nota, setNota] = useState([]);
@@ -19,33 +20,12 @@ export default function NotaPage() {
     const [pagination, setPagination] = useState({});
     const { current_page, per_page } = pagination || {};
 
-    const handleSearchChange = (e) => {
-        setSearchQuery(e.target.value);
-    };
-
-    const filteredNota = nota.length > 0 ? nota.filter((entry) => {
-        const nameMatch = entry.customer.name.toLowerCase().includes(searchQuery.toLowerCase());
-        const statusMatch = !filteredStatus || entry.status === filteredStatus;
-        return nameMatch && statusMatch;
-    }) : [];
-
     useEffect(() => {
         fetchNotaTransaksi();
     }, []);
 
-    const fetchNotaTransaksi = async (page = 1) => {
-        try {
-            setLoading(true);
-            const result = await getAllTransaksi(page);
-            setNota(result.data);
-            setAuth(true);
-            setPagination(result.meta);
-        } catch (e) {
-            console.error(e);
-            setError(e.response?.data?.error || 'Unknown error occurred');
-        } finally {
-            setLoading(false);
-        }
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
     };
 
     const handlePageChange = (page) => {
@@ -68,6 +48,63 @@ export default function NotaPage() {
         setSelectedNota(null);
     };
 
+    const filteredNota = nota.length > 0 ? nota.filter((entry) => {
+        const nameMatch = entry.customer.name.toLowerCase().includes(searchQuery.toLowerCase());
+        const statusMatch = !filteredStatus || entry.status === filteredStatus;
+        return nameMatch && statusMatch;
+    }) : [];
+
+    const fetchNotaTransaksi = async (page = 1) => {
+        try {
+            setLoading(true);
+            const result = await getAllTransaksi(page);
+            setNota(result.data);
+            setAuth(true);
+            setPagination(result.meta);
+        } catch (e) {
+            console.error(e);
+            setError(e.response?.data?.error || 'Unknown error occurred');
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const fetchAllNotaTransaksi = async () => {
+        try {
+            setLoading(true);
+            const result = await getAllNotaTransaksi();
+            setAuth(true);
+            return result;
+        } catch (e) {
+            console.log(e);
+            setError(e.response.data.error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const exportToExcel = async () => {
+        const result = await fetchAllNotaTransaksi();
+
+        if (result && result.data) {
+            const dataToExport = result.data.map((entry, index) => ({
+                No: index + 1,
+                Resi_Kostumer: entry.customer.name,
+                Tanggal: entry.date,
+                Status: entry.status,
+                Products: entry.products.map((product) => `x${product.quantity} ${product.name} @ ${product.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}`).join(', '),
+                Total: calculateTotal(entry.products).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }),
+                Metode_Pembayaran: entry.payment_method,
+            }));
+
+            const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+            const workbook = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(workbook, worksheet, "Riwayat_Tambah_Produk");
+
+            XLSX.writeFile(workbook, "Riwayat_Tambah_Produk.xlsx");
+        }
+    };
+
     return (
         <div className="flex h-screen overflow-hidden bg-gray-100">
             <SideNavbarComponent />
@@ -81,6 +118,7 @@ export default function NotaPage() {
                             searchQuery={searchQuery}
                             handleSearchChange={handleSearchChange}
                             handleStatusFilterChange={handleStatusFilterChange}
+                            exportToExcel={exportToExcel}
                         />
 
                         <div className="bg-white border-b-[3px] border-gray-200 overflow-auto h-96">
@@ -100,7 +138,6 @@ export default function NotaPage() {
                                     <thead className="h-12 border-b-2">
                                     <tr className="text-sm text-[#9CA4AE]">
                                         <td className="px-4">No</td>
-                                        <td className="px-4">Toko</td>
                                         <td className="px-4">Resi Kostumer</td>
                                         <td className="px-4">Tanggal</td>
                                         <td className="px-4">Status</td>
@@ -111,7 +148,6 @@ export default function NotaPage() {
                                     {filteredNota.map((nota, index) => (
                                         <tr className="border-b-2 h-18" key={`${nota.id}-${index}`}>
                                             <td className="px-4">{(current_page - 1) * per_page + index + 1}</td>
-                                            <td className="px-4 py-2">{nota.store_name || 'Toko Adel Jaya'}</td>
                                             <td className="px-4 py-2">{nota.customer.name}</td>
                                             <td className="px-4 py-2">{nota.date}</td>
                                             <td className="px-4 py-2">

@@ -43,7 +43,7 @@ const addIncome = async (data) => {
     }
 };
 
-const getAllProductTransaktion = async () =>  {
+const  getAllProductTransaktion = async () =>  {
     try {
         const response = await axios.get(`${baseUrl}/api/products?paginate=false`, {
             headers: {
@@ -58,6 +58,24 @@ const getAllProductTransaktion = async () =>  {
         } else {
             return { error: "Failed to add income." };
         }    }
+};
+
+const getAllNotaTransaksi = async () => {
+    try {
+        const response = await axios.get(`${baseUrl}/api/transactions/income?paginate=false`, {
+            headers: {
+                AUTHORIZATION: token,
+                "ngrok-skip-browser-warning": true
+            },
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.data) {
+            return error.response.data;
+        } else {
+            return { error: "Failed to fetch transactions." };
+        }
+    }
 };
 
 
@@ -85,4 +103,6 @@ const updateStatusTransaction = async (transactionId, status) => {
 };
 
 
-export { getAllTransaksi, addIncome, updateStatusTransaction, getAllProductTransaktion};
+export { getAllTransaksi, addIncome,
+    updateStatusTransaction, getAllProductTransaktion,
+    getAllNotaTransaksi};

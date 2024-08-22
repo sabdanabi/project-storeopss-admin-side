@@ -6,7 +6,6 @@ import { getAllProduct, addNewProduct, deleteProduct, importProductExcel } from 
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { BtnDropDownAddStock } from "../../components/page_persediaan_components/button/BtnDropDownAddStock.jsx";
-import { Spinner } from '@chakra-ui/react';
 import { PaginationPersediaanProduk } from "../../components/page_persediaan_components/PaginationPersediaanProduk.jsx";
 import * as XLSX from 'xlsx';
 import { getAllProductTransaktion } from "../../services/TransaksiService.jsx";
@@ -19,56 +18,12 @@ export default function PersediaanPage() {
     const [searchQuery, setSearchQuery] = useState('');
     const [pagination, setPagination] = useState({});
 
-    const [pilihProduct, setPilihProduct] = useState([]);
+    useEffect(() => {
+        fetchProducts();
+    }, []);
 
-    const fetchProducts = async (page = 1) => {
-        try {
-            setLoading(true);
-            const result = await getAllProduct(page);
-            setProducts(result.data);
-            setAuth(true);
-            setPagination(result.meta);
-        } catch (e) {
-            console.log(e);
-            setError(e.response.data.error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const updateProductsState = async () => {
-        try {
-            setLoading(true);
-            const result = await getAllProductTransaktion();
-            setPilihProduct(result.data);
-            setAuth(true);
-        } catch (e) {
-            console.log(e);
-            setError(e.response.data.error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
-    const exportToExcel = async () => {
-        if (pilihProduct.length === 0) {
-            await updateProductsState();
-        }
-        console.log(pilihProduct);  // Tambahkan ini untuk memeriksa data
-
-        const dataToExport = pilihProduct.map((product, index) => ({
-            No: index + 1,
-            Produk: product.name,
-            'Harga Beli': product.purchase_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }),
-            'Harga Jual': product.selling_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }),
-            Stock: product.quantity ?? 0
-        }));
-
-        const worksheet = XLSX.utils.json_to_sheet(dataToExport);
-        const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Produk Stock");
-
-        XLSX.writeFile(workbook, "Produk_Stock.xlsx");
+    const updateProductState = () => {
+        fetchProducts(pagination.current_page);
     };
 
 
@@ -90,12 +45,50 @@ export default function PersediaanPage() {
         toast.success("Data berhasil dihapus!");
     };
 
-    useEffect(() => {
-        fetchProducts();
-    }, []);
+    const fetchProducts = async (page = 1) => {
+        try {
+            setLoading(true);
+            const result = await getAllProduct(page);
+            setProducts(result.data);
+            setAuth(true);
+            setPagination(result.meta);
+        } catch (e) {
+            console.log(e);
+            setError(e.response.data.error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-    const updateProductState = () => {
-        fetchProducts(pagination.current_page);
+    const fetchAllProducts = async () => {
+        try {
+            setLoading(true);
+            const result = await getAllProductTransaktion();
+            setAuth(true);
+            return result;
+        } catch (e) {
+            console.log(e);
+            setError(e.response.data.error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const exportToExcel = async () => {
+        const result = await fetchAllProducts()
+        const dataToExport = result.data.map((product, index) => ({
+            No: index + 1,
+            Produk: product.name,
+            'Harga Beli': product.purchase_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }),
+            'Harga Jual': product.selling_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }),
+            Stock: product.quantity ?? 0
+        }));
+
+        const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Produk Stock");
+
+        XLSX.writeFile(workbook, "Produk_Stock.xlsx");
     };
 
     return (

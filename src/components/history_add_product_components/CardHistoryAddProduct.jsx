@@ -1,7 +1,6 @@
 import PropTypes from "prop-types";
-import {useState} from "react";
 
-export function CardHistoryAddProduct({ addProductHistory, pagination, selectedEntry, current_page,
+export function CardHistoryAddProduct({ addProductHistory, selectedEntry, current_page,
                                           setSelectedEntry, per_page }) {
 
     const handleDetailClick = (entry) => {
@@ -91,7 +90,7 @@ export function CardHistoryAddProduct({ addProductHistory, pagination, selectedE
 CardHistoryAddProduct.propTypes = {
     addProductHistory: PropTypes.arrayOf(
         PropTypes.shape({
-            id: PropTypes.number.isRequired,
+            id: PropTypes.number,
             date: PropTypes.string.isRequired,
             name: PropTypes.string.isRequired,
             purchase_price: PropTypes.number.isRequired,
@@ -99,4 +98,8 @@ CardHistoryAddProduct.propTypes = {
             quantity: PropTypes.number.isRequired,
         })
     ).isRequired,
+    selectedEntry: PropTypes.object,
+    current_page: PropTypes.number.isRequired,
+    setSelectedEntry: PropTypes.func.isRequired,
+    per_page: PropTypes.number.isRequired,
 };
