@@ -60,33 +60,33 @@ export default function LaporanStockPage() {
         <div className="flex h-screen overflow-hidden bg-gray-100">
             <SideNavbarComponent />
             <div className="flex flex-col flex-1 w-full">
-                <PartTop />
+                <PartTop/>
                 <NamePageComponent nama={"Laporan Stock"} subtitle={"dapatkan laporan stock anda secara real time"}/>
-                {isLoading ? (
-                    <div className="flex items-center justify-center h-full">
-                        <Spinner
-                            thickness='4px'
-                            speed='0.65s'
-                            emptyColor='gray.200'
-                            color='blue.500'
-                            size='xl'
-                        />
+                <main className="flex-1 px-10 pt-5 ">
+                    <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200 h-[480px] mb-7">
+                        <DescPageComponent
+                            desc={"Laporan stok ini mencakup periode dari tanggal 1 Maret 2024 hingga 31 Maret 2024."}/>
+                        <FilterComponentLaporanPage onFilterChange={handleFilterChange}/>
+                        {isLoading ? (
+                            <div className="flex items-center justify-center h-full">
+                                <Spinner
+                                    thickness='4px'
+                                    speed='0.65s'
+                                    emptyColor='gray.200'
+                                    color='blue.500'
+                                    size='xl'
+                                />
+                            </div>
+                        ) : isAuth ? (
+                            <DummyTabelLaporanStock products={products}/>
+                        ) : (
+                            <div className="flex items-center justify-center h-full w-full">
+                                <p className="text-xl">{error}</p>
+                            </div>
+                        )}
                     </div>
-                ) : isAuth ? (
-                    <main className="flex-1 px-10 pt-5 ">
-                        <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
-                            <DescPageComponent desc={"Laporan stok ini mencakup periode dari tanggal 1 Maret 2024 hingga 31 Maret 2024."} />
-                            <FilterComponentLaporanPage onFilterChange={handleFilterChange}/>
-                            <DummyTabelLaporanStock products={products} />
-                        </div>
-                    </main>
-                ) : (
-                    <div className="flex items-center justify-center h-full">
-                        <p className="text-xl">{error}</p>
-                    </div>
-                )}
-
-                <PaginationRecapProduct pagination={pagination} onPageChange={handlePageChange}/>
+                    <PaginationRecapProduct pagination={pagination} onPageChange={handlePageChange}/>
+                </main>
             </div>
         </div>
     );

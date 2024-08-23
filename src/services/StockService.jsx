@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const token = localStorage.getItem("token");
@@ -15,7 +16,10 @@ const addNewProduct = async (formData) => {
         return response.data;
     } catch (error) {
         if (error.response && error.response.status === 401) {
-            window.location.href = "/login-page";
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
         } else {
             handleAxiosError(error);
         }
@@ -37,7 +41,10 @@ const getAllProduct = async (page = 1) =>  {
         return response.data;
     } catch (error) {
         if (error.response && error.response.status === 401) {
-            window.location.href = "/login-page";
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 2000);
         } else {
             handleAxiosError(error);
         }
@@ -55,7 +62,10 @@ const deleteProduct = async (productId) => {
         return response.data;
     } catch (error) {
         if (error.response && error.response.status === 401) {
-            window.location.href = "/login-page";
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
         } else {
             handleAxiosError(error);
         }
@@ -74,7 +84,10 @@ const editProduct = async (productId, formData) => {
         return response.data;
     } catch (error) {
         if (error.response && error.response.status === 401) {
-            window.location.href = "/login-page";
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
         } else {
             handleAxiosError(error);
         }
@@ -100,7 +113,10 @@ const getProductById = async (productId) => {
         return data;
     } catch (error) {
         if (error.response && error.response.status === 401) {
-            window.location.href = "/login-page";
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
         } else {
             handleAxiosError(error);
         }
@@ -121,7 +137,10 @@ const getHistoryAddProduct = async (page = 1) => {
         return response.data;
     } catch (error) {
         if (error.response && error.response.status === 401) {
-            window.location.href = "/login-page";
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
         } else {
             handleAxiosError(error);
         }
@@ -139,7 +158,10 @@ const getHistoryAddProductAll = async () => {
         return response.data;
     } catch (error) {
         if (error.response && error.response.status === 401) {
-            window.location.href = "/login-page";
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
         } else {
             handleAxiosError(error);
         }
@@ -159,7 +181,10 @@ const importProductExcel = async (formData) => {
         return response.data;
     } catch (error) {
         if (error.response && error.response.status === 401) {
-            window.location.href = "/login-page";
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
         } else {
             handleAxiosError(error);
         }

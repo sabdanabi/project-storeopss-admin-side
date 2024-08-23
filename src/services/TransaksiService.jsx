@@ -1,4 +1,5 @@
 import axios from "axios";
+import {toast} from "react-toastify";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const token = localStorage.getItem("token");
@@ -17,7 +18,10 @@ const getAllTransaksi = async (page = 1) => {
         return response.data;
     } catch (error) {
         if (error.response && error.response.status === 401) {
-            window.location.href = "/login-page";
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
         } else {
             console.error('Error:', error.message);
         }
@@ -36,7 +40,10 @@ const addIncome = async (data) => {
         return response.data;
     } catch (error) {
         if (error.response && error.response.status === 401) {
-            window.location.href = "/login-page";
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
         } else {
             console.error('Error:', error.message);
         }
@@ -54,7 +61,10 @@ const  getAllProductTransaktion = async () =>  {
         return response.data;
     } catch (error) {
         if (error.response && error.response.status === 401) {
-            window.location.href = "/login-page";
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
         } else {
             console.error('Error:', error.message);
         }
@@ -72,7 +82,10 @@ const getAllNotaTransaksi = async () => {
         return response.data;
     } catch (error) {
         if (error.response && error.response.status === 401) {
-            window.location.href = "/login-page";
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
         } else {
             console.error('Error:', error.message);
         }
@@ -95,7 +108,10 @@ const updateStatusTransaction = async (transactionId, status) => {
         return response.data;
     } catch (error) {
         if (error.response && error.response.status === 401) {
-            window.location.href = "/login-page";
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
         } else {
             console.error('Error:', error.message);
         }

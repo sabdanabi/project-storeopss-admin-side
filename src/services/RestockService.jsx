@@ -1,4 +1,5 @@
 import axios from "axios";
+import {toast} from "react-toastify";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const token = localStorage.getItem("token");
@@ -16,8 +17,10 @@ const addRestockProduct = async (productId, restockData) => {
         return response.data;
     }catch (error) {
         if (error.response && error.response.status === 401) {
-            window.location.href = "/login-page";
-        } else {
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);         } else {
             console.error(error.response ? error.response.data : error.message);
         }
     }
@@ -37,8 +40,10 @@ const getRestockHistory = async (page = 1) => {
         return response.data;
     } catch (error) {
         if (error.response && error.response.status === 401) {
-            window.location.href = "/login-page";
-        } else {
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);         } else {
             console.error(error.response ? error.response.data : error.message);
         }
     }
@@ -55,8 +60,10 @@ const getAllRestockHistory = async () => {
         return response.data;
     } catch (error) {
         if (error.response && error.response.status === 401) {
-            window.location.href = "/login-page";
-        } else {
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);         } else {
             console.error(error.response ? error.response.data : error.message);
         }
     }
