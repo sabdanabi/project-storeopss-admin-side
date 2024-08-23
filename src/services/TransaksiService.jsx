@@ -1,4 +1,5 @@
 import axios from "axios";
+import {toast} from "react-toastify";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const token = localStorage.getItem("token");
@@ -16,10 +17,13 @@ const getAllTransaksi = async (page = 1) => {
         });
         return response.data;
     } catch (error) {
-        if (error.response && error.response.data) {
-            return error.response.data;
+        if (error.response && error.response.status === 401) {
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
         } else {
-            return { error: "Failed to fetch transactions." };
+            console.error('Error:', error.message);
         }
     }
 };
@@ -35,15 +39,18 @@ const addIncome = async (data) => {
         });
         return response.data;
     } catch (error) {
-        if (error.response && error.response.data) {
-            return error.response.data;
+        if (error.response && error.response.status === 401) {
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
         } else {
-            return { error: "Failed to add income." };
+            console.error('Error:', error.message);
         }
     }
 };
 
-const getAllProductTransaktion = async () =>  {
+const  getAllProductTransaktion = async () =>  {
     try {
         const response = await axios.get(`${baseUrl}/api/products?paginate=false`, {
             headers: {
@@ -53,11 +60,36 @@ const getAllProductTransaktion = async () =>  {
         });
         return response.data;
     } catch (error) {
-        if (error.response && error.response.data) {
-            return error.response.data;
+        if (error.response && error.response.status === 401) {
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
         } else {
-            return { error: "Failed to add income." };
-        }    }
+            console.error('Error:', error.message);
+        }
+    }
+};
+
+const getAllNotaTransaksi = async () => {
+    try {
+        const response = await axios.get(`${baseUrl}/api/transactions/income?paginate=false`, {
+            headers: {
+                AUTHORIZATION: token,
+                "ngrok-skip-browser-warning": true
+            },
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
+        } else {
+            console.error('Error:', error.message);
+        }
+    }
 };
 
 
@@ -75,14 +107,18 @@ const updateStatusTransaction = async (transactionId, status) => {
 
         return response.data;
     } catch (error) {
-        if (error.response && error.response.data) {
-            return error.response.data;
+        if (error.response && error.response.status === 401) {
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
         } else {
             console.error('Error:', error.message);
-            return { error: 'Failed to update transaction status.' };
         }
     }
 };
 
 
-export { getAllTransaksi, addIncome, updateStatusTransaction, getAllProductTransaktion};
+export { getAllTransaksi, addIncome,
+    updateStatusTransaction, getAllProductTransaktion,
+    getAllNotaTransaksi};

@@ -1,5 +1,6 @@
 // services/StatisticService.js
 import axios from "axios";
+import {toast} from "react-toastify";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const token = localStorage.getItem("token");
@@ -21,7 +22,13 @@ const getStatisticProductSell = async (year = null, month = null, sort = 'asc', 
         });
         return response.data;
     } catch (error) {
-        handleAxiosError(error);
+        if (error.response && error.response.status === 401) {
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);         } else {
+            handleAxiosError(error);
+        }
     }
 };
 

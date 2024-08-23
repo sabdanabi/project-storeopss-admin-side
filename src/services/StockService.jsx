@@ -1,4 +1,5 @@
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const token = localStorage.getItem("token");
@@ -14,7 +15,14 @@ const addNewProduct = async (formData) => {
         });
         return response.data;
     } catch (error) {
-        handleAxiosError(error);
+        if (error.response && error.response.status === 401) {
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
+        } else {
+            handleAxiosError(error);
+        }
     }
 };
 
@@ -32,7 +40,14 @@ const getAllProduct = async (page = 1) =>  {
         });
         return response.data;
     } catch (error) {
-        handleAxiosError(error);
+        if (error.response && error.response.status === 401) {
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 2000);
+        } else {
+            handleAxiosError(error);
+        }
     }
 };
 
@@ -46,7 +61,14 @@ const deleteProduct = async (productId) => {
         });
         return response.data;
     } catch (error) {
-        handleAxiosError(error);
+        if (error.response && error.response.status === 401) {
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
+        } else {
+            handleAxiosError(error);
+        }
     }
 };
 
@@ -61,7 +83,14 @@ const editProduct = async (productId, formData) => {
         });
         return response.data;
     } catch (error) {
-        handleAxiosError(error);
+        if (error.response && error.response.status === 401) {
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
+        } else {
+            handleAxiosError(error);
+        }
     }
 };
 
@@ -83,8 +112,14 @@ const getProductById = async (productId) => {
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error('Error:', error.message);
-        return null;
+        if (error.response && error.response.status === 401) {
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
+        } else {
+            handleAxiosError(error);
+        }
     }
 };
 
@@ -101,8 +136,35 @@ const getHistoryAddProduct = async (page = 1) => {
         });
         return response.data;
     } catch (error) {
-        handleAxiosError(error);
-        throw error;
+        if (error.response && error.response.status === 401) {
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
+        } else {
+            handleAxiosError(error);
+        }
+    }
+};
+
+const getHistoryAddProductAll = async () => {
+    try {
+        const response = await axios.get(`${baseUrl}/api/products/histories/add?paginate=false`, {
+            headers: {
+                AUTHORIZATION: token,
+                "ngrok-skip-browser-warning": true
+            },
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
+        } else {
+            handleAxiosError(error);
+        }
     }
 };
 
@@ -118,7 +180,14 @@ const importProductExcel = async (formData) => {
         });
         return response.data;
     } catch (error) {
-        handleAxiosError(error);
+        if (error.response && error.response.status === 401) {
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
+        } else {
+            handleAxiosError(error);
+        }
     }
 };
 
@@ -136,4 +205,5 @@ const handleAxiosError = (error) => {
 };
 
 export { getAllProduct, addNewProduct, deleteProduct,
-    editProduct, getProductById, getHistoryAddProduct, importProductExcel  };
+    editProduct, getProductById, getHistoryAddProduct, importProductExcel,
+    getHistoryAddProductAll};

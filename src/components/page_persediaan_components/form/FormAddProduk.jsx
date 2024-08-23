@@ -54,13 +54,13 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
         }));
     };
 
-    const handleImageChange = (e) => {
-        const imageFile = e.target.files[0];
-        setFormData((prevData) => ({
-            ...prevData,
-            image: imageFile,
-        }));
-    };
+    // const handleImageChange = (e) => {
+    //     const imageFile = e.target.files[0];
+    //     setFormData((prevData) => ({
+    //         ...prevData,
+    //         image: imageFile,
+    //     }));
+    // };
 
     // const toggleDropdown = () => {
     //     setIsOpen(!isOpen);

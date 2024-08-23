@@ -8,7 +8,7 @@ import PropTypes from 'prop-types';
 //     Button,
 // } from '@chakra-ui/reacxt';
 
-export default function TabsPagePersediaan({ items, setSelectedTab, exportToExcel, products}) {
+export default function TabsPagePersediaan({ items, setSelectedTab, exportToExcel}) {
     const [activeTab, setActiveTab] = useState(0);
     const [selectedCtgry, setSelectedDay] = useState('Kategori Produk'); 
     const firstBtnRef = useRef(null);
@@ -68,7 +68,7 @@ export default function TabsPagePersediaan({ items, setSelectedTab, exportToExce
                     {/*</Menu>*/}
 
                     <button onClick={exportToExcel}
-                        className=" bg-white w-32 h-7 rounded-md flex justify-center pt-[2px] ml-4
+                        className=" bg-white w-32 h-9 rounded-md flex justify-center items-center ml-4
                          border-2 border-[#1a4f8b]">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                              stroke="currentColor" className="size-5 text-[#1a4f8b] mr-2">

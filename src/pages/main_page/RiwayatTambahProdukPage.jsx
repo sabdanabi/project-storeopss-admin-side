@@ -5,9 +5,10 @@ import PartTop from "../../components/components_reused/PartTop.jsx";
 import NamePageComponent from "../../components/components_reused/NamePageComponent.jsx";
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
 import { CardHistoryAddProduct } from "../../components/history_add_product_components/CardHistoryAddProduct.jsx";
-import { getHistoryAddProduct } from "../../services/StockService.jsx";
+import {getHistoryAddProduct, getHistoryAddProductAll} from "../../services/StockService.jsx";
 import { PaginationRiwayatTambahProduk } from "../../components/history_add_product_components/PaginationRiwayatTambahProduk.jsx";
 import FilterComponentNewProduk from "../../components/components_reused/FilterComponentNewProduk.jsx";
+import * as XLSX from "xlsx";
 
 export default function RiwayatTambahProdukPage() {
     const [addProductHistory, setAddProductHistory] = useState([]);
@@ -17,17 +18,17 @@ export default function RiwayatTambahProdukPage() {
     const [searchQuery, setSearchQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState('');
     const [pagination, setPagination] = useState({});
+    const [selectedEntry, setSelectedEntry] = useState(null);
+    const { current_page, per_page } = pagination || {};
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
 
-    // Mengelola perubahan filter status
     const handleStatusFilterChange = (status) => {
         setStatusFilter(status);
     };
 
-    // Filter riwayat berdasarkan pencarian dan status
     const filteredHistory = addProductHistory.filter((entry) => {
         const matchesName = entry.name.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesDate = entry.date.includes(searchQuery);
@@ -35,7 +36,6 @@ export default function RiwayatTambahProdukPage() {
         return (matchesName || matchesDate) && matchesStatus;
     });
 
-    // Mengambil data riwayat tambah produk dari API
     const fetchAddProductHistory = async (page = 1) => {
         try {
             setLoading(true);
@@ -50,6 +50,42 @@ export default function RiwayatTambahProdukPage() {
         }
     };
 
+    const fetchAllHistoryAddProduct = async () => {
+        try {
+            setLoading(true);
+            const result = await getHistoryAddProductAll();
+            setAuth(true);
+            return result;
+        } catch (e) {
+            console.log(e);
+            setError(e.response.data.error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
+    const exportToExcel = async () => {
+        const result = await fetchAllHistoryAddProduct();
+        const dataToExport = result.data.map((entry, index) => ({
+            No: index + 1,
+            Nama_Produk: entry.name,
+            Tanggal: entry.date,
+            Harga_Beli: entry.purchase_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }),
+            Harga_Jual: entry.selling_price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }),
+            Stock_Produk: entry.quantity,
+        }));
+
+        const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Riwayat_Tambah_Produk");
+
+        XLSX.writeFile(workbook, "Riwayat_Tambah_Produk.xlsx");
+    };
+
+
+
+
     const handlePageChange = (page) => {
         fetchAddProductHistory(page);
     };
@@ -63,15 +99,16 @@ export default function RiwayatTambahProdukPage() {
             <SideNavbarComponent />
 
             <div className="flex flex-col flex-1 w-full">
-                <PartTop/>
-                <NamePageComponent nama="Riwayat Tambah Produk"/>
+                <PartTop />
+                <NamePageComponent nama="Riwayat Tambah Produk" />
                 <main className="flex-1 pt-5 px-10 overflow-y-auto">
                     <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
-                        <DescPageComponent desc="Riwayat tambah produk anda dari waktu ke waktu."/>
+                        <DescPageComponent desc="Riwayat tambah produk anda dari waktu ke waktu." />
                         <FilterComponentNewProduk
                             searchQuery={searchQuery}
                             handleSearchChange={handleSearchChange}
                             handleStatusFilterChange={handleStatusFilterChange}
+                            exportToExcel={exportToExcel}
                         />
                         <div className="bg-white border-b-[3px] border-gray-200 overflow-auto h-96">
                             {isLoading ? (
@@ -85,7 +122,14 @@ export default function RiwayatTambahProdukPage() {
                                     />
                                 </div>
                             ) : isAuth ? (
-                                <CardHistoryAddProduct addProductHistory={filteredHistory} pagination={pagination}/>
+                                <CardHistoryAddProduct
+                                    addProductHistory={filteredHistory}
+                                    pagination={pagination}
+                                    selectedEntry={selectedEntry}
+                                    setSelectedEntry={setSelectedEntry}
+                                    current_page={current_page}
+                                    per_page={per_page}
+                                />
                             ) : (
                                 <div className="flex items-center justify-center h-full">
                                     <p className="text-xl">{error}</p>
@@ -93,9 +137,8 @@ export default function RiwayatTambahProdukPage() {
                             )}
                         </div>
                     </div>
-                    <PaginationRiwayatTambahProduk pagination={pagination} onPageChange={handlePageChange}/>
+                    <PaginationRiwayatTambahProduk pagination={pagination} onPageChange={handlePageChange} />
                 </main>
-
             </div>
         </div>
     );
