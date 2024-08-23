@@ -21,7 +21,11 @@ const getStatisticProductSell = async (year = null, month = null, sort = 'asc', 
         });
         return response.data;
     } catch (error) {
-        handleAxiosError(error);
+        if (error.response && error.response.status === 401) {
+            window.location.href = "/login-page";
+        } else {
+            handleAxiosError(error);
+        }
     }
 };
 

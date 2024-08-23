@@ -15,21 +15,8 @@ export default function StatisticPage() {
     const [error, setError] = useState('');
     const [isAuth, setAuth] = useState(false);
     const [pagination, setPagination] = useState({});
-    const [selectedYear, setSelectedYear] = useState(''); // Define selectedYear
-    const [selectedMonth, setSelectedMonth] = useState(''); // Define selectedMonth
-
-    const fetchData = async (page = 1, year = null, month = null) => {
-        try {
-            const result = await getStatisticProductSell(year, month, 'asc', page);
-            setData(result.data.products);
-            setPagination(result.meta);
-            setAuth(true);
-        } catch (err) {
-            setError('Gagal mengambil data');
-        } finally {
-            setLoading(false);
-        }
-    };
+    const [selectedYear, setSelectedYear] = useState('');
+    const [selectedMonth, setSelectedMonth] = useState('');
 
     const handleFilterChange = (year, month) => {
         setSelectedYear(year);
@@ -44,6 +31,19 @@ export default function StatisticPage() {
     useEffect(() => {
         fetchData(1);
     }, []);
+
+    const fetchData = async (page = 1, year = null, month = null) => {
+        try {
+            const result = await getStatisticProductSell(year, month, 'asc', page);
+            setData(result.data.products);
+            setPagination(result.meta);
+            setAuth(true);
+        } catch (err) {
+            setError('Gagal mengambil data');
+        } finally {
+            setLoading(false);
+        }
+    };
 
     return (
         <div className="flex h-screen overflow-hidden bg-gray-100">

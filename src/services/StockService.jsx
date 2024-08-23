@@ -14,7 +14,11 @@ const addNewProduct = async (formData) => {
         });
         return response.data;
     } catch (error) {
-        handleAxiosError(error);
+        if (error.response && error.response.status === 401) {
+            window.location.href = "/login-page";
+        } else {
+            handleAxiosError(error);
+        }
     }
 };
 
@@ -32,7 +36,11 @@ const getAllProduct = async (page = 1) =>  {
         });
         return response.data;
     } catch (error) {
-        handleAxiosError(error);
+        if (error.response && error.response.status === 401) {
+            window.location.href = "/login-page";
+        } else {
+            handleAxiosError(error);
+        }
     }
 };
 
@@ -46,7 +54,11 @@ const deleteProduct = async (productId) => {
         });
         return response.data;
     } catch (error) {
-        handleAxiosError(error);
+        if (error.response && error.response.status === 401) {
+            window.location.href = "/login-page";
+        } else {
+            handleAxiosError(error);
+        }
     }
 };
 
@@ -61,7 +73,11 @@ const editProduct = async (productId, formData) => {
         });
         return response.data;
     } catch (error) {
-        handleAxiosError(error);
+        if (error.response && error.response.status === 401) {
+            window.location.href = "/login-page";
+        } else {
+            handleAxiosError(error);
+        }
     }
 };
 
@@ -83,8 +99,11 @@ const getProductById = async (productId) => {
         const data = await response.json();
         return data;
     } catch (error) {
-        console.error('Error:', error.message);
-        return null;
+        if (error.response && error.response.status === 401) {
+            window.location.href = "/login-page";
+        } else {
+            handleAxiosError(error);
+        }
     }
 };
 
@@ -101,8 +120,11 @@ const getHistoryAddProduct = async (page = 1) => {
         });
         return response.data;
     } catch (error) {
-        handleAxiosError(error);
-        throw error;
+        if (error.response && error.response.status === 401) {
+            window.location.href = "/login-page";
+        } else {
+            handleAxiosError(error);
+        }
     }
 };
 
@@ -116,8 +138,11 @@ const getHistoryAddProductAll = async () => {
         });
         return response.data;
     } catch (error) {
-        handleAxiosError(error);
-        throw error;
+        if (error.response && error.response.status === 401) {
+            window.location.href = "/login-page";
+        } else {
+            handleAxiosError(error);
+        }
     }
 };
 
@@ -133,7 +158,11 @@ const importProductExcel = async (formData) => {
         });
         return response.data;
     } catch (error) {
-        handleAxiosError(error);
+        if (error.response && error.response.status === 401) {
+            window.location.href = "/login-page";
+        } else {
+            handleAxiosError(error);
+        }
     }
 };
 

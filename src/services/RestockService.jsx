@@ -15,8 +15,11 @@ const addRestockProduct = async (productId, restockData) => {
             });
         return response.data;
     }catch (error) {
-        console.error(error.response ? error.response.data : error.message);
-        throw error;
+        if (error.response && error.response.status === 401) {
+            window.location.href = "/login-page";
+        } else {
+            console.error(error.response ? error.response.data : error.message);
+        }
     }
 }
 
@@ -33,8 +36,11 @@ const getRestockHistory = async (page = 1) => {
         });
         return response.data;
     } catch (error) {
-        console.error('Error fetching restock history:', error.response ? error.response.data : error.message);
-        throw error;
+        if (error.response && error.response.status === 401) {
+            window.location.href = "/login-page";
+        } else {
+            console.error(error.response ? error.response.data : error.message);
+        }
     }
 };
 
@@ -48,8 +54,11 @@ const getAllRestockHistory = async () => {
         });
         return response.data;
     } catch (error) {
-        console.error('Error fetching restock history:', error.response ? error.response.data : error.message);
-        throw error;
+        if (error.response && error.response.status === 401) {
+            window.location.href = "/login-page";
+        } else {
+            console.error(error.response ? error.response.data : error.message);
+        }
     }
 };
 

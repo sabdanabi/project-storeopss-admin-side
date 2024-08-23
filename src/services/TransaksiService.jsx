@@ -16,10 +16,10 @@ const getAllTransaksi = async (page = 1) => {
         });
         return response.data;
     } catch (error) {
-        if (error.response && error.response.data) {
-            return error.response.data;
+        if (error.response && error.response.status === 401) {
+            window.location.href = "/login-page";
         } else {
-            return { error: "Failed to fetch transactions." };
+            console.error('Error:', error.message);
         }
     }
 };
@@ -35,10 +35,10 @@ const addIncome = async (data) => {
         });
         return response.data;
     } catch (error) {
-        if (error.response && error.response.data) {
-            return error.response.data;
+        if (error.response && error.response.status === 401) {
+            window.location.href = "/login-page";
         } else {
-            return { error: "Failed to add income." };
+            console.error('Error:', error.message);
         }
     }
 };
@@ -53,11 +53,12 @@ const  getAllProductTransaktion = async () =>  {
         });
         return response.data;
     } catch (error) {
-        if (error.response && error.response.data) {
-            return error.response.data;
+        if (error.response && error.response.status === 401) {
+            window.location.href = "/login-page";
         } else {
-            return { error: "Failed to add income." };
-        }    }
+            console.error('Error:', error.message);
+        }
+    }
 };
 
 const getAllNotaTransaksi = async () => {
@@ -70,10 +71,10 @@ const getAllNotaTransaksi = async () => {
         });
         return response.data;
     } catch (error) {
-        if (error.response && error.response.data) {
-            return error.response.data;
+        if (error.response && error.response.status === 401) {
+            window.location.href = "/login-page";
         } else {
-            return { error: "Failed to fetch transactions." };
+            console.error('Error:', error.message);
         }
     }
 };
@@ -93,11 +94,10 @@ const updateStatusTransaction = async (transactionId, status) => {
 
         return response.data;
     } catch (error) {
-        if (error.response && error.response.data) {
-            return error.response.data;
+        if (error.response && error.response.status === 401) {
+            window.location.href = "/login-page";
         } else {
             console.error('Error:', error.message);
-            return { error: 'Failed to update transaction status.' };
         }
     }
 };

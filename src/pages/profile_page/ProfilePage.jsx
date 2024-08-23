@@ -2,8 +2,19 @@ import SideNavbarComponent from "../../components/components_reused/SideNavbarCo
 import PartTop from "../../components/components_reused/PartTop.jsx";
 import NamePageComponent from "../../components/components_reused/NamePageComponent.jsx";
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
+import {logOutUser} from "../../services/AuthService.jsx";
 
 export default function ProfilePage() {
+    const handleLogout = async () => {
+        const result = await logOutUser();
+        if (result.message) {
+            console.log(result.message);
+            localStorage.removeItem("token");
+            window.location.href = "/login-page";
+        } else if (result.error) {
+            console.error(result.error);
+        }
+    };
     return(
         <div className="flex h-screen overflow-hidden bg-gray-100">
             <SideNavbarComponent/>
@@ -25,8 +36,8 @@ export default function ProfilePage() {
                             <div className="bg-white w-[621px] h-72 rounded-lg p-8 ml-20">
                                 <div className="flex mb-4">
                                     <p className="text-xs text-[#8C95A4] mr-[400px]">Informasi Pengguna</p>
-                                    <button className="bg-[#F5365C] w-9 h-6 text-white rounded text-sm">
-                                        <a href="/login-page">Edit</a></button>
+                                    <button className="bg-[#F5365C] w-9 h-6 text-white rounded text-sm"
+                                            onClick={handleLogout}>Edit</button>
                                 </div>
 
                                 <div className="mb-3">
