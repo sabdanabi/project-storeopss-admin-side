@@ -4,9 +4,7 @@ import PartTop from "../../components/components_reused/PartTop.jsx";
 import NamePageComponent from "../../components/components_reused/NamePageComponent.jsx";
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
 import {getRecapProduct} from "../../services/RecapProductService.jsx";
-import {
-    FilterComponentLaporanPage
-} from "../../components/page_laporan_stock_components/FilterComponentLaporanPage.jsx";
+import {FilterComponentLaporanPage} from "../../components/page_laporan_stock_components/FilterComponentLaporanPage.jsx";
 import {Spinner} from "@chakra-ui/react";
 import {PaginationRecapProduct} from "../../components/page_laporan_stock_components/PaginationRecapProduct.jsx";
 import DummyTabelLaporanStock from "../../dummy/dummy_data_tabel/DummyTabelLaporanStock.jsx";
@@ -65,7 +63,7 @@ export default function LaporanStockPage() {
                 <main className="flex-1 px-10 pt-5 ">
                     <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200 h-[480px] mb-7">
                         <DescPageComponent
-                            desc={"Laporan stok ini mencakup periode dari tanggal 1 Maret 2024 hingga 31 Maret 2024."}/>
+                            desc={`Laporan stok ini mencakup pada ${selectedMonth} ${selectedYear}`}/>
                         <FilterComponentLaporanPage onFilterChange={handleFilterChange}/>
                         {isLoading ? (
                             <div className="flex items-center justify-center h-full">

@@ -9,7 +9,7 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
         quantity: "",
         purchasePrice: "",
         sellingPrice: "",
-        unit: "",
+        // unit: "",
         image: null,
     });
 
@@ -23,7 +23,7 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
             formDataWithImage.append("quantity", formData.quantity);
             formDataWithImage.append("purchase_price", formData.purchasePrice);
             formDataWithImage.append("selling_price", formData.sellingPrice);
-            formDataWithImage.append("unit", formData.unit);
+            // formDataWithImage.append("unit", formData.unit);
 
             if (formData.image) {
                 formDataWithImage.append("image", formData.image);
@@ -37,7 +37,7 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
                 quantity: "",
                 purchasePrice: "",
                 sellingPrice: "",
-                unit: "",
+                // unit: "",
                 image: null,
             });
             refreshProducts();
@@ -136,18 +136,18 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
                         />
                     </div>
 
-                    <div className="mb-4">
-                        <label className="text-sm">Unit /pcs/kg</label>
-                        <br/>
-                        <input
-                            placeholder="Masukkan unit produk...."
-                            type="text"
-                            name="unit"
-                            value={formData.unit}
-                            onChange={handleChange}
-                            className="border-2 w-96 h-8 rounded-lg mt-3 text-xs p-3"
-                        />
-                    </div>
+                    {/*<div className="mb-4">*/}
+                    {/*    <label className="text-sm">Unit /pcs/kg</label>*/}
+                    {/*    <br/>*/}
+                    {/*    <input*/}
+                    {/*        placeholder="Masukkan unit produk...."*/}
+                    {/*        type="text"*/}
+                    {/*        name="unit"*/}
+                    {/*        value={formData.unit}*/}
+                    {/*        onChange={handleChange}*/}
+                    {/*        className="border-2 w-96 h-8 rounded-lg mt-3 text-xs p-3"*/}
+                    {/*    />*/}
+                    {/*</div>*/}
 
                     <div className="mb-4">
                         <label className="text-sm">Kategori Produk</label>
