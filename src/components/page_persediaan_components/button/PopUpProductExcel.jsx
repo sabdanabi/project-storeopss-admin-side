@@ -1,6 +1,7 @@
 import FormAddProduk from "../form/FormAddProduk.jsx";
 import Popup from "reactjs-popup";
 import {FormImportProductExcel} from "../form/FormImportProductExcel.jsx";
+import PropTypes from "prop-types";
 
 export function PopUpProductExcel({isPopupOpenFormExcel, closePopupFormExcel, importProductExcel, updateProductsState}) {
     return (
@@ -37,3 +38,10 @@ export function PopUpProductExcel({isPopupOpenFormExcel, closePopupFormExcel, im
         </Popup>
     )
 }
+
+PopUpProductExcel.propTypes = {
+    isPopupOpenFormExcel: PropTypes.bool,
+    closePopupFormExcel: PropTypes.func,
+    importProductExcel: PropTypes.func,
+    updateProductsState: PropTypes.func,
+};

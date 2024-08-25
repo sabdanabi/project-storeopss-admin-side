@@ -16,7 +16,7 @@ export function HistoryRestockCard({ restockHistory, pagination }) {
     return (
         <>
             <table className="w-full h-12">
-                <thead className="h-12 border-b-2">
+                <thead className="h-10 border-b-2">
                     <tr className="text-sm text-[#9CA4AE]">
                         <td className="px-4">No</td>
                         <td className="px-4">Nama Produk</td>
@@ -28,7 +28,7 @@ export function HistoryRestockCard({ restockHistory, pagination }) {
                 </thead>
                 <tbody className="font-semibold text-blue-gray-700">
                     {restockHistory.map((entry, index) => (
-                        <tr className="border-b-2 h-18" key={`${entry.id}-${index}`}>
+                        <tr className="border-b-2 h-13 text-xs" key={`${entry.id}-${index}`}>
                             <td className="px-4">{(current_page - 1) * per_page + index + 1}</td>
                             <td className="py-2 px-4 border-b">{entry.product.name}</td>
                             <td className="py-2 px-4 border-b">{entry.date}</td>         

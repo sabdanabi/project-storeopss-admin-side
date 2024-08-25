@@ -15,7 +15,7 @@ export default function  BtnEditPorduk({updateProductsState, id}) {
                     <div className="modal">
                         <div className="fixed inset-0 flex justify-center items-center h-screen bg-black/40">
                             <div className="bg-white rounded-xl shadow p-5 transition-all w-[900px] h-[450px]">
-                                <div className="flex justify-between">
+                                <div className="flex justify-between flex-row-reverse">
                                     {/*<p className="font-semibold text-2xl mb-7 m-auto">Edit Produk</p>*/}
                                     <button onClick={() => close()} className="h-7">
                                         <svg

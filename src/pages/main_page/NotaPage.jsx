@@ -146,7 +146,7 @@ export default function NotaPage() {
                                     </thead>
                                     <tbody className="text-sm font-semibold text-blue-gray-700">
                                     {filteredNota.map((nota, index) => (
-                                        <tr className="border-b-2 h-18" key={`${nota.id}-${index}`}>
+                                        <tr className="border-b-2 h-10 text-xs" key={`${nota.id}-${index}`}>
                                             <td className="px-4">{(current_page - 1) * per_page + index + 1}</td>
                                             <td className="px-4 py-2">{nota.customer.name}</td>
                                             <td className="px-4 py-2">{nota.date}</td>
