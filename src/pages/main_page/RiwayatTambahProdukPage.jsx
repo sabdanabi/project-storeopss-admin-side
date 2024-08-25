@@ -20,6 +20,7 @@ export default function RiwayatTambahProdukPage() {
     const [pagination, setPagination] = useState({});
     const [selectedEntry, setSelectedEntry] = useState(null);
     const { current_page, per_page } = pagination || {};
+    const [selectedRange, setSelectedRange] = useState('Semua');
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
@@ -29,6 +30,11 @@ export default function RiwayatTambahProdukPage() {
         setStatusFilter(status);
     };
 
+    const handleRangeChange = (range) => {
+        setSelectedRange(range);
+        fetchAddProductHistory(1, range === 'Semua' ? '' : range);
+    };
+
     const filteredHistory = addProductHistory.filter((entry) => {
         const matchesName = entry.name.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesDate = entry.date.includes(searchQuery);
@@ -36,10 +42,10 @@ export default function RiwayatTambahProdukPage() {
         return (matchesName || matchesDate) && matchesStatus;
     });
 
-    const fetchAddProductHistory = async (page = 1) => {
+    const fetchAddProductHistory = async (page = 1, range = null) => {
         try {
             setLoading(true);
-            const data = await getHistoryAddProduct(page);
+            const data = await getHistoryAddProduct(page, range);
             setAddProductHistory(data.data);
             setAuth(true);
             setPagination(data.meta);
@@ -91,8 +97,8 @@ export default function RiwayatTambahProdukPage() {
     };
 
     useEffect(() => {
-        fetchAddProductHistory();
-    }, []);
+        fetchAddProductHistory(1, selectedRange);
+    }, [1, selectedRange]);
 
     return (
         <div className="flex h-screen overflow-hidden bg-gray-100">
@@ -109,6 +115,8 @@ export default function RiwayatTambahProdukPage() {
                             handleSearchChange={handleSearchChange}
                             handleStatusFilterChange={handleStatusFilterChange}
                             exportToExcel={exportToExcel}
+                            handleRangeChange={handleRangeChange}
+                            selectedRange={selectedRange}
                         />
                         <div className="bg-white border-b-[3px] border-gray-200 overflow-auto h-96">
                             {isLoading ? (

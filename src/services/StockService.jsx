@@ -35,7 +35,7 @@ const getAllProduct = async (page = 1) =>  {
                 "ngrok-skip-browser-warning": true
             },
             params: {
-                page: page
+                page,
             }
         });
         return response.data;
@@ -123,7 +123,7 @@ const getProductById = async (productId) => {
     }
 };
 
-const getHistoryAddProduct = async (page = 1) => {
+const getHistoryAddProduct = async (page = 1,  range = null) => {
     try {
         const response = await axios.get(`${baseUrl}/api/products/histories/add`, {
             headers: {
@@ -131,7 +131,9 @@ const getHistoryAddProduct = async (page = 1) => {
                 "ngrok-skip-browser-warning": true
             },
             params: {
-                page: page
+                page,
+                range,
+
             }
         });
         return response.data;
