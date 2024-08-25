@@ -6,7 +6,7 @@ import { BtnEditTransaksi } from "./button/BtnEditTransaksi.jsx";
 import {Spinner} from "@chakra-ui/react";
 
 export default function TblTransaksi({ handleSearchChange, searchQuery, filteredTransaksi, updateProductsState, handleStatusFilterChange,
-                                     pagination, isLoading, isAuth, error}) {
+                                     pagination, isLoading, isAuth, error, handleRangeChange, selectedRange, onFilterChange, }) {
     const { current_page, per_page } = pagination || {};
 
     return (
@@ -14,7 +14,8 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
             <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200" >
                 <DescPageComponent desc={"Selamat datang di admin dashboard Anda."} />
                 <FilterTransaksiComponents handleSearchChange={handleSearchChange} searchQuery={searchQuery}
-                                           handleStatusFilterChange={handleStatusFilterChange} />
+                                           handleStatusFilterChange={handleStatusFilterChange} handleRangeChange={handleRangeChange}
+                                           selectedRange={selectedRange} onFilterChange={onFilterChange}/>
 
                 <div className="bg-white border-b-[3px] border-gray-200  overflow-y-auto h-96">
                     {isLoading ? (
@@ -101,7 +102,7 @@ TblTransaksi.propTypes = {
         status: PropTypes.string.isRequired,
     })).isRequired,
     updateProductsState: PropTypes.func.isRequired,
-    handleStatusFilterChange: PropTypes.func.isRequired,
+    handleStatusFilterChange: PropTypes.func,
     pagination: PropTypes.shape({
         current_page: PropTypes.number,
         per_page: PropTypes.number

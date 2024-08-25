@@ -46,6 +46,6 @@ export default function  BtnEditPorduk({updateProductsState, id}) {
 }
 
 BtnEditPorduk.propTypes = {
-    updateProductsState: PropTypes.func.isRequired,
-    id: PropTypes.oneOfType([PropTypes.number]).isRequired,
+    updateProductsState: PropTypes.func,
+    id: PropTypes.oneOfType([PropTypes.number]),
 };

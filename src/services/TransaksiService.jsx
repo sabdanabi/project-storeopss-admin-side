@@ -4,17 +4,20 @@ import {toast} from "react-toastify";
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const token = localStorage.getItem("token");
 
-const getAllTransaksi = async (page = 1) => {
+const getAllTransaksi = async (page = 1, range = null, paid = null) => {
     try {
         const response = await axios.get(`${baseUrl}/api/transactions/income`, {
             headers: {
                 AUTHORIZATION: token,
-                "ngrok-skip-browser-warning": true
+                "ngrok-skip-browser-warning": true,
             },
             params: {
-                page: page
+                page,
+                range,
+                paid,
             }
         });
+
         return response.data;
     } catch (error) {
         if (error.response && error.response.status === 401) {
@@ -22,8 +25,11 @@ const getAllTransaksi = async (page = 1) => {
             setTimeout(() => {
                 window.location.href = "/login-page";
             }, 3000);
+        } else if (error.response && error.response.data.error) {
+            toast.error(error.response.data.error);
         } else {
             console.error('Error:', error.message);
+            toast.error("Terjadi kesalahan. Silakan coba lagi.");
         }
     }
 };

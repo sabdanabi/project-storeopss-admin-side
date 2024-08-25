@@ -9,7 +9,8 @@ import {
     Button,
     useDisclosure,
 } from '@chakra-ui/react';
-import IconTrash from '../../components_reused/Icon/DeleteIcon'; // Import your delete icon
+import IconTrash from '../../components_reused/Icon/DeleteIcon';
+import PropTypes from "prop-types"; // Import your delete icon
 
 export function BtnDeleteNew({ id, handleDelete }) {
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -28,7 +29,7 @@ export function BtnDeleteNew({ id, handleDelete }) {
                 _hover={{}}  
                 _focus={{}}  
             >
-                <IconTrash boxSize={1}/>
+                <IconTrash/>
             </Button>
 
             <AlertDialog
@@ -60,3 +61,8 @@ export function BtnDeleteNew({ id, handleDelete }) {
         </>
     );
 }
+
+BtnDeleteNew.propTypes = {
+    id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+    handleDelete: PropTypes.func,
+};

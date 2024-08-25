@@ -87,14 +87,9 @@ export default function TabsPagePersediaan({ items, setSelectedTab, exportToExce
 
 TabsPagePersediaan.propTypes = {
     items: PropTypes.arrayOf(PropTypes.shape({
-        title: PropTypes.string.isRequired,
-    })).isRequired,
-    setSelectedTab: PropTypes.func.isRequired,
-    data: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        productName: PropTypes.string.isRequired,
-        status: PropTypes.string.isRequired,
-        date: PropTypes.string.isRequired,
-    })).isRequired,
-    searchQuery: PropTypes.string.isRequired,
+        title: PropTypes.string,
+    })),
+    setSelectedTab: PropTypes.func,
+    searchQuery: PropTypes.string,
+    exportToExcel: PropTypes.func
 };

@@ -8,20 +8,22 @@ import {
 } from '@chakra-ui/react'
 import {useState} from "react";
 
-export default function FilterTransaksiComponents({handleSearchChange, searchQuery, handleStatusFilterChange,}) {
+export default function FilterTransaksiComponents({handleSearchChange, searchQuery,
+                                                      handleRangeChange, selectedRange, onFilterChange}) {
 
-    const [selectedStatus, setSelectedStatus] = useState('Status Transaksi')
+    const [selectedPaid, setSelectedPaid] = useState(null);
 
-    const onStatusChange = (status) => {
-        setSelectedStatus(status);
-        handleStatusFilterChange(status);
-    }
+    const handleFilterChange = (paid) => {
+        setSelectedPaid(paid);
+        onFilterChange(paid);
+    };
 
-    const [selectedDay, setSelectedDay] = useState("Pilih Waktu")
-    const onFilterChange = (dayFilter)  => {
-        setSelectedDay(dayFilter);
-        handleDayFilterChange(dayFilter);
-    }
+    const getSelectedText = () => {
+        if (selectedPaid === true) return 'Lunas';
+        if (selectedPaid === false) return 'Belum Lunas';
+        return 'Semua'; // Default teks jika tidak ada filter yang diterapkan
+    };
+
     return (
         <div className="bg-white h-[65px] flex py-3 px-6 relative border-b-[3px] border-gray-200 gap-5">
             <div className="w-[950px]">
@@ -47,12 +49,12 @@ export default function FilterTransaksiComponents({handleSearchChange, searchQue
                         <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                     </svg>
                 }>
-                    <p className="text-[14px] font-normal mr-10 text-[#727E91] lg:text-xs xl:text-sm">{selectedStatus}</p>
+                    <p className="text-[14px] font-normal mr-10 text-[#727E91] lg:text-xs xl:text-sm">{getSelectedText()}</p>
                 </MenuButton>
                 <MenuList>
-                    <p className="text-[14px]"><MenuItem onClick={() => onStatusChange('Semua')}>Semua</MenuItem></p>
-                    <p className="text-[14px]"><MenuItem onClick={() => onStatusChange('Lunas')}>Lunas</MenuItem></p>
-                    <p className="text-[14px]"><MenuItem onClick={() => onStatusChange('Belum lunas')}>Belum Lunas</MenuItem></p>
+                    <MenuItem onClick={() => handleFilterChange(null)}>Semua</MenuItem>
+                    <MenuItem onClick={() => handleFilterChange(true)}>Lunas</MenuItem>
+                    <MenuItem onClick={() => handleFilterChange(false)}>Belum Lunas</MenuItem>
                 </MenuList>
             </Menu>
 
@@ -63,23 +65,23 @@ export default function FilterTransaksiComponents({handleSearchChange, searchQue
                         <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                     </svg>
                 }>
-                    <p className="text-[14px] font-normal mr-10 text-[#727E91]">{selectedDay}</p>
+                    <p className="text-[14px] font-normal mr-10 text-[#727E91]">{selectedRange}</p>
                 </MenuButton>
                 <MenuList>
-                    <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('Hari ini')}>Hari ini</MenuItem></p>
-                    <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('1 Minggu')}>1 Minggu</MenuItem></p>
-                    <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('1 Bulan')}>1 Bulan</MenuItem></p>
-                    <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('Pilih tanggal')}>Pilih tanggal</MenuItem></p>
-                    <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('Pilih antara tanggal')}>Pilih antara tanggal</MenuItem></p>
+                    <p className="text-[14px]"><MenuItem onClick={() => handleRangeChange('Semua')}>Semua</MenuItem></p>
+                    <p className="text-[14px]"><MenuItem onClick={() => handleRangeChange('daily')}>Harian</MenuItem></p>
+                    <p className="text-[14px]"><MenuItem onClick={() => handleRangeChange('weekly')}>Mingguan</MenuItem></p>
+                    <p className="text-[14px]"><MenuItem onClick={() => handleRangeChange('monthly')}>Bulanan</MenuItem></p>
                 </MenuList>
             </Menu>
+
         </div>
     )
 }
 
 FilterTransaksiComponents.propTypes = {
-    handleSearchChange: PropTypes.func.isRequired,
-    searchQuery: PropTypes.string.isRequired,
+    handleSearchChange: PropTypes.func,
+    searchQuery: PropTypes.string,
     handleDayFilterChange: PropTypes.func,
     handleStatusFilterChange:PropTypes.func
 };

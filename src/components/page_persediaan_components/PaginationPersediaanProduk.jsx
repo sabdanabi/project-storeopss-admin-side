@@ -52,15 +52,15 @@ export function PaginationPersediaanProduk({meta, onPageChange}) {
 
 PaginationPersediaanProduk.propTypes = {
     meta: PropTypes.shape({
-        current_page: PropTypes.number.isRequired,
-        last_page: PropTypes.number.isRequired,
+        current_page: PropTypes.number,
+        last_page: PropTypes.number,
         links: PropTypes.arrayOf(
             PropTypes.shape({
                 url: PropTypes.string,
-                label: PropTypes.string.isRequired,
-                active: PropTypes.bool.isRequired,
+                label: PropTypes.string,
+                active: PropTypes.bool,
             })
-        ).isRequired,
-    }).isRequired,
-    onPageChange: PropTypes.func.isRequired,
+        ),
+    }),
+    onPageChange: PropTypes.func,
 };

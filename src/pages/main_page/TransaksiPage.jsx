@@ -13,45 +13,51 @@ export default function TransaksiPage() {
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [searchQuery, setSearchQuery] = useState('');
-    const [filteredStatus, setFilteredStatus] = useState(null);
-    const [pagination, setPagination] = useState({});
-
+    const [pagination, setPagination] = useState({ });
+    const [selectedRange, setSelectedRange] = useState('Semua');
+    const [selectedPaid, setSelectedPaid] = useState(null);
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
     };
 
     useEffect(() => {
-        fetchDataTranksaksi();
-    }, []);
+        fetchDataTransaksi(1, selectedRange, selectedPaid);
+    }, [1, selectedRange, selectedPaid]);
 
     const handlePageChange = (page) => {
-        fetchDataTranksaksi(page);
+        fetchDataTransaksi(page);
     };
 
     const updateProductState = () => {
-        fetchDataTranksaksi(pagination.current_page);
+        fetchDataTransaksi(pagination.current_page);
     };
 
-    const handleStatusFilterChange = (status) => {
-        setFilteredStatus(status === 'Semua' ? null : status);
+    const onFilterChange = (paid) => {
+        setSelectedPaid(paid);
+        fetchDataTransaksi(1, paid);
     };
+
+    const handleRangeChange = (range) => {
+        setSelectedRange(range);
+        fetchDataTransaksi(1, range === 'Semua' ? '' : range);
+    };
+
 
     const filteredTransaksi = transaksi.length > 0 ? transaksi.filter((entry) => {
         const nameMatch = entry.customer.name.toLowerCase().includes(searchQuery.toLowerCase());
-        const statusMatch = !filteredStatus || entry.status === filteredStatus;
-        return nameMatch && statusMatch;
+        return nameMatch;
     }) : [];
 
-    const fetchDataTranksaksi = async (page = 1) => {
+    const fetchDataTransaksi = async (page = 1, range = null, paid = null) => {
         try {
             setLoading(true);
-            const result = await getAllTransaksi(page);
+            const result = await getAllTransaksi(page, range, paid);
             setTransaksi(result.data);
             setAuth(true);
             setPagination(result.meta);
         } catch (e) {
-            console.log(e);
+            console.error("Error fetching transactions:", e);
             setError(e.response?.data?.error || 'Unknown error occurred');
         } finally {
             setLoading(false);
@@ -64,7 +70,7 @@ export default function TransaksiPage() {
             <div className="flex flex-col flex-1 w-full overflow-hidden">
                 <PartTop/>
                 <BtnAddTransaksi addIncome={addIncome}
-                                 updateProductsState={fetchDataTranksaksi}/>
+                                 updateProductsState={fetchDataTransaksi}/>
 
                 <div>
                     <TblTransaksi
@@ -72,11 +78,13 @@ export default function TransaksiPage() {
                         filteredTransaksi={filteredTransaksi}
                         searchQuery={searchQuery}
                         updateProductsState={updateProductState}
-                        handleStatusFilterChange={handleStatusFilterChange}
+                        onFilterChange={onFilterChange}
                         pagination={pagination}
                         error={error}
                         isAuth={isAuth}
                         isLoading={isLoading}
+                        handleRangeChange={handleRangeChange}
+                        selectedRange={selectedRange}
                     />
                     <PaginationTransaksiProduk pagination={pagination} onPageChange={handlePageChange}/>
                 </div>
