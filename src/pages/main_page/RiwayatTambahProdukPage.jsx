@@ -6,7 +6,6 @@ import NamePageComponent from "../../components/components_reused/NamePageCompon
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
 import { CardHistoryAddProduct } from "../../components/history_add_product_components/CardHistoryAddProduct.jsx";
 import {getHistoryAddProduct, getHistoryAddProductAll} from "../../services/StockService.jsx";
-import { PaginationRiwayatTambahProduk } from "../../components/history_add_product_components/PaginationRiwayatTambahProduk.jsx";
 import FilterComponentNewProduk from "../../components/components_reused/FilterComponentNewProduk.jsx";
 import * as XLSX from "xlsx";
 
@@ -145,7 +144,6 @@ export default function RiwayatTambahProdukPage() {
                             )}
                         </div>
                     </div>
-                    <PaginationRiwayatTambahProduk pagination={pagination} onPageChange={handlePageChange} />
                 </main>
             </div>
         </div>
