@@ -4,9 +4,8 @@ import NamePageComponent from "../../components/components_reused/NamePageCompon
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
 import FilterComponentsNotaPage from "../../components/components_reused/FilterComponentsNotaPage.jsx";
 import { useEffect, useState } from "react";
-import {getAllNotaTransaksi, getAllProductTransaktion, getAllTransaksi} from "../../services/TransaksiService.jsx";
+import {getAllNotaTransaksi, getAllTransaksi} from "../../services/TransaksiService.jsx";
 import { Spinner } from "@chakra-ui/react";
-import {PagintionRiwayatNota} from "../../components/riwayat_nota_components/PagintionRiwayatNota.jsx";
 import * as XLSX from "xlsx";
 
 export default function NotaPage() {
