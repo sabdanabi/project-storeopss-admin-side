@@ -37,7 +37,7 @@ const getAllProduct = async (page = 1, searchQuery = '', stockFilter = '') => {
             params: {
                 ...(page && { page }),
                 ...(searchQuery && { search: searchQuery }),
-                ...(stockFilter && { stock: stockFilter }), // Tambahkan filter stok
+                ...(stockFilter && { stock: stockFilter }),
             }
         });
 

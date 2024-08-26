@@ -6,7 +6,7 @@ import { BtnEditTransaksi } from "./button/BtnEditTransaksi.jsx";
 import {Spinner} from "@chakra-ui/react";
 
 export default function TblTransaksi({ handleSearchChange, searchQuery, filteredTransaksi, updateProductsState, handleStatusFilterChange,
-                                     pagination, isLoading, isAuth, error, handleRangeChange, selectedRange, onFilterChange, }) {
+                                     pagination, isLoading, isAuth, error, handleRangeChange, selectedRange, onFilterChange, handleSearchClick, handleKeyDown }) {
     const { current_page, per_page } = pagination || {};
 
     return (
@@ -15,7 +15,7 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                 <DescPageComponent desc={"Selamat datang di admin dashboard Anda."} />
                 <FilterTransaksiComponents handleSearchChange={handleSearchChange} searchQuery={searchQuery}
                                            handleStatusFilterChange={handleStatusFilterChange} handleRangeChange={handleRangeChange}
-                                           selectedRange={selectedRange} onFilterChange={onFilterChange}/>
+                                           selectedRange={selectedRange} onFilterChange={onFilterChange} handleSearchClick={handleSearchClick} handleKeyDown={handleKeyDown}/>
 
                 <div className="bg-white border-b-[3px] border-gray-200  overflow-y-auto h-96">
                     {isLoading ? (
@@ -93,14 +93,14 @@ TblTransaksi.propTypes = {
     handleSearchChange: PropTypes.func.isRequired,
     searchQuery: PropTypes.string.isRequired,
     filteredTransaksi: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number.isRequired,
+        id: PropTypes.number,
         customer: PropTypes.shape({
             name: PropTypes.string.isRequired
         }).isRequired,
         date: PropTypes.string.isRequired,
         selling_price: PropTypes.number.isRequired,
         status: PropTypes.string.isRequired,
-    })).isRequired,
+    })),
     updateProductsState: PropTypes.func.isRequired,
     handleStatusFilterChange: PropTypes.func,
     pagination: PropTypes.shape({

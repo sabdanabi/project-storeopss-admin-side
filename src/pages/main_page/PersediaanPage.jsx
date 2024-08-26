@@ -15,9 +15,9 @@ export default function PersediaanPage() {
     const [isAuth, setAuth] = useState(false);
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState("");
-    const [searchQuery, setSearchQuery] = useState('');
     const [pagination, setPagination] = useState({});
     const [stockFilter, setStockFilter] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
         if (searchQuery === '') {

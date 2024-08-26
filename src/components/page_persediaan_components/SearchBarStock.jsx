@@ -1,4 +1,5 @@
 import PropTypes from "prop-types";
+import {Button} from "@chakra-ui/react";
 
 export function SearchBarStock({ handleSearchChange, handleSearchKeyDown, searchQuery, onSearchClick }) {
     return (
@@ -23,19 +24,14 @@ export function SearchBarStock({ handleSearchChange, handleSearchKeyDown, search
                 <path strokeLinecap="round" strokeLinejoin="round"
                       d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
             </svg>
-            <button
-                onClick={() => {
-                    if (searchQuery.trim()) {
-                        onSearchClick();
-                    } else {
-                        console.log("Input kosong!");
-                    }
-                }}
-                className="absolute right-6 top-1/2 h-9 bg-[#1a4f8b]
-                transform -translate-y-1/2 text-white py-2 px-4 rounded-r-md text-xs"
-            >
-                Search
-            </button>
+
+            <Button onClick={() => {
+                if (searchQuery.trim()) {
+                    onSearchClick();
+                } else {
+                    console.log("Input kosong!");
+                }
+            }}className="ml-2 h-36"><p className="text-[#1a4f8b]">Cari</p></Button>
         </div>
     );
 }

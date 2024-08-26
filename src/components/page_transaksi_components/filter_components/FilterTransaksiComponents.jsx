@@ -6,10 +6,10 @@ import {
     MenuItem,
     Button,
 } from '@chakra-ui/react'
-import {useState} from "react";
+import { useState } from "react";
 
-export default function FilterTransaksiComponents({handleSearchChange, searchQuery,
-                                                      handleRangeChange, selectedRange, onFilterChange}) {
+export default function FilterTransaksiComponents({ handleSearchChange, searchQuery, handleRangeChange,
+                                                      selectedRange, onFilterChange, handleSearchClick, handleKeyDown}) {
 
     const [selectedPaid, setSelectedPaid] = useState(null);
 
@@ -21,25 +21,39 @@ export default function FilterTransaksiComponents({handleSearchChange, searchQue
     const getSelectedText = () => {
         if (selectedPaid === true) return 'Lunas';
         if (selectedPaid === false) return 'Belum Lunas';
-        return 'Semua'; // Default teks jika tidak ada filter yang diterapkan
+        return 'Semua';
     };
 
     return (
         <div className="bg-white h-[65px] flex py-3 px-6 relative border-b-[3px] border-gray-200 gap-5">
-            <div className="w-[950px]">
+            <div className="w-[950px] flex items-center">
                 <input
                     type="text"
                     placeholder="Cari Produk"
                     value={searchQuery}
                     onChange={handleSearchChange}
+                    onKeyDown={handleKeyDown}
                     className="py-2 pl-11 pr-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2
                                 focus:ring-indigo-500 focus:border-transparent w-full"
                 />
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                     stroke="currentColor" className="w-5 h-5 absolute top-5 left-10 text-[#8C95A4]">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-5 absolute top-5 left-10 text-[#8C95A4]"
+                >
                     <path strokeLinecap="round" strokeLinejoin="round"
                           d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
                 </svg>
+                <Button onClick={() => {
+                    if (searchQuery.trim()) {
+                        handleSearchClick();
+                    } else {
+                        console.log("Input kosong!");
+                    }
+                }} className="ml-2 h-36"><p className="text-[#1a4f8b]">Cari</p></Button>
             </div>
 
             <Menu>
@@ -68,20 +82,21 @@ export default function FilterTransaksiComponents({handleSearchChange, searchQue
                     <p className="text-[14px] font-normal mr-10 text-[#727E91]">{selectedRange}</p>
                 </MenuButton>
                 <MenuList>
-                    <p className="text-[14px]"><MenuItem onClick={() => handleRangeChange('Semua')}>Semua</MenuItem></p>
-                    <p className="text-[14px]"><MenuItem onClick={() => handleRangeChange('daily')}>Harian</MenuItem></p>
-                    <p className="text-[14px]"><MenuItem onClick={() => handleRangeChange('weekly')}>Mingguan</MenuItem></p>
-                    <p className="text-[14px]"><MenuItem onClick={() => handleRangeChange('monthly')}>Bulanan</MenuItem></p>
+                    <MenuItem onClick={() => handleRangeChange('Semua')}>Semua</MenuItem>
+                    <MenuItem onClick={() => handleRangeChange('daily')}>Harian</MenuItem>
+                    <MenuItem onClick={() => handleRangeChange('weekly')}>Mingguan</MenuItem>
+                    <MenuItem onClick={() => handleRangeChange('monthly')}>Bulanan</MenuItem>
                 </MenuList>
             </Menu>
-
         </div>
-    )
+    );
 }
 
 FilterTransaksiComponents.propTypes = {
-    handleSearchChange: PropTypes.func,
-    searchQuery: PropTypes.string,
-    handleDayFilterChange: PropTypes.func,
-    handleStatusFilterChange:PropTypes.func
+    handleSearchChange: PropTypes.func.isRequired,
+    searchQuery: PropTypes.string.isRequired,
+    handleRangeChange: PropTypes.func.isRequired,
+    selectedRange: PropTypes.string.isRequired,
+    onFilterChange: PropTypes.func.isRequired,
+    onSearchClick: PropTypes.func.isRequired, // New prop
 };
