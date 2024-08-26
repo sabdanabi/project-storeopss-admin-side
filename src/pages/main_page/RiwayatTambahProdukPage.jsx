@@ -18,36 +18,56 @@ export default function RiwayatTambahProdukPage() {
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const [statusFilter, setStatusFilter] = useState('');
     const [pagination, setPagination] = useState({});
     const [selectedEntry, setSelectedEntry] = useState(null);
     const { current_page, per_page } = pagination || {};
     const [selectedRange, setSelectedRange] = useState('Semua');
 
-    const handleSearchChange = (e) => {
-        setSearchQuery(e.target.value);
+
+    const handlePageChange = (page) => {
+        fetchAddProductHistory(page);
     };
 
-    const handleStatusFilterChange = (status) => {
-        setStatusFilter(status);
+    useEffect(() => {
+        if (searchQuery === '') {
+            fetchAddProductHistory(1, selectedRange, '');
+        }
+    }, [selectedRange, searchQuery]);
+
+    const handleSearchChange = (e) => {
+        const query = e.target.value;
+        setSearchQuery(query);
+
+        if (query === '') {
+            fetchAddProductHistory(1, selectedRange, '');
+        }
+    };
+
+    const handleSearchClick = () => {
+        fetchAddProductHistory(1, selectedRange, searchQuery);
     };
 
     const handleRangeChange = (range) => {
         setSelectedRange(range);
-        fetchAddProductHistory(1, range === 'Semua' ? '' : range);
+        fetchAddProductHistory(1, range === 'Semua' ? '' : range, searchQuery);
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            fetchAddProductHistory(1, selectedRange, searchQuery);
+        }
     };
 
     const filteredHistory = addProductHistory.filter((entry) => {
         const matchesName = entry.name.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesDate = entry.date.includes(searchQuery);
-        const matchesStatus = statusFilter ? entry.status === statusFilter : true;
-        return (matchesName || matchesDate) && matchesStatus;
+        return matchesName || matchesDate;
     });
 
-    const fetchAddProductHistory = async (page = 1, range = null) => {
+    const fetchAddProductHistory = async (page = 1, range = null, searchQuery = '') => {
         try {
             setLoading(true);
-            const data = await getHistoryAddProduct(page, range);
+            const data = await getHistoryAddProduct(page, range, searchQuery);
             setAddProductHistory(data.data);
             setAuth(true);
             setPagination(data.meta);
@@ -91,17 +111,6 @@ export default function RiwayatTambahProdukPage() {
         XLSX.writeFile(workbook, "Riwayat_Tambah_Produk.xlsx");
     };
 
-
-
-
-    const handlePageChange = (page) => {
-        fetchAddProductHistory(page);
-    };
-
-    useEffect(() => {
-        fetchAddProductHistory(1, selectedRange);
-    }, [1, selectedRange]);
-
     return (
         <div className="flex h-screen overflow-hidden bg-gray-100">
             <SideNavbarComponent />
@@ -115,10 +124,11 @@ export default function RiwayatTambahProdukPage() {
                         <FilterComponentNewProduk
                             searchQuery={searchQuery}
                             handleSearchChange={handleSearchChange}
-                            handleStatusFilterChange={handleStatusFilterChange}
                             exportToExcel={exportToExcel}
                             handleRangeChange={handleRangeChange}
                             selectedRange={selectedRange}
+                            handleSearchClick={handleSearchClick}
+                            handleKeyDown={handleKeyDown}
                         />
                         <div className="bg-white border-b-[3px] border-gray-200 overflow-auto h-96">
                             {isLoading ? (

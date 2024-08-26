@@ -15,7 +15,7 @@ export default function NotaPage() {
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [searchQuery, setSearchQuery] = useState('');
-    const [filteredStatus, setFilteredStatus] = useState(null);
+    // const [filteredStatus, setFilteredStatus] = useState(null);
     const [selectedNota, setSelectedNota] = useState(null);
     const [pagination, setPagination] = useState({});
     const { current_page, per_page } = pagination || {};
@@ -23,20 +23,38 @@ export default function NotaPage() {
     const [selectedPaid, setSelectedPaid] = useState(null);
 
     useEffect(() => {
-        fetchNotaTransaksi(1, selectedRange, selectedPaid);
-    }, [1, selectedRange, selectedPaid]);
+        if (searchQuery === '') {
+            fetchNotaTransaksi(1, selectedRange, selectedPaid, '');
+        }
+
+    }, [selectedRange, selectedPaid, searchQuery]);
 
     const handleSearchChange = (e) => {
-        setSearchQuery(e.target.value);
+        const query = e.target.value;
+        setSearchQuery(query);
+
+        if (query === '') {
+            fetchNotaTransaksi(1, selectedRange, selectedPaid, '');
+        }
+    };
+
+    const handleSearchClick = () => {
+        fetchNotaTransaksi(1, selectedRange, selectedPaid, searchQuery);
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            fetchNotaTransaksi(1, selectedRange, selectedPaid, searchQuery);
+        }
     };
 
     const handlePageChange = (page) => {
         fetchNotaTransaksi(page);
     };
 
-    const handleStatusFilterChange = (status) => {
-        setFilteredStatus(status === 'Semua' ? null : status);
-    };
+    // const handleStatusFilterChange = (status) => {
+    //     setFilteredStatus(status === 'Semua' ? null : status);
+    // };
 
     const calculateTotal = (products) => {
         return products.reduce((total, product) => total + product.quantity * product.price, 0);
@@ -52,29 +70,30 @@ export default function NotaPage() {
 
     const onFilterChange = (paid) => {
         setSelectedPaid(paid);
-        fetchNotaTransaksi(1, paid);
+        fetchNotaTransaksi(1, selectedRange, paid, searchQuery);
     };
 
     const handleRangeChange = (range) => {
         setSelectedRange(range);
-        fetchNotaTransaksi(1, range === 'Semua' ? '' : range);
+        fetchNotaTransaksi(1, range, selectedPaid, searchQuery);
     };
 
-    const filteredNota = nota.length > 0 ? nota.filter((entry) => {
-        const nameMatch = entry.customer.name.toLowerCase().includes(searchQuery.toLowerCase());
-        const statusMatch = !filteredStatus || entry.status === filteredStatus;
-        return nameMatch && statusMatch;
-    }) : [];
+    const filteredNota = nota.filter((entry) => {
+        const customerName = entry.customer?.name || '';
+        const nameMatch = customerName.toLowerCase().includes(searchQuery.toLowerCase());
+        const dateMatch = entry.date?.includes(searchQuery) || false;
+        return nameMatch || dateMatch;
+    });
 
-    const fetchNotaTransaksi = async (page = 1,  range = null, paid) => {
+    const fetchNotaTransaksi = async (page = 1, range = null, paid = null, searchQuery = '') => {
         try {
             setLoading(true);
-            const result = await getAllTransaksi(page,range, paid);
+            const result = await getAllTransaksi(page, range, paid, searchQuery);
             setNota(result.data);
             setAuth(true);
             setPagination(result.meta);
         } catch (e) {
-            console.error(e);
+            console.error("Error fetching transactions:", e);
             setError(e.response?.data?.error || 'Unknown error occurred');
         } finally {
             setLoading(false);
@@ -129,11 +148,13 @@ export default function NotaPage() {
                         <FilterComponentsNotaPage
                             searchQuery={searchQuery}
                             handleSearchChange={handleSearchChange}
-                            handleStatusFilterChange={handleStatusFilterChange}
+                            // handleStatusFilterChange={handleStatusFilterChange}
                             exportToExcel={exportToExcel}
                             handleRangeChange={handleRangeChange}
                             selectedRange={selectedRange}
                             onFilterChange={onFilterChange}
+                            handleSearchClick={handleSearchClick}
+                            handleKeyDown={handleKeyDown}
                         />
 
                         <div className="bg-white border-b-[3px] border-gray-200 overflow-auto h-96">

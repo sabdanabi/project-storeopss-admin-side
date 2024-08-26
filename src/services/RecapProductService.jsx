@@ -12,10 +12,11 @@ const getRecapProduct = async (year = null, month = null, page = 1, searchQuery 
                 "ngrok-skip-browser-warning": true
             },
             params: {
-                page,
                 year,
                 month,
-                searchQuery
+                ...(page && { page }),
+                ...(searchQuery && { search: searchQuery }),
+
             }
         });
         return response.data;

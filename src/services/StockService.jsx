@@ -130,7 +130,7 @@ const getProductById = async (productId) => {
     }
 };
 
-const getHistoryAddProduct = async (page = 1,  range = null) => {
+const getHistoryAddProduct = async (page = 1, range = null, searchQuery = '') => {
     try {
         const response = await axios.get(`${baseUrl}/api/products/histories/add`, {
             headers: {
@@ -138,8 +138,9 @@ const getHistoryAddProduct = async (page = 1,  range = null) => {
                 "ngrok-skip-browser-warning": true
             },
             params: {
-                page,
-                range,
+                ...(page && { page }),
+                ...(range && { range }),
+                ...(searchQuery && { search: searchQuery }),
 
             }
         });

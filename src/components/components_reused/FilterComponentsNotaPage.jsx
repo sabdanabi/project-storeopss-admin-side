@@ -9,7 +9,8 @@ import {useState} from "react";
 import PropTypes from "prop-types";
 
 export default function FilterComponentsNotaPage({handleSearchChange, searchQuery, exportToExcel,
-                                                     onFilterChange, handleRangeChange, selectedRange}) {
+                                                     onFilterChange, handleRangeChange, selectedRange,
+                                                     handleSearchClick, handleKeyDown}) {
 
     const [selectedPaid, setSelectedPaid] = useState(null);
 
@@ -29,17 +30,24 @@ export default function FilterComponentsNotaPage({handleSearchChange, searchQuer
             <input
                 type="text"
                 placeholder="Cari Produk"
-                value={searchQuery}
                 onChange={handleSearchChange}
+                onKeyDown={handleKeyDown}
                 className="py-2 pl-11 pr-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2
-                                focus:ring-indigo-500 focus:border-transparent w-[600px] mr-7"
+                                focus:ring-indigo-500 focus:border-transparent w-[600px] mr-3"
             />
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                  stroke="currentColor" className="w-5 h-5 absolute top-5 left-10 text-[#8C95A4]">
                 <path strokeLinecap="round" strokeLinejoin="round"
                       d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
             </svg>
-            <div className='mr-4'>
+            <Button onClick={() => {
+                if (searchQuery.trim()) {
+                    handleSearchClick();
+                } else {
+                    console.log("Input kosong!");
+                }
+            }} className="ml-2 h-36"><p className="text-[#1a4f8b]">Cari</p></Button>
+            <div className='mr-4 ml-2'>
                 <Menu>
                     <MenuButton as={Button} rightIcon={
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
@@ -92,7 +100,5 @@ export default function FilterComponentsNotaPage({handleSearchChange, searchQuer
 FilterComponentsNotaPage.propTypes = {
     handleSearchChange: PropTypes.func.isRequired,
     searchQuery: PropTypes.string.isRequired,
-    handleStatusFilterChange: PropTypes.func.isRequired,
-    handleDayFilterChange: PropTypes.func,
     exportToExcel: PropTypes.func.isRequired,
 };
