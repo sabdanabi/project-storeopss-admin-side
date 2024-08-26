@@ -17,13 +17,9 @@ export default function TransaksiPage() {
     const [selectedRange, setSelectedRange] = useState('Semua');
     const [selectedPaid, setSelectedPaid] = useState(null);
 
-    const handleSearchChange = (e) => {
-        setSearchQuery(e.target.value);
-    };
-
     useEffect(() => {
-        fetchDataTransaksi(1, selectedRange, selectedPaid);
-    }, [1, selectedRange, selectedPaid]);
+        fetchDataTransaksi(1, selectedRange, selectedPaid, searchQuery);
+    }, [1, selectedRange, selectedPaid, searchQuery]);
 
     const handlePageChange = (page) => {
         fetchDataTransaksi(page);
@@ -43,16 +39,21 @@ export default function TransaksiPage() {
         fetchDataTransaksi(1, range === 'Semua' ? '' : range);
     };
 
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
 
-    const filteredTransaksi = transaksi.length > 0 ? transaksi.filter((entry) => {
+    const filteredTransaksi = transaksi.filter((entry) => {
         const nameMatch = entry.customer.name.toLowerCase().includes(searchQuery.toLowerCase());
-        return nameMatch;
-    }) : [];
+        const dateMatch = entry.date.includes(searchQuery);
+        return nameMatch || dateMatch;
+    });
 
-    const fetchDataTransaksi = async (page = 1, range = null, paid = null) => {
+
+    const fetchDataTransaksi = async (page = 1, range = null, paid = null, searchQuery = '') => {
         try {
             setLoading(true);
-            const result = await getAllTransaksi(page, range, paid);
+            const result = await getAllTransaksi(page, range, paid, searchQuery);
             setTransaksi(result.data);
             setAuth(true);
             setPagination(result.meta);

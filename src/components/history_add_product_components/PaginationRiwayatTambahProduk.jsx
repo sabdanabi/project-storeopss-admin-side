@@ -4,7 +4,7 @@ export function PaginationRiwayatTambahProduk({pagination, onPageChange}) {
     const { current_page, last_page, links } = pagination || {};
     return (
         <div className="">
-            <Flex justifyContent="center" align="center" mt={4}>
+            <Flex justifyContent="center" align="center">
                 <Button
                     onClick={() => onPageChange(1)}
                     isDisabled={current_page === 1}

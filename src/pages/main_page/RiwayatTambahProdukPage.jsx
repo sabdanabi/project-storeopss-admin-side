@@ -8,6 +8,9 @@ import { CardHistoryAddProduct } from "../../components/history_add_product_comp
 import {getHistoryAddProduct, getHistoryAddProductAll} from "../../services/StockService.jsx";
 import FilterComponentNewProduk from "../../components/components_reused/FilterComponentNewProduk.jsx";
 import * as XLSX from "xlsx";
+import {
+    PaginationRiwayatTambahProduk
+} from "../../components/history_add_product_components/PaginationRiwayatTambahProduk.jsx";
 
 export default function RiwayatTambahProdukPage() {
     const [addProductHistory, setAddProductHistory] = useState([]);
@@ -106,7 +109,7 @@ export default function RiwayatTambahProdukPage() {
             <div className="flex flex-col flex-1 w-full">
                 <PartTop />
                 <NamePageComponent nama="Riwayat Tambah Produk" />
-                <main className="flex-1 pt-5 px-10 overflow-y-auto">
+                <main className=" pt-5 px-10 overflow-y-auto mb-5">
                     <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
                         <DescPageComponent desc="Riwayat tambah produk anda dari waktu ke waktu." />
                         <FilterComponentNewProduk
@@ -145,6 +148,7 @@ export default function RiwayatTambahProdukPage() {
                         </div>
                     </div>
                 </main>
+                <PaginationRiwayatTambahProduk pagination={pagination} onPageChange={handlePageChange}/>
             </div>
         </div>
     );

@@ -198,6 +198,6 @@ export default function FormEditProduk({ updateProductsState, id }) {
 }
 
 FormEditProduk.propTypes = {
-    updateProductsState: PropTypes.func.isRequired,
+    updateProductsState: PropTypes.func,
     id: PropTypes.number.isRequired
 };

@@ -8,13 +8,7 @@ import {
 import {useState} from "react";
 import PropTypes from "prop-types";
 
-export default function FilterComponentRestock({handleSearchChange, searchQuery, handleDayFilterChange, exportToExcel}) {
-
-    const [selectedDay, setSelectedDay] = useState("Pilih Waktu")
-    const onFilterChange = (dayFilter)  => {
-        setSelectedDay(dayFilter);
-        handleDayFilterChange(dayFilter);
-    }
+export default function FilterComponentRestock({handleSearchChange, searchQuery, handleDayFilterChange, exportToExcel, handleRangeChange, selectedRange}) {
 
     return (
         <div className="bg-white h-[65px] py-3 px-6 relative border-b-[3px] border-gray-200 flex">
@@ -40,19 +34,17 @@ export default function FilterComponentRestock({handleSearchChange, searchQuery,
                             <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                         </svg>
                     }>
-                        <p className="text-[14px] font-normal mr-10 text-[#727E91]">{selectedDay}</p>
+                        <p className="text-[14px] font-normal mr-10 text-[#727E91]">{selectedRange}</p>
                     </MenuButton>
                     <MenuList>
-                        <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('Hari ini')}>Hari
-                            ini</MenuItem></p>
-                        <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('1 Minggu')}>1
-                            Minggu</MenuItem></p>
-                        <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('1 Bulan')}>1
-                            Bulan</MenuItem></p>
-                        <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('Pilih tanggal')}>Pilih
-                            tanggal</MenuItem></p>
-                        <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('Pilih antara tanggal')}>Pilih
-                            antara tanggal</MenuItem></p>
+                        <p className="text-[14px]"><MenuItem onClick={() => handleRangeChange('Semua')}>Semua</MenuItem>
+                        </p>
+                        <p className="text-[14px]"><MenuItem
+                            onClick={() => handleRangeChange('daily')}>Harian</MenuItem></p>
+                        <p className="text-[14px]"><MenuItem
+                            onClick={() => handleRangeChange('weekly')}>Mingguan</MenuItem></p>
+                        <p className="text-[14px]"><MenuItem
+                            onClick={() => handleRangeChange('monthly')}>Bulanan</MenuItem></p>
                     </MenuList>
                 </Menu>
             </div>

@@ -8,7 +8,7 @@ import {
 import {useState} from "react";
 import PropTypes from "prop-types";
 
-export default function FilterComponentNewProduk({handleSearchChange, searchQuery, handleDayFilterChange, exportToExcel, handleRangeChange, selectedRange}) {
+export default function FilterComponentNewProduk({handleSearchChange, searchQuery, exportToExcel, handleRangeChange, selectedRange}) {
 
     return (
         <div className="bg-white h-[65px] py-3 px-6 relative border-b-[3px] border-gray-200 flex">

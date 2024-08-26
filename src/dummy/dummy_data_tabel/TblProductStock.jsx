@@ -5,7 +5,6 @@ import { BtnDeleteNew } from "../../components/page_persediaan_components/button
 
 export default function TblProductStock({ products, handleDelete, updateProductState, pagination }) {
 
-    // Set default values for pagination if undefined
     const { current_page = 1, per_page = 10 } = pagination || {};
 
     return (
@@ -65,9 +64,9 @@ TblProductStock.propTypes = {
         purchase_price: PropTypes.number,
         selling_price: PropTypes.number,
         quantity: PropTypes.number,
-    })).isRequired,
+    })),
     handleDelete: PropTypes.func.isRequired,
-    updateProductState: PropTypes.func.isRequired,
+    updateProductState: PropTypes.func,
     pagination: PropTypes.shape({
         current_page: PropTypes.number,
         per_page: PropTypes.number,

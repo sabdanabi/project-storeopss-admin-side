@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import {getAllNotaTransaksi, getAllTransaksi} from "../../services/TransaksiService.jsx";
 import { Spinner } from "@chakra-ui/react";
 import * as XLSX from "xlsx";
+import {PagintionRiwayatNota} from "../../components/riwayat_nota_components/PagintionRiwayatNota.jsx";
 
 export default function NotaPage() {
     const [nota, setNota] = useState([]);
@@ -18,10 +19,12 @@ export default function NotaPage() {
     const [selectedNota, setSelectedNota] = useState(null);
     const [pagination, setPagination] = useState({});
     const { current_page, per_page } = pagination || {};
+    const [selectedRange, setSelectedRange] = useState('Semua');
+    const [selectedPaid, setSelectedPaid] = useState(null);
 
     useEffect(() => {
-        fetchNotaTransaksi();
-    }, []);
+        fetchNotaTransaksi(1, selectedRange, selectedPaid);
+    }, [1, selectedRange, selectedPaid]);
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
@@ -47,16 +50,26 @@ export default function NotaPage() {
         setSelectedNota(null);
     };
 
+    const onFilterChange = (paid) => {
+        setSelectedPaid(paid);
+        fetchNotaTransaksi(1, paid);
+    };
+
+    const handleRangeChange = (range) => {
+        setSelectedRange(range);
+        fetchNotaTransaksi(1, range === 'Semua' ? '' : range);
+    };
+
     const filteredNota = nota.length > 0 ? nota.filter((entry) => {
         const nameMatch = entry.customer.name.toLowerCase().includes(searchQuery.toLowerCase());
         const statusMatch = !filteredStatus || entry.status === filteredStatus;
         return nameMatch && statusMatch;
     }) : [];
 
-    const fetchNotaTransaksi = async (page = 1) => {
+    const fetchNotaTransaksi = async (page = 1,  range = null, paid) => {
         try {
             setLoading(true);
-            const result = await getAllTransaksi(page);
+            const result = await getAllTransaksi(page,range, paid);
             setNota(result.data);
             setAuth(true);
             setPagination(result.meta);
@@ -118,6 +131,9 @@ export default function NotaPage() {
                             handleSearchChange={handleSearchChange}
                             handleStatusFilterChange={handleStatusFilterChange}
                             exportToExcel={exportToExcel}
+                            handleRangeChange={handleRangeChange}
+                            selectedRange={selectedRange}
+                            onFilterChange={onFilterChange}
                         />
 
                         <div className="bg-white border-b-[3px] border-gray-200 overflow-auto h-96">

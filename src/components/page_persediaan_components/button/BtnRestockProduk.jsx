@@ -37,5 +37,5 @@ export default function BtnRestockProduk({id, updateProductsState}) {
 
 BtnRestockProduk.propTypes = {
     id: PropTypes.number.isRequired,
-    updateProductsState: PropTypes.func.isRequired
+    updateProductsState: PropTypes.func
 };

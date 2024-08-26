@@ -1,95 +1,109 @@
+import { useState } from "react";
+import { Spinner, Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import DescPageComponent from "../components_reused/DescPageComponent.jsx";
-import TabsPagePersediaan from "../tabs_components/TabsPagePersediaan.jsx";
-import {useState} from "react";
 import TblProductStock from "../../dummy/dummy_data_tabel/TblProductStock.jsx";
 import PropTypes from "prop-types";
-import { ToastContainer} from "react-toastify";
-import {SearchBarStock} from "./SearchBarStock.jsx";
-import {Spinner} from "@chakra-ui/react";
+import { ToastContainer } from "react-toastify";
+import { SearchBarStock } from "./SearchBarStock.jsx";
 
+export default function TblStock({ products, handleDelete, updateProductsState, handleSearchChange, handleSearchKeyDown, searchQuery, exportToExcel, pagination, error, isAuth, isLoading, onSearchClick, stockFilter, onStockFilterChange }) {
+    const [selectedTab, setSelectedTab] = useState(0);
 
-export default function TblStock({products, handleDelete, updateProductsState,handleSearchChange,
-                                     searchQuery, exportToExcel, pagination, error, isAuth, isLoading}) {
-
-    const [selectedTab,setSelectedTab] = useState(0)
-
-    const items = [
-        {
-            title: 'Semua Produk',
-            content: (
-                <div>
-                    <SearchBarStock handleSearchChange={handleSearchChange} searchQuery={searchQuery}  />
-                    <TblProductStock products={products} handleDelete={handleDelete} updateProductState={updateProductsState} pagination={pagination}/>
-                </div>
-            ),
-        },
-        {
-            title: 'Stock Tinggi',
-            content: (
-                <div>
-                    <SearchBarStock handleSearchChange={handleSearchChange} products={searchQuery}/>
-                    <TblProductStock products={products.filter(product => product.quantity > 50)} handleDelete={handleDelete}
-                                     updateProductState={updateProductsState}/>
-                </div>
-            ),
-        },
-        {
-            title: 'Stock Rendah',
-            content: (
-                <div>
-                    <SearchBarStock handleSearchChange={handleSearchChange} products={searchQuery}/>
-                    <TblProductStock products={products.filter(product => product.quantity > 0 && product.quantity <= 50)} handleDelete={handleDelete}
-                                     updateProductState={updateProductsState}/>
-                </div>
-            ),
-        },
-        {
-            title: 'Stock Habis',
-            content: (
-                <div>
-                    <SearchBarStock handleSearchChange={handleSearchChange} products={searchQuery}/>
-                    <TblProductStock products={products.filter(product => product.quantity === 0)} handleDelete={handleDelete}
-                                     updateProductState={updateProductsState}/>
-                </div>
-            ),
-        },
-    ];
+    const handleTabChange = (index) => {
+        let filter = '';
+        switch (index) {
+            case 0:
+                filter = '';
+                break;
+            case 1:
+                filter = 'high';
+                break;
+            case 2:
+                filter = 'low';
+                break;
+            case 3:
+                filter = 'empty';
+                break;
+            default:
+                filter = '';
+        }
+        setSelectedTab(index);
+        onStockFilterChange(filter);
+        updateProductsState(1, searchQuery, filter);
+    };
 
     return (
         <main className="flex-1 pt-6 pl-10 pr-10 overflow-y-auto">
             <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200 h-[480px]">
-                <DescPageComponent desc={"Selamat datang di admin dashboard Anda."}/>
+                <DescPageComponent desc={"Selamat datang di admin dashboard Anda."} />
 
-                <TabsPagePersediaan items={items} setSelectedTab={setSelectedTab} exportToExcel={exportToExcel} products={products}/>
+                <SearchBarStock
+                    handleSearchChange={handleSearchChange}
+                    searchQuery={searchQuery}
+                    handleSearchKeyDown={handleSearchKeyDown}
+                    onSearchClick={onSearchClick}
+                />
 
-                {isLoading ? (
-                    <div className="flex items-center justify-center h-full">
-                        <Spinner
-                            thickness='4px'
-                            speed='0.65s'
-                            emptyColor='gray.200'
-                            color='blue.500'
-                            size='xl'
-                        />
-                    </div>
-                ) : isAuth ? (
-                    <div>
-                        {items.map((item, index) => (
-                            <div key={index} className={`${selectedTab === index ? '' : 'hidden'}`}>
-                                {item.content}
-                            </div>
-                        ))}
-                    </div>
-                ) : (
-                    <div className="flex items-center justify-center h-full">
-                        <p className="text-xl">{ error }</p>
-                    </div>
-                )}
+                <Tabs onChange={(index) => handleTabChange(index)} variant="enclosed">
+                    <TabList>
+                        <Tab>Semua</Tab>
+                        <Tab>Stok Tinggi</Tab>
+                        <Tab>Stok Rendah</Tab>
+                        <Tab>Stok Kosong</Tab>
+                    </TabList>
+
+                    {isLoading ? (
+                        <div className="flex items-center justify-center h-full pt-36">
+                            <Spinner
+                                thickness='4px'
+                                speed='0.65s'
+                                emptyColor='gray.200'
+                                color='blue.500'
+                                size='xl'
+                            />
+                        </div>
+                    ) : isAuth ? (
+                        <TabPanels>
+                            <TabPanel>
+                                <TblProductStock
+                                    products={products}
+                                    handleDelete={handleDelete}
+                                    stockFilter={stockFilter}
+                                />
+                            </TabPanel>
+                            <TabPanel>
+                                <TblProductStock
+                                    products={products}
+                                    handleDelete={handleDelete}
+                                    stockFilter={stockFilter}
+                                />
+                            </TabPanel>
+                            <TabPanel>
+                                <TblProductStock
+                                    products={products}
+                                    handleDelete={handleDelete}
+                                    stockFilter={stockFilter}
+                                />
+                            </TabPanel>
+                            <TabPanel>
+                                <TblProductStock
+                                    products={products}
+                                    handleDelete={handleDelete}
+                                    stockFilter={stockFilter}
+                                />
+                            </TabPanel>
+                        </TabPanels>
+                    ) : (
+                        <div className="flex items-center justify-center h-full">
+                            <p className="text-xl">{error}</p>
+                        </div>
+                    )}
+                </Tabs>
 
                 <ToastContainer position="top-center" />
             </div>
         </main>
-    )
+    );
 }
 
 TblStock.propTypes = {
@@ -101,9 +115,22 @@ TblStock.propTypes = {
         selling_price: PropTypes.number.isRequired,
         category: PropTypes.string.isRequired,
         image: PropTypes.string,
-    })).isRequired,
-    handleDelete: PropTypes.func.isRequired,
-    updateProductsState: PropTypes.func.isRequired,
-    handleSearchChange: PropTypes.func.isRequired,
-    searchQuery: PropTypes.string.isRequired,
+    })),
+    handleDelete: PropTypes.func,
+    updateProductsState: PropTypes.func,
+    handleSearchChange: PropTypes.func,
+    handleSearchKeyDown: PropTypes.func,
+    searchQuery: PropTypes.string,
+    exportToExcel: PropTypes.func,
+    pagination: PropTypes.shape({
+        current_page: PropTypes.number,
+        last_page: PropTypes.number,
+        total: PropTypes.number,
+    }),
+    error: PropTypes.string,
+    isAuth: PropTypes.bool,
+    isLoading: PropTypes.bool,
+    onSearchClick: PropTypes.func,
+    stockFilter: PropTypes.string,
+    onStockFilterChange: PropTypes.func,
 };

@@ -170,5 +170,5 @@ export function FormRestockProduct({ id, updateProductsState }) {
 
 FormRestockProduct.propTypes = {
     id: PropTypes.number.isRequired,
-    updateProductsState: PropTypes.func.isRequired,
+    updateProductsState: PropTypes.func,
 };

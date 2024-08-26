@@ -18,6 +18,8 @@ export default function RiwayatRestockProdukPage() {
     const [searchQuery, setSearchQuery] = useState('');
     const [statusFilter, setStatusFilter] = useState('');
     const [pagination, setPagination] = useState({});
+    const [selectedRange, setSelectedRange] = useState('Semua');
+
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
@@ -27,6 +29,11 @@ export default function RiwayatRestockProdukPage() {
         setStatusFilter(status);
     };
 
+    const handleRangeChange = (range) => {
+        setSelectedRange(range);
+        fetchRestockHistory(1, range === 'Semua' ? '' : range);
+    };
+
     const filteredHistory = restockHistory.filter((entry) => {
         const matchesName = entry.product.name.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesDate = entry.date.includes(searchQuery);
@@ -34,14 +41,13 @@ export default function RiwayatRestockProdukPage() {
         return (matchesName || matchesDate) && matchesStatus;
     });
 
-    const fetchRestockHistory = async (page = 1) => {
+    const fetchRestockHistory = async (page = 1,  range = null) => {
         try {
             setLoading(true);
-            const data = await getRestockHistory(page);
+            const data = await getRestockHistory(page, range);
             setRestockHistory(data.data);
             setAuth(true);
             setPagination(data.meta);
-
         } catch (error) {
             setError(error.message);
         } finally {
@@ -85,8 +91,8 @@ export default function RiwayatRestockProdukPage() {
     };
 
     useEffect(() => {
-        fetchRestockHistory();
-    }, []);
+        fetchRestockHistory(1, selectedRange);
+    }, [1, selectedRange]);
 
     return (
         <div className="flex h-screen overflow-hidden bg-gray-100">
@@ -104,6 +110,8 @@ export default function RiwayatRestockProdukPage() {
                             handleSearchChange={handleSearchChange}
                             handleStatusFilterChange={handleStatusFilterChange}
                             exportToExcel={exportToExcel}
+                            handleRangeChange={handleRangeChange}
+                            selectedRange={selectedRange}
                         />
 
                         <div className="flex justify-center h-96">
