@@ -94,7 +94,7 @@ export default function PersediaanPage() {
     return (
         <div className="flex h-screen overflow-hidden bg-gray-100">
             <SideNavbarComponent />
-            <div className="flex flex-col flex-1 w-full overflow-hidden">
+            <div className="flex flex-col flex-1 w-full overflow-auto">
                 <PartTop />
 
                 <BtnDropDownAddStock

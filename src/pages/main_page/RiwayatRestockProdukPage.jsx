@@ -3,11 +3,11 @@ import PartTop from "../../components/components_reused/PartTop.jsx";
 import NamePageComponent from "../../components/components_reused/NamePageComponent.jsx";
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
 import { useEffect, useState } from "react";
-import {getAllRestockHistory, getRestockHistory} from "../../services/RestockService.jsx";
+import { getAllRestockHistory, getRestockHistory } from "../../services/RestockService.jsx";
 import { HistoryRestockCard } from "../../components/history_restock_components/HistoryRestockCard.jsx";
-import { Spinner } from '@chakra-ui/react';
+import { Spinner } from "@chakra-ui/react";
 import FilterComponentRestock from "../../components/components_reused/FilterComponentRestock.jsx";
-import {PaginationHistoryRestock} from "../../components/history_restock_components/PaginationHistoryRestock.jsx";
+import { PaginationHistoryRestock } from "../../components/history_restock_components/PaginationHistoryRestock.jsx";
 import * as XLSX from "xlsx";
 
 export default function RiwayatRestockProdukPage() {
@@ -15,8 +15,8 @@ export default function RiwayatRestockProdukPage() {
     const [isAuth, setAuth] = useState(false);
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [searchQuery, setSearchQuery] = useState('');
-    const [statusFilter, setStatusFilter] = useState('');
+    const [searchQuery, setSearchQuery] = useState("");
+    const [statusFilter, setStatusFilter] = useState("");
     const [pagination, setPagination] = useState({});
 
     const handleSearchChange = (e) => {
@@ -41,7 +41,6 @@ export default function RiwayatRestockProdukPage() {
             setRestockHistory(data.data);
             setAuth(true);
             setPagination(data.meta);
-
         } catch (error) {
             setError(error.message);
         } finally {
@@ -57,7 +56,7 @@ export default function RiwayatRestockProdukPage() {
             return result;
         } catch (e) {
             console.log(e);
-            setError(e.response.data.error);
+            setError(e.message);
         } finally {
             setLoading(false);
         }
@@ -67,7 +66,7 @@ export default function RiwayatRestockProdukPage() {
         const result = await fetchAllRestockHistory();
         const dataToExport = result.data.map((entry, index) => ({
             No: index + 1,
-            Nama_Produk: entry.name,
+            Nama_Produk: entry.product.name,
             Tanggal: entry.date,
             Pemasok: entry.supplier.name,
             Jumlah: entry.product.new_quantity,
@@ -75,9 +74,9 @@ export default function RiwayatRestockProdukPage() {
 
         const worksheet = XLSX.utils.json_to_sheet(dataToExport);
         const workbook = XLSX.utils.book_new();
-        XLSX.utils.book_append_sheet(workbook, worksheet, "Riwayat_Tambah_Produk");
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Riwayat_Restock_Produk");
 
-        XLSX.writeFile(workbook, "Riwayat_Tambah_Produk.xlsx");
+        XLSX.writeFile(workbook, "Riwayat_Restock_Produk.xlsx");
     };
 
     const handlePageChange = (page) => {
@@ -93,12 +92,13 @@ export default function RiwayatRestockProdukPage() {
             <SideNavbarComponent />
 
             <div className="flex flex-col flex-1 w-full">
-                <PartTop/>
-                <NamePageComponent nama={"Riwayat Pembaruan Stok"}/>
+                <PartTop />
+                <NamePageComponent nama={"Riwayat Pembaruan Stok"} />
                 <main className="flex-1 pt-5 px-10 overflow-y-auto">
                     <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
                         <DescPageComponent
-                            desc={"Riwayat pengisian ulang produk anda dari waktu ke waktu"}/>
+                            desc={"Riwayat pengisian ulang produk anda dari waktu ke waktu"}
+                        />
                         <FilterComponentRestock
                             searchQuery={searchQuery}
                             handleSearchChange={handleSearchChange}
@@ -106,19 +106,34 @@ export default function RiwayatRestockProdukPage() {
                             exportToExcel={exportToExcel}
                         />
 
-                        <div className="flex justify-center h-96">
+                        <div className="flex justify-center">
                             {isLoading ? (
                                 <div className="flex items-center justify-center h-full">
                                     <Spinner
-                                        thickness='4px'
-                                        speed='0.65s'
-                                        emptyColor='gray.200'
-                                        color='blue.500'
-                                        size='xl'
+                                        thickness="4px"
+                                        speed="0.65s"
+                                        emptyColor="gray.200"
+                                        color="blue.500"
+                                        size="xl"
                                     />
                                 </div>
                             ) : isAuth ? (
-                                <HistoryRestockCard restockHistory={filteredHistory} pagination={pagination}/>
+                                filteredHistory.length > 0 ? (
+                                    <HistoryRestockCard restockHistory={filteredHistory} pagination={pagination} />
+                                ) : (
+                                    <div className="flex-col items-center justify-center">
+                                        <img src="/assets_img/notfound_transaction_img.png" className="m-auto mt-10 w-[200px]" />
+                                        <p className="text-[22px] text-center font-medium mt-6 text-blue-gray-600">
+                                            Riwayat tidak ditemukan
+                                        </p>
+                                        <p className="text-[18px] text-center font-normal mt-4 mb-10 text-blue-gray-200">
+                                            Tidak dapat menemukan riwayat restock produk {"     "}
+                                            <span className="font-semibold text-blue-gray-600">
+                                                {searchQuery}
+                                            </span>
+                                        </p>
+                                    </div>
+                                )
                             ) : (
                                 <div className="flex items-center justify-center h-full">
                                     <p className="text-xl">{error}</p>
@@ -126,9 +141,8 @@ export default function RiwayatRestockProdukPage() {
                             )}
                         </div>
                     </div>
-                    <PaginationHistoryRestock pagination={pagination} onPageChange={handlePageChange}/>
+                    <PaginationHistoryRestock pagination={pagination} onPageChange={handlePageChange} />
                 </main>
-
             </div>
         </div>
     );

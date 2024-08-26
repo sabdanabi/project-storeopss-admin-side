@@ -5,7 +5,7 @@ import PartTop from "../../components/components_reused/PartTop.jsx";
 import NamePageComponent from "../../components/components_reused/NamePageComponent.jsx";
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
 import { CardHistoryAddProduct } from "../../components/history_add_product_components/CardHistoryAddProduct.jsx";
-import {getHistoryAddProduct, getHistoryAddProductAll} from "../../services/StockService.jsx";
+import { getHistoryAddProduct, getHistoryAddProductAll } from "../../services/StockService.jsx";
 import { PaginationRiwayatTambahProduk } from "../../components/history_add_product_components/PaginationRiwayatTambahProduk.jsx";
 import FilterComponentNewProduk from "../../components/components_reused/FilterComponentNewProduk.jsx";
 import * as XLSX from "xlsx";
@@ -58,12 +58,11 @@ export default function RiwayatTambahProdukPage() {
             return result;
         } catch (e) {
             console.log(e);
-            setError(e.response.data.error);
+            setError(e.message);
         } finally {
             setLoading(false);
         }
     };
-
 
     const exportToExcel = async () => {
         const result = await fetchAllHistoryAddProduct();
@@ -82,9 +81,6 @@ export default function RiwayatTambahProdukPage() {
 
         XLSX.writeFile(workbook, "Riwayat_Tambah_Produk.xlsx");
     };
-
-
-
 
     const handlePageChange = (page) => {
         fetchAddProductHistory(page);
@@ -110,7 +106,7 @@ export default function RiwayatTambahProdukPage() {
                             handleStatusFilterChange={handleStatusFilterChange}
                             exportToExcel={exportToExcel}
                         />
-                        <div className="bg-white border-b-[3px] border-gray-200 overflow-auto h-96">
+                        <div className="bg-white border-b-[3px] border-gray-200 overflow-auto">
                             {isLoading ? (
                                 <div className="flex items-center justify-center h-full">
                                     <Spinner
@@ -122,14 +118,24 @@ export default function RiwayatTambahProdukPage() {
                                     />
                                 </div>
                             ) : isAuth ? (
-                                <CardHistoryAddProduct
-                                    addProductHistory={filteredHistory}
-                                    pagination={pagination}
-                                    selectedEntry={selectedEntry}
-                                    setSelectedEntry={setSelectedEntry}
-                                    current_page={current_page}
-                                    per_page={per_page}
-                                />
+                                filteredHistory.length > 0 ? (
+                                    <CardHistoryAddProduct
+                                        addProductHistory={filteredHistory}
+                                        pagination={pagination}
+                                        selectedEntry={selectedEntry}
+                                        setSelectedEntry={setSelectedEntry}
+                                        current_page={current_page}
+                                        per_page={per_page}
+                                    />
+                                ) : (
+                                    <div className="flex-col items-center justify-center">
+                                        <img src="/assets_img/notfound_transaction_img.png" className="m-auto mt-10 w-[200px]" />
+                                        <p className="text-[22px] text-center font-medium mt-6 text-blue-gray-600">Riwayat tidak ditemukan</p>
+                                        <p className="text-[18px] text-center font-normal mt-4 mb-10 text-blue-gray-200">
+                                            Tidak dapat menemukan riwayat tambah produk <span className="font-semibold text-blue-gray-600">{searchQuery}</span>
+                                        </p>
+                                    </div>
+                                )
                             ) : (
                                 <div className="flex items-center justify-center h-full">
                                     <p className="text-xl">{error}</p>

@@ -2,7 +2,7 @@ import PropTypes from "prop-types";
 
 export default function DummyTabelLaporanStock({products}) {
     return (
-        <div className="bg-white flex border-b-[3px] border-gray-200 overflow-auto h-96">
+        <div className="bg-white flex border-b-[3px] border-gray-200 overflow-auto">
                 {products.length > 0 ? (
                     <table className="w-full">
                         <thead className="h-12 border-b-2">
@@ -19,7 +19,7 @@ export default function DummyTabelLaporanStock({products}) {
                             <td>Stok Akhir</td>
                         </tr>
                         </thead>
-                        <tbody className="font-semibold text-blue-gray-700">
+                        <tbody className="font-semibold text-blue-gray-700 text-[15px]">
                         {products.map((product, index) => (
                             <tr className=" border-b-2" key={product.id}>
                                 <td className="px-4"><p className="mr-3">{index + 1}</p></td>

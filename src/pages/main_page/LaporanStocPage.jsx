@@ -61,7 +61,7 @@ export default function LaporanStockPage() {
                 <PartTop/>
                 <NamePageComponent nama={"Laporan Stock"} subtitle={"dapatkan laporan stock anda secara real time"}/>
                 <main className="flex-1 px-10 pt-5 ">
-                    <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200 h-[480px] mb-7">
+                    <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200 mb-7">
                         <DescPageComponent
                             desc={`Laporan stok ini mencakup pada ${selectedMonth} ${selectedYear}`}/>
                         <FilterComponentLaporanPage onFilterChange={handleFilterChange}/>
