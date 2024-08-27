@@ -38,7 +38,7 @@ export default function TransaksiPage() {
     };
 
     const filteredTransaksi = transaksi.length > 0 ? transaksi.filter((entry) => {
-        const nameMatch = entry.customer.name.toLowerCase().includes(searchQuery.toLowerCase());
+        const nameMatch = entry.customer.name;
         const statusMatch = !filteredStatus || entry.status === filteredStatus;
         return nameMatch && statusMatch;
     }) : [];
