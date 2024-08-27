@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
+import Popup from "reactjs-popup";
+import {useEffect, useState} from "react";
 import PropTypes from "prop-types";
-import { FilterProdukAddTransaksi } from "../filter_components/FilterProdukAddTransaksi.jsx";
-import { getAllProductTransaktion } from "../../../services/TransaksiService.jsx";
+import {FilterProdukAddTransaksi} from "../filter_components/FilterProdukAddTransaksi.jsx";
+import {getAllProductTransaktion} from "../../../services/TransaksiService.jsx";
 
-const ITEMS_PER_PAGE = 10;
-
-export function ProductSelectionTable({ onProductSelect }) {
+export function BtnPilihProduk({ onProductSelect}) {
+    const [isInnerPopupOpen, setInnerPopupOpen] = useState(false);
     const [pilihProduct, setPilihProduct] = useState([]);
     const [isAuth, setAuth] = useState(false);
     const [isLoading, setLoading] = useState(true);
@@ -14,16 +14,14 @@ export function ProductSelectionTable({ onProductSelect }) {
     const [counts, setCounts] = useState({});
     const [checklist, setChecklist] = useState({});
     const [searchQuery, setSearchQuery] = useState('');
-    const [currentPage, setCurrentPage] = useState(1);
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
-        setCurrentPage(1); 
     };
 
-    const filteredProduct = pilihProduct.filter((product) =>
-        product.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    const filteredProduct = pilihProduct.filter((product) => {
+        return product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    });
 
     const incrementCount = (id) => {
         setCounts((prevCounts) => {
@@ -75,14 +73,19 @@ export function ProductSelectionTable({ onProductSelect }) {
     };
 
     const handleSelect = () => {
-        const selectedProducts = pilihProduct
-            .filter((product) => checklist[product.id])
-            .map((product) => ({
-                ...product,
-                count: counts[product.id] || 0
-            }));
+        const selectedProducts = pilihProduct.filter((product) => checklist[product.id]).map((product) => ({
+            ...product,
+            count: counts[product.id] || 0
+        }));
         onProductSelect(selectedProducts);
+        closeInnerPopup();
     };
+
+    const openInnerPopup = () => {
+        setWarning("");
+        setInnerPopupOpen(true);
+    };
+    const closeInnerPopup = () => setInnerPopupOpen(false);
 
     const updateProductsState = async () => {
         try {
@@ -90,6 +93,7 @@ export function ProductSelectionTable({ onProductSelect }) {
             const result = await getAllProductTransaktion();
             setPilihProduct(result.data);
             setAuth(true);
+            console.log(pilihProduct)
         } catch (e) {
             console.log(e);
             setError(e.response.data.error);
@@ -113,99 +117,84 @@ export function ProductSelectionTable({ onProductSelect }) {
         }, {}));
     }, [pilihProduct]);
 
-    const totalItems = filteredProduct.length;
-    const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
-
-    const paginatedProducts = filteredProduct.slice(
-        (currentPage - 1) * ITEMS_PER_PAGE,
-        currentPage * ITEMS_PER_PAGE
-    );
-
-    const handlePageChange = (newPage) => {
-        if (newPage >= 1 && newPage <= totalPages) {
-            setCurrentPage(newPage);
-        }
-    };
-
     return (
         <div>
-            <FilterProdukAddTransaksi searchQuery={searchQuery} handleSearchChange={handleSearchChange} />
-            <div>
-                {isLoading ? (
-                    <div className="flex items-center justify-center h-full">
-                        <p className="text-xl">Memuat...</p>
-                    </div>
-                ) : isAuth ? (
-                    <div className="overflow-auto">
-                        <table className="w-[700px] bg-white mt-7 table-fixed">
-                            <thead>
-                                <tr>
-                                    <th className="py-2 text-left">Nama Produk</th>
-                                    <th className="py-2 text-center">Harga</th>
-                                    <th className="py-2 text-center">Stok</th>
-                                    <th className="py-2 text-center">Jumlah</th>
-                                    <th className="py-2 text-center">Pilih</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {paginatedProducts.map((product) => (
-                                    <tr key={product.id} className="border-b">
-                                        <td className="py-2 px-4 text-left">{product.name}</td>
-                                        <td className="py-2 px-4 text-center">{product.selling_price}</td>
-                                        <td className="py-2 px-4 text-center">{product.quantity}</td>
-                                        <td className="py-2 px-4 text-center">
-                                            <button onClick={() => decrementCount(product.id)} className="px-2 border rounded">-</button>
-                                            <span className="mx-2">{counts[product.id]}</span>
-                                            <button onClick={() => incrementCount(product.id)} className="px-2 border rounded">+</button>
-                                        </td>
-                                        <td className="py-2 px-4 text-center">
-                                            <button onClick={() => toggleChecklist(product.id)}>
-                                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={`size-6 ${checklist[product.id] ? 'text-green-500' : 'text-gray-500'}`}>
-                                                    <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75-9.75-4.365-9.75-9.75Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clipRule="evenodd"/>
-                                                </svg>
-                                            </button>
-                                        </td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                        <div className="flex justify-between items-center mt-4 w-[300px]">
-                            <button 
-                                onClick={() => handlePageChange(currentPage - 1)} 
-                                disabled={currentPage === 1}
-                                className="px-4 py-2 bg-gray-300 rounded"
-                            >
-                                Prev
-                            </button>
-                            <span>
-                                Page {currentPage} of {totalPages}
-                            </span>
-                            <button 
-                                onClick={() => handlePageChange(currentPage + 1)} 
-                                disabled={currentPage === totalPages}
-                                className="px-4 py-2 bg-gray-300 rounded"
-                            >
-                                Next
-                            </button>
+            <button onClick={openInnerPopup} type={"button"} className="border-2 text-[#8C95A4] text-center p-2 text-xs rounded-lg">
+                Pilih Produk
+            </button>
+            <Popup open={isInnerPopupOpen} closeOnDocumentClick onClose={closeInnerPopup} modal>
+                {innerClose => (
+                    <div className="modal">
+                        <div className="fixed inset-0 flex justify-center items-center h-screen bg-black/40">
+                            <div className="bg-white rounded-xl shadow p-5 transition-all w-[450px] h-[470px]">
+                                <div className="flex justify-between">
+                                    <p className="font-semibold text-2xl mb-7">Pilih Produk</p>
+                                    <button onClick={innerClose} className="h-7">
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 text-red-600">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                                        </svg>
+                                    </button>
+                                </div>
+
+                                <FilterProdukAddTransaksi searchQuery={searchQuery} handleSearchChange={handleSearchChange} />
+                                <div>
+                                    <div className="overflow-auto h-64">
+                                        {isLoading ? (
+                                            <div className="flex items-center justify-center h-full">
+                                                <p className="text-xl">Memuat...</p>
+                                            </div>
+                                        ) : isAuth ? (
+                                            <div>
+                                                {filteredProduct.map((product) => (
+                                                    <div className="flex border-2 rounded-lg p-2 gap-5 mt-5 relative" key={product.id}>
+                                                        {/*<img src={product.image ? product.image : "/assets_img/placeholder_image.jpg"} className="h-10 mt-2" alt="img produk"/>*/}
+                                                        <div className="">
+                                                            <p className="font-semibold">{product.name}</p>
+                                                            <div className="flex text-xs font-medium text-[#727E91]">
+                                                                <p className="mr-3">Harga</p>
+                                                                <p>{product.selling_price}</p>
+                                                            </div>
+                                                            <div className="flex font-medium text-[#727E91] text-xs">
+                                                                <p className="mr-3">Stok</p>
+                                                                <p>{product.quantity}</p>
+                                                            </div>
+                                                        </div>
+                                                        <div className="absolute left-60 top-8">
+                                                            <button onClick={() => decrementCount(product.id)} className="px-2 border rounded">-</button>
+                                                            <span className="mx-4">{counts[product.id]}</span>
+                                                            <button onClick={() => incrementCount(product.id)} className="px-2 border rounded">+</button>
+                                                        </div>
+                                                        <button className="absolute left-[350px] top-8" onClick={() => toggleChecklist(product.id)}>
+                                                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className={`size-6 ${checklist[product.id] ? 'text-green-500' : 'text-gray-500'}`}>
+                                                                <path fillRule="evenodd" d="M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75-9.75-4.365-9.75-9.75Zm13.36-1.814a.75.75 0 1 0-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 0 0-1.06 1.06l2.25 2.25a.75.75 0 0 0 1.14-.094l3.75-5.25Z" clipRule="evenodd"/>
+                                                            </svg>
+                                                        </button>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            <div className="flex items-center justify-center h-full">
+                                                <p className="text-xl">{error}</p>
+                                            </div>
+
+                                        )}
+                                    </div>
+                                    {warning && <div className="text-red-600 mt-4">{warning}</div>}
+                                    <button className="flex ml-36 px-7 py-2 bg-[#1A4F8B] group mt-10
+                                    rounded-lg shadow-sm hover:bg-gray-50 hover:border-[#1A4F8B] hover:border-2" onClick={handleSelect}>
+                                        <span className="text-white font-medium text-sm group-hover:text-[#1A4F8B]">Pilih</span>
+                                    </button>
+                                </div>
+                            </div>
                         </div>
-                        <button
-                            className="flex px-7 py-2 bg-[#1A4F8B] group mt-10 rounded-lg shadow-sm hover:bg-gray-50 hover:border-[#1A4F8B] hover:border-2"
-                            onClick={handleSelect}
-                        >
-                            <span className="text-white font-medium text-sm group-hover:text-[#1A4F8B]">Pilih Produk</span>
-                        </button>
-                    </div>
-                ) : (
-                    <div className="flex items-center justify-center h-full">
-                        <p className="text-xl">{error}</p>
                     </div>
                 )}
-            </div>
-            {warning && <div className="text-red-600 mt-4">{warning}</div>}
+            </Popup>
         </div>
     );
 }
 
-ProductSelectionTable.propTypes = {
-    onProductSelect: PropTypes.func.isRequired,
-};
+
+BtnPilihProduk.propTypes = {
+    onProductSelect : PropTypes.func.isRequired,
+}

@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 export function FilterProdukAddTransaksi({ searchQuery, handleSearchChange }) {
     return (
         <>
-            <div className="w-[500px]">
+            <div className="w-[400px]">
                 <input
                     type="text"
                     placeholder="Cari Produk"

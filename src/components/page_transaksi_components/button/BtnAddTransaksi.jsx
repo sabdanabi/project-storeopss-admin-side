@@ -1,10 +1,12 @@
 import Popup from "reactjs-popup";
 import { Radio } from "@material-tailwind/react";
 import { useState } from "react";
+import { BtnDeleteProductTransaksi } from "./BtnDeleteProductTransaksi.jsx";
 import { toast, ToastContainer } from "react-toastify";
 import PropTypes from "prop-types";
-import { ProductSelectionTable } from "./BtnPilihProduk.jsx";
-import { FaTrash } from "react-icons/fa";  // Import delete icon
+import { FaTrash } from "react-icons/fa"
+import {BtnPilihProduk} from "./BtnPilihProduk.jsx";
+import {ProductSelectionTable} from "../ProductSelectionTable.jsx";
 
 export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
     const [selectedValueRD1, setSelectedValueRD1] = useState('');
@@ -16,12 +18,19 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
         customer_phone: '',
         customer_name: '',
         status: '',
-        payment_method: ''
+        payment_method: '',
+        option: ''
     });
+
 
     const handleRadioChange = (event) => {
         setSelectedValueRD1(event.target.value);
         setFormData({ ...formData, status: event.target.value });
+    };
+
+    const handleRadioChangeRD3 = (event) => {
+        setSelectedValueRD3(event.target.value);
+        setFormData({ ...formData, option: event.target.value === 'Dikirim' ? 2 : 1 });
     };
 
     const handleRadioChangeRD2 = (event) => {
@@ -34,12 +43,8 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
     };
 
     const handleDeleteProduct = (productId) => {
-        setSelectedProducts((prevSelected) => {
-            const updatedProducts = prevSelected.filter(product => product.id !== productId);
-            updateProductsState();
-            toast.success("Data berhasil dihapus!");
-            return updatedProducts;
-        });
+        setSelectedProducts(selectedProducts.filter(product => product.id !== productId));
+        toast.success("Data berhasil dihapus!");
     };
 
     const handleChange = (e) => {
@@ -57,32 +62,24 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
             ...formData,
             status: selectedValueRD1,
             payment_method: selectedValueRD2,
+            option: selectedValueRD3 === 'Dikirim' ? 2 : 1,
             products: productList,
         };
-
         try {
             const response = await addIncome(data);
             if (response.message === "Transaksi berhasil dicatat.") {
                 toast.success("Transaksi berhasil ditambahkan!");
-                setFormData({
-                    note: '',
-                    customer_phone: '',
-                    customer_name: '',
-                });
-                setSelectedValueRD1('');
-                setSelectedValueRD2('');
-                setSelectedProducts([]);
+                resetForm();
                 updateProductsState();
-                resetForm()
             } else {
                 toast.error("Gagal menambahkan transaksi.");
-
             }
         } catch (error) {
             console.error("Terjadi kesalahan saat menambahkan transaksi:", error);
             toast.error("Terjadi kesalahan saat menambahkan transaksi.");
         }
     };
+
 
     const resetForm = () => {
         setFormData({
@@ -94,6 +91,7 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
         });
         setSelectedValueRD1('');
         setSelectedValueRD2('');
+        setSelectedValueRD3('');
         setSelectedProducts([]);
     };
 
@@ -105,33 +103,38 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                 <h1 className="text-2xl font-semibold text-blue-gray-800">Transaksi</h1>
                 <h6 className="text-[15px] font-regular text-gray-500 ml-4 mt-2">Catat penjualan anda dengan mudah</h6>
             </div>
-            <ToastContainer position="top-center" />
+            <ToastContainer position="top-center"/>
             <Popup
                 trigger={
-                    <button className="flex items-center px-4 h-[40px] bg-[#1A4F8B] group rounded-[7px] shadow-sm hover:bg-[#1a4f8bcd] ml-15">
-                        <span className="text-white font-normal text-[14px] group-hover:text-white">Tambah Penjualan</span>
+                    <button
+                        className="flex items-center px-4 h-[40px] bg-[#1A4F8B] group rounded-[7px] shadow-sm hover:bg-[#1a4f8bcd] ml-15">
+                    <span className="text-white font-normal text-[14px] group-hover:text-white"> Tambah Penjualan</span>
                     </button>
                 }
-                modal
-                nested
-                onClose={resetForm}
+                modal nested
             >
                 {close => (
                     <div className='modal'>
                         <div className="fixed inset-0 flex justify-center items-center h-screen bg-black/40">
-                            <div className="bg-white rounded-xl shadow p-5   transition-all w-[1620px] h-[900px]">
+                            <div className="bg-white rounded-xl shadow p-5 transition-all w-[920px] h-[1000px]">
                                 <form onSubmit={handleSubmit}>
                                     <div className="flex justify-between">
                                         <p className="font-semibold text-2xl mb-7">Penjualan</p>
                                         <button onClick={() => close()} className="h-7">
-                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-8 h-8 text-red-600">
-                                                <path strokeLinecap="round" strokeLinejoin="round" d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                                 strokeWidth={1.5} stroke="currentColor"
+                                                 className="w-8 h-8 text-red-600">
+                                                <path strokeLinecap="round" strokeLinejoin="round"
+                                                      d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
                                             </svg>
                                         </button>
                                     </div>
                                     <p className="font-medium mb-3 ml-7">Pilih Produk</p>
                                     <div className="flex ml-7">
-                                        <ProductSelectionTable onProductSelect={handleProductSelect} />
+                                        {/*<ProductSelectionTable onProductSelect={handleProductSelect}/>*/}
+                                        <div className="flex gap-2">
+                                            <BtnPilihProduk onProductSelect={handleProductSelect}/>
+                                        </div>
                                         <div className="text-sm">
                                         </div>
                                         <div
@@ -145,22 +148,24 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                             <div
                                                 className="mt-2 space-y-2 flex-grow h-70 overflow-auto"
                                                 style={{
-                                                    scrollbarWidth: 'thin', 
+                                                    scrollbarWidth: 'thin',
                                                     scrollbarColor: '#f0f0f0',
                                                 }}
                                             >
                                                 {selectedProducts.map((product, index) => (
-                                                    <div key={index} className="flex justify-between items-center border p-2 rounded-md">
+                                                    <div key={index}
+                                                         className="flex justify-between items-center border p-2 rounded-md">
                                                         <div className="flex items-center space-x-2">
                                                             <span className="w-40">{product.name}</span>
                                                             <span className="text-center">{product.count}x</span>
+                                                            <span className="text-center">{product.selling_price}</span>
                                                         </div>
                                                         <button
                                                             type="button"
                                                             onClick={() => handleDeleteProduct(product.id)}
                                                             className="text-red-600 hover:text-red-800"
                                                         >
-                                                            <FaTrash />
+                                                            <FaTrash/>
                                                         </button>
                                                     </div>
                                                 ))}
@@ -168,8 +173,11 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
 
                                             <div className="border-t pt-4 flex justify-between items-center">
                                                 <p className="text-[18px] font-normal">Total</p>
-                                                <p className="text-[18px] font-medium">{totalHarga.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</p>
-                                                </div>
+                                                <p className="text-[18px] font-medium">{totalHarga.toLocaleString('id-ID', {
+                                                    style: 'currency',
+                                                    currency: 'IDR'
+                                                })}</p>
+                                            </div>
                                         </div>
                                         <div>
                                             <div className="p-5 w-[335px] h-[740px] shadow-xl ml-16">
@@ -186,8 +194,11 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                                 <label>Kontak Opsional</label>
                                                 <div>
                                                     <div className="flex">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mt-5 mr-1">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                             viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
+                                                             className="w-6 h-6 mt-5 mr-1">
+                                                            <path strokeLinecap="round" strokeLinejoin="round"
+                                                                  d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"/>
                                                         </svg>
                                                         <input
                                                             type="number"
@@ -201,27 +212,29 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                                 <label>Metode Pembayaran</label>
                                                 <div>
                                                     <div className="flex gap-7 mb-5">
-                                                        <div className={`h-10 rounded-md ${formData.payment_method === 'Tunai' ? 'border-blue-500' : 'border-gray-200'}`}>
+                                                        <div
+                                                            className={`h-10 rounded-md ${selectedValueRD2 === 'Tunai' ? 'border-blue-500' : 'border-gray-200'}`}>
                                                             <Radio
                                                                 id="paymentTunai"
                                                                 name="payment_method"
                                                                 value="Tunai"
                                                                 color="blue"
                                                                 label={<span className="text-[15px] font-normal">Tunai</span>}
-                                                                checked={formData.payment_method === 'Tunai'}
-                                                                onChange={handleRadioChange}
+                                                                checked={selectedValueRD2 === 'Tunai'}
+                                                                onChange={handleRadioChangeRD2}
 
                                                             />
                                                         </div>
-                                                        <div className={`h-10 rounded-md ${formData.payment_method === 'Transfer Bank' ? 'border-blue-500' : 'border-gray-200'}`}>
+                                                        <div
+                                                            className={`h-10 rounded-md ${selectedValueRD2 === 'Transfer Bank' ? 'border-blue-500' : 'border-gray-200'}`}>
                                                             <Radio
                                                                 id="paymentTransferBank"
                                                                 name="payment_method"
                                                                 value="Transfer Bank"
                                                                 color="blue"
                                                                 label={<span className="text-[15px] font-normal">Transfer Bank</span>}
-                                                                checked={formData.payment_method === 'Transfer Bank'}
-                                                                onChange={handleRadioChange}
+                                                                checked={selectedValueRD2 === 'Transfer Bank'}
+                                                                onChange={handleRadioChangeRD2}
                                                             />
                                                         </div>
                                                     </div>
@@ -229,17 +242,20 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                                 <label>Status Transaksi</label>
                                                 <div className="mb-7">
                                                     <div className="flex gap-7 mt-2">
-                                                        <div className={`h-10 rounded-md ${selectedValueRD1 === 'Lunas' ? 'border-blue-500' : 'border-gray-200'}`}>
+                                                        <div
+                                                            className={`h-10 rounded-md ${selectedValueRD1 === 'Lunas' ? 'border-blue-500' : 'border-gray-200'}`}>
                                                             <Radio
                                                                 id="option1RD1"
                                                                 value="Lunas"
                                                                 color="blue"
-                                                                label={<span className="text-[15px] font-normal">Lunas</span>}
+                                                                label={<span
+                                                                    className="text-[15px] font-normal">Lunas</span>}
                                                                 checked={selectedValueRD1 === 'Lunas'}
                                                                 onChange={handleRadioChange}
                                                             />
                                                         </div>
-                                                        <div className={`h-10 rounded-md ${selectedValueRD1 === 'Belum Lunas' ? 'border-blue-500' : 'border-gray-200'}`}>
+                                                        <div
+                                                            className={`h-10 rounded-md ${selectedValueRD1 === 'Belum Lunas' ? 'border-blue-500' : 'border-gray-200'}`}>
                                                             <Radio
                                                                 id="option2RD1"
                                                                 value="Belum Lunas"
@@ -254,17 +270,21 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                                 <label>Opsi Pengambilan</label>
                                                 <div className="mb-7">
                                                     <div className="flex gap-7 mt-2">
-                                                        <div className={`h-10 rounded-md ${selectedValueRD3 === 'Dikirim' ? 'border-blue-500' : 'border-gray-200'}`}>
+                                                        <div
+                                                            className={`h-10 rounded-md ${selectedValueRD3 === 'Dikirim' ? 'border-blue-500' : 'border-gray-200'}`}>
                                                             <Radio
                                                                 id="option1RD1"
                                                                 className="w-4 h-4"
                                                                 value="Dikirim"
                                                                 color="blue"
-                                                                label={<span className="text-[15px] font-normal">Dikirim</span>}
+                                                                label={<span
+                                                                    className="text-[15px] font-normal">Dikirim</span>}
                                                                 checked={selectedValueRD3 === 'Dikirim'}
+                                                                onChange={handleRadioChangeRD3}
                                                             />
                                                         </div>
-                                                        <div className={`h-10 rounded-md ${selectedValueRD3 === 'Diambil di Toko' ? 'border-blue-500' : 'border-gray-200'}`}>
+                                                        <div
+                                                            className={`h-10 rounded-md ${selectedValueRD3 === 'Diambil di Toko' ? 'border-blue-500' : 'border-gray-200'}`}>
                                                             <Radio
                                                                 id="option2RD1"
                                                                 className="w-4 h-4"
@@ -272,6 +292,7 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                                                 color="blue"
                                                                 label={<span className="text-[15px] font-normal">Ambil di toko</span>}
                                                                 checked={selectedValueRD3 === 'Diambil di Toko'}
+                                                                onChange={handleRadioChangeRD3}
                                                             />
                                                         </div>
                                                     </div>
@@ -280,8 +301,11 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
 
                                                 <div className="mb-7">
                                                     <div className="flex mt-2">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6 mt-6 mr-2">
-                                                            <path strokeLinecap="round" strokeLinejoin="round" d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10" />
+                                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                             viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor"
+                                                             className="w-6 h-6 mt-6 mr-2">
+                                                            <path strokeLinecap="round" strokeLinejoin="round"
+                                                                  d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"/>
                                                         </svg>
                                                         <textarea
                                                             id="note"
@@ -297,11 +321,16 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                             </div>
                                         </div>
                                     </div>
+                                    <button
+                                        className="flex items-center px-7 py-2 bg-[#1A4F8B] group ml-96 mt-9 rounded-lg shadow-sm hover:bg-gray-50 hover:border-[#1A4F8B] hover:border-2"
+                                        type="submit">
+                                        <span
+                                            className="text-white font-medium text-sm group-hover:text-[#1A4F8B]">Simpan</span>
+                                    </button>
                                 </form>
                             </div>
                         </div>
                     </div>
-
                 )}
             </Popup>
         </div>
