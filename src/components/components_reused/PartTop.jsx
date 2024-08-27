@@ -11,6 +11,7 @@ import { notificationsAtom } from "../../lib/atom";
 import { useState, useEffect } from "react";
 import { getTransactionById, finishTransaction } from '../../services/TransaksiService';
 import PopupDetailTransaksi from '../popup-components/PopupDetailTransaksi';
+import {toast} from "react-toastify";
 
 export default function PartTop() {
     const [notifications, setNotifications] = useAtom(notificationsAtom);
@@ -47,11 +48,21 @@ export default function PartTop() {
     };
 
     const handleFinishTransaction = async (transactionId) => {
-        setLoading(true)
-        await finishTransaction(transactionId);
-        setLoading(false)
-        setTransaction(null);
-        setNotifications(notifications.filter(notification => notification.transactionId !== transactionId));
+        setLoading(true);
+        try {
+            const response = await finishTransaction();
+
+            if (response.statusCode === 200) {
+                toast.success("Transaksi berhasil diperbarui.");
+            }
+
+            setTransaction(null);
+            setNotifications(notifications.filter(notification => notification.transactionId !== transactionId));
+        } catch (error) {
+            toast.error("Transaksi gagal diperbarui.");
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
