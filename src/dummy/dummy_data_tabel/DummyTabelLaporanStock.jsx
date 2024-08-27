@@ -1,6 +1,6 @@
 import PropTypes from "prop-types";
 
-export default function DummyTabelLaporanStock({products}) {
+export default function DummyTabelLaporanStock({products, selectedMonth, selectedYear}) {
     return (
         <div className="w-full">
             {products.length > 0 ? (
@@ -43,8 +43,13 @@ export default function DummyTabelLaporanStock({products}) {
                     </tbody>
                 </table>
             ) : (
-                <div className="flex items-center justify-center h-full">
-                    <p className="text-xl">No Data</p>
+                <div className="flex-col items-center justify-center">
+                    <img src="/assets_img/notfound_transaction_img.png" className="m-auto mt-10 w-[150px]"/>
+                    <p className="text-[22px] text-center font-medium mt-6 text-blue-gray-600 ">Data tidak ditemukan</p>
+                    <p className="text-[18px] text-center font-normal mt-4 mb-10 text-blue-gray-200 ">
+                        Tidak dapat menemukan data untuk <span
+                        className="font-semibold text-blue-gray-600">{selectedMonth} {selectedYear}</span>
+                    </p>
                 </div>
             )
             }

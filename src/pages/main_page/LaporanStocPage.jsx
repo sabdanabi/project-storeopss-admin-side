@@ -103,7 +103,7 @@ export default function LaporanStockPage() {
                                     />
                                 </div>
                             ) : isAuth ? (
-                                <DummyTabelLaporanStock products={filteredProducts}/>
+                                <DummyTabelLaporanStock products={filteredProducts} selectedMonth={selectedMonth} selectedYear={selectedYear}/>
                             ) : (
                                 <div className="flex items-center justify-center h-full w-full">
                                     <p className="text-xl">{error}</p>

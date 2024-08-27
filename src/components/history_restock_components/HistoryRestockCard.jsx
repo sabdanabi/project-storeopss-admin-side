@@ -33,7 +33,7 @@ export function HistoryRestockCard({ restockHistory, pagination }) {
                             <td className="py-2 px-4 border-b">{entry.product.name}</td>
                             <td className="py-2 px-4 border-b">{entry.date}</td>         
                             <td className="py-2 px-4 border-b">{entry.supplier.name}</td>          
-                            <td className="py-2 px-4 border-b">{entry.product.new_quantity} pcs/kg</td>                        
+                            <td className="py-2 px-4 border-b">{entry.product.new_quantity}</td>
                             <td className="py-2 px-4 border-b">
                                 <button
                                     className="text-[10px] hover:bg-[#d7e0e8] text-blue-gray-500 bg-[#dde6efc6] h-[33px] w-[68px] rounded-lg font-semibold"
@@ -75,7 +75,7 @@ export function HistoryRestockCard({ restockHistory, pagination }) {
                             <div className="flex text-xs font-medium text-[#403E8A] mb-2  mt-3 ml-4 mr-4">
                                 <p className="text-[13px] w-[130px] text-blue-gray-500">Alamat</p>
                                 <p className="">:</p>
-                                <p className="font-semibold text-[#8C8BB4] text-[13px] ml-5 ">{selectedEntry.destination_address}</p>
+                                <p className="font-semibold text-[#8C8BB4] text-[13px] ml-5 ">{selectedEntry.supplier.address}</p>
                             </div>
 
                             <div className="flex text-xs font-medium text-[#403E8A] mb-2 mt-3 ml-4 mr-4">

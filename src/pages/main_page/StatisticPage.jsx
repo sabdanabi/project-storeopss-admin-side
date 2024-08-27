@@ -17,6 +17,8 @@ export default function StatisticPage() {
     const [pagination, setPagination] = useState({});
     const [selectedYear, setSelectedYear] = useState('');
     const [selectedMonth, setSelectedMonth] = useState('');
+    const [mostSoldProduct, setMostSoldProduct] = useState(null);
+    const [leastSoldProduct, setLeastSoldProduct] = useState(null);
 
     const handleFilterChange = (year, month) => {
         setSelectedYear(year);
@@ -33,17 +35,27 @@ export default function StatisticPage() {
     }, []);
 
     const fetchData = async (page = 1, year = null, month = null) => {
+        setLoading(true);
         try {
             const result = await getStatisticProductSell(year, month, 'asc', page);
-            setData(result.data.products);
+            const products = result.data.products;
+            const sortedProducts = [...products].sort((a, b) => b.quantity - a.quantity);
+            const mostSoldProduct = sortedProducts[0];
+            const leastSoldProduct = sortedProducts[sortedProducts.length - 1];
+
+            setData(products);
+            setMostSoldProduct(mostSoldProduct);
+            setLeastSoldProduct(leastSoldProduct);
             setPagination(result.meta);
             setAuth(true);
-        } catch (err) {
+        } catch (error) {
+            console.error("Failed to fetch data:", error);
             setError('Gagal mengambil data');
         } finally {
             setLoading(false);
         }
     };
+
 
     return (
         <div className="flex h-screen overflow-hidden bg-gray-100">
@@ -56,7 +68,9 @@ export default function StatisticPage() {
                         <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200 h-[520px]">
                             <DescPageComponent
                                 desc={`Laporan stok ini mencakup recap product pada bulan ${selectedMonth} ${selectedYear}.`}/>
-                            <FilterRecapProductComponent onFilterChange={handleFilterChange}/>
+                            <FilterRecapProductComponent onFilterChange={handleFilterChange} mostSoldProduct={mostSoldProduct}
+                                                         leastSoldProduct={leastSoldProduct}/>
+
                             {loading ? (
                                 <div className="flex items-center justify-center h-full">
                                     <Spinner
