@@ -127,7 +127,43 @@ const updateStatusTransaction = async (transactionId, status) => {
     }
 };
 
+const getTransactionById = async (transactionId) => {
+    try {
+
+        const response = await axios.get(`${baseUrl}/api/transactions/income/${transactionId}`, {
+            headers: {
+                AUTHORIZATION: token,
+                "Content-Type": "application/json",
+                "ngrok-skip-browser-warning": true
+            }
+        });
+        return response.data;
+        
+    } catch (error) {
+        console.error('Error:', error.message);
+    }
+};
+
+const finishTransaction = async (transactionId) => {
+    try {
+
+        const response = await axios.post(`${baseUrl}/api/transactions/finish/${transactionId}`, {
+            "is_finished": true
+        }, {
+            headers: {
+                AUTHORIZATION: token,
+                "Content-Type": "application/json",
+                "ngrok-skip-browser-warning": true
+            }
+        });
+        return response.data;
+        
+    } catch (error) {
+        console.error('Error:', error.message);
+    }
+}
+
 
 export { getAllTransaksi, addIncome,
     updateStatusTransaction, getAllProductTransaktion,
-    getAllNotaTransaksi};
+    getAllNotaTransaksi, getTransactionById, finishTransaction };

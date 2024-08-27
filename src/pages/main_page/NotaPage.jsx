@@ -230,10 +230,26 @@ export default function NotaPage() {
                                                 <p className="font-semibold text-blue-gray-700">Tanggal: {selectedNota.date}</p>
                                                 <p>Produk:</p>
                                                 {selectedNota.products.map((product, index) => (
-                                                    <div key={index} className="pl-2">
+                                                    <div key={index} className="pl-2 flex items-center justify-between">
                                                         <p>
                                                             - x{product.quantity} {product.name} @ {product.price.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}
                                                         </p>
+                                                        {product.is_checked && (
+                                                            <svg
+                                                            xmlns="http://www.w3.org/2000/svg"
+                                                            fill="none"
+                                                            viewBox="0 0 24 24"
+                                                            strokeWidth={1.5}
+                                                            stroke="currentColor"
+                                                            className="w-4 h-4 text-green-500 ml-2"
+                                                            >
+                                                            <path
+                                                                strokeLinecap="round"
+                                                                strokeLinejoin="round"
+                                                                d="M4.5 12.75l6 6 9-13.5"
+                                                            />
+                                                            </svg>
+                                                        )}
                                                     </div>
                                                 ))}
                                                 <p className="font-semibold text-blue-gray-700 mt-2">Total: {calculateTotal(selectedNota.products).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</p>
