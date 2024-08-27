@@ -129,7 +129,7 @@ export function ProductSelectionTable({ onProductSelect }) {
 
     return (
         <div>
-            <FilterProdukAddTransaksi searchQuery={searchQuery} handleSearchChange={handleSearchChange} />
+            <FilterProdukAddTransaksi searchQuery={searchQuery} handleSearchChange={handleSearchChange} modal />
             <div>
                 {isLoading ? (
                     <div className="flex items-center justify-center h-full">

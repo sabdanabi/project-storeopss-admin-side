@@ -3,8 +3,8 @@ import { Radio } from "@material-tailwind/react";
 import { useState } from "react";
 import { toast, ToastContainer } from "react-toastify";
 import PropTypes from "prop-types";
-import { ProductSelectionTable } from "./BtnPilihProduk.jsx";
-import { FaTrash } from "react-icons/fa";  // Import delete icon
+import { FaTrash } from "react-icons/fa";  
+import { ProductSelectionTable } from "./BtnPilihProduk";
 
 export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
     const [selectedValueRD1, setSelectedValueRD1] = useState('');
@@ -16,12 +16,19 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
         customer_phone: '',
         customer_name: '',
         status: '',
-        payment_method: ''
+        payment_method: '',
+        option: ''
     });
+
 
     const handleRadioChange = (event) => {
         setSelectedValueRD1(event.target.value);
         setFormData({ ...formData, status: event.target.value });
+    };
+
+    const handleRadioChangeRD3 = (event) => {
+        setSelectedValueRD3(event.target.value);
+        setFormData({ ...formData, option: event.target.value === 'Dikirim' ? 2 : 1 });
     };
 
     const handleRadioChangeRD2 = (event) => {
@@ -34,12 +41,8 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
     };
 
     const handleDeleteProduct = (productId) => {
-        setSelectedProducts((prevSelected) => {
-            const updatedProducts = prevSelected.filter(product => product.id !== productId);
-            updateProductsState();
-            toast.success("Data berhasil dihapus!");
-            return updatedProducts;
-        });
+        setSelectedProducts(selectedProducts.filter(product => product.id !== productId));
+        toast.success("Data berhasil dihapus!");
     };
 
     const handleChange = (e) => {
@@ -57,32 +60,23 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
             ...formData,
             status: selectedValueRD1,
             payment_method: selectedValueRD2,
+            option: selectedValueRD3 === 'Dikirim' ? 2 : 1,
             products: productList,
         };
-
         try {
             const response = await addIncome(data);
             if (response.message === "Transaksi berhasil dicatat.") {
                 toast.success("Transaksi berhasil ditambahkan!");
-                setFormData({
-                    note: '',
-                    customer_phone: '',
-                    customer_name: '',
-                });
-                setSelectedValueRD1('');
-                setSelectedValueRD2('');
-                setSelectedProducts([]);
+                resetForm();
                 updateProductsState();
-                resetForm()
             } else {
                 toast.error("Gagal menambahkan transaksi.");
-
             }
         } catch (error) {
-            console.error("Terjadi kesalahan saat menambahkan transaksi:", error);
             toast.error("Terjadi kesalahan saat menambahkan transaksi.");
         }
     };
+
 
     const resetForm = () => {
         setFormData({
@@ -90,14 +84,18 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
             customer_phone: '',
             customer_name: '',
             status: '',
-            payment_method: ''
+            payment_method: '',
+            option: ''
         });
         setSelectedValueRD1('');
         setSelectedValueRD2('');
+        setSelectedValueRD3('');
         setSelectedProducts([]);
     };
 
     const totalHarga = selectedProducts.reduce((total, product) => total + product.selling_price * product.count, 0);
+
+
 
     return (
         <div className="flex items-center justify-between h-16 border-b-[3px] w-full px-6 py-4 bg-white border-gray-200">
@@ -131,7 +129,9 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                     </div>
                                     <p className="font-medium mb-3 ml-7">Pilih Produk</p>
                                     <div className="flex ml-7">
-                                        <ProductSelectionTable onProductSelect={handleProductSelect} />
+                                        <div className="flex gap-2">
+                                            <ProductSelectionTable onProductSelect={handleProductSelect} />
+                                        </div>                                       
                                         <div className="text-sm">
                                         </div>
                                         <div
@@ -145,7 +145,7 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                             <div
                                                 className="mt-2 space-y-2 flex-grow h-70 overflow-auto"
                                                 style={{
-                                                    scrollbarWidth: 'thin', 
+                                                    scrollbarWidth: 'thin',
                                                     scrollbarColor: '#f0f0f0',
                                                 }}
                                             >
@@ -169,7 +169,7 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                             <div className="border-t pt-4 flex justify-between items-center">
                                                 <p className="text-[18px] font-normal">Total</p>
                                                 <p className="text-[18px] font-medium">{totalHarga.toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</p>
-                                                </div>
+                                            </div>
                                         </div>
                                         <div>
                                             <div className="p-5 w-[335px] h-[740px] shadow-xl ml-16">
@@ -209,7 +209,7 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                                                 color="blue"
                                                                 label={<span className="text-[15px] font-normal">Tunai</span>}
                                                                 checked={formData.payment_method === 'Tunai'}
-                                                                onChange={handleRadioChange}
+                                                                onChange={handleRadioChangeRD2}
 
                                                             />
                                                         </div>
@@ -221,7 +221,7 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                                                 color="blue"
                                                                 label={<span className="text-[15px] font-normal">Transfer Bank</span>}
                                                                 checked={formData.payment_method === 'Transfer Bank'}
-                                                                onChange={handleRadioChange}
+                                                                onChange={handleRadioChangeRD2}
                                                             />
                                                         </div>
                                                     </div>
@@ -254,17 +254,21 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                                 <label>Opsi Pengambilan</label>
                                                 <div className="mb-7">
                                                     <div className="flex gap-7 mt-2">
-                                                        <div className={`h-10 rounded-md ${selectedValueRD3 === 'Dikirim' ? 'border-blue-500' : 'border-gray-200'}`}>
+                                                        <div
+                                                            className={`h-10 rounded-md ${selectedValueRD3 === 'Dikirim' ? 'border-blue-500' : 'border-gray-200'}`}>
                                                             <Radio
                                                                 id="option1RD1"
                                                                 className="w-4 h-4"
                                                                 value="Dikirim"
                                                                 color="blue"
-                                                                label={<span className="text-[15px] font-normal">Dikirim</span>}
+                                                                label={<span
+                                                                    className="text-[15px] font-normal">Dikirim</span>}
                                                                 checked={selectedValueRD3 === 'Dikirim'}
+                                                                onChange={handleRadioChangeRD3}
                                                             />
                                                         </div>
-                                                        <div className={`h-10 rounded-md ${selectedValueRD3 === 'Diambil di Toko' ? 'border-blue-500' : 'border-gray-200'}`}>
+                                                        <div
+                                                            className={`h-10 rounded-md ${selectedValueRD3 === 'Diambil di Toko' ? 'border-blue-500' : 'border-gray-200'}`}>
                                                             <Radio
                                                                 id="option2RD1"
                                                                 className="w-4 h-4"
@@ -272,6 +276,7 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                                                 color="blue"
                                                                 label={<span className="text-[15px] font-normal">Ambil di toko</span>}
                                                                 checked={selectedValueRD3 === 'Diambil di Toko'}
+                                                                onChange={handleRadioChangeRD3}
                                                             />
                                                         </div>
                                                     </div>
