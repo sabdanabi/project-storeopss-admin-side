@@ -3,10 +3,10 @@ import SideNavbarComponent from "../../components/components_reused/SideNavbarCo
 import PartTop from "../../components/components_reused/PartTop.jsx";
 import NamePageComponent from "../../components/components_reused/NamePageComponent.jsx";
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
-import {getRecapProduct} from "../../services/RecapProductService.jsx";
-import {FilterComponentLaporanPage} from "../../components/page_laporan_stock_components/FilterComponentLaporanPage.jsx";
-import {Spinner} from "@chakra-ui/react";
-import {PaginationRecapProduct} from "../../components/page_laporan_stock_components/PaginationRecapProduct.jsx";
+import { getRecapProduct } from "../../services/RecapProductService.jsx";
+import { FilterComponentLaporanPage } from "../../components/page_laporan_stock_components/FilterComponentLaporanPage.jsx";
+import { Spinner } from "@chakra-ui/react";
+import { PaginationRecapProduct } from "../../components/page_laporan_stock_components/PaginationRecapProduct.jsx";
 import DummyTabelLaporanStock from "../../dummy/dummy_data_tabel/DummyTabelLaporanStock.jsx";
 
 export default function LaporanStockPage() {
@@ -17,25 +17,40 @@ export default function LaporanStockPage() {
     const [pagination, setPagination] = useState({});
     const [selectedYear, setSelectedYear] = useState('');
     const [selectedMonth, setSelectedMonth] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
+    const [isSearch, setIsSearch] = useState(false); // State untuk status pencarian
 
     const handlePageChange = (page) => {
-        fetchRecapProducts(page, selectedYear, selectedMonth);
+        fetchRecapProducts(page);
+    };
+
+    const handleSearchChange = (e) => {
+        setSearchQuery(e.target.value);
+    };
+
+    const onSearchClick = () => {
+        setIsSearch(true); // Menandai pencarian telah dilakukan
     };
 
     const handleFilterChange = (year, month) => {
         setSelectedYear(year);
         setSelectedMonth(month);
-        fetchRecapProducts(1, year, month);
-    }
+        fetchRecapProducts(1, year, month, searchQuery);
+    };
 
     useEffect(() => {
-        fetchRecapProducts(1);
-    }, []);
+        if (isSearch) {
+            fetchRecapProducts(1, selectedYear, selectedMonth, searchQuery);
+            setIsSearch(false); // Reset status pencarian setelah pencarian dilakukan
+        } else if (searchQuery === '') {
+            fetchRecapProducts(1, selectedYear, selectedMonth);
+        }
+    }, [searchQuery, isSearch, selectedYear, selectedMonth]);
 
-    const fetchRecapProducts = async (page = 1, year = null, month = null) => {
+    const fetchRecapProducts = async (page = 1, year = null, month = null, searchQuery = '') => {
         try {
             setLoading(true);
-            const result = await getRecapProduct(year, month, page);
+            const result = await getRecapProduct(year, month, page, searchQuery);
 
             if (result.error) {
                 setError(result.error);
@@ -54,17 +69,28 @@ export default function LaporanStockPage() {
         }
     };
 
+    // Filter produk berdasarkan searchQuery
+    const filteredProducts = products.filter((product) =>
+        product.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
     return (
         <div className="flex h-screen overflow-hidden bg-gray-100">
             <SideNavbarComponent />
             <div className="flex flex-col flex-1 w-full">
-                <PartTop/>
-                <NamePageComponent nama={"Laporan Stock"} subtitle={"dapatkan laporan stock anda secara real time"}/>
+                <PartTop />
+                <NamePageComponent nama={"Laporan Stock"} subtitle={"dapatkan laporan stock anda secara real time"} />
                 <main className="flex-1 px-10 pt-5 ">
                     <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200 mb-7">
                         <DescPageComponent
-                            desc={`Laporan stok ini mencakup pada ${selectedMonth} ${selectedYear}`}/>
-                        <FilterComponentLaporanPage onFilterChange={handleFilterChange}/>
+                            desc={`Laporan stok ini mencakup pada ${selectedMonth} ${selectedYear}`} />
+                        <FilterComponentLaporanPage
+                            handleSearchChange={handleSearchChange}
+                            searchQuery={searchQuery}
+                            onSearchClick={onSearchClick}
+                            onFilterChange={handleFilterChange}
+                            selectedYear={selectedYear}
+                            selectedMonth={selectedMonth} />
                         {isLoading ? (
                             <div className="flex items-center justify-center h-full">
                                 <Spinner
@@ -76,14 +102,14 @@ export default function LaporanStockPage() {
                                 />
                             </div>
                         ) : isAuth ? (
-                            <DummyTabelLaporanStock products={products}/>
+                            <DummyTabelLaporanStock products={filteredProducts} />
                         ) : (
                             <div className="flex items-center justify-center h-full w-full">
                                 <p className="text-xl">{error}</p>
                             </div>
                         )}
                     </div>
-                    <PaginationRecapProduct pagination={pagination} onPageChange={handlePageChange}/>
+                    <PaginationRecapProduct pagination={pagination} onPageChange={handlePageChange} />
                 </main>
             </div>
         </div>

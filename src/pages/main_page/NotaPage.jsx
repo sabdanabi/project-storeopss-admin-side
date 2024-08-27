@@ -4,10 +4,10 @@ import NamePageComponent from "../../components/components_reused/NamePageCompon
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
 import FilterComponentsNotaPage from "../../components/components_reused/FilterComponentsNotaPage.jsx";
 import { useEffect, useState } from "react";
-import { getAllNotaTransaksi, getAllTransaksi } from "../../services/TransaksiService.jsx";
+import {getAllNotaTransaksi, getAllTransaksi} from "../../services/TransaksiService.jsx";
 import { Spinner } from "@chakra-ui/react";
-import { PagintionRiwayatNota } from "../../components/riwayat_nota_components/PagintionRiwayatNota.jsx";
 import * as XLSX from "xlsx";
+import {PagintionRiwayatNota} from "../../components/riwayat_nota_components/PagintionRiwayatNota.jsx";
 
 export default function NotaPage() {
     const [nota, setNota] = useState([]);
@@ -15,26 +15,46 @@ export default function NotaPage() {
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState("");
     const [searchQuery, setSearchQuery] = useState('');
-    const [filteredStatus, setFilteredStatus] = useState(null);
+    // const [filteredStatus, setFilteredStatus] = useState(null);
     const [selectedNota, setSelectedNota] = useState(null);
     const [pagination, setPagination] = useState({});
     const { current_page, per_page } = pagination || {};
+    const [selectedRange, setSelectedRange] = useState('Semua');
+    const [selectedPaid, setSelectedPaid] = useState(null);
 
     useEffect(() => {
-        fetchNotaTransaksi();
-    }, []);
+        if (searchQuery === '') {
+            fetchNotaTransaksi(1, selectedRange, selectedPaid, '');
+        }
+
+    }, [selectedRange, selectedPaid, searchQuery]);
 
     const handleSearchChange = (e) => {
-        setSearchQuery(e.target.value);
+        const query = e.target.value;
+        setSearchQuery(query);
+
+        if (query === '') {
+            fetchNotaTransaksi(1, selectedRange, selectedPaid, '');
+        }
+    };
+
+    const handleSearchClick = () => {
+        fetchNotaTransaksi(1, selectedRange, selectedPaid, searchQuery);
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            fetchNotaTransaksi(1, selectedRange, selectedPaid, searchQuery);
+        }
     };
 
     const handlePageChange = (page) => {
         fetchNotaTransaksi(page);
     };
 
-    const handleStatusFilterChange = (status) => {
-        setFilteredStatus(status === 'Semua' ? null : status);
-    };
+    // const handleStatusFilterChange = (status) => {
+    //     setFilteredStatus(status === 'Semua' ? null : status);
+    // };
 
     const calculateTotal = (products) => {
         return products.reduce((total, product) => total + product.quantity * product.price, 0);
@@ -48,21 +68,32 @@ export default function NotaPage() {
         setSelectedNota(null);
     };
 
-    const filteredNota = nota.length > 0 ? nota.filter((entry) => {
-        const nameMatch = entry.customer.name.toLowerCase().includes(searchQuery.toLowerCase());
-        const statusMatch = !filteredStatus || entry.status === filteredStatus;
-        return nameMatch && statusMatch;
-    }) : [];
+    const onFilterChange = (paid) => {
+        setSelectedPaid(paid);
+        fetchNotaTransaksi(1, selectedRange, paid, searchQuery);
+    };
 
-    const fetchNotaTransaksi = async (page = 1) => {
+    const handleRangeChange = (range) => {
+        setSelectedRange(range);
+        fetchNotaTransaksi(1, range, selectedPaid, searchQuery);
+    };
+
+    const filteredNota = nota.filter((entry) => {
+        const customerName = entry.customer?.name || '';
+        const nameMatch = customerName.toLowerCase().includes(searchQuery.toLowerCase());
+        const dateMatch = entry.date?.includes(searchQuery) || false;
+        return nameMatch || dateMatch;
+    });
+
+    const fetchNotaTransaksi = async (page = 1, range = null, paid = null, searchQuery = '') => {
         try {
             setLoading(true);
-            const result = await getAllTransaksi(page);
+            const result = await getAllTransaksi(page, range, paid, searchQuery);
             setNota(result.data);
             setAuth(true);
             setPagination(result.meta);
         } catch (e) {
-            console.error(e);
+            console.error("Error fetching transactions:", e);
             setError(e.response?.data?.error || 'Unknown error occurred');
         } finally {
             setLoading(false);
@@ -117,8 +148,13 @@ export default function NotaPage() {
                         <FilterComponentsNotaPage
                             searchQuery={searchQuery}
                             handleSearchChange={handleSearchChange}
-                            handleStatusFilterChange={handleStatusFilterChange}
+                            // handleStatusFilterChange={handleStatusFilterChange}
                             exportToExcel={exportToExcel}
+                            handleRangeChange={handleRangeChange}
+                            selectedRange={selectedRange}
+                            onFilterChange={onFilterChange}
+                            handleSearchClick={handleSearchClick}
+                            handleKeyDown={handleKeyDown}
                         />
 
                         <div className="bg-white border-b-[3px] border-gray-200 overflow-auto">
@@ -133,49 +169,38 @@ export default function NotaPage() {
                                     />
                                 </div>
                             ) : isAuth ? (
-                                filteredNota.length > 0 ? (
-                                    <table className="w-full">
-                                        <thead className="h-12 border-b-2">
-                                            <tr className="text-sm text-[#9CA4AE]">
-                                                <td className="px-4">No</td>
-                                                <td className="px-4">Resi Kostumer</td>
-                                                <td className="px-4">Tanggal</td>
-                                                <td className="px-4">Status</td>
-                                                <td className="px-4">Aksi</td>
-                                            </tr>
-                                        </thead>
-                                        <tbody className="text-sm font-semibold text-blue-gray-700">
-                                            {filteredNota.map((nota, index) => (
-                                                <tr className="border-b-2 h-18" key={`${nota.id}-${index}`}>
-                                                    <td className="px-4">{(current_page - 1) * per_page + index + 1}</td>
-                                                    <td className="px-4 py-2">{nota.customer.name}</td>
-                                                    <td className="px-4 py-2">{nota.date}</td>
-                                                    <td className="px-4 py-2">
-                                                        <span className={`text-sm ${nota.status === 'Belum lunas' ? 'text-[#7A3636]' : 'text-[#2B713A]'}`}>
-                                                            {nota.status}
-                                                        </span>
-                                                    </td>
-                                                    <td className="px-4 py-2">
-                                                        <button
-                                                            className="text-[10px] hover:bg-[#d7e0e8] text-blue-gray-500 bg-[#dde6efc6] h-[33px] w-[68px] rounded-lg font-semibold"
-                                                            onClick={() => handleDetailClick(nota)}
-                                                        >
-                                                            Detail
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            ))}
-                                        </tbody>
-                                    </table>
-                                ) : (
-                                    <div className="flex-col items-center justify-center">
-                                        <img src="/assets_img/notfound_transaction_img.png" className="m-auto mt-10 w-[200px]" />
-                                        <p className="text-[22px] text-center font-medium mt-6 text-blue-gray-600">Nota tidak ditemukan</p>
-                                        <p className="text-[18px] text-center font-normal mt-4 mb-10 text-blue-gray-200">
-                                            Tidak dapat menemukan nota kostumer <span className="font-semibold text-blue-gray-600">{searchQuery}</span>
-                                        </p>
-                                    </div>
-                                )
+                                <table className="w-full h-12">
+                                    <thead className="h-12 border-b-2">
+                                    <tr className="text-sm text-[#9CA4AE]">
+                                        <td className="px-4">No</td>
+                                        <td className="px-4">Resi Kostumer</td>
+                                        <td className="px-4">Tanggal</td>
+                                        <td className="px-4">Status</td>
+                                        <td className="px-4">Aksi</td>
+                                    </tr>
+                                    </thead>
+                                    <tbody className="text-sm font-semibold text-blue-gray-700">
+                                    {filteredNota.map((nota, index) => (
+                                        <tr className="border-b-2 h-10 text-xs" key={`${nota.id}-${index}`}>
+                                            <td className="px-4">{(current_page - 1) * per_page + index + 1}</td>
+                                            <td className="px-4 py-2">{nota.customer.name}</td>
+                                            <td className="px-4 py-2">{nota.date}</td>
+                                            <td className="px-4 py-2">
+                                            <span
+                                                className={`text-sm ${nota.status === 'Belum lunas' ? 'text-[#7A3636]' : 'text-[#2B713A]'}`}>{nota.status}</span>
+                                            </td>
+                                            <td className="px-4 py-2">
+                                                <button
+                                                    className="text-[10px] hover:bg-[#d7e0e8] text-blue-gray-500 bg-[#dde6efc6] h-[33px] w-[68px] rounded-lg font-semibold"
+                                                    onClick={() => handleDetailClick(nota)}
+                                                >
+                                                    Detail
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                    </tbody>
+                                </table>
                             ) : (
                                 <div className="flex items-center justify-center h-full">
                                     <p className="text-xl">{error}</p>

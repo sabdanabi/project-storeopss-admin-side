@@ -5,10 +5,10 @@ import PartTop from "../../components/components_reused/PartTop.jsx";
 import NamePageComponent from "../../components/components_reused/NamePageComponent.jsx";
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
 import { CardHistoryAddProduct } from "../../components/history_add_product_components/CardHistoryAddProduct.jsx";
-import { getHistoryAddProduct, getHistoryAddProductAll } from "../../services/StockService.jsx";
-import { PaginationRiwayatTambahProduk } from "../../components/history_add_product_components/PaginationRiwayatTambahProduk.jsx";
+import {getHistoryAddProduct, getHistoryAddProductAll} from "../../services/StockService.jsx";
 import FilterComponentNewProduk from "../../components/components_reused/FilterComponentNewProduk.jsx";
 import * as XLSX from "xlsx";
+import {PaginationRiwayatTambahProduk} from "../../components/history_add_product_components/PaginationRiwayatTambahProduk.jsx";
 
 export default function RiwayatTambahProdukPage() {
     const [addProductHistory, setAddProductHistory] = useState([]);
@@ -16,30 +16,56 @@ export default function RiwayatTambahProdukPage() {
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const [statusFilter, setStatusFilter] = useState('');
     const [pagination, setPagination] = useState({});
     const [selectedEntry, setSelectedEntry] = useState(null);
     const { current_page, per_page } = pagination || {};
+    const [selectedRange, setSelectedRange] = useState('Semua');
 
-    const handleSearchChange = (e) => {
-        setSearchQuery(e.target.value);
+
+    const handlePageChange = (page) => {
+        fetchAddProductHistory(page);
     };
 
-    const handleStatusFilterChange = (status) => {
-        setStatusFilter(status);
+    useEffect(() => {
+        if (searchQuery === '') {
+            fetchAddProductHistory(1, selectedRange, '');
+        }
+    }, [selectedRange, searchQuery]);
+
+    const handleSearchChange = (e) => {
+        const query = e.target.value;
+        setSearchQuery(query);
+
+        if (query === '') {
+            fetchAddProductHistory(1, selectedRange, '');
+        }
+    };
+
+    const handleSearchClick = () => {
+        fetchAddProductHistory(1, selectedRange, searchQuery);
+    };
+
+    const handleRangeChange = (range) => {
+        setSelectedRange(range);
+        fetchAddProductHistory(1, range === 'Semua' ? '' : range, searchQuery);
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            fetchAddProductHistory(1, selectedRange, searchQuery);
+        }
     };
 
     const filteredHistory = addProductHistory.filter((entry) => {
         const matchesName = entry.name.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesDate = entry.date.includes(searchQuery);
-        const matchesStatus = statusFilter ? entry.status === statusFilter : true;
-        return (matchesName || matchesDate) && matchesStatus;
+        return matchesName || matchesDate;
     });
 
-    const fetchAddProductHistory = async (page = 1) => {
+    const fetchAddProductHistory = async (page = 1, range = null, searchQuery = '') => {
         try {
             setLoading(true);
-            const data = await getHistoryAddProduct(page);
+            const data = await getHistoryAddProduct(page, range, searchQuery);
             setAddProductHistory(data.data);
             setAuth(true);
             setPagination(data.meta);
@@ -81,15 +107,6 @@ export default function RiwayatTambahProdukPage() {
 
         XLSX.writeFile(workbook, "Riwayat_Tambah_Produk.xlsx");
     };
-
-    const handlePageChange = (page) => {
-        fetchAddProductHistory(page);
-    };
-
-    useEffect(() => {
-        fetchAddProductHistory();
-    }, []);
-
     return (
         <div className="flex h-screen overflow-hidden bg-gray-100">
             <SideNavbarComponent />
@@ -97,14 +114,17 @@ export default function RiwayatTambahProdukPage() {
             <div className="flex flex-col flex-1 w-full">
                 <PartTop />
                 <NamePageComponent nama="Riwayat Tambah Produk" />
-                <main className="flex-1 pt-5 px-10 overflow-y-auto">
+                <main className=" pt-5 px-10 overflow-y-auto mb-5">
                     <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
                         <DescPageComponent desc="Riwayat tambah produk anda dari waktu ke waktu." />
                         <FilterComponentNewProduk
                             searchQuery={searchQuery}
                             handleSearchChange={handleSearchChange}
-                            handleStatusFilterChange={handleStatusFilterChange}
                             exportToExcel={exportToExcel}
+                            handleRangeChange={handleRangeChange}
+                            selectedRange={selectedRange}
+                            handleSearchClick={handleSearchClick}
+                            handleKeyDown={handleKeyDown}
                         />
                         <div className="bg-white border-b-[3px] border-gray-200 overflow-auto">
                             {isLoading ? (
@@ -143,8 +163,8 @@ export default function RiwayatTambahProdukPage() {
                             )}
                         </div>
                     </div>
-                    <PaginationRiwayatTambahProduk pagination={pagination} onPageChange={handlePageChange} />
                 </main>
+                <PaginationRiwayatTambahProduk pagination={pagination} onPageChange={handlePageChange}/>
             </div>
         </div>
     );

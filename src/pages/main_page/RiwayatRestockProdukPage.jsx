@@ -15,29 +15,54 @@ export default function RiwayatRestockProdukPage() {
     const [isAuth, setAuth] = useState(false);
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [searchQuery, setSearchQuery] = useState("");
-    const [statusFilter, setStatusFilter] = useState("");
+    const [searchQuery, setSearchQuery] = useState('');
     const [pagination, setPagination] = useState({});
+    const [selectedRange, setSelectedRange] = useState('Semua');
 
-    const handleSearchChange = (e) => {
-        setSearchQuery(e.target.value);
+    const handlePageChange = (page) => {
+        fetchRestockHistory(page);
     };
 
-    const handleStatusFilterChange = (status) => {
-        setStatusFilter(status);
+    useEffect(() => {
+        if (searchQuery === '') {
+            fetchRestockHistory(1,selectedRange, '');
+        }
+    }, [selectedRange, searchQuery]);
+
+    const handleSearchChange = (e) => {
+        const query = e.target.value;
+        setSearchQuery(query);
+
+        if (query === '') {
+            fetchRestockHistory(1,selectedRange, '');
+        }
+    };
+
+    const handleSearchClick = () => {
+        fetchRestockHistory(1,selectedRange, searchQuery);
+    };
+
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            fetchRestockHistory(1,selectedRange, searchQuery);
+        }
+    };
+
+    const handleRangeChange = (range) => {
+        setSelectedRange(range);
+        fetchRestockHistory(1, range === 'Semua' ? '' : range, searchQuery);
     };
 
     const filteredHistory = restockHistory.filter((entry) => {
         const matchesName = entry.product.name.toLowerCase().includes(searchQuery.toLowerCase());
         const matchesDate = entry.date.includes(searchQuery);
-        const matchesStatus = statusFilter ? entry.status === statusFilter : true;
-        return (matchesName || matchesDate) && matchesStatus;
+        return matchesName || matchesDate;
     });
 
-    const fetchRestockHistory = async (page = 1) => {
+    const fetchRestockHistory = async (page = 1,  range = null, searchQuery = '') => {
         try {
             setLoading(true);
-            const data = await getRestockHistory(page);
+            const data = await getRestockHistory(page, range, searchQuery);
             setRestockHistory(data.data);
             setAuth(true);
             setPagination(data.meta);
@@ -79,14 +104,6 @@ export default function RiwayatRestockProdukPage() {
         XLSX.writeFile(workbook, "Riwayat_Restock_Produk.xlsx");
     };
 
-    const handlePageChange = (page) => {
-        fetchRestockHistory(page);
-    };
-
-    useEffect(() => {
-        fetchRestockHistory();
-    }, []);
-
     return (
         <div className="flex h-screen overflow-hidden bg-gray-100">
             <SideNavbarComponent />
@@ -102,8 +119,11 @@ export default function RiwayatRestockProdukPage() {
                         <FilterComponentRestock
                             searchQuery={searchQuery}
                             handleSearchChange={handleSearchChange}
-                            handleStatusFilterChange={handleStatusFilterChange}
                             exportToExcel={exportToExcel}
+                            handleRangeChange={handleRangeChange}
+                            selectedRange={selectedRange}
+                            handleSearchClick={handleSearchClick}
+                            handleKeyDown={handleKeyDown}
                         />
 
                         <div className="flex justify-center">

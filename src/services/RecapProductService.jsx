@@ -4,7 +4,7 @@ import {toast} from "react-toastify";
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const token = localStorage.getItem("token");
 
-const getRecapProduct = async (year = null, month = null, page = 1) => {
+const getRecapProduct = async (year = null, month = null, page = 1, searchQuery = '') => {
     try {
         const response = await axios.get(`${baseUrl}/api/products/recap`, {
             headers: {
@@ -12,9 +12,11 @@ const getRecapProduct = async (year = null, month = null, page = 1) => {
                 "ngrok-skip-browser-warning": true
             },
             params: {
-                page,
                 year,
                 month,
+                ...(page && { page }),
+                ...(searchQuery && { search: searchQuery }),
+
             }
         });
         return response.data;

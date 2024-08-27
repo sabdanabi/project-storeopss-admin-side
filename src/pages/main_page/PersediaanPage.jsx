@@ -1,7 +1,7 @@
+import { useEffect, useState } from "react";
 import SideNavbarComponent from "../../components/components_reused/SideNavbarComponent.jsx";
 import PartTop from "../../components/components_reused/PartTop.jsx";
 import TblStock from "../../components/page_persediaan_components/TblStock.jsx";
-import { useEffect, useState } from "react";
 import { getAllProduct, addNewProduct, deleteProduct, importProductExcel } from "../../services/StockService.jsx";
 import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
@@ -15,28 +15,51 @@ export default function PersediaanPage() {
     const [isAuth, setAuth] = useState(false);
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState("");
-    const [searchQuery, setSearchQuery] = useState('');
     const [pagination, setPagination] = useState({});
+    const [stockFilter, setStockFilter] = useState('');
+    const [searchQuery, setSearchQuery] = useState('');
 
     useEffect(() => {
-        fetchProducts();
-    }, []);
+        if (searchQuery === '') {
+            fetchProducts(1, '', stockFilter);
+        }
+    }, [searchQuery, stockFilter]);
 
     const updateProductState = () => {
-        fetchProducts(pagination.current_page);
+        fetchProducts(pagination.current_page, searchQuery, stockFilter);
     };
-
 
     const handleSearchChange = (e) => {
-        setSearchQuery(e.target.value);
+        const query = e.target.value;
+        setSearchQuery(query);
+
+        if (query === '') {
+            fetchProducts(1, '', stockFilter);
+        }
     };
 
-    const filteredHistory = products.filter((product) => {
-        return product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const handleSearchKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            fetchProducts(1, searchQuery, stockFilter);
+        }
+    };
+
+    const handleStockFilterChange = (filter) => {
+        setStockFilter(filter);
+        fetchProducts(1, searchQuery, filter);
+    };
+
+    const onSearchClick = () => {
+        fetchProducts(1, searchQuery, stockFilter);
+    };
+
+    const filteredHistory = products.filter((entry) => {
+        const nameMatch = entry.name.toLowerCase().includes(searchQuery.toLowerCase());
+        return nameMatch;
     });
 
     const handlePageChange = (page) => {
-        fetchProducts(page);
+        fetchProducts(page, searchQuery, stockFilter);
     };
 
     const handleDelete = async (productId) => {
@@ -45,10 +68,10 @@ export default function PersediaanPage() {
         toast.success("Data berhasil dihapus!");
     };
 
-    const fetchProducts = async (page = 1) => {
+    const fetchProducts = async (page = 1, searchQuery = '', stockFilter = '') => {
         try {
             setLoading(true);
-            const result = await getAllProduct(page);
+            const result = await getAllProduct(page, searchQuery, stockFilter);
             setProducts(result.data);
             setAuth(true);
             setPagination(result.meta);
@@ -110,11 +133,15 @@ export default function PersediaanPage() {
                         searchQuery={searchQuery}
                         updateProductsState={updateProductState}
                         handleSearchChange={handleSearchChange}
+                        handleSearchKeyDown={handleSearchKeyDown}
                         exportToExcel={exportToExcel}
+                        onSearchClick={onSearchClick}
                         pagination={pagination}
                         isLoading={isLoading}
                         isAuth={isAuth}
                         error={error}
+                        stockFilter={stockFilter}
+                        onStockFilterChange={handleStockFilterChange}
                     />
                     <PaginationPersediaanProduk meta={pagination} onPageChange={handlePageChange} />
                 </div>

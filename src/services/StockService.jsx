@@ -27,27 +27,34 @@ const addNewProduct = async (formData) => {
 };
 
 
-const getAllProduct = async (page = 1) =>  {
+const getAllProduct = async (page = 1, searchQuery = '', stockFilter = '') => {
     try {
         const response = await axios.get(`${baseUrl}/api/products`, {
             headers: {
                 AUTHORIZATION: token,
-                "ngrok-skip-browser-warning": true
+                "ngrok-skip-browser-warning": true,
             },
             params: {
-                page: page
+                ...(page && { page }),
+                ...(searchQuery && { search: searchQuery }),
+                ...(stockFilter && { stock: stockFilter }),
             }
         });
+
         return response.data;
     } catch (error) {
-        if (error.response && error.response.status === 401) {
+        if (error.response?.status === 401) {
             toast.error("Anda belum login. Silakan login terlebih dahulu.");
             setTimeout(() => {
                 window.location.href = "/login-page";
-            }, 2000);
+            }, 3000);
+        } else if (error.response?.data?.error) {
+            toast.error(error.response.data.error);
         } else {
-            handleAxiosError(error);
+            console.error('Error:', error.message);
+            toast.error("Terjadi kesalahan. Silakan coba lagi.");
         }
+        return null;
     }
 };
 
@@ -123,7 +130,7 @@ const getProductById = async (productId) => {
     }
 };
 
-const getHistoryAddProduct = async (page = 1) => {
+const getHistoryAddProduct = async (page = 1, range = null, searchQuery = '') => {
     try {
         const response = await axios.get(`${baseUrl}/api/products/histories/add`, {
             headers: {
@@ -131,7 +138,10 @@ const getHistoryAddProduct = async (page = 1) => {
                 "ngrok-skip-browser-warning": true
             },
             params: {
-                page: page
+                ...(page && { page }),
+                ...(range && { range }),
+                ...(searchQuery && { search: searchQuery }),
+
             }
         });
         return response.data;

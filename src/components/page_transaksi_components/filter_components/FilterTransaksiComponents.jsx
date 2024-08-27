@@ -6,38 +6,54 @@ import {
     MenuItem,
     Button,
 } from '@chakra-ui/react'
-import {useState} from "react";
+import { useState } from "react";
 
-export default function FilterTransaksiComponents({handleSearchChange, searchQuery, handleStatusFilterChange,}) {
+export default function FilterTransaksiComponents({ handleSearchChange, searchQuery, handleRangeChange,
+                                                      selectedRange, onFilterChange, handleSearchClick, handleKeyDown}) {
 
-    const [selectedStatus, setSelectedStatus] = useState('Status Transaksi')
+    const [selectedPaid, setSelectedPaid] = useState(null);
 
-    const onStatusChange = (status) => {
-        setSelectedStatus(status);
-        handleStatusFilterChange(status);
-    }
+    const handleFilterChange = (paid) => {
+        setSelectedPaid(paid);
+        onFilterChange(paid);
+    };
 
-    const [selectedDay, setSelectedDay] = useState("Pilih Waktu")
-    const onFilterChange = (dayFilter)  => {
-        setSelectedDay(dayFilter);
-        handleDayFilterChange(dayFilter);
-    }
+    const getSelectedText = () => {
+        if (selectedPaid === true) return 'Lunas';
+        if (selectedPaid === false) return 'Belum Lunas';
+        return 'Semua';
+    };
+
     return (
         <div className="bg-white h-[65px] flex py-3 px-6 relative border-b-[3px] border-gray-200 gap-5">
-            <div className="w-[950px]">
+            <div className="w-[950px] flex items-center">
                 <input
                     type="text"
                     placeholder="Cari Produk"
                     value={searchQuery}
                     onChange={handleSearchChange}
+                    onKeyDown={handleKeyDown}
                     className="py-2 pl-11 pr-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2
                                 focus:ring-indigo-500 focus:border-transparent w-full"
                 />
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                     stroke="currentColor" className="w-5 h-5 absolute top-6 left-10 text-[#8C95A4]">
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    strokeWidth={1.5}
+                    stroke="currentColor"
+                    className="w-5 h-5 absolute top-5 left-10 text-[#8C95A4]"
+                >
                     <path strokeLinecap="round" strokeLinejoin="round"
                           d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"/>
                 </svg>
+                <Button onClick={() => {
+                    if (searchQuery.trim()) {
+                        handleSearchClick();
+                    } else {
+                        console.log("Input kosong!");
+                    }
+                }} className="ml-2 h-36"><p className="text-[#1a4f8b]">Cari</p></Button>
             </div>
 
             <Menu>
@@ -47,12 +63,12 @@ export default function FilterTransaksiComponents({handleSearchChange, searchQue
                         <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                     </svg>
                 }>
-                    <p className="text-[14px] font-normal mr-10 text-[#727E91] lg:text-xs xl:text-sm">{selectedStatus}</p>
+                    <p className="text-[14px] font-normal mr-10 text-[#727E91] lg:text-xs xl:text-sm">{getSelectedText()}</p>
                 </MenuButton>
                 <MenuList>
-                    <p className="text-[14px]"><MenuItem onClick={() => onStatusChange('Semua')}>Semua</MenuItem></p>
-                    <p className="text-[14px]"><MenuItem onClick={() => onStatusChange('Lunas')}>Lunas</MenuItem></p>
-                    <p className="text-[14px]"><MenuItem onClick={() => onStatusChange('Belum lunas')}>Belum Lunas</MenuItem></p>
+                    <MenuItem onClick={() => handleFilterChange(null)}>Semua</MenuItem>
+                    <MenuItem onClick={() => handleFilterChange(true)}>Lunas</MenuItem>
+                    <MenuItem onClick={() => handleFilterChange(false)}>Belum Lunas</MenuItem>
                 </MenuList>
             </Menu>
 
@@ -63,23 +79,26 @@ export default function FilterTransaksiComponents({handleSearchChange, searchQue
                         <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                     </svg>
                 }>
-                    <p className="text-[14px] font-normal mr-10 text-[#727E91]">{selectedDay}</p>
+                    <p className="text-[14px] font-normal mr-10 text-[#727E91]">{selectedRange}</p>
                 </MenuButton>
                 <MenuList>
-                    <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('Hari ini')}>Hari ini</MenuItem></p>
-                    <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('1 Minggu')}>1 Minggu</MenuItem></p>
-                    <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('1 Bulan')}>1 Bulan</MenuItem></p>
-                    <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('Pilih tanggal')}>Pilih tanggal</MenuItem></p>
-                    <p className="text-[14px]"><MenuItem onClick={() => onFilterChange('Pilih antara tanggal')}>Pilih antara tanggal</MenuItem></p>
+                    <MenuItem onClick={() => handleRangeChange('Semua')}>Semua</MenuItem>
+                    <MenuItem onClick={() => handleRangeChange('daily')}>Harian</MenuItem>
+                    <MenuItem onClick={() => handleRangeChange('weekly')}>Mingguan</MenuItem>
+                    <MenuItem onClick={() => handleRangeChange('monthly')}>Bulanan</MenuItem>
                 </MenuList>
             </Menu>
         </div>
-    )
+    );
 }
 
 FilterTransaksiComponents.propTypes = {
-    handleSearchChange: PropTypes.func.isRequired,
-    searchQuery: PropTypes.string.isRequired,
-    handleDayFilterChange: PropTypes.func,
-    handleStatusFilterChange:PropTypes.func
+    handleSearchChange: PropTypes.func,
+    searchQuery: PropTypes.string,
+    handleRangeChange: PropTypes.func,
+    selectedRange: PropTypes.string,
+    onFilterChange: PropTypes.func,
+    handleSearchClick: PropTypes.func,
+    handleKeyDown: PropTypes.func
 };
+
