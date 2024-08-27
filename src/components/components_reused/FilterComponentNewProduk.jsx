@@ -6,8 +6,9 @@ import {
     Button,
 } from '@chakra-ui/react'
 import {useState} from "react";
+import PropTypes from "prop-types";
 
-export default function FilterComponentRestock({handleSearchChange, searchQuery, handleDayFilterChange, exportToExcel}) {
+export default function FilterComponentNewProduk({handleSearchChange, searchQuery, handleDayFilterChange, exportToExcel}) {
 
     const [selectedDay, setSelectedDay] = useState("Pilih Waktu")
     const onFilterChange = (dayFilter)  => {
@@ -68,3 +69,10 @@ export default function FilterComponentRestock({handleSearchChange, searchQuery,
         </div>
     )
 }
+
+FilterComponentNewProduk.propTypes = {
+    handleSearchChange: PropTypes.func.isRequired,
+    searchQuery: PropTypes.string.isRequired,
+    handleDayFilterChange: PropTypes.func,
+    exportToExcel: PropTypes.func.isRequired,
+};

@@ -1,8 +1,7 @@
-import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-export function CardHistoryAddProduct({ addProductHistory }) {
-    const [selectedEntry, setSelectedEntry] = useState(null);
+export function CardHistoryAddProduct({ addProductHistory, selectedEntry, current_page,
+                                          setSelectedEntry, per_page }) {
 
     const handleDetailClick = (entry) => {
         setSelectedEntry(entry);
@@ -24,10 +23,10 @@ export function CardHistoryAddProduct({ addProductHistory }) {
                         <td className="px-4">Aksi</td>
                     </tr>
                 </thead>
-                <tbody className="font-semibold text-blue-gray-700">
+                <tbody className="font-semibold text-[15px] text-blue-gray-700">
                     {addProductHistory.map((entry, index) => (
                         <tr className="border-b-2 h-18" key={`${entry.id}-${index}`}>
-                            <td className="px-4"><p className="mr-3">{index + 1}</p></td>
+                            <td className="px-4"><p className="mr-3">{(current_page - 1) * per_page + index + 1}</p></td>
                             <td className="py-2 px-4 border-b">{entry.name}</td>
                             <td className="py-2 px-4 border-b">{entry.date}</td>
                             <td className="py-2 px-4 border-b">{entry.quantity}</td>
@@ -48,7 +47,7 @@ export function CardHistoryAddProduct({ addProductHistory }) {
                 <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
                     <div className="bg-white p-4 rounded-lg max-w-lg w-full">
                         <div className="flex justify-between items-center mb-4">
-                        <p className="font-semibold text-[20px] text-blue-gray-600">Riwayat Tambah Produk</p>
+                            <p className="font-semibold text-[20px] text-blue-gray-600">Riwayat Tambah Produk</p>
                             <button
                                 className="text-red-500 font-bold"
                                 onClick={handleCloseModal}
@@ -58,21 +57,21 @@ export function CardHistoryAddProduct({ addProductHistory }) {
                         </div>
 
                         <div className="bg-white w-85 py-3 px-2 rounded-[8px] shadow-md">
-                        <div className="flex justify-between items-center mb-4">
-                            <p className="font-semibold ml-4  text-[#8C8BB4] text-[15px]">{selectedEntry.name}</p>
-                            <p className="text-[12px] font-normal text-blue-gray-300">{selectedEntry.date}</p>
+                            <div className="flex justify-between items-center mb-4">
+                                <p className="font-semibold ml-4  text-[#8C8BB4] text-[15px]">{selectedEntry.name}</p>
+                                <p className="text-[12px] font-normal text-blue-gray-300">{selectedEntry.date}</p>
                             </div>
 
                             <div className="flex text-xs font-medium text-[#403E8A] mb-2 relative mt-3 ml-4 mr-4">
-                                <p className="text-[13px] text-blue-gray-500">Harga Beli</p>
+                                <p className="text-[13px]  text-blue-gray-500">Harga Beli</p>
                                 <p className="absolute left-28">:</p>
-                                <p className="font-semibold text-[#8C8BB4] text-[13px] absolute left-32">Rp {selectedEntry.purchase_price.toLocaleString('id-ID')}</p>
+                                <p className="font-semibold text-[#8C8BB4] text-[13px] absolute left-32">Rp {selectedEntry.purchase_price} total</p>
                             </div>
 
                             <div className="flex text-xs font-medium text-[#403E8A] mb-2 relative mt-3 ml-4 mr-4">
-                                <p className="text-[13px] text-blue-gray-500">Harga Jual</p>
+                                <p className="text-[13px]  text-blue-gray-500">Harga Jual</p>
                                 <p className="absolute left-28">:</p>
-                                <p className="font-semibold text-[#8C8BB4] text-[13px] absolute left-32">Rp {selectedEntry.selling_price.toLocaleString('id-ID')} / pcs/kg</p>
+                                <p className="font-semibold text-[#8C8BB4] text-[13px] absolute left-32">Rp {selectedEntry.selling_price} / pcs/kg</p>
                             </div>
 
                             <div className="flex text-xs font-medium text-[#403E8A] mb-2 relative mt-3 ml-4 mr-4">
@@ -91,7 +90,7 @@ export function CardHistoryAddProduct({ addProductHistory }) {
 CardHistoryAddProduct.propTypes = {
     addProductHistory: PropTypes.arrayOf(
         PropTypes.shape({
-            id: PropTypes.number.isRequired,
+            id: PropTypes.number,
             date: PropTypes.string.isRequired,
             name: PropTypes.string.isRequired,
             purchase_price: PropTypes.number.isRequired,
@@ -99,4 +98,8 @@ CardHistoryAddProduct.propTypes = {
             quantity: PropTypes.number.isRequired,
         })
     ).isRequired,
+    selectedEntry: PropTypes.object,
+    current_page: PropTypes.number.isRequired,
+    setSelectedEntry: PropTypes.func.isRequired,
+    per_page: PropTypes.number.isRequired,
 };

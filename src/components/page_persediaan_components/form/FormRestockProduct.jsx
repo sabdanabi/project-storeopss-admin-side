@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { restockProduct } from '../../../services/RestockService.jsx';
+import { addRestockProduct } from '../../../services/RestockService.jsx';
 import PropTypes from "prop-types";
 
 export function FormRestockProduct({ id, updateProductsState }) {
@@ -24,7 +24,7 @@ export function FormRestockProduct({ id, updateProductsState }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            await restockProduct(id, formData);
+            await addRestockProduct(id, formData);
             toast.success('Produk berhasil direstok.', { position: 'top-center', autoClose: 10000 });
             updateProductsState();
 

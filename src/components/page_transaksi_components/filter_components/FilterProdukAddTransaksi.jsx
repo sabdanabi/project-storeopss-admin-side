@@ -1,7 +1,9 @@
-export function SearchBarStock({handleSearchChange,  searchQuery, }) {
+import PropTypes from "prop-types";
+
+export function FilterProdukAddTransaksi({ searchQuery, handleSearchChange }) {
     return (
         <>
-            <div className="bg-white h-[65px] flex py-3 px-6 relative border-b-[3px] border-gray-200">
+            <div className="w-[400px]">
                 <input
                     type="text"
                     placeholder="Cari Produk"
@@ -19,3 +21,8 @@ export function SearchBarStock({handleSearchChange,  searchQuery, }) {
         </>
     )
 }
+
+FilterProdukAddTransaksi.propTypes = {
+    searchQuery: PropTypes.string.isRequired,
+    handleSearchChange: PropTypes.func.isRequired,
+};

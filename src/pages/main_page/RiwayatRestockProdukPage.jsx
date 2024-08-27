@@ -3,11 +3,12 @@ import PartTop from "../../components/components_reused/PartTop.jsx";
 import NamePageComponent from "../../components/components_reused/NamePageComponent.jsx";
 import DescPageComponent from "../../components/components_reused/DescPageComponent.jsx";
 import { useEffect, useState } from "react";
-import { getAllRestockHistory } from "../../services/RestockService.jsx";
+import {getAllRestockHistory, getRestockHistory} from "../../services/RestockService.jsx";
 import { HistoryRestockCard } from "../../components/history_restock_components/HistoryRestockCard.jsx";
-import SearchBarHistoryRestock from "../../components/history_restock_components/SearchBarHistoryRestock.jsx";
 import { Spinner } from '@chakra-ui/react';
 import FilterComponentRestock from "../../components/components_reused/FilterComponentRestock.jsx";
+import {PaginationHistoryRestock} from "../../components/history_restock_components/PaginationHistoryRestock.jsx";
+import * as XLSX from "xlsx";
 
 export default function RiwayatRestockProdukPage() {
     const [restockHistory, setRestockHistory] = useState([]);
@@ -15,7 +16,8 @@ export default function RiwayatRestockProdukPage() {
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const [statusFilter, setStatusFilter] = useState(''); 
+    const [statusFilter, setStatusFilter] = useState('');
+    const [pagination, setPagination] = useState({});
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
@@ -32,17 +34,54 @@ export default function RiwayatRestockProdukPage() {
         return (matchesName || matchesDate) && matchesStatus;
     });
 
-    const fetchRestockHistory = async () => {
+    const fetchRestockHistory = async (page = 1) => {
         try {
             setLoading(true);
-            const data = await getAllRestockHistory();
+            const data = await getRestockHistory(page);
             setRestockHistory(data.data);
             setAuth(true);
+            setPagination(data.meta);
+
         } catch (error) {
             setError(error.message);
         } finally {
             setLoading(false);
         }
+    };
+
+    const fetchAllRestockHistory = async () => {
+        try {
+            setLoading(true);
+            const result = await getAllRestockHistory();
+            setAuth(true);
+            return result;
+        } catch (e) {
+            console.log(e);
+            setError(e.response.data.error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const exportToExcel = async () => {
+        const result = await fetchAllRestockHistory();
+        const dataToExport = result.data.map((entry, index) => ({
+            No: index + 1,
+            Nama_Produk: entry.name,
+            Tanggal: entry.date,
+            Pemasok: entry.supplier.name,
+            Jumlah: entry.product.new_quantity,
+        }));
+
+        const worksheet = XLSX.utils.json_to_sheet(dataToExport);
+        const workbook = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Riwayat_Tambah_Produk");
+
+        XLSX.writeFile(workbook, "Riwayat_Tambah_Produk.xlsx");
+    };
+
+    const handlePageChange = (page) => {
+        fetchRestockHistory(page);
     };
 
     useEffect(() => {
@@ -54,39 +93,42 @@ export default function RiwayatRestockProdukPage() {
             <SideNavbarComponent />
 
             <div className="flex flex-col flex-1 w-full">
-                <PartTop />
-                <NamePageComponent nama={"Riwayat Pembaruan Stok"} />
-                {isLoading ? (
-                    <div className="flex items-center justify-center h-full">
-                        <Spinner
-                            thickness='4px'
-                            speed='0.65s'
-                            emptyColor='gray.200'
-                            color='blue.500'
-                            size='xl'
+                <PartTop/>
+                <NamePageComponent nama={"Riwayat Pembaruan Stok"}/>
+                <main className="flex-1 pt-5 px-10 overflow-y-auto">
+                    <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
+                        <DescPageComponent
+                            desc={"Riwayat pengisian ulang produk anda dari waktu ke waktu"}/>
+                        <FilterComponentRestock
+                            searchQuery={searchQuery}
+                            handleSearchChange={handleSearchChange}
+                            handleStatusFilterChange={handleStatusFilterChange}
+                            exportToExcel={exportToExcel}
                         />
-                    </div>
-                ) : isAuth ? (
-                    <main className="flex-1 p-5 overflow-y-auto">
-                        <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200">
-                            <DescPageComponent
-                                desc={"Riwayat pengisian ulang produk anda dari waktu ke waktu"} />
-                            <FilterComponentRestock
-                                searchQuery={searchQuery}
-                                handleSearchChange={handleSearchChange}
-                                handleStatusFilterChange={handleStatusFilterChange}
-                            />
 
-                            <div className="bg-[#EEF0F5] p-3 h-full border-b-[3px] border-gray-200 grid grid-cols-3 gap-5 overflow-auto">
-                                <HistoryRestockCard restockHistory={filteredHistory} />
-                            </div>
+                        <div className="flex justify-center h-96">
+                            {isLoading ? (
+                                <div className="flex items-center justify-center h-full">
+                                    <Spinner
+                                        thickness='4px'
+                                        speed='0.65s'
+                                        emptyColor='gray.200'
+                                        color='blue.500'
+                                        size='xl'
+                                    />
+                                </div>
+                            ) : isAuth ? (
+                                <HistoryRestockCard restockHistory={filteredHistory} pagination={pagination}/>
+                            ) : (
+                                <div className="flex items-center justify-center h-full">
+                                    <p className="text-xl">{error}</p>
+                                </div>
+                            )}
                         </div>
-                    </main>
-                ) : (
-                    <div className="flex items-center justify-center h-full">
-                        <p className="text-xl">{error}</p>
                     </div>
-                )}
+                    <PaginationHistoryRestock pagination={pagination} onPageChange={handlePageChange}/>
+                </main>
+
             </div>
         </div>
     );

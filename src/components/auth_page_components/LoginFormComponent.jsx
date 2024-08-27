@@ -85,10 +85,10 @@ export default function LoginFormComponent() {
                     </div>
                 </form>
 
-                <button type="submit" className=" border-[1px] border-black w-[100%] h-[47px] rounded-full mt-10">
-                    <img src="/assets_img/google_logo.png" className="h-[20px] w-[20px] absolute left-[30%]"/>
-                    Lanjut Dengan Google
-                </button>
+                {/*<button type="submit" className=" border-[1px] border-black w-[100%] h-[47px] rounded-full mt-10">*/}
+                {/*    <img src="/assets_img/google_logo.png" className="h-[20px] w-[20px] absolute left-[30%]"/>*/}
+                {/*    Lanjut Dengan Google*/}
+                {/*</button>*/}
             </div>
         </>
     )

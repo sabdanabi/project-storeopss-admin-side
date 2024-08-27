@@ -1,9 +1,10 @@
 import axios from "axios";
+import {toast} from "react-toastify";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const token = localStorage.getItem("token");
 
-const restockProduct = async (productId, restockData) => {
+const addRestockProduct = async (productId, restockData) => {
     try {
         const response = await axios.post(`${baseUrl}/api/products/${productId}/restock`,
             restockData,
@@ -15,24 +16,59 @@ const restockProduct = async (productId, restockData) => {
             });
         return response.data;
     }catch (error) {
-        console.error(error.response ? error.response.data : error.message);
-        throw error;
+        if (error.response && error.response.status === 401) {
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);         } else {
+            console.error(error.response ? error.response.data : error.message);
+        }
     }
 }
 
-const getAllRestockHistory = async () => {
+const getRestockHistory = async (page = 1) => {
     try {
         const response = await axios.get(`${baseUrl}/api/products/histories/restock`, {
             headers: {
                 Authorization: token,
                 'ngrok-skip-browser-warning': true
+            },
+            params: {
+                page: page
             }
         });
         return response.data;
     } catch (error) {
-        console.error('Error fetching restock history:', error.response ? error.response.data : error.message);
-        throw error;
+        if (error.response && error.response.status === 401) {
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);         } else {
+            console.error(error.response ? error.response.data : error.message);
+        }
     }
 };
 
-export { restockProduct, getAllRestockHistory };
+const getAllRestockHistory = async () => {
+    try {
+        const response = await axios.get(`${baseUrl}/api/products/histories/restock?paginate=false`, {
+            headers: {
+                Authorization: token,
+                'ngrok-skip-browser-warning': true
+            },
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response && error.response.status === 401) {
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);         } else {
+            console.error(error.response ? error.response.data : error.message);
+        }
+    }
+};
+
+
+
+export { addRestockProduct, getRestockHistory, getAllRestockHistory };

@@ -5,7 +5,6 @@ import './index.css';
 import App from "./App.jsx";
 import { ThemeProvider } from "@material-tailwind/react";
 
-
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
       <ChakraProvider>

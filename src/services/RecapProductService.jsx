@@ -1,19 +1,32 @@
 import axios from "axios";
+import {toast} from "react-toastify";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const token = localStorage.getItem("token");
 
-const getRecapProduct = async () => {
+const getRecapProduct = async (year = null, month = null, page = 1) => {
     try {
         const response = await axios.get(`${baseUrl}/api/products/recap`, {
             headers: {
                 AUTHORIZATION: token,
                 "ngrok-skip-browser-warning": true
             },
+            params: {
+                page,
+                year,
+                month,
+            }
         });
         return response.data;
     } catch (error) {
-        handleAxiosError(error);
+        if (error.response && error.response.status === 401) {
+            toast.error("Anda belum login. Silakan login terlebih dahulu.");
+            setTimeout(() => {
+                window.location.href = "/login-page";
+            }, 3000);
+        } else {
+            handleAxiosError(error);
+        }
     }
 };
 

@@ -9,7 +9,7 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
         quantity: "",
         purchasePrice: "",
         sellingPrice: "",
-        unit: "",
+        // unit: "",
         image: null,
     });
 
@@ -23,7 +23,7 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
             formDataWithImage.append("quantity", formData.quantity);
             formDataWithImage.append("purchase_price", formData.purchasePrice);
             formDataWithImage.append("selling_price", formData.sellingPrice);
-            formDataWithImage.append("unit", formData.unit);
+            // formDataWithImage.append("unit", formData.unit);
 
             if (formData.image) {
                 formDataWithImage.append("image", formData.image);
@@ -37,7 +37,7 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
                 quantity: "",
                 purchasePrice: "",
                 sellingPrice: "",
-                unit: "",
+                // unit: "",
                 image: null,
             });
             refreshProducts();
@@ -54,13 +54,13 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
         }));
     };
 
-    const handleImageChange = (e) => {
-        const imageFile = e.target.files[0];
-        setFormData((prevData) => ({
-            ...prevData,
-            image: imageFile,
-        }));
-    };
+    // const handleImageChange = (e) => {
+    //     const imageFile = e.target.files[0];
+    //     setFormData((prevData) => ({
+    //         ...prevData,
+    //         image: imageFile,
+    //     }));
+    // };
 
     // const toggleDropdown = () => {
     //     setIsOpen(!isOpen);
@@ -81,7 +81,7 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
         <form onSubmit={handleSubmit}>
             <ToastContainer position="top-center"/>
             <div className="flex gap-10">
-                <div>
+                    <div>
                     <div className="mb-4">
                         <label className="text-sm">Nama Produk</label>
                         <br/>
@@ -120,7 +120,9 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
                             className="border-2 w-96 h-8 rounded-lg mt-3 text-xs p-3"
                         />
                     </div>
-
+                    </div>
+                    
+                    <div>
                     <div className="mb-4">
                         <label className="text-sm">Stock</label>
                         <br/>
@@ -134,18 +136,18 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
                         />
                     </div>
 
-                    <div className="mb-4">
-                        <label className="text-sm">Unit /pcs/kg</label>
-                        <br/>
-                        <input
-                            placeholder="Masukkan unit produk...."
-                            type="text"
-                            name="unit"
-                            value={formData.unit}
-                            onChange={handleChange}
-                            className="border-2 w-96 h-8 rounded-lg mt-3 text-xs p-3"
-                        />
-                    </div>
+                    {/*<div className="mb-4">*/}
+                    {/*    <label className="text-sm">Unit /pcs/kg</label>*/}
+                    {/*    <br/>*/}
+                    {/*    <input*/}
+                    {/*        placeholder="Masukkan unit produk...."*/}
+                    {/*        type="text"*/}
+                    {/*        name="unit"*/}
+                    {/*        value={formData.unit}*/}
+                    {/*        onChange={handleChange}*/}
+                    {/*        className="border-2 w-96 h-8 rounded-lg mt-3 text-xs p-3"*/}
+                    {/*    />*/}
+                    {/*</div>*/}
 
                     <div className="mb-4">
                         <label className="text-sm">Kategori Produk</label>
@@ -161,7 +163,7 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
                     </div>
                 </div>
 
-                <div>
+                {/* <div>
                     <label className="text-sm">Foto Produk</label>
                     <br/>
                     <div className="relative w-96 h-96 rounded-lg mt-3 overflow-hidden border-2">
@@ -179,7 +181,7 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
                             className="absolute inset-0 opacity-0 cursor-pointer"
                         />
                     </div>
-                </div>
+                </div> */}
             </div>
 
             <div className="flex justify-center mt-10">

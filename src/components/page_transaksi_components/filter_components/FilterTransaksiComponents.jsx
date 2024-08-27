@@ -8,7 +8,7 @@ import {
 } from '@chakra-ui/react'
 import {useState} from "react";
 
-export default function FilterComponents({handleSearchChange, searchQuery, handleStatusFilterChange, handleDayFilterChange}) {
+export default function FilterTransaksiComponents({handleSearchChange, searchQuery, handleStatusFilterChange,}) {
 
     const [selectedStatus, setSelectedStatus] = useState('Status Transaksi')
 
@@ -24,7 +24,7 @@ export default function FilterComponents({handleSearchChange, searchQuery, handl
     }
     return (
         <div className="bg-white h-[65px] flex py-3 px-6 relative border-b-[3px] border-gray-200 gap-5">
-            <div className="w-[800px]">
+            <div className="w-[950px]">
                 <input
                     type="text"
                     placeholder="Cari Produk"
@@ -43,11 +43,11 @@ export default function FilterComponents({handleSearchChange, searchQuery, handl
             <Menu>
                 <MenuButton as={Button} rightIcon={
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                         stroke="currentColor" className="w-5 h-5 text-[#727E91]">
+                         stroke="currentColor" className="w-5 h-5 text-[#727E91] lg:hidden xl:block">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                     </svg>
                 }>
-                    <p className="text-[14px] font-normal mr-10 text-[#727E91]">{selectedStatus}</p>
+                    <p className="text-[14px] font-normal mr-10 text-[#727E91] lg:text-xs xl:text-sm">{selectedStatus}</p>
                 </MenuButton>
                 <MenuList>
                     <p className="text-[14px]"><MenuItem onClick={() => onStatusChange('Semua')}>Semua</MenuItem></p>
@@ -59,7 +59,7 @@ export default function FilterComponents({handleSearchChange, searchQuery, handl
             <Menu>
                 <MenuButton as={Button} rightIcon={
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                         stroke="currentColor" className="w-5 h-5 text-[#727E91]">
+                         stroke="currentColor" className="w-5 h-5 text-[#727E91] lg:hidden xl:block">
                         <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                     </svg>
                 }>
@@ -77,8 +77,9 @@ export default function FilterComponents({handleSearchChange, searchQuery, handl
     )
 }
 
-FilterComponents.propTypes = {
+FilterTransaksiComponents.propTypes = {
     handleSearchChange: PropTypes.func.isRequired,
     searchQuery: PropTypes.string.isRequired,
-    handleDayFilterChange: PropTypes.func.isRequired,
+    handleDayFilterChange: PropTypes.func,
+    handleStatusFilterChange:PropTypes.func
 };
