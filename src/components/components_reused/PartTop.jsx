@@ -4,14 +4,18 @@ import {
     MenuList,
     MenuItem,
     IconButton,
-} from '@chakra-ui/react'
+} from '@chakra-ui/react';
 import echo from "../../echo";
 import { useAtom } from "jotai";
 import { notificationsAtom } from "../../lib/atom";
-import {useEffect} from "react";
+import { useState, useEffect } from "react";
+import { getTransactionById, finishTransaction } from '../../services/TransaksiService';
+import PopupDetailTransaksi from '../popup-components/PopupDetailTransaksi';
 
 export default function PartTop() {
     const [notifications, setNotifications] = useAtom(notificationsAtom);
+    const [transaction, setTransaction] = useState(null);
+    const [isLoading, setLoading] = useState(false);
 
     useEffect(() => {
         const channel = echo.channel("product-checklist");
@@ -27,7 +31,28 @@ export default function PartTop() {
 
         return () => channel.stopListening(".product-checked");
     }, []);
-    
+
+    const handleNotificationClick = async (transactionId) => {
+        console.log(notifications)
+        setLoading(true);
+        const transaction = await getTransactionById(transactionId);
+        setTransaction(transaction.data);
+        setLoading(false);
+    };
+
+    const handleCloseModal = () => setTransaction(null);
+
+    const calculateTotal = (products) => {
+        return products.reduce((total, product) => total + product.quantity * product.price, 0);
+    };
+
+    const handleFinishTransaction = async (transactionId) => {
+        setLoading(true)
+        await finishTransaction(transactionId);
+        setLoading(false)
+        setTransaction(null);
+        setNotifications(notifications.filter(notification => notification.transactionId !== transactionId));
+    };
 
     return (
         <div className="flex flex-row-reverse items-center w-full px-6 py-4 bg-white border-b-[3px] border-gray-200">
@@ -64,13 +89,21 @@ export default function PartTop() {
                         <MenuItem>No new notifications</MenuItem>
                     ) : (
                         notifications.map((notification, index) => (
-                        <MenuItem key={index}>
-                            Pesanan atas nama {notification.customerName} terkirim!
-                        </MenuItem>
+                            <MenuItem key={index} onClick={() => handleNotificationClick(notification.transactionId)}>
+                                Pesanan atas nama {notification.customerName} terkirim!
+                            </MenuItem>
                         ))
                     )}
                 </MenuList>
             </Menu>
+
+            <PopupDetailTransaksi
+                transaction={transaction}
+                handleCloseModal={handleCloseModal}
+                calculateTotal={calculateTotal}
+                handleFinishTransaction={handleFinishTransaction}
+                isLoading={isLoading}
+            />
         </div>
     )
 }

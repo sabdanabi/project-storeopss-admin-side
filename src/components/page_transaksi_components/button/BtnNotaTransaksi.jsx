@@ -101,7 +101,9 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
                                  className="bg-white w-72 py-2 px-1 rounded-[10px] shadow-md notaTransaksi">
                                 <div className="flex ml-4 mr-5 mt-3 justify-between items-center">
                                     <p className="font-semibold text-[17px] text-blue-gray-700 bold">Toko Adel Jaya</p>
-                                    <p className="text-[14px] text-[#2B713A] font-semibold bold">Selesai</p>
+                                    <p className={`text-[14px] font-semibold ${filteredTransaksi.is_finished ? "text-[#2B713A]" : "text-[#7A3636]"}`}>
+                                        { filteredTransaksi.is_finished ? "Selesai" : "Belum selesai" }
+                                    </p>
                                 </div>
                                 <div
                                     className="text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
