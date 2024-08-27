@@ -83,31 +83,33 @@ export default function LaporanStockPage() {
                 <main className="flex-1 px-10 pt-5 ">
                     <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200 mb-7">
                         <DescPageComponent
-                            desc={`Laporan stok ini mencakup pada ${selectedMonth} ${selectedYear}`} />
+                            desc={`Laporan stok ini mencakup pada ${selectedMonth} ${selectedYear}`}/>
                         <FilterComponentLaporanPage
                             handleSearchChange={handleSearchChange}
                             searchQuery={searchQuery}
                             onSearchClick={onSearchClick}
                             onFilterChange={handleFilterChange}
                             selectedYear={selectedYear}
-                            selectedMonth={selectedMonth} />
-                        {isLoading ? (
-                            <div className="flex items-center justify-center h-full">
-                                <Spinner
-                                    thickness='4px'
-                                    speed='0.65s'
-                                    emptyColor='gray.200'
-                                    color='blue.500'
-                                    size='xl'
-                                />
-                            </div>
-                        ) : isAuth ? (
-                            <DummyTabelLaporanStock products={filteredProducts} />
-                        ) : (
-                            <div className="flex items-center justify-center h-full w-full">
-                                <p className="text-xl">{error}</p>
-                            </div>
-                        )}
+                            selectedMonth={selectedMonth}/>
+                        <div className="bg-white flex border-b-[3px] border-gray-200 overflow-auto h-80">
+                            {isLoading ? (
+                                <div className="flex items-center justify-center h-full w-full">
+                                    <Spinner
+                                        thickness='4px'
+                                        speed='0.65s'
+                                        emptyColor='gray.200'
+                                        color='blue.500'
+                                        size='xl'
+                                    />
+                                </div>
+                            ) : isAuth ? (
+                                <DummyTabelLaporanStock products={filteredProducts}/>
+                            ) : (
+                                <div className="flex items-center justify-center h-full w-full">
+                                    <p className="text-xl">{error}</p>
+                                </div>
+                            )}
+                        </div>
                     </div>
                     <PaginationRecapProduct pagination={pagination} onPageChange={handlePageChange} />
                 </main>

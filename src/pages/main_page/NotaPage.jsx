@@ -157,7 +157,7 @@ export default function NotaPage() {
                             handleKeyDown={handleKeyDown}
                         />
 
-                        <div className="bg-white border-b-[3px] border-gray-200 overflow-auto">
+                        <div className="bg-white border-b-[3px] border-gray-200 overflow-auto h-80">
                             {isLoading ? (
                                 <div className="flex items-center justify-center h-full">
                                     <Spinner

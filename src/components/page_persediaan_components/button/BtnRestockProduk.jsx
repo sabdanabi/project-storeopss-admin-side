@@ -2,7 +2,7 @@ import Popup from "reactjs-popup";
 import {FormRestockProduct} from "../form/FormRestockProduct.jsx";
 import PropTypes from "prop-types";
 
-export default function BtnRestockProduk({id, updateProductsState}) {
+export default function BtnRestockProduk({id, refreshProductss}) {
     return(
         <>
             <Popup trigger={
@@ -25,7 +25,7 @@ export default function BtnRestockProduk({id, updateProductsState}) {
                                     </button>
                                 </div>
                                 <FormRestockProduct id={id}
-                                                    updateProductsState={updateProductsState}/>
+                                                    updateProductsState={refreshProductss}/>
                             </div>
                         </div>
                     </div>

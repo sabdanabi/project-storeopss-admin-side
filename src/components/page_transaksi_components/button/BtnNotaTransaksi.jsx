@@ -55,7 +55,6 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
             printWindow.print();
 
             printWindow.onafterprint = () => {
-                closePopup();
                 window.location.reload();
             };
         } else {
@@ -97,69 +96,71 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
                             </button>
                         </div>
 
-                        <div className="flex justify-center p-3 w-96"></div>
+                        <div className="flex justify-center p-3 w-96">
+                            <div id="notaTransaksi"
+                                 className="bg-white w-72 py-2 px-1 rounded-[10px] shadow-md notaTransaksi">
+                                <div className="flex ml-4 mr-5 mt-3 justify-between items-center">
+                                    <p className="font-semibold text-[17px] text-blue-gray-700 bold">Toko Adel Jaya</p>
+                                    <p className="text-[14px] text-[#2B713A] font-semibold bold">Selesai</p>
+                                </div>
+                                <div
+                                    className="text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
+                                    <p className="font-semibold text-blue-gray-700 bold">Resi
+                                        kostumer {filteredTransaksi.customer.name}</p>
+                                    <p className="font-semibold text-[#8C8BB4] bold">{filteredTransaksi.date}</p>
+                                </div>
+                                <hr className="my-1 mt-5 border-t-2 border-blue-gray-300 mb-1 border-dashed"/>
+                                <hr className="my-1 mt-0 border-t-2 border-blue-gray-300 mb-3 border-dashed"/>
 
-                        <div id="notaTransaksi"
-                             className="bg-white w-72 py-2 px-1 rounded-[10px] shadow-md notaTransaksi">
-                            <div className="flex ml-4 mr-5 mt-3 justify-between items-center">
-                                <p className="font-semibold text-[17px] text-blue-gray-700 bold">Toko Adel Jaya</p>
-                                <p className="text-[14px] text-[#2B713A] font-semibold bold">Selesai</p>
-                            </div>
-                            <div
-                                className="text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
-                                <p className="font-semibold text-blue-gray-700 bold">Resi kostumer {filteredTransaksi.customer.name}</p>
-                                <p className="font-semibold text-[#8C8BB4] bold">{filteredTransaksi.date}</p>
-                            </div>
-                            <hr className="my-1 mt-5 border-t-2 border-blue-gray-300 mb-1 border-dashed"/>
-                            <hr className="my-1 mt-0 border-t-2 border-blue-gray-300 mb-3 border-dashed"/>
-
-                            <div>
-                                {filteredTransaksi.products && filteredTransaksi.products.length > 0 ? filteredTransaksi.products.map((product, index) => (
-                                    <div key={index}
-                                         className="justify-between flex ml-4 text-[15px] font-medium text-blue-gray-700">
-                                        <div className="flex">
-                                            <p className="mr-2 bold">x{product.quantity}</p>
-                                            <p className="bold">{product.name}</p>
+                                <div>
+                                    {filteredTransaksi.products && filteredTransaksi.products.length > 0 ? filteredTransaksi.products.map((product, index) => (
+                                        <div key={index}
+                                             className="justify-between flex ml-4 text-[15px] font-medium text-blue-gray-700">
+                                            <div className="flex gap-2">
+                                                <p className="mr-3 bold">x</p>
+                                                <p className="mr-2 bold">{product.quantity}</p>
+                                                <p className="bold">{product.name}</p>
+                                            </div>
+                                            <p className="mr-4 bold">
+                                                {(product.price * product.quantity).toLocaleString('id-ID', {
+                                                    style: 'currency',
+                                                    currency: 'IDR'
+                                                })}
+                                            </p>
                                         </div>
-                                        <p className="mr-4 bold">
-                                            {(product.price * product.quantity).toLocaleString('id-ID', {
-                                                style: 'currency',
-                                                currency: 'IDR'
-                                            })}
-                                        </p>
-                                    </div>
-                                )) : (
-                                    <div className="text-xs py-4 px-6">
-                                        <p>Produk tidak tersedia</p>
-                                    </div>
-                                )}
-                            </div>
-                            <hr className="my-1 mt-3 border-t-2 border-blue-gray-300 mb-3 border-dashed"/>
-                            <div
-                                className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
-                                <p className="font-semibold text-blue-gray-900 bold">Total</p>
-                                <p className="text-[15px] font-semibold text-blue-gray-900 bold">
-                                    {filteredTransaksi.products ? `${calculateTotal(filteredTransaksi.products).toLocaleString('id-ID', {
-                                        style: 'currency',
-                                        currency: 'IDR'
-                                    })}` : ''}
-                                </p>
-                            </div>
-                            <hr className="my-1 mt-3 border-t-2 border-blue-gray-300 mb-3 border-dashed"/>
-                            <div
-                                className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
-                                <p className="font-semibold text-blue-gray-700 bold">Metode Pembayaran</p>
-                                <p className="text-[15px] font-semibold text-blue-gray-700 bold">
-                                    {filteredTransaksi.payment_method}
-                                </p>
-                            </div>
-                            <div id="status"
-                                className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-2 relative ml-4 mb-3 mr-4">
-                                <p className="font-semibold text-blue-gray-700 bold">Status</p>
-                                <div className={` 
+                                    )) : (
+                                        <div className="text-xs py-4 px-6">
+                                            <p>Produk tidak tersedia</p>
+                                        </div>
+                                    )}
+                                </div>
+                                <hr className="my-1 mt-3 border-t-2 border-blue-gray-300 mb-3 border-dashed"/>
+                                <div
+                                    className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
+                                    <p className="font-semibold text-blue-gray-900 bold">Total</p>
+                                    <p className="text-[15px] font-semibold text-blue-gray-900 bold">
+                                        {filteredTransaksi.products ? `${calculateTotal(filteredTransaksi.products).toLocaleString('id-ID', {
+                                            style: 'currency',
+                                            currency: 'IDR'
+                                        })}` : ''}
+                                    </p>
+                                </div>
+                                <hr className="my-1 mt-3 border-t-2 border-blue-gray-300 mb-3 border-dashed"/>
+                                <div
+                                    className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
+                                    <p className="font-semibold text-blue-gray-700 bold">Metode Pembayaran</p>
+                                    <p className="text-[15px] font-semibold text-blue-gray-700 bold">
+                                        {filteredTransaksi.payment_method}
+                                    </p>
+                                </div>
+                                <div id="status"
+                                     className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-2 relative ml-4 mb-3 mr-4">
+                                    <p className="font-semibold text-blue-gray-700 bold">Status</p>
+                                    <div className={` 
                                             ${filteredTransaksi.status}`}>
-                                    <p className={`text-sm  
+                                        <p className={`text-sm  
                                                 ${filteredTransaksi.status === 'Belum lunas' ? 'text-[#7A3636]' : 'text-[#2B713A]'} bold`}>{filteredTransaksi.status}</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

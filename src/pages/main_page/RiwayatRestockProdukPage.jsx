@@ -126,7 +126,7 @@ export default function RiwayatRestockProdukPage() {
                             handleKeyDown={handleKeyDown}
                         />
 
-                        <div className="flex justify-center">
+                        <div className="flex justify-center h-80 overflow-auto">
                             {isLoading ? (
                                 <div className="flex items-center justify-center h-full">
                                     <Spinner

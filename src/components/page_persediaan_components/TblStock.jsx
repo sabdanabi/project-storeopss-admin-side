@@ -5,7 +5,8 @@ import TblProductStock from "../../dummy/dummy_data_tabel/TblProductStock.jsx";
 import PropTypes from "prop-types";
 import { ToastContainer } from "react-toastify";
 import { SearchBarStock } from "./SearchBarStock.jsx";
-export default function TblStock({ products, handleDelete, updateProductsState, handleSearchChange, handleSearchKeyDown, searchQuery, exportToExcel, error, isAuth, isLoading, onSearchClick, stockFilter, onStockFilterChange }) {
+export default function TblStock({ products, handleDelete, updateProductsState, handleSearchChange, handleSearchKeyDown,
+                                     searchQuery, exportToExcel, error, isAuth, isLoading, onSearchClick, stockFilter, onStockFilterChange }) {
     const [selectedTab, setSelectedTab] = useState(0);
 
     const handleTabChange = (index) => {
@@ -70,6 +71,7 @@ export default function TblStock({ products, handleDelete, updateProductsState, 
                                     products={products}
                                     handleDelete={handleDelete}
                                     stockFilter={stockFilter}
+                                    refreshProducts={updateProductsState}
                                 />
                             </TabPanel>
                             <TabPanel>
@@ -77,6 +79,7 @@ export default function TblStock({ products, handleDelete, updateProductsState, 
                                     products={products}
                                     handleDelete={handleDelete}
                                     stockFilter={stockFilter}
+                                    refreshProducts={updateProductsState}
                                 />
                             </TabPanel>
                             <TabPanel>
@@ -84,6 +87,7 @@ export default function TblStock({ products, handleDelete, updateProductsState, 
                                     products={products}
                                     handleDelete={handleDelete}
                                     stockFilter={stockFilter}
+                                    refreshProducts={updateProductsState}
                                 />
                             </TabPanel>
                             <TabPanel>
@@ -91,6 +95,7 @@ export default function TblStock({ products, handleDelete, updateProductsState, 
                                     products={products}
                                     handleDelete={handleDelete}
                                     stockFilter={stockFilter}
+                                    refreshProducts={updateProductsState}
                                 />
                             </TabPanel>
                         </TabPanels>

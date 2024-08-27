@@ -16,7 +16,7 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                                            handleStatusFilterChange={handleStatusFilterChange} handleRangeChange={handleRangeChange}
                                            selectedRange={selectedRange} onFilterChange={onFilterChange} handleSearchClick={handleSearchClick} handleKeyDown={handleKeyDown}/>
 
-                <div className="bg-white border-b-[3px] border-gray-200 overflow-y-auto ">
+                <div className="bg-white border-b-[3px] border-gray-200 overflow-y-auto h-80">
                     {isLoading ? (
                         <div className="flex items-center justify-center h-full">
                             <Spinner
@@ -28,7 +28,7 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                             />
                         </div>
                     ) : isAuth ? (
-                        <table className="w-full h-12">
+                        <table className="w-full ">
                             <thead className="h-10 border-b-2">
                             <tr className="text-sm text-[#9CA4AE]">
                                 <td className="px-4">No</td>

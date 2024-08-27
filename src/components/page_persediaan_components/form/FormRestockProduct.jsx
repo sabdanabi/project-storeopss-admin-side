@@ -24,14 +24,16 @@ export function FormRestockProduct({ id, updateProductsState }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            console.log("Submitting form with data:", formData);
             await addRestockProduct(id, formData);
             toast.success('Produk berhasil direstok.', { position: 'top-center', autoClose: 10000 });
             updateProductsState();
-
         } catch (error) {
+            console.error("Error while restocking product:", error);
             toast.error('Produk tidak ditemukan.', { position: 'top-center', autoClose: 10000 });
         }
     };
+
 
     return (
         <>

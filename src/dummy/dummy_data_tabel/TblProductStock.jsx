@@ -3,12 +3,12 @@ import BtnRestockProduk from "../../components/page_persediaan_components/button
 import BtnEditPorduk from "../../components/page_persediaan_components/button/BtnEditPorduk.jsx";
 import { BtnDeleteNew } from "../../components/page_persediaan_components/button/BtnDeleteNew.jsx";
 
-export default function TblProductStock({ products, handleDelete, updateProductState, pagination }) {
+export default function TblProductStock({ products, handleDelete, pagination, refreshProducts }) {
 
     const { current_page = 1, per_page = 10 } = pagination || {};
 
     return (
-        <div className="bg-white flex border-b-[3px] border-gray-200 overflow-auto ">
+        <div className="bg-white flex border-b-[3px] border-gray-200 overflow-auto h-80">
             <table className="w-full">
                 <thead className="h-10 border-b-2">
                 <tr className="text-sm text-[#9CA4AE]">
@@ -43,8 +43,8 @@ export default function TblProductStock({ products, handleDelete, updateProductS
                         <td></td>
                         <td>
                             <div className="flex gap-4 items-center">
-                                <BtnRestockProduk id={product.id} updateProductsState={updateProductState} />
-                                <BtnEditPorduk id={product.id} updateProductsState={updateProductState} />
+                                <BtnRestockProduk id={product.id} refreshProductss={refreshProducts} />
+                                <BtnEditPorduk id={product.id} updateProductsState={refreshProducts} />
                                 <BtnDeleteNew handleDelete={handleDelete} id={product.id} />
                             </div>
                         </td>

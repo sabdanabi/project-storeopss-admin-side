@@ -1,4 +1,3 @@
-import React, { useEffect } from "react";
 import {
     Menu,
     MenuButton,
@@ -9,6 +8,7 @@ import {
 import echo from "../../echo";
 import { useAtom } from "jotai";
 import { notificationsAtom } from "../../lib/atom";
+import {useEffect} from "react";
 
 export default function PartTop() {
     const [notifications, setNotifications] = useAtom(notificationsAtom);
