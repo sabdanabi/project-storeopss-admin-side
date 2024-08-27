@@ -63,4 +63,5 @@ export function BtnDropDownAddStock({addNewProduct, updateProductsState, importP
 BtnDropDownAddStock.propTypes = {
     updateProductsState: PropTypes.func.isRequired,
     addNewProduct: PropTypes.func.isRequired,
+    importProductExcel: PropTypes.func
 }

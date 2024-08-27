@@ -49,7 +49,7 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                                     <td className="px-4"><p className="mr-3 text-blue-gray-700">{(current_page - 1) * per_page + index + 1}</p></td>
                                     <td>
                                         <div className="flex py-3">
-                                            <p className="mr-24 text-blue-gray-700">{transaction.customer.name}</p>
+                                            <p className="mr-24 text-blue-gray-700">{transaction.customer.name ?? "Customer Name"}</p>
                                         </div>
                                     </td>
                                     <td></td>
@@ -90,24 +90,30 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
 }
 
 TblTransaksi.propTypes = {
-    handleSearchChange: PropTypes.func.isRequired,
-    searchQuery: PropTypes.string.isRequired,
+    handleSearchChange: PropTypes.func,
+    searchQuery: PropTypes.string,
     filteredTransaksi: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.number,
         customer: PropTypes.shape({
             name: PropTypes.string.isRequired
         }).isRequired,
-        date: PropTypes.string.isRequired,
-        selling_price: PropTypes.number.isRequired,
-        status: PropTypes.string.isRequired,
+        date: PropTypes.string,
+        selling_price: PropTypes.number,
+        status: PropTypes.string,
     })),
-    updateProductsState: PropTypes.func.isRequired,
+    updateProductsState: PropTypes.func,
     handleStatusFilterChange: PropTypes.func,
     pagination: PropTypes.shape({
         current_page: PropTypes.number,
         per_page: PropTypes.number
     }),
-    isLoading: PropTypes.bool.isRequired,
-    isAuth: PropTypes.bool.isRequired,
+    isLoading: PropTypes.bool,
+    isAuth: PropTypes.bool,
     error: PropTypes.string,
+    handleRangeChange: PropTypes.func,
+    selectedRange: PropTypes.string,
+    onFilterChange: PropTypes.func,
+    handleSearchClick: PropTypes.func,
+    handleKeyDown: PropTypes.func
 };
+

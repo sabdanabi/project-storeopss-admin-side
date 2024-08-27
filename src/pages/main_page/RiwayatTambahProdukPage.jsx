@@ -8,9 +8,7 @@ import { CardHistoryAddProduct } from "../../components/history_add_product_comp
 import {getHistoryAddProduct, getHistoryAddProductAll} from "../../services/StockService.jsx";
 import FilterComponentNewProduk from "../../components/components_reused/FilterComponentNewProduk.jsx";
 import * as XLSX from "xlsx";
-import {
-    PaginationRiwayatTambahProduk
-} from "../../components/history_add_product_components/PaginationRiwayatTambahProduk.jsx";
+import {PaginationRiwayatTambahProduk} from "../../components/history_add_product_components/PaginationRiwayatTambahProduk.jsx";
 
 export default function RiwayatTambahProdukPage() {
     const [addProductHistory, setAddProductHistory] = useState([]);

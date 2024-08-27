@@ -66,8 +66,11 @@ export default function FilterComponentNewProduk({handleSearchChange, searchQuer
 }
 
 FilterComponentNewProduk.propTypes = {
-    handleSearchChange: PropTypes.func.isRequired,
-    searchQuery: PropTypes.string.isRequired,
-    handleDayFilterChange: PropTypes.func,
-    exportToExcel: PropTypes.func.isRequired,
+    handleSearchChange: PropTypes.func,
+    searchQuery: PropTypes.string,
+    exportToExcel: PropTypes.func,
+    handleRangeChange: PropTypes.func,
+    selectedRange: PropTypes.string,
+    handleSearchClick: PropTypes.func,
+    handleKeyDown: PropTypes.func,
 };

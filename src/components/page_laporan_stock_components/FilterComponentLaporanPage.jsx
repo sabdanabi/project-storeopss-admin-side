@@ -1,4 +1,5 @@
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import PropTypes from "prop-types";
 
 export function FilterComponentLaporanPage({
                                                searchQuery,
@@ -97,3 +98,13 @@ export function FilterComponentLaporanPage({
         </div>
     );
 }
+
+FilterComponentLaporanPage.propTypes = {
+    searchQuery: PropTypes.string,
+    onSearchClick: PropTypes.func,
+    onFilterChange: PropTypes.func,
+    handleSearchChange: PropTypes.func,
+    handleSearchKeyDown: PropTypes.func,
+    selectedMonth: PropTypes.string,
+    selectedYear: PropTypes.string,
+};

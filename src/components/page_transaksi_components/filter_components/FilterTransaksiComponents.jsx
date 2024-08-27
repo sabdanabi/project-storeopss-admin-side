@@ -93,10 +93,12 @@ export default function FilterTransaksiComponents({ handleSearchChange, searchQu
 }
 
 FilterTransaksiComponents.propTypes = {
-    handleSearchChange: PropTypes.func.isRequired,
-    searchQuery: PropTypes.string.isRequired,
-    handleRangeChange: PropTypes.func.isRequired,
-    selectedRange: PropTypes.string.isRequired,
-    onFilterChange: PropTypes.func.isRequired,
-    onSearchClick: PropTypes.func.isRequired, // New prop
+    handleSearchChange: PropTypes.func,
+    searchQuery: PropTypes.string,
+    handleRangeChange: PropTypes.func,
+    selectedRange: PropTypes.string,
+    onFilterChange: PropTypes.func,
+    handleSearchClick: PropTypes.func,
+    handleKeyDown: PropTypes.func
 };
+
