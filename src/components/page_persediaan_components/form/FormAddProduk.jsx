@@ -1,29 +1,29 @@
-import {useState} from "react";
+import { useState } from "react";
 import PropTypes from "prop-types";
-import {toast, ToastContainer} from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
-export default function FormAddProduk({ refreshProducts, addNewProduct}) {
+import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
+import {toast} from "react-toastify";
+
+
+export default function FormAddProduk({ refreshProducts, addNewProduct }) {
     const [formData, setFormData] = useState({
         name: "",
         category: "",
         quantity: "",
         purchasePrice: "",
         sellingPrice: "",
-        // unit: "",
         image: null,
     });
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            toast.success("Data berhasil ditambahkan!", { position: "top-center", autoClose: 10000 });
             const formDataWithImage = new FormData();
             formDataWithImage.append("name", formData.name);
             formDataWithImage.append("category", formData.category);
             formDataWithImage.append("quantity", formData.quantity);
             formDataWithImage.append("purchase_price", formData.purchasePrice);
             formDataWithImage.append("selling_price", formData.sellingPrice);
-            // formDataWithImage.append("unit", formData.unit);
 
             if (formData.image) {
                 formDataWithImage.append("image", formData.image);
@@ -37,10 +37,10 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
                 quantity: "",
                 purchasePrice: "",
                 sellingPrice: "",
-                // unit: "",
                 image: null,
             });
             refreshProducts();
+            toast.success("Data berhasil ditambahkan!");
         } catch (e) {
             console.error(e);
         }
@@ -54,145 +54,124 @@ export default function FormAddProduk({ refreshProducts, addNewProduct}) {
         }));
     };
 
-    // const handleImageChange = (e) => {
-    //     const imageFile = e.target.files[0];
-    //     setFormData((prevData) => ({
-    //         ...prevData,
-    //         image: imageFile,
-    //     }));
-    // };
+    const handleCategoryChange = (category) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            category,
+        }));
+    };
 
-    // const toggleDropdown = () => {
-    //     setIsOpen(!isOpen);
-    // };
-    //
-    // const handleItemClick = (item) => {
-    //     setSelectedItem(item);
-    //     setFormData((prevData) => ({
-    //         ...prevData,
-    //         category: item,
-    //     }));
-    //     setIsOpen(false);
-    //     setIsOpen(false);
-    // };
-    //
-    // const items = ['Pintu', 'Material', 'Prabotan'];
     return (
-        <form onSubmit={handleSubmit}>
-            <ToastContainer position="top-center"/>
-            <div className="flex gap-10">
+        <div>
+            <form onSubmit={handleSubmit}>
+                <div className="flex gap-10">
                     <div>
-                    <div className="mb-4">
-                        <label className="text-sm">Nama Produk</label>
-                        <br/>
-                        <input
-                            placeholder="Masukan nama produk..."
-                            type="text"
-                            name="name"
-                            value={formData.name}
-                            onChange={handleChange}
-                            className="border-2 w-96 h-8 rounded-lg mt-3 text-xs p-3"
-                        />
+                        <div className="mb-4">
+                            <label className="text-sm">Nama Produk</label>
+                            <br/>
+                            <input
+                                placeholder="Masukan nama produk..."
+                                type="text"
+                                name="name"
+                                value={formData.name}
+                                onChange={handleChange}
+                                className="border-2 w-96 h-8 rounded-lg mt-3 text-xs p-3"
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="text-sm">Harga Beli</label>
+                            <br/>
+                            <input
+                                placeholder="Masukkan harga beli produk...."
+                                type="number"
+                                name="purchasePrice"
+                                value={formData.purchasePrice}
+                                onChange={handleChange}
+                                className="border-2 w-96 h-8 rounded-lg mt-3 text-xs p-3"
+                            />
+                        </div>
+
+                        <div className="mb-4">
+                            <label className="text-sm">Harga Jual</label>
+                            <br/>
+                            <input
+                                placeholder="Masukkan harga jual produk...."
+                                type="number"
+                                name="sellingPrice"
+                                value={formData.sellingPrice}
+                                onChange={handleChange}
+                                className="border-2 w-96 h-8 rounded-lg mt-3 text-xs p-3"
+                            />
+                        </div>
                     </div>
 
-                    <div className="mb-4">
-                        <label className="text-sm">Harga Beli</label>
-                        <br/>
-                        <input
-                            placeholder="Masukkan harga beli produk...."
-                            type="number"
-                            name="purchasePrice"
-                            value={formData.purchasePrice}
-                            onChange={handleChange}
-                            className="border-2 w-96 h-8 rounded-lg mt-3 text-xs p-3"
-                        />
-                    </div>
-
-                    <div className="mb-4">
-                        <label className="text-sm">Harga Jual</label>
-                        <br/>
-                        <input
-                            placeholder="Masukkan harga jual produk...."
-                            type="number"
-                            name="sellingPrice"
-                            value={formData.sellingPrice}
-                            onChange={handleChange}
-                            className="border-2 w-96 h-8 rounded-lg mt-3 text-xs p-3"
-                        />
-                    </div>
-                    </div>
-                    
                     <div>
-                    <div className="mb-4">
-                        <label className="text-sm">Stock</label>
-                        <br/>
-                        <input
-                            placeholder="Masukkan stock produk...."
-                            type="number"
-                            name="quantity"
-                            value={formData.quantity}
-                            onChange={handleChange}
-                            className="border-2 w-96 h-8 rounded-lg mt-3 text-xs p-3"
-                        />
-                    </div>
+                        <div className="mb-4">
+                            <label className="text-sm">Stock</label>
+                            <br/>
+                            <input
+                                placeholder="Masukkan stock produk...."
+                                type="number"
+                                name="quantity"
+                                value={formData.quantity}
+                                onChange={handleChange}
+                                className="border-2 w-96 h-8 rounded-lg mt-3 text-xs p-3"
+                            />
+                        </div>
 
-                    {/*<div className="mb-4">*/}
-                    {/*    <label className="text-sm">Unit /pcs/kg</label>*/}
-                    {/*    <br/>*/}
-                    {/*    <input*/}
-                    {/*        placeholder="Masukkan unit produk...."*/}
-                    {/*        type="text"*/}
-                    {/*        name="unit"*/}
-                    {/*        value={formData.unit}*/}
-                    {/*        onChange={handleChange}*/}
-                    {/*        className="border-2 w-96 h-8 rounded-lg mt-3 text-xs p-3"*/}
-                    {/*    />*/}
-                    {/*</div>*/}
-
-                    <div className="mb-4">
-                        <label className="text-sm">Kategori Produk</label>
-                        <br/>
-                        <input
-                            type="text"
-                            name="category"
-                            value={formData.category}
-                            onChange={handleChange}
-                            placeholder="Category"
-                            className="w-full h-8 px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
+                        <div className="mb-4">
+                            <label className="text-sm">Kategori Produk</label>
+                            <br/>
+                            <Menu>
+                                <MenuButton
+                                    as={Button}
+                                    className="h-12 border bg-white hover:bg-[#1a4f8bcd] w-96"
+                                    rightIcon={
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                             strokeWidth={1.5}
+                                             stroke="currentColor" className="w-5 h-5 text-black">
+                                            <path strokeLinecap="round" strokeLinejoin="round"
+                                                  d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
+                                        </svg>
+                                    }
+                                >
+                                    <div className="flex items-center px-0 py-2 group rounded-lg">
+                                        <span
+                                            className="text-black font-normal text-[14px]">{formData.category || 'Kategori Produk'}</span>
+                                    </div>
+                                </MenuButton>
+                                <MenuList className="max-h-60 overflow-y-auto">
+                                    <MenuItem onClick={() => handleCategoryChange('Pengecatan')}>Pengecatan</MenuItem>
+                                    <MenuItem onClick={() => handleCategoryChange('Kramik')}>Kramik</MenuItem>
+                                    <MenuItem onClick={() => handleCategoryChange('Paralon')}>Paralon</MenuItem>
+                                    <MenuItem onClick={() => handleCategoryChange('Sambungan Paralon')}>Sambungan
+                                        Paralon</MenuItem>
+                                    <MenuItem onClick={() => handleCategoryChange('Paku dan Sekrup')}>Paku dan
+                                        Sekrup</MenuItem>
+                                    <MenuItem onClick={() => handleCategoryChange('Pralatan Tukang')}>Pralatan
+                                        Tukang</MenuItem>
+                                    <MenuItem onClick={() => handleCategoryChange('Kelistrikan')}>Kelistrikan</MenuItem>
+                                    <MenuItem onClick={() => handleCategoryChange('Amplas')}>Amplas</MenuItem>
+                                    <MenuItem onClick={() => handleCategoryChange('Perlengkapan Rumah')}>Perlengkapan
+                                        Rumah</MenuItem>
+                                    <MenuItem onClick={() => handleCategoryChange('Material')}>Material</MenuItem>
+                                </MenuList>
+                            </Menu>
+                        </div>
                     </div>
                 </div>
 
-                {/* <div>
-                    <label className="text-sm">Foto Produk</label>
-                    <br/>
-                    <div className="relative w-96 h-96 rounded-lg mt-3 overflow-hidden border-2">
-                        <img
-                            src="/assets_img/image.png" // Ganti dengan URL gambar yang Anda miliki
-                            alt="Preview"
-                            className="w-full h-full object-cover"
-                        />
-                        <input
-                            type="file"
-                            id="image"
-                            name="image"
-                            accept="image/*"
-                            onChange={handleImageChange}
-                            className="absolute inset-0 opacity-0 cursor-pointer"
-                        />
-                    </div>
-                </div> */}
-            </div>
-
-            <div className="flex justify-center mt-10">
-                <button type="submit"
-                        className="flex items-center justify-center px-4 py-2 bg-[#1A4F8B] group w-36
+                <div className="flex justify-center mt-10">
+                    <button type="submit"
+                            className="flex items-center justify-center px-4 py-2 bg-[#1A4F8B] group w-36
                                rounded-lg shadow-sm hover:bg-gray-50 hover:border-[#1A4F8B] hover:border-2">
-                    <span className="text-white font-light group-hover:text-[#1A4F8B]">Simpan</span>
-                </button>
-            </div>
-        </form>
-    )
+                        <span className="text-white font-light group-hover:text-[#1A4F8B]">Simpan</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    );
 }
 
 FormAddProduk.propTypes = {

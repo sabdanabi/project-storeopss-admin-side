@@ -157,8 +157,7 @@ export default function SideNavbarComponent() {
                                 </svg>
 
                                 <span
-                                    className={`name-page-sideBar-style ${isDetailTransaksiPage ? 'text-light-blue-800 ' : ''}`}>Detail
-                                    Transaksi</span>
+                                    className={`name-page-sideBar-style ${isDetailTransaksiPage ? 'text-light-blue-800 ' : ''}`}>Pelacakan Produk</span>
                             </div>
                         </a>
 

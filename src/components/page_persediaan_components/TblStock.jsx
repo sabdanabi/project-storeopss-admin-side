@@ -105,7 +105,6 @@ export default function TblStock({ products, handleDelete, updateProductsState, 
                         </div>
                     )}
                 </Tabs>
-                <ToastContainer position="top-center" />
             </div>
         </main>
     );

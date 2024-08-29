@@ -39,7 +39,6 @@ export function FormImportProductExcel({ importProductExcel, updateProductsState
 
     return (
         <form onSubmit={handleSubmit}>
-            <ToastContainer position="top-center" />
             <div className="flex">
                 <div>
                     <br />

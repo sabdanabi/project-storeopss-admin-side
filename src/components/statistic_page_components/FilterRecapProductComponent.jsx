@@ -61,7 +61,7 @@ export function FilterRecapProductComponent({ onFilterChange, leastSoldProduct, 
                         }>
                             <p className="text-[14px] font-normal mr-10 text-[#727E91]">Pilih Bulan</p>
                         </MenuButton>
-                        <MenuList>
+                        <MenuList className="max-h-60 overflow-y-auto">
                             <MenuItem onClick={() => handleMonthChange('01')}>Januari</MenuItem>
                             <MenuItem onClick={() => handleMonthChange('02')}>Februari</MenuItem>
                             <MenuItem onClick={() => handleMonthChange('03')}>Maret</MenuItem>
@@ -99,19 +99,30 @@ export function FilterRecapProductComponent({ onFilterChange, leastSoldProduct, 
 
                 <div className='mr-4 ml-4'>
                     <Menu>
-                        <MenuButton as={Button} rightIcon={
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                                 stroke="currentColor" className="w-5 h-5 text-[#727E91]">
-                                <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
-                            </svg>
-                        }>
-                            <p className="text-[14px] font-normal mr-10 text-[#727E91]">Pilih Kategori</p>
+                        <MenuButton
+                            as={Button}
+                            className="h-12 hover:bg-[#1a4f8bcd]"
+                            rightIcon={
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     strokeWidth={1.5}
+                                     stroke="currentColor" className="w-5 h-5 text-[#727E91]">
+                                    <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
+                                </svg>
+                            }
+                        >
+                            <p className="text-[14px] font-normal mr-10 text-[#727E91]">Kategori Produk</p>
                         </MenuButton>
-                        <MenuList>
-                            <MenuItem>Material Konstruksi</MenuItem>
-                            <MenuItem>Perabotan</MenuItem>
-                            <MenuItem>Cat</MenuItem>
-                            <MenuItem>Material Rumah</MenuItem>
+                        <MenuList className="max-h-60 overflow-y-auto"> {/* Adjust height and add scroll */}
+                            <MenuItem>Pengecatan</MenuItem>
+                            <MenuItem>Kramik</MenuItem>
+                            <MenuItem>Paralon</MenuItem>
+                            <MenuItem>Sambungan Paralon</MenuItem>
+                            <MenuItem>Paku dan Sekrup</MenuItem>
+                            <MenuItem>Pralatan Tukang</MenuItem>
+                            <MenuItem>Kelistrikan</MenuItem>
+                            <MenuItem>Amplas</MenuItem>
+                            <MenuItem>Perlengkapan Rumah</MenuItem>
+                            <MenuItem>Material</MenuItem>
                         </MenuList>
                     </Menu>
                 </div>

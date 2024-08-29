@@ -38,7 +38,6 @@ export function FormRestockProduct({ id, updateProductsState }) {
     return (
         <>
             <form onSubmit={handleSubmit}>
-                <ToastContainer position="top-center"/>
                 <div className="flex justify-between">
                     <div className="w-64">
                         <div className="mb-4">

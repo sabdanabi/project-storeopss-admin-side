@@ -1,18 +1,18 @@
 import Popup from "reactjs-popup";
 import { Radio } from "@material-tailwind/react";
 import { useState } from "react";
-import { BtnDeleteProductTransaksi } from "./BtnDeleteProductTransaksi.jsx";
-import { toast, ToastContainer } from "react-toastify";
+import { toast} from "react-toastify";
 import PropTypes from "prop-types";
 import { FaTrash } from "react-icons/fa"
-import {BtnPilihProduk} from "./BtnPilihProduk.jsx";
 import {ProductSelectionTable} from "../ProductSelectionTable.jsx";
+import {Spinner} from "@chakra-ui/react";
 
 export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
     const [selectedValueRD1, setSelectedValueRD1] = useState('');
     const [selectedValueRD2, setSelectedValueRD2] = useState('');
     const [selectedValueRD3, setSelectedValueRD3] = useState('');
     const [selectedProducts, setSelectedProducts] = useState([]);
+    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({
         note: '',
         customer_phone: '',
@@ -54,6 +54,7 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
         const productList = selectedProducts.map(product => ({
             id: product.id,
             quantity: product.count,
@@ -77,7 +78,10 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
         } catch (error) {
             console.error("Terjadi kesalahan saat menambahkan transaksi:", error);
             toast.error("Terjadi kesalahan saat menambahkan transaksi.");
+        } finally {
+            setLoading(false);
         }
+
     };
 
 
@@ -105,7 +109,6 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                 <h1 className="text-2xl font-semibold text-blue-gray-800">Transaksi</h1>
                 <h6 className="text-[15px] font-regular text-gray-500 ml-4 mt-2">Catat penjualan anda dengan mudah</h6>
             </div>
-            <ToastContainer position="top-center"/>
             <Popup
                 trigger={
                     <button
@@ -159,7 +162,7 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                                         <div className="flex items-center space-x-1">
                                                             <span className="w-40">{product.name}</span>
                                                             <span className="text-center">{product.count}x</span>
-                                                            <span className="text-center">{product.selling_price}</span>
+                                                            <span className="text-center">Rp{product.selling_price}</span>
                                                         </div>
                                                         <button
                                                             type="button"
@@ -323,9 +326,21 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                     </div>
                                     <button
                                         className="flex items-center px-7 py-2 bg-[#1A4F8B] group ml-[500px] rounded-lg shadow-sm hover:bg-gray-50 hover:border-[#1A4F8B] hover:border-2"
-                                        type="submit">
-                                        <span
-                                            className="text-white font-medium text-sm group-hover:text-[#1A4F8B]">Tambah Transaksi</span>
+                                        type="submit"
+                                        disabled={loading}
+                                    >
+                                        {loading ? (
+                                            <Spinner
+                                                thickness='4px'
+                                                speed='0.65s'
+                                                emptyColor='gray.200'
+                                                color='blue.500'
+                                                size='sm'
+                                            />
+                                        ) : (
+                                            <span
+                                                className="text-white font-medium text-sm group-hover:text-[#1A4F8B]">Tambah Transaksi</span>
+                                        )}
                                     </button>
                                 </form>
                             </div>
