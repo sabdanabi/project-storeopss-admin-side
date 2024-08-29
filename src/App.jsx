@@ -8,6 +8,7 @@ import ProfilePage from "./pages/profile_page/ProfilePage.jsx";
 import TransaksiPage from "./pages/main_page/TransaksiPage.jsx";
 import NotaPage from "./pages/main_page/NotaPage.jsx";
 import LoginPage from "./pages/auth_pages/LoginPage.jsx";
+import {DetailTransaksiPage} from "./pages/main_page/DetailTransaksiPage.jsx";
 
 export default function App() {
     return (
@@ -22,6 +23,7 @@ export default function App() {
                 <Route path="/transaksi-page" element={<TransaksiPage/>}/>
                 <Route path="/nota-page" element={<NotaPage/>}/>
                 <Route path="/login-page" element={<LoginPage/>}/>
+                <Route path="/detail-transaksi-page" element={<DetailTransaksiPage/>}/>
             </Routes>
         </Router>
     )
