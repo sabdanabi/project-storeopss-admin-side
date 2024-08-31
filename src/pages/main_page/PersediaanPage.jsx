@@ -18,15 +18,16 @@ export default function PersediaanPage() {
     const [pagination, setPagination] = useState({});
     const [stockFilter, setStockFilter] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
+    const [category, setCategory] = useState('');
 
     useEffect(() => {
         if (searchQuery === '') {
-            fetchProducts(1, '', stockFilter);
+            fetchProducts(1, '', stockFilter, category);
         }
-    }, [searchQuery, stockFilter]);
+    }, [searchQuery, stockFilter, category]);
 
     const updateProductState = () => {
-        fetchProducts(pagination.current_page, searchQuery, stockFilter);
+        fetchProducts(pagination.current_page, searchQuery, stockFilter, category);
     };
 
     const handleSearchChange = (e) => {
@@ -34,19 +35,23 @@ export default function PersediaanPage() {
         setSearchQuery(query);
 
         if (query === '') {
-            fetchProducts(1, '', stockFilter);
+            fetchProducts(1, '', stockFilter, category);
         }
     };
 
     const handleSearchKeyDown = (e) => {
         if (e.key === 'Enter') {
-            fetchProducts(1, searchQuery, stockFilter);
+            fetchProducts(1, searchQuery, stockFilter, category);
         }
     };
 
     const handleStockFilterChange = (filter) => {
         setStockFilter(filter);
-        fetchProducts(1, searchQuery, filter);
+        fetchProducts(1, searchQuery, filter, category);
+    };
+
+    const handleCategoryChange = (selectedCategory) => {
+        setCategory(selectedCategory);
     };
 
     const onSearchClick = () => {
@@ -68,10 +73,10 @@ export default function PersediaanPage() {
         toast.success("Data berhasil dihapus!");
     };
 
-    const fetchProducts = async (page = 1, searchQuery = '', stockFilter = '') => {
+    const fetchProducts = async (page = 1, searchQuery = '', stockFilter = '',  category = '') => {
         try {
             setLoading(true);
-            const result = await getAllProduct(page, searchQuery, stockFilter);
+            const result = await getAllProduct(page, searchQuery, stockFilter, category);
             setProducts(result.data);
             setAuth(true);
             setPagination(result.meta);
@@ -142,6 +147,8 @@ export default function PersediaanPage() {
                         error={error}
                         stockFilter={stockFilter}
                         onStockFilterChange={handleStockFilterChange}
+                        category={category}
+                        onCategoryChange={handleCategoryChange}
                     />
                     <PaginationPersediaanProduk meta={pagination} onPageChange={handlePageChange} />
                 </div>

@@ -61,7 +61,7 @@ const addIncome = async (data) => {
 
 const  getAllProductTransaktion = async () =>  {
     try {
-        const response = await axios.get(`${baseUrl}/api/products?paginate=false`, {
+            const response = await axios.get(`${baseUrl}/api/products?paginate=false`, {
             headers: {
                 AUTHORIZATION: token,
                 "ngrok-skip-browser-warning": true

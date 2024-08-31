@@ -6,7 +6,7 @@ import PropTypes from "prop-types";
 import { ToastContainer } from "react-toastify";
 import { SearchBarStock } from "./SearchBarStock.jsx";
 export default function TblStock({ products, handleDelete, updateProductsState, handleSearchChange, handleSearchKeyDown,
-                                     searchQuery, exportToExcel, error, isAuth, isLoading, onSearchClick, stockFilter, onStockFilterChange }) {
+                                     searchQuery, exportToExcel, error, isAuth, isLoading, onSearchClick, stockFilter, onStockFilterChange, category, onCategoryChange }) {
     const [selectedTab, setSelectedTab] = useState(0);
 
     const handleTabChange = (index) => {
@@ -43,6 +43,8 @@ export default function TblStock({ products, handleDelete, updateProductsState, 
                     handleSearchKeyDown={handleSearchKeyDown}
                     onSearchClick={onSearchClick}
                     exportToExcel={exportToExcel}
+                    categoryProduct={category}
+                    onCategoryChange={onCategoryChange}
                 />
 
 

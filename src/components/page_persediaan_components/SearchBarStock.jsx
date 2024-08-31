@@ -1,7 +1,8 @@
 import PropTypes from "prop-types";
-import {Button} from "@chakra-ui/react";
+import {Button, Menu, MenuButton, MenuItem, MenuList} from "@chakra-ui/react";
 
-export function SearchBarStock({ handleSearchChange, handleSearchKeyDown, searchQuery, onSearchClick, exportToExcel }) {
+export function SearchBarStock({ handleSearchChange, handleSearchKeyDown, searchQuery, onSearchClick,
+                                   exportToExcel, onCategoryChange, categoryProduct }) {
     return (
         <div className="bg-white h-[65px] flex py-3 px-6 relative border-b-[3px] border-gray-200">
             <input
@@ -34,7 +35,7 @@ export function SearchBarStock({ handleSearchChange, handleSearchKeyDown, search
             }} className="ml-2 h-36"><p className="text-[#1a4f8b]">Cari</p></Button>
 
             <button onClick={exportToExcel}
-                    className=" bg-white w-32 h-9 rounded-md flex justify-center items-center ml-4
+                    className=" bg-white w-44 h-9 rounded-md flex justify-center items-center ml-4
                          border-2 border-[#1a4f8b]">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                      stroke="currentColor" className="size-5 text-[#1a4f8b] mr-2">
@@ -43,6 +44,36 @@ export function SearchBarStock({ handleSearchChange, handleSearchKeyDown, search
                 </svg>
                 <p className="text-xs font-medium text-[#1a4f8b]  mt-[2px]">Unduh Tabel</p>
             </button>
+            <div className='mr-4 ml-4'>
+                <Menu>
+                    <MenuButton
+                        as={Button}
+                        className="h-12 hover:bg-[#1a4f8bcd] w-44"
+                        rightIcon={
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                 strokeWidth={1.5}
+                                 stroke="currentColor" className="w-5 h-5 text-[#727E91]">
+                                <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
+                            </svg>
+                        }
+                    >
+                        <p className="text-[14px] font-normal mr-10 text-[#727E91]">Kategori Produk</p>
+                    </MenuButton>
+                    <MenuList className="max-h-60 overflow-y-auto">
+                        <MenuItem onClick={() => onCategoryChange('')}>Semua</MenuItem>
+                        <MenuItem onClick={() => onCategoryChange('Pengecatan')}>Pengecatan</MenuItem>
+                        <MenuItem onClick={() => onCategoryChange('Kramik')}>Kramik</MenuItem>
+                        <MenuItem onClick={() => onCategoryChange('Paralon')}>Paralon</MenuItem>
+                        <MenuItem onClick={() => onCategoryChange('Sambungan Paralon')}>Sambungan Paralon</MenuItem>
+                        <MenuItem onClick={() => onCategoryChange('Paku dan Sekrup')}>Paku dan Sekrup</MenuItem>
+                        <MenuItem onClick={() => onCategoryChange('Peralatan Tukang')}>Peralatan Tukang</MenuItem>
+                        <MenuItem onClick={() => onCategoryChange('Kelistrikan')}>Kelistrikan</MenuItem>
+                        <MenuItem onClick={() => onCategoryChange('Amplas')}>Amplas</MenuItem>
+                        <MenuItem onClick={() => onCategoryChange('Perlengkapan Rumah')}>Perlengkapan Rumah</MenuItem>
+                        <MenuItem onClick={() => onCategoryChange('Material')}>Material</MenuItem>
+                    </MenuList>
+                </Menu>
+            </div>
         </div>
     );
 }

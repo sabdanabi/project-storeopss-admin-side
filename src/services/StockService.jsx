@@ -27,7 +27,7 @@ const addNewProduct = async (formData) => {
 };
 
 
-const getAllProduct = async (page = 1, searchQuery = '', stockFilter = '') => {
+const getAllProduct = async (page = 1, searchQuery = '', stockFilter = '', stockCategory = '') => {
     try {
         const response = await axios.get(`${baseUrl}/api/products`, {
             headers: {
@@ -38,6 +38,7 @@ const getAllProduct = async (page = 1, searchQuery = '', stockFilter = '') => {
                 ...(page && { page }),
                 ...(searchQuery && { search: searchQuery }),
                 ...(stockFilter && { stock: stockFilter }),
+                ...(stockCategory && { category: stockCategory }),
             }
         });
 
