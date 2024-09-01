@@ -7,7 +7,7 @@ import { getRecapProduct } from "../../services/RecapProductService.jsx";
 import { FilterComponentLaporanPage } from "../../components/page_laporan_stock_components/FilterComponentLaporanPage.jsx";
 import { Spinner } from "@chakra-ui/react";
 import { PaginationRecapProduct } from "../../components/page_laporan_stock_components/PaginationRecapProduct.jsx";
-import DummyTabelLaporanStock from "../../dummy/dummy_data_tabel/DummyTabelLaporanStock.jsx";
+import TblLaporanStock from "../../components/page_laporan_stock_components/TblLaporanStock.jsx";
 
 export default function LaporanStockPage() {
     const [products, setProducts] = useState([]);
@@ -18,7 +18,7 @@ export default function LaporanStockPage() {
     const [selectedYear, setSelectedYear] = useState('');
     const [selectedMonth, setSelectedMonth] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
-    const [isSearch, setIsSearch] = useState(false); // State untuk status pencarian
+    const [isSearch, setIsSearch] = useState(false);
 
     const handlePageChange = (page) => {
         fetchRecapProducts(page);
@@ -29,7 +29,7 @@ export default function LaporanStockPage() {
     };
 
     const onSearchClick = () => {
-        setIsSearch(true); // Menandai pencarian telah dilakukan
+        setIsSearch(true);
     };
 
     const handleFilterChange = (year, month) => {
@@ -41,7 +41,7 @@ export default function LaporanStockPage() {
     useEffect(() => {
         if (isSearch) {
             fetchRecapProducts(1, selectedYear, selectedMonth, searchQuery);
-            setIsSearch(false); // Reset status pencarian setelah pencarian dilakukan
+            setIsSearch(false);
         } else if (searchQuery === '') {
             fetchRecapProducts(1, selectedYear, selectedMonth);
         }
@@ -69,7 +69,6 @@ export default function LaporanStockPage() {
         }
     };
 
-    // Filter produk berdasarkan searchQuery
     const filteredProducts = products.filter((product) =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase())
     );
@@ -103,7 +102,7 @@ export default function LaporanStockPage() {
                                     />
                                 </div>
                             ) : isAuth ? (
-                                <DummyTabelLaporanStock products={filteredProducts} selectedMonth={selectedMonth} selectedYear={selectedYear}/>
+                                <TblLaporanStock products={filteredProducts} selectedMonth={selectedMonth} selectedYear={selectedYear}/>
                             ) : (
                                 <div className="flex items-center justify-center h-full w-full">
                                     <p className="text-xl">{error}</p>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Spinner, Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/react";
 import DescPageComponent from "../components_reused/DescPageComponent.jsx";
-import TblProductStock from "../../dummy/dummy_data_tabel/TblProductStock.jsx";
+import TblProductStock from "./TblProductStock.jsx";
 import PropTypes from "prop-types";
 import { ToastContainer } from "react-toastify";
 import { SearchBarStock } from "./SearchBarStock.jsx";

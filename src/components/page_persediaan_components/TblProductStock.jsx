@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
-import BtnRestockProduk from "../../components/page_persediaan_components/button/BtnRestockProduk.jsx";
-import BtnEditPorduk from "../../components/page_persediaan_components/button/BtnEditPorduk.jsx";
-import { BtnDeleteNew } from "../../components/page_persediaan_components/button/BtnDeleteNew.jsx";
+import BtnRestockProduk from "./button/BtnRestockProduk.jsx";
+import BtnEditPorduk from "./button/BtnEditPorduk.jsx";
+import { BtnDeleteNew } from "./button/BtnDeleteNew.jsx";
 
 export default function TblProductStock({ products, handleDelete, pagination, refreshProducts }) {
 

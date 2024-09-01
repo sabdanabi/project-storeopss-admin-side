@@ -58,7 +58,7 @@ export function FilterComponentLaporanPage({
                     }>
                         <p className="text-[14px] font-normal mr-10 text-[#727E91]">Pilih Bulan</p>
                     </MenuButton>
-                    <MenuList>
+                    <MenuList className="max-h-60 overflow-y-auto">
                         {/* Daftar Bulan */}
                         <MenuItem onClick={() => handleMonthChange('01')}>Januari</MenuItem>
                         <MenuItem onClick={() => handleMonthChange('02')}>Februari</MenuItem>
@@ -86,7 +86,7 @@ export function FilterComponentLaporanPage({
                     }>
                         <p className="text-[14px] font-normal mr-10 text-[#727E91]">Pilih Tahun</p>
                     </MenuButton>
-                    <MenuList>
+                    <MenuList className="max-h-60 overflow-y-auto">
                         {/* Daftar Tahun */}
                         <MenuItem onClick={() => handleYearChange('2024')}>2024</MenuItem>
                         <MenuItem onClick={() => handleYearChange('2025')}>2025</MenuItem>

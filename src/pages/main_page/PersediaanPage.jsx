@@ -78,6 +78,7 @@ export default function PersediaanPage() {
             setLoading(true);
             const result = await getAllProduct(page, searchQuery, stockFilter, category);
             setProducts(result.data);
+            console.log(result)
             setAuth(true);
             setPagination(result.meta);
         } catch (e) {
