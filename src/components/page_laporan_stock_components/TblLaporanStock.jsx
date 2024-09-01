@@ -85,9 +85,20 @@ export default function TblLaporanStock({ products, selectedMonth, selectedYear 
                     </p>
                 </div>
             )}
+
             <Popup open={!!selectedProduct} onClose={() => setSelectedProduct(null)} modal nested>
-                <div className="modal bg-white p-5 rounded-lg shadow-lg">
-                    <button className="close" onClick={() => setSelectedProduct(null)}>&times;</button>
+                <div className="modal bg-white p-5 px-8 rounded-lg shadow-lg w-[950px] h-[450px]">
+                    <div className="flex justify-between">
+                        <p className="font-semibold text-lg mb-4">Detail Laporan Stock</p>
+                        <button onClick={() => setSelectedProduct(null)} className="h-7 close">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                 strokeWidth={1.5} stroke="currentColor"
+                                 className="w-8 h-8 text-red-600">
+                                <path strokeLinecap="round" strokeLinejoin="round"
+                                      d="m9.75 9.75 4.5 4.5m0-4.5-4.5 4.5M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"/>
+                            </svg>
+                        </button>
+                    </div>
                     {isLoading ? (
                         <div className="flex items-center justify-center h-full w-full">
                             <Spinner
@@ -102,33 +113,61 @@ export default function TblLaporanStock({ products, selectedMonth, selectedYear 
                         <p className="text-red-500">{error}</p>
                     ) : selectedProduct ? (
                         <div>
-                            <h2 className="text-xl font-semibold mb-4">{selectedProduct.name}</h2>
-                            <p>Jumlah: {selectedProduct.quantity || 'N/A'} {selectedProduct.unit || 'unit'}</p>
-                            <p>Kategori: {selectedProduct.category || 'N/A'}</p>
-                            <h3 className="mt-4 font-semibold">Transaksi:</h3>
-                            <ul>
-                                {selectedProduct.transactions && selectedProduct.transactions.length > 0 ? (
-                                    selectedProduct.transactions.map(trans => (
-                                        <li key={trans.transactions_id}>
-                                            {trans.date}: {trans.quantity} pcs (Invoice: {trans.invoice})
-                                        </li>
-                                    ))
-                                ) : (
-                                    <li>Tidak ada transaksi</li>
-                                )}
-                            </ul>
-                            <h3 className="mt-4 font-semibold">Restok:</h3>
-                            <ul>
-                                {selectedProduct.restock && selectedProduct.restock.length > 0 ? (
-                                    selectedProduct.restock.map((restock, index) => (
-                                        <li key={index}>
-                                            {restock.date}: {restock.quantity} pcs
-                                        </li>
-                                    ))
-                                ) : (
-                                    <li>Tidak ada restok</li>
-                                )}
-                            </ul>
+                            <h2 className="text-base font-semibold mb-2">{selectedProduct.name}</h2>
+                            <p>Stock Akhir: {selectedProduct.quantity || 'N/A'}</p>
+                            <p>Kategori Produk: {selectedProduct.category || 'N/A'}</p>
+                            <div className="flex">
+                                <div>
+                                    <h3 className="mt-4 font-semibold">Transaksi:</h3>
+                                    <div className="h-56 overflow-auto w-96">
+                                        <table className="w-full">
+                                            <thead className="h-10 border-b-2">
+                                            <tr className="text-sm text-[#9CA4AE]">
+                                                <td>Tanggal Transaksi</td>
+                                                <td>Jumlah Produk Transaksi</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {selectedProduct.transactions && selectedProduct.transactions.length > 0 ? (
+                                                selectedProduct.transactions.map(trans => (
+                                                    <tr key={trans.id} className="border-b-2 text-sm">
+                                                        <td className="py-2">{trans.date}</td>
+                                                        <td className="pl-16">{trans.quantity}</td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <li>Tidak ada transaksi</li>
+                                            )}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div className=" ml-8">
+                                    <h3 className="mt-4 font-semibold">Restok:</h3>
+                                    <div className="h-56 overflow-auto w-96">
+                                        <table className="w-full">
+                                            <thead className="h-10 border-b-2">
+                                            <tr className="text-sm text-[#9CA4AE]">
+                                                <td>Tanggal Restock</td>
+                                                <td>Jumlah Produk Restock</td>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            {selectedProduct.restock && selectedProduct.restock.length > 0 ? (
+                                                selectedProduct.restock.map((restock) => (
+                                                    <tr key={restock.id} className="border-b-2 text-sm">
+                                                        <td className="py-2">{restock.date}</td>
+                                                        <td className="pl-16">{restock.quantity}</td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <li>Tidak ada restok</li>
+                                            )}
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     ) : (
                         <p>Data produk tidak ditemukan.</p>
