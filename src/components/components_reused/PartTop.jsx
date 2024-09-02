@@ -23,10 +23,10 @@ export default function PartTop() {
 
         channel.listen(".product-checked", (e) => {
             setNotifications((notification) => [
-                ...notification, {
+                {
                     transactionId: e.transactionId,
                     customerName: e.customerName
-                }
+                }, ...notification
             ]);
         });
 
@@ -50,20 +50,20 @@ export default function PartTop() {
     const handleFinishTransaction = async (transactionId) => {
         setLoading(true);
         try {
-            const response = await finishTransaction();
+            const response = await finishTransaction(transactionId);
 
-            if (response.statusCode === 200) {
-                toast.success("Transaksi berhasil diperbarui.");
+            if (response && response.message) {
+                toast.success("Transaksi berhasil diselesaikan.");
+                setTransaction(null);
+                setNotifications(notifications.filter(notification => notification.transactionId !== transactionId));
             }
-
-            setTransaction(null);
-            setNotifications(notifications.filter(notification => notification.transactionId !== transactionId));
         } catch (error) {
-            toast.error("Transaksi gagal diperbarui.");
+            console.error('Error:', error.message);
         } finally {
             setLoading(false);
         }
     };
+
 
     return (
         <div className="flex flex-row-reverse items-center w-full px-6 py-4 bg-white border-b-[3px] border-gray-200">
@@ -95,12 +95,20 @@ export default function PartTop() {
                         </div>
                     }
                 />
-                <MenuList>
+                <MenuList className="max-h-60 overflow-y-auto">
                     {notifications.length === 0 ? (
                         <MenuItem>No new notifications</MenuItem>
                     ) : (
                         notifications.map((notification, index) => (
-                            <MenuItem key={index} onClick={() => handleNotificationClick(notification.transactionId)}>
+                            <MenuItem key={index}
+                                      className="border"
+                                      onClick={() => handleNotificationClick(notification.transactionId)}>
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                     strokeWidth={1.5}
+                                     stroke="currentColor" className="w-6 h-6 text-[#8C95A4] m-2">
+                                    <path strokeLinecap="round" strokeLinejoin="round"
+                                          d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"/>
+                                </svg>
                                 Pesanan atas nama {notification.customerName} terkirim!
                             </MenuItem>
                         ))

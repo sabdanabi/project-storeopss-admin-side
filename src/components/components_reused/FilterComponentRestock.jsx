@@ -5,11 +5,23 @@ import {
     MenuItem,
     Button,
 } from '@chakra-ui/react'
-import {useState} from "react";
 import PropTypes from "prop-types";
 
 export default function FilterComponentRestock({handleSearchChange, searchQuery, exportToExcel, handleRangeChange, selectedRange,
-                                                   handleSearchClick, handleKeyDown}) {
+                                                      handleSearchClick, handleKeyDown}) {
+
+    const getRangeText = () => {
+        switch (selectedRange) {
+            case 'daily':
+                return 'Harian';
+            case 'weekly':
+                return 'Mingguan';
+            case 'monthly':
+                return 'Bulanan';
+            default:
+                return 'Pilih Rentang';
+        }
+    };
 
     return (
         <div className="bg-white h-[65px] py-3 px-6 relative border-b-[3px] border-gray-200 flex">
@@ -42,17 +54,13 @@ export default function FilterComponentRestock({handleSearchChange, searchQuery,
                             <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                         </svg>
                     }>
-                        <p className="text-[14px] font-normal mr-10 text-[#727E91]">{selectedRange}</p>
+                        <p className="text-[12px] font-normal mr-2 text-[#727E91]">{getRangeText()}</p>
                     </MenuButton>
                     <MenuList>
-                        <p className="text-[14px]"><MenuItem onClick={() => handleRangeChange('Semua')}>Semua</MenuItem>
-                        </p>
-                        <p className="text-[14px]"><MenuItem
-                            onClick={() => handleRangeChange('daily')}>Harian</MenuItem></p>
-                        <p className="text-[14px]"><MenuItem
-                            onClick={() => handleRangeChange('weekly')}>Mingguan</MenuItem></p>
-                        <p className="text-[14px]"><MenuItem
-                            onClick={() => handleRangeChange('monthly')}>Bulanan</MenuItem></p>
+                       <MenuItem onClick={() => handleRangeChange('Semua')}>Semua</MenuItem>
+                        <MenuItem onClick={() => handleRangeChange('daily')}>Harian</MenuItem>
+                        <MenuItem onClick={() => handleRangeChange('weekly')}>Mingguan</MenuItem>
+                        <MenuItem onClick={() => handleRangeChange('monthly')}>Bulanan</MenuItem>
                     </MenuList>
                 </Menu>
             </div>

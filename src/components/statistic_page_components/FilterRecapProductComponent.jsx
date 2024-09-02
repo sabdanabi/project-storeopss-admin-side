@@ -13,7 +13,7 @@ import {
 import { useState } from "react";
 import PropTypes from "prop-types";
 
-export function FilterRecapProductComponent({ onFilterChange, leastSoldProduct, mostSoldProduct }) {
+export function FilterRecapProductComponent({ onFilterChange, leastSoldProduct, mostSoldProduct, onCategoryChange, categoryProduct }) {
     const [selectedYear, setSelectedYear] = useState('');
     const [selectedMonth, setSelectedMonth] = useState('');
 
@@ -110,19 +110,20 @@ export function FilterRecapProductComponent({ onFilterChange, leastSoldProduct, 
                                 </svg>
                             }
                         >
-                            <p className="text-[14px] font-normal mr-10 text-[#727E91]">Kategori Produk</p>
+                            <p className="text-[14px] font-normal mr-10 text-[#727E91]">{categoryProduct || 'Pilih Kategori'}</p>
                         </MenuButton>
-                        <MenuList className="max-h-60 overflow-y-auto"> {/* Adjust height and add scroll */}
-                            <MenuItem>Pengecatan</MenuItem>
-                            <MenuItem>Kramik</MenuItem>
-                            <MenuItem>Paralon</MenuItem>
-                            <MenuItem>Sambungan Paralon</MenuItem>
-                            <MenuItem>Paku dan Sekrup</MenuItem>
-                            <MenuItem>Pralatan Tukang</MenuItem>
-                            <MenuItem>Kelistrikan</MenuItem>
-                            <MenuItem>Amplas</MenuItem>
-                            <MenuItem>Perlengkapan Rumah</MenuItem>
-                            <MenuItem>Material</MenuItem>
+                        <MenuList className="max-h-60 overflow-y-auto">
+                            <MenuItem onClick={() => onCategoryChange('')}>Semua</MenuItem>
+                            <MenuItem onClick={() => onCategoryChange('Pengecatan')}>Pengecatan</MenuItem>
+                            <MenuItem onClick={() => onCategoryChange('Kramik')}>Kramik</MenuItem>
+                            <MenuItem onClick={() => onCategoryChange('Paralon')}>Paralon</MenuItem>
+                            <MenuItem onClick={() => onCategoryChange('Sambungan Paralon')}>Sambungan Paralon</MenuItem>
+                            <MenuItem onClick={() => onCategoryChange('Paku dan Sekrup')}>Paku dan Sekrup</MenuItem>
+                            <MenuItem onClick={() => onCategoryChange('Peralatan Tukang')}>Peralatan Tukang</MenuItem>
+                            <MenuItem onClick={() => onCategoryChange('Kelistrikan')}>Kelistrikan</MenuItem>
+                            <MenuItem onClick={() => onCategoryChange('Amplas')}>Amplas</MenuItem>
+                            <MenuItem onClick={() => onCategoryChange('Perlengkapan Rumah')}>Perlengkapan Rumah</MenuItem>
+                            <MenuItem onClick={() => onCategoryChange('Material')}>Material</MenuItem>
                         </MenuList>
                     </Menu>
                 </div>
@@ -142,4 +143,6 @@ FilterRecapProductComponent.propTypes = {
         name: PropTypes.string,
         quantity: PropTypes.number,
     }),
+    onCategoryChange: PropTypes.func,
+    categoryProduct: PropTypes.string,
 };

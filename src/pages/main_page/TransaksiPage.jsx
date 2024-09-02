@@ -61,9 +61,11 @@ export default function TransaksiPage() {
 
     const filteredTransaksi = transaksi.filter((entry) => {
         const customerName = entry.customer?.name || '';
+        const invoice = entry.invoice || '';
         const nameMatch = customerName.toLowerCase().includes(searchQuery.toLowerCase());
+        const invoiceMatch = invoice.toLowerCase().includes(searchQuery.toLowerCase());
         const dateMatch = entry.date?.includes(searchQuery) || false;
-        return nameMatch || dateMatch;
+        return nameMatch || invoiceMatch || dateMatch;
     });
 
     const fetchDataTransaksi = async (page = 1, range = null, paid = null, searchQuery = '') => {

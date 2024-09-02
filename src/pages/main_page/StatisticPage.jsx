@@ -19,25 +19,30 @@ export default function StatisticPage() {
     const [selectedMonth, setSelectedMonth] = useState('');
     const [mostSoldProduct, setMostSoldProduct] = useState(null);
     const [leastSoldProduct, setLeastSoldProduct] = useState(null);
+    const [category, setCategory] = useState('');
+
+    useEffect(() => {
+        fetchData(1, selectedYear, selectedMonth, category);
+    }, [selectedYear, selectedMonth, category]);
 
     const handleFilterChange = (year, month) => {
         setSelectedYear(year);
         setSelectedMonth(month);
-        fetchData(1, year, month);
+        fetchData(1, year, month, category);
     };
 
     const handlePageChange = (page) => {
-        fetchData(page, selectedYear, selectedMonth);
+        fetchData(page, selectedYear, selectedMonth, category);
     };
 
-    useEffect(() => {
-        fetchData(1);
-    }, []);
+    const handleCategoryChange = (selectedCategory) => {
+        setCategory(selectedCategory);
+    };
 
-    const fetchData = async (page = 1, year = null, month = null) => {
+    const fetchData = async (page = 1, year = null, month = null, category = '') => {
         setLoading(true);
         try {
-            const result = await getStatisticProductSell(year, month, 'asc', page);
+            const result = await getStatisticProductSell(year, month, 'asc', page, category);
             const products = result.data.products;
             const sortedProducts = [...products].sort((a, b) => b.quantity - a.quantity);
             const mostSoldProduct = sortedProducts[0];
@@ -69,7 +74,7 @@ export default function StatisticPage() {
                             <DescPageComponent
                                 desc={`Laporan stok ini mencakup recap product pada bulan ${selectedMonth} ${selectedYear}.`}/>
                             <FilterRecapProductComponent onFilterChange={handleFilterChange} mostSoldProduct={mostSoldProduct}
-                                                         leastSoldProduct={leastSoldProduct}/>
+                                                         leastSoldProduct={leastSoldProduct} onCategoryChange={handleCategoryChange} categoryProduct={category}/>
 
                             {loading ? (
                                 <div className="flex items-center justify-center h-full">

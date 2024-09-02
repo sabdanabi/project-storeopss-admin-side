@@ -22,7 +22,20 @@ export default function FilterComponentsNotaPage({handleSearchChange, searchQuer
     const getSelectedText = () => {
         if (selectedPaid === true) return 'Lunas';
         if (selectedPaid === false) return 'Belum Lunas';
-        return 'Semua';
+        return 'Pilih Status';
+    };
+
+    const getRangeText = () => {
+        switch (selectedRange) {
+            case 'daily':
+                return 'Harian';
+            case 'weekly':
+                return 'Mingguan';
+            case 'monthly':
+                return 'Bulanan';
+            default:
+                return 'Pilih Rentang';
+        }
     };
 
     return (
@@ -55,7 +68,7 @@ export default function FilterComponentsNotaPage({handleSearchChange, searchQuer
                             <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                         </svg>
                     }>
-                        <p className="text-xs font-medium mr-10 text-[#727E91]">{getSelectedText()}</p>
+                        <p className="text-xs font-normal mr-10 text-[#727E91]">{getSelectedText()}</p>
                     </MenuButton>
                     <MenuList>
                         <MenuItem onClick={() => handleFilterChange(null)}>Semua</MenuItem>
@@ -73,13 +86,13 @@ export default function FilterComponentsNotaPage({handleSearchChange, searchQuer
                             <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                         </svg>
                     }>
-                        <p className="text-[14px] font-normal mr-10 text-[#727E91]">{selectedRange}</p>
+                        <p className="text-[12px] font-normal mr-2 text-[#727E91]">{getRangeText()}</p>
                     </MenuButton>
                     <MenuList>
-                        <p className="text-[14px]"><MenuItem onClick={() => handleRangeChange('Semua')}>Semua</MenuItem></p>
-                        <p className="text-[14px]"><MenuItem onClick={() => handleRangeChange('daily')}>Harian</MenuItem></p>
-                        <p className="text-[14px]"><MenuItem onClick={() => handleRangeChange('weekly')}>Mingguan</MenuItem></p>
-                        <p className="text-[14px]"><MenuItem onClick={() => handleRangeChange('monthly')}>Bulanan</MenuItem></p>
+                        <MenuItem onClick={() => handleRangeChange('Semua')}>Semua</MenuItem>
+                        <MenuItem onClick={() => handleRangeChange('daily')}>Harian</MenuItem>
+                        <MenuItem onClick={() => handleRangeChange('weekly')}>Mingguan</MenuItem>
+                        <MenuItem onClick={() => handleRangeChange('monthly')}>Bulanan</MenuItem>
                     </MenuList>
                 </Menu>
             </div>

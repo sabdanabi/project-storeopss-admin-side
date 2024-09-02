@@ -146,9 +146,8 @@ const getTransactionById = async (transactionId) => {
 
 const finishTransaction = async (transactionId) => {
     try {
-
         const response = await axios.post(`${baseUrl}/api/transactions/finish/${transactionId}`, {
-            "is_finished": true
+            is_finished: true
         }, {
             headers: {
                 AUTHORIZATION: token,
@@ -156,12 +155,27 @@ const finishTransaction = async (transactionId) => {
                 "ngrok-skip-browser-warning": true
             }
         });
+
         return response.data;
-        
     } catch (error) {
-        console.error('Error:', error.message);
+        if (error.response) {
+            if (error.response.status === 400 && error.response.data?.error) {
+                toast.error("Transaksi belum lunas tidak dapat diselesaikan.");
+            } else if (error.response.status === 401) {
+                toast.error("Anda belum login. Silakan login terlebih dahulu.");
+                setTimeout(() => {
+                    window.location.href = "/login-page";
+                }, 3000);
+            } else {
+                toast.error("Terjadi kesalahan. Silakan coba lagi.");
+            }
+        } else {
+            console.error('Error:', error.message);
+            toast.error("Terjadi kesalahan. Silakan coba lagi.");
+        }
     }
-}
+};
+
 
 
 export { getAllTransaksi, addIncome,

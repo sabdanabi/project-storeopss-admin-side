@@ -19,7 +19,7 @@ const addNewProduct = async (formData) => {
             toast.error("Anda belum login. Silakan login terlebih dahulu.");
             setTimeout(() => {
                 window.location.href = "/login-page";
-            }, 3000);
+            }, 1000);
         } else {
             handleAxiosError(error);
         }

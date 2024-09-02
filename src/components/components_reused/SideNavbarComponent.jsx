@@ -11,7 +11,7 @@ export default function SideNavbarComponent() {
     const isRiwayatRestockPage = location.pathname === '/riwayat-restock-page';
     const isTransaksiPage = location.pathname === '/transaksi-page';
     const isNotaPage = location.pathname === '/nota-page';
-    const isDetailTransaksiPage = location.pathname === '/detail-transaksi-page';
+    // const isDetailTransaksiPage = location.pathname === '/detail-transaksi-page';
 
     return(
         <>
@@ -146,20 +146,20 @@ export default function SideNavbarComponent() {
                             </div>
                         </a>
 
-                        <a href="/detail-transaksi-page">
-                            <div className={`flex w-[100%] hover:bg-[#F2F6FF] pl-5 h-11 rounded-lg mb-2 group 
-                        ${isDetailTransaksiPage ? 'bg-[#F2F6FF]' : ''}`}>
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                     strokeWidth={1.5} stroke="currentColor" className={`text-[#8C95A4] w-6 h-7 mt-2 group-hover:text-light-blue-800  
-                                 ${isDetailTransaksiPage ? 'text-light-blue-800 ' : ''}`}>
-                                    <path strokeLinecap="round" strokeLinejoin="round"
-                                          d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Zm3.75 11.625a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"/>
-                                </svg>
+                        {/*<a href="/detail-transaksi-page">*/}
+                        {/*    <div className={`flex w-[100%] hover:bg-[#F2F6FF] pl-5 h-11 rounded-lg mb-2 group */}
+                        {/*${isDetailTransaksiPage ? 'bg-[#F2F6FF]' : ''}`}>*/}
+                        {/*        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"*/}
+                        {/*             strokeWidth={1.5} stroke="currentColor" className={`text-[#8C95A4] w-6 h-7 mt-2 group-hover:text-light-blue-800  */}
+                        {/*         ${isDetailTransaksiPage ? 'text-light-blue-800 ' : ''}`}>*/}
+                        {/*            <path strokeLinecap="round" strokeLinejoin="round"*/}
+                        {/*                  d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Zm3.75 11.625a2.625 2.625 0 1 1-5.25 0 2.625 2.625 0 0 1 5.25 0Z"/>*/}
+                        {/*        </svg>*/}
 
-                                <span
-                                    className={`name-page-sideBar-style ${isDetailTransaksiPage ? 'text-light-blue-800 ' : ''}`}>Pelacakan Produk</span>
-                            </div>
-                        </a>
+                        {/*        <span*/}
+                        {/*            className={`name-page-sideBar-style ${isDetailTransaksiPage ? 'text-light-blue-800 ' : ''}`}>Pelacakan Produk</span>*/}
+                        {/*    </div>*/}
+                        {/*</a>*/}
 
                     </nav>
                 </div>

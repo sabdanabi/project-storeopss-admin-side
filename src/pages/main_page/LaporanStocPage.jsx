@@ -69,6 +69,8 @@ export default function LaporanStockPage() {
         }
     };
 
+
+
     const filteredProducts = products.filter((product) =>
         product.name.toLowerCase().includes(searchQuery.toLowerCase())
     );

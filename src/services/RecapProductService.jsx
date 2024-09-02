@@ -32,6 +32,27 @@ const getRecapProduct = async (year = null, month = null, page = 1, searchQuery 
     }
 };
 
+// const getRecapAllProduct = async () => {
+//     try {
+//         const response = await axios.get(`${baseUrl}/api/products/recap?paginate=false`, {
+//             headers: {
+//                 AUTHORIZATION: token,
+//                 "ngrok-skip-browser-warning": true
+//             },
+//         });
+//         return response.data;
+//     } catch (error) {
+//         if (error.response && error.response.status === 401) {
+//             toast.error("Anda belum login. Silakan login terlebih dahulu.");
+//             setTimeout(() => {
+//                 window.location.href = "/login-page";
+//             }, 3000);
+//         } else {
+//             handleAxiosError(error);
+//         }
+//     }
+// };
+
 const getRecapProductById = async (productId) => {
     try {
         const response = await axios.get(`${baseUrl}/api/products/recap/${productId}`, {
@@ -67,4 +88,4 @@ const handleAxiosError = (error) => {
 };
 
 
-export { getRecapProduct, getRecapProductById };
+export { getRecapProduct, getRecapProductById};

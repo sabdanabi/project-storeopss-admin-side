@@ -10,6 +10,19 @@ import PropTypes from "prop-types";
 export default function FilterComponentNewProduk({handleSearchChange, searchQuery,
                                                      exportToExcel, handleRangeChange, selectedRange, handleSearchClick, handleKeyDown}) {
 
+    const getRangeText = () => {
+        switch (selectedRange) {
+            case 'daily':
+                return 'Harian';
+            case 'weekly':
+                return 'Mingguan';
+            case 'monthly':
+                return 'Bulanan';
+            default:
+                return 'Pilih Rentang';
+        }
+    };
+
     return (
         <div className="bg-white h-[65px] py-3 px-6 relative border-b-[3px] border-gray-200 flex">
             <input
@@ -41,7 +54,7 @@ export default function FilterComponentNewProduk({handleSearchChange, searchQuer
                             <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                         </svg>
                     }>
-                        <p className="text-[14px] font-normal mr-10 text-[#727E91]">{selectedRange}</p>
+                        <p className="text-[12px] font-normal mr-2 text-[#727E91]">{getRangeText()}</p>
                     </MenuButton>
                     <MenuList>
                         <p className="text-[14px]"><MenuItem onClick={() => handleRangeChange('Semua')}>Semua</MenuItem></p>

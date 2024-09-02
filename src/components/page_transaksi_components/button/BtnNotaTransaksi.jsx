@@ -74,8 +74,7 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
         >
             {close => (
                 <div className="modal">
-                    <div
-                        className="bg-white rounded-xl shadow p-5 transition-all max-w-[750px] max-h-[610px] overflow-auto">
+                    <div className="bg-white rounded-xl shadow p-5 transition-all max-w-[750px] max-h-[610px] overflow-auto">
                         <div className="flex justify-between">
                             <p className="font-semibold text-2xl mb-7">Nota</p>
                             <button onClick={() => close()} className="h-7">
@@ -107,6 +106,7 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
                                 </div>
                                 <div
                                     className="text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
+                                    <p className="font-semibold text-blue-gray-700 bold">{filteredTransaksi.invoice}</p>
                                     <p className="font-semibold text-blue-gray-700 bold">Resi
                                         kostumer {filteredTransaksi.customer.name}</p>
                                     <p className="font-semibold text-[#8C8BB4] bold">{filteredTransaksi.date}</p>

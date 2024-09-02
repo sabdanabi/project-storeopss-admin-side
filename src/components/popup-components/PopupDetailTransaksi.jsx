@@ -1,4 +1,5 @@
 import { Spinner } from "@chakra-ui/react";
+import PropTypes from "prop-types";
 
 export default function PopupDetailTransaksi({
   transaction,
@@ -52,36 +53,39 @@ export default function PopupDetailTransaksi({
               <p className="font-semibold text-blue-gray-700">
                 Tanggal: {transaction.date}
               </p>
+              <p className="font-semibold text-blue-gray-700">
+                Tanggal: {transaction.status}
+              </p>
               <p>Produk:</p>
               {transaction.products.map((product, index) => (
-                <div
-                  key={index}
-                  className="pl-2 flex items-center justify-between"
-                >
-                  <p>
-                    - x{product.quantity} {product.name} @{" "}
-                    {product.price.toLocaleString("id-ID", {
-                      style: "currency",
-                      currency: "IDR",
-                    })}
-                  </p>
-                  {product.is_checked && (
-                    <svg
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 24 24"
-                      strokeWidth={1.5}
-                      stroke="currentColor"
-                      className="w-4 h-4 text-green-500 ml-2"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        d="M4.5 12.75l6 6 9-13.5"
-                      />
-                    </svg>
-                  )}
-                </div>
+                  <div
+                      key={index}
+                      className="pl-2 flex items-center justify-between"
+                  >
+                    <p>
+                      - x{product.quantity} {product.name} @{" "}
+                      {product.price.toLocaleString("id-ID", {
+                        style: "currency",
+                        currency: "IDR",
+                      })}
+                    </p>
+                    {product.is_checked && (
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            strokeWidth={1.5}
+                            stroke="currentColor"
+                            className="w-4 h-4 text-green-500 ml-2"
+                        >
+                          <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              d="M4.5 12.75l6 6 9-13.5"
+                          />
+                        </svg>
+                    )}
+                  </div>
               ))}
               <p className="font-semibold text-blue-gray-700 mt-2">
                 Total:{" "}
@@ -94,7 +98,7 @@ export default function PopupDetailTransaksi({
           </div>
         )}
         {!isLoading && (
-          <div className="flex justify-center mt-4">
+            <div className="flex justify-center mt-4">
             <button
               onClick={() => handleFinishTransaction(transaction.id)}
               className="px-7 py-2 bg-[#1A4F8B] rounded-lg shadow-sm hover:bg-gray-50 hover:text-[#1A4F8B] border border-transparent hover:border-[#1A4F8B] transition-colors"
@@ -109,3 +113,27 @@ export default function PopupDetailTransaksi({
     </div>
   );
 }
+
+PopupDetailTransaksi.propTypes = {
+  transaction: PropTypes.shape({
+    id: PropTypes.number,
+    is_finished: PropTypes.bool,
+    customer: PropTypes.shape({
+      name: PropTypes.string,
+    }),
+    date: PropTypes.string,
+    status: PropTypes.string,
+    products: PropTypes.arrayOf(
+        PropTypes.shape({
+          quantity: PropTypes.number,
+          name: PropTypes.string,
+          price: PropTypes.number,
+          is_checked: PropTypes.bool,
+        })
+    ),
+  }),
+  handleCloseModal: PropTypes.func,
+  calculateTotal: PropTypes.func,
+  isLoading: PropTypes.bool,
+  handleFinishTransaction: PropTypes.func,
+};
