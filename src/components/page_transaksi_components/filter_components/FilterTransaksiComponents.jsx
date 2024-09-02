@@ -1,15 +1,8 @@
 import PropTypes from "prop-types";
-import {
-    Menu,
-    MenuButton,
-    MenuList,
-    MenuItem,
-    Button,
-} from '@chakra-ui/react'
+import { Menu, MenuButton, MenuList, MenuItem, Button } from '@chakra-ui/react';
 import { useState } from "react";
 
-export default function FilterTransaksiComponents({ handleSearchChange, searchQuery, handleRangeChange,
-                                                      selectedRange, onFilterChange, handleSearchClick, handleKeyDown}) {
+export default function FilterTransaksiComponents({handleSearchChange, searchQuery, handleRangeChange, selectedRange, onFilterChange, handleSearchClick, handleKeyDown}) {
 
     const [selectedPaid, setSelectedPaid] = useState(null);
 
@@ -21,7 +14,20 @@ export default function FilterTransaksiComponents({ handleSearchChange, searchQu
     const getSelectedText = () => {
         if (selectedPaid === true) return 'Lunas';
         if (selectedPaid === false) return 'Belum Lunas';
-        return 'Semua';
+        return 'Pilih Status';
+    };
+
+    const getRangeText = () => {
+        switch (selectedRange) {
+            case 'daily':
+                return 'Harian';
+            case 'weekly':
+                return 'Mingguan';
+            case 'monthly':
+                return 'Bulanan';
+            default:
+                return 'Pilih Rentang';
+        }
     };
 
     return (
@@ -53,7 +59,9 @@ export default function FilterTransaksiComponents({ handleSearchChange, searchQu
                     } else {
                         console.log("Input kosong!");
                     }
-                }} className="ml-2 h-36"><p className="text-[#1a4f8b]">Cari</p></Button>
+                }} className="ml-2 h-36">
+                    <p className="text-[#1a4f8b]">Cari</p>
+                </Button>
             </div>
 
             <Menu>
@@ -79,7 +87,7 @@ export default function FilterTransaksiComponents({ handleSearchChange, searchQu
                         <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                     </svg>
                 }>
-                    <p className="text-[14px] font-normal mr-10 text-[#727E91]">{selectedRange}</p>
+                    <p className="text-[14px] font-normal mr-10 text-[#727E91]">{getRangeText()}</p>
                 </MenuButton>
                 <MenuList>
                     <MenuItem onClick={() => handleRangeChange('Semua')}>Semua</MenuItem>
@@ -101,4 +109,3 @@ FilterTransaksiComponents.propTypes = {
     handleSearchClick: PropTypes.func,
     handleKeyDown: PropTypes.func
 };
-

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Button, Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
@@ -10,12 +11,45 @@ export function FilterComponentLaporanPage({
                                                selectedMonth,
                                                selectedYear
                                            }) {
-    const handleYearChange = (year) => {
-        onFilterChange(year, selectedMonth);
+    const [selectedYearName, setSelectedYearName] = useState("Pilih Tahun");
+    const [selectedMonthName, setSelectedMonthName] = useState("Pilih Bulan");
+
+    const months = [
+        { key: "01", name: "Januari" },
+        { key: "02", name: "Februari" },
+        { key: "03", name: "Maret" },
+        { key: "04", name: "April" },
+        { key: "05", name: "Mei" },
+        { key: "06", name: "Juni" },
+        { key: "07", name: "Juli" },
+        { key: "08", name: "Agustus" },
+        { key: "09", name: "September" },
+        { key: "10", name: "Oktober" },
+        { key: "11", name: "November" },
+        { key: "12", name: "Desember" }
+    ];
+
+    const years = [
+        { key: "2024", name: "2024" },
+        { key: "2025", name: "2025" },
+        { key: "2026", name: "2026" },
+        { key: "2027", name: "2027" }
+    ];
+
+    const handleYearChange = (yearKey) => {
+        const selectedYear = years.find(year => year.key === yearKey);
+        if (selectedYear) {
+            setSelectedYearName(selectedYear.name);
+            onFilterChange(yearKey, selectedMonth);
+        }
     };
 
-    const handleMonthChange = (month) => {
-        onFilterChange(selectedYear, month);
+    const handleMonthChange = (monthKey) => {
+        const selectedMonth = months.find(month => month.key === monthKey);
+        if (selectedMonth) {
+            setSelectedMonthName(selectedMonth.name);
+            onFilterChange(selectedYear, monthKey);
+        }
     };
 
     return (
@@ -27,7 +61,7 @@ export function FilterComponentLaporanPage({
                 onChange={handleSearchChange}
                 onKeyDown={handleSearchKeyDown}
                 className="py-2 pl-11 pr-12 border border-gray-300 rounded-md focus:outline-none focus:ring-2
-                                focus:ring-indigo-500 focus:border-transparent w-full mr-5"
+                            focus:ring-indigo-500 focus:border-transparent w-full mr-5"
             />
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                  stroke="currentColor" className="w-5 h-5 absolute top-5 left-10 text-[#8C95A4]">
@@ -38,9 +72,9 @@ export function FilterComponentLaporanPage({
             <Button
                 onClick={() => {
                     if (searchQuery.trim()) {
-                        onSearchClick(); // Trigger search only if input is not empty
+                        onSearchClick();
                     } else {
-                        onFilterChange(selectedYear, selectedMonth); // Reload table with unfiltered data if input is empty
+                        onFilterChange(selectedYear, selectedMonth);
                     }
                 }}
                 className="ml-2 h-36"
@@ -56,25 +90,20 @@ export function FilterComponentLaporanPage({
                             <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                         </svg>
                     }>
-                        <p className="text-[14px] font-normal mr-10 text-[#727E91]">Pilih Bulan</p>
+                        <p className="text-[14px] font-normal mr-10 text-[#727E91]">
+                            {selectedMonthName}
+                        </p>
                     </MenuButton>
                     <MenuList className="max-h-60 overflow-y-auto">
-                        {/* Daftar Bulan */}
-                        <MenuItem onClick={() => handleMonthChange('01')}>Januari</MenuItem>
-                        <MenuItem onClick={() => handleMonthChange('02')}>Februari</MenuItem>
-                        <MenuItem onClick={() => handleMonthChange('03')}>Maret</MenuItem>
-                        <MenuItem onClick={() => handleMonthChange('04')}>April</MenuItem>
-                        <MenuItem onClick={() => handleMonthChange('05')}>Mei</MenuItem>
-                        <MenuItem onClick={() => handleMonthChange('06')}>Juni</MenuItem>
-                        <MenuItem onClick={() => handleMonthChange('07')}>Juli</MenuItem>
-                        <MenuItem onClick={() => handleMonthChange('08')}>Agustus</MenuItem>
-                        <MenuItem onClick={() => handleMonthChange('09')}>September</MenuItem>
-                        <MenuItem onClick={() => handleMonthChange('10')}>Oktober</MenuItem>
-                        <MenuItem onClick={() => handleMonthChange('11')}>November</MenuItem>
-                        <MenuItem onClick={() => handleMonthChange('12')}>Desember</MenuItem>
+                        {months.map((month) => (
+                            <MenuItem key={month.key} onClick={() => handleMonthChange(month.key)}>
+                                {month.name}
+                            </MenuItem>
+                        ))}
                     </MenuList>
                 </Menu>
             </div>
+
 
             <div className="mr-4 ml-4">
                 <Menu>
@@ -84,14 +113,15 @@ export function FilterComponentLaporanPage({
                             <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
                         </svg>
                     }>
-                        <p className="text-[14px] font-normal mr-10 text-[#727E91]">Pilih Tahun</p>
+                        <p className="text-[14px] font-normal mr-10 text-[#727E91]">{selectedYearName}</p>
                     </MenuButton>
                     <MenuList className="max-h-60 overflow-y-auto">
                         {/* Daftar Tahun */}
-                        <MenuItem onClick={() => handleYearChange('2024')}>2024</MenuItem>
-                        <MenuItem onClick={() => handleYearChange('2025')}>2025</MenuItem>
-                        <MenuItem onClick={() => handleYearChange('2026')}>2026</MenuItem>
-                        <MenuItem onClick={() => handleYearChange('2027')}>2027</MenuItem>
+                        {years.map((year) => (
+                            <MenuItem key={year.key} onClick={() => handleYearChange(year.key)}>
+                                {year.name}
+                            </MenuItem>
+                        ))}
                     </MenuList>
                 </Menu>
             </div>

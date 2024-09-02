@@ -5,20 +5,18 @@ import { getRecapProductById } from "../../services/RecapProductService";
 import { Spinner } from "@chakra-ui/react";
 
 export default function TblLaporanStock({ products, selectedMonth, selectedYear }) {
-    const [selectedProduct, setSelectedProduct] = useState(null); // State untuk menyimpan produk yang dipilih
-    const [isLoading, setIsLoading] = useState(false); // State untuk mengelola loading di popup
-    const [error, setError] = useState(''); // State untuk mengelola error di popup
+    const [selectedProduct, setSelectedProduct] = useState(null);
+    const [isLoading, setIsLoading] = useState(false);
+    const [error, setError] = useState('');
 
-    // Fungsi untuk menangani klik pada tombol "Detail"
     const handleDetailClick = async (productId) => {
         setIsLoading(true);
-        setError(''); // Reset error saat memuat data
+        setError('');
         try {
             const productDetail = await getRecapProductById(productId);
-            console.log(productDetail.data)
-            setSelectedProduct(productDetail.data); // Simpan detail produk yang diambil
+            setSelectedProduct(productDetail.data);
         } catch (error) {
-            setError("Gagal mengambil data produk."); // Atur pesan error jika gagal
+            setError("Gagal mengambil data produk.");
         } finally {
             setIsLoading(false);
         }
@@ -50,7 +48,6 @@ export default function TblLaporanStock({ products, selectedMonth, selectedYear 
                             <td className="px-4"><p className="mr-3">{index + 1}</p></td>
                             <td>
                                 <div className="flex py-3">
-                                    {/* <img src={product.image} className="h-12 mr-3" alt=""/> */}
                                     <p className="mr-20">{product.name}</p>
                                 </div>
                             </td>
@@ -64,7 +61,6 @@ export default function TblLaporanStock({ products, selectedMonth, selectedYear 
                             <td>{product.last_quantity}</td>
                             <td></td>
                             <td>
-                                {/* Tombol Detail untuk membuka popup */}
                                 <button
                                     className="text-[9px] hover:bg-[#d7e0e8] text-blue-gray-500 bg-[#dde6efc6] h-[30px] w-[62px] rounded-lg font-semibold"
                                     onClick={() => handleDetailClick(product.id)}
@@ -136,7 +132,9 @@ export default function TblLaporanStock({ products, selectedMonth, selectedYear 
                                                     </tr>
                                                 ))
                                             ) : (
-                                                <li>Tidak ada transaksi</li>
+                                                <tr>
+                                                    <td colSpan="2">Tidak ada transaksi</td>
+                                                </tr>
                                             )}
                                             </tbody>
                                         </table>
@@ -154,14 +152,16 @@ export default function TblLaporanStock({ products, selectedMonth, selectedYear 
                                             </thead>
                                             <tbody>
                                             {selectedProduct.restock && selectedProduct.restock.length > 0 ? (
-                                                selectedProduct.restock.map((restock) => (
+                                                selectedProduct.restock.map(restock => (
                                                     <tr key={restock.id} className="border-b-2 text-sm">
                                                         <td className="py-2">{restock.date}</td>
                                                         <td className="pl-16">{restock.quantity}</td>
                                                     </tr>
                                                 ))
                                             ) : (
-                                                <li>Tidak ada restok</li>
+                                                <tr>
+                                                    <td colSpan="2">Tidak ada restok</td>
+                                                </tr>
                                             )}
                                             </tbody>
                                         </table>

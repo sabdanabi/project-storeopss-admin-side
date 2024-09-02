@@ -57,7 +57,7 @@ export function SearchBarStock({ handleSearchChange, handleSearchKeyDown, search
                             </svg>
                         }
                     >
-                        <p className="text-[14px] font-normal mr-10 text-[#727E91]">Kategori Produk</p>
+                        <p className="text-[14px] font-normal mr-10 text-[#727E91]">{categoryProduct || 'Pilih Kategori'}</p>
                     </MenuButton>
                     <MenuList className="max-h-60 overflow-y-auto">
                         <MenuItem onClick={() => onCategoryChange('')}>Semua</MenuItem>

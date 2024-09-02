@@ -84,9 +84,6 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
 
     };
 
-
-
-
     const resetForm = () => {
         setFormData({
             note: '',
