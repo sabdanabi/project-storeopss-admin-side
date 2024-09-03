@@ -4,10 +4,12 @@ import Popup from "reactjs-popup";
 import { getRecapProductById } from "../../services/RecapProductService";
 import { Spinner } from "@chakra-ui/react";
 
-export default function TblLaporanStock({ products, selectedMonth, selectedYear }) {
+export default function TblLaporanStock({ products, selectedMonth, selectedYear, pagination }) {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const { current_page, per_page } = pagination || {};
+
 
     const handleDetailClick = async (productId) => {
         setIsLoading(true);
@@ -45,7 +47,7 @@ export default function TblLaporanStock({ products, selectedMonth, selectedYear 
                     <tbody className="font-semibold text-blue-gray-700 text-[15px]">
                     {products.map((product, index) => (
                         <tr className="border-b-2" key={product.id}>
-                            <td className="px-4"><p className="mr-3">{index + 1}</p></td>
+                            <td className="px-4"><p className="mr-3">{(current_page - 1) * per_page + index + 1}</p></td>
                             <td>
                                 <div className="flex py-3">
                                     <p className="mr-20">{product.name}</p>
@@ -114,7 +116,7 @@ export default function TblLaporanStock({ products, selectedMonth, selectedYear 
                             <p>Kategori Produk: {selectedProduct.category || 'N/A'}</p>
                             <div className="flex">
                                 <div>
-                                    <h3 className="mt-4 font-semibold">Transaksi:</h3>
+                                    <h3 className="mt-4 font-semibold">Aktivitas Produk:</h3>
                                     <div className="h-56 overflow-auto w-96">
                                         <table className="w-full">
                                             <thead className="h-10 border-b-2">

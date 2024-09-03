@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import 'react-toastify/dist/ReactToastify.css';
 import { editProduct, getProductById } from "../../../services/StockService.jsx";
+import { Menu, MenuButton, MenuList, MenuItem, Button } from "@chakra-ui/react";
 
 export default function FormEditProduk({ updateProductsState, id }) {
     const [formData, setFormData] = useState({
@@ -57,18 +58,25 @@ export default function FormEditProduk({ updateProductsState, id }) {
         }
     };
 
+    const handleCategoryChange = (category) => {
+        setFormData((prevData) => ({
+            ...prevData,
+            category,
+        }));
+    };
+
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const productData = await getProductById(id);
                 setFormData({
-                    name: productData.name || "",
-                    category: productData.category || "",
-                    quantity: productData.quantity || "",
-                    purchasePrice: productData.purchasePrice || "",
-                    sellingPrice: productData.sellingPrice || "",
-                    unit: productData.unit || "",
-                    image: productData.image || "",
+                    name: productData.data.name || "",
+                    category: productData.data.category || "",
+                    quantity: productData.data.quantity || "",
+                    purchasePrice: productData.data.purchase_price || "",
+                    sellingPrice: productData.data.selling_price || "",
+                    unit: productData.data.unit || "",
+                    image: productData.data.image || "",
                 });
             } catch (error) {
                 console.error(error);
@@ -124,7 +132,7 @@ export default function FormEditProduk({ updateProductsState, id }) {
 
                 <div>
                     <div className="mb-4">
-                        <label className="text-sm">Stock/pcs/kg</label>
+                        <label className="text-sm">Stock</label>
                         <br />
                         <input
                             placeholder="Masukkan stock produk...."
@@ -136,52 +144,43 @@ export default function FormEditProduk({ updateProductsState, id }) {
                         />
                     </div>
 
-                    {/*<div className="mb-4">*/}
-                    {/*    <label className="text-sm">Unit /pcs/kg</label>*/}
-                    {/*    <br />*/}
-                    {/*    <input*/}
-                    {/*        placeholder="Masukkan unit produk...."*/}
-                    {/*        type="text"*/}
-                    {/*        name="unit"*/}
-                    {/*        value={formData.unit || ""}*/}
-                    {/*        onChange={handleChange}*/}
-                    {/*        className="border-2 w-96 h-8 rounded-lg mt-3 text-xs p-3"*/}
-                    {/*    />*/}
-                    {/*</div>*/}
-
                     <div className="mb-4">
                         <label className="text-sm">Kategori Produk</label>
                         <br />
-                        <input
-                            type="text"
-                            name="category"
-                            value={formData.category || ""}
-                            onChange={handleChange}
-                            placeholder="Category"
-                            className="w-full px-3 py-2 h-8 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-                        />
+                        <Menu>
+                            <MenuButton
+                                as={Button}
+                                className="h-12 border bg-white hover:bg-[#1a4f8bcd] w-96"
+                                rightIcon={
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                         strokeWidth={1.5}
+                                         stroke="currentColor" className="w-5 h-5 text-black">
+                                        <path strokeLinecap="round" strokeLinejoin="round"
+                                              d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
+                                    </svg>
+                                }
+                            >
+                                <div className="flex items-center px-0 py-2 group rounded-lg">
+                                    <span className="text-black font-normal text-[14px]">
+                                        {formData.category || 'Kategori Produk'}
+                                    </span>
+                                </div>
+                            </MenuButton>
+                            <MenuList className="max-h-60 overflow-y-auto">
+                                <MenuItem onClick={() => handleCategoryChange('Pengecatan')}>Pengecatan</MenuItem>
+                                <MenuItem onClick={() => handleCategoryChange('Kramik')}>Kramik</MenuItem>
+                                <MenuItem onClick={() => handleCategoryChange('Paralon')}>Paralon</MenuItem>
+                                <MenuItem onClick={() => handleCategoryChange('Sambungan Paralon')}>Sambungan Paralon</MenuItem>
+                                <MenuItem onClick={() => handleCategoryChange('Paku dan Sekrup')}>Paku dan Sekrup</MenuItem>
+                                <MenuItem onClick={() => handleCategoryChange('Pralatan Tukang')}>Pralatan Tukang</MenuItem>
+                                <MenuItem onClick={() => handleCategoryChange('Kelistrikan')}>Kelistrikan</MenuItem>
+                                <MenuItem onClick={() => handleCategoryChange('Amplas')}>Amplas</MenuItem>
+                                <MenuItem onClick={() => handleCategoryChange('Perlengkapan Rumah')}>Perlengkapan Rumah</MenuItem>
+                                <MenuItem onClick={() => handleCategoryChange('Material')}>Material</MenuItem>
+                            </MenuList>
+                        </Menu>
                     </div>
                 </div>
-
-                {/*<div>*/}
-                {/*    <label className="text-sm">Foto Produk</label>*/}
-                {/*    <br/>*/}
-                {/*    <div className="relative w-96 h-96 rounded-lg mt-3 overflow-hidden border-2">*/}
-                {/*        <img*/}
-                {/*            src={formData.image || "/assets_img/image.png"}*/}
-                {/*            alt="Preview"*/}
-                {/*            className="w-full h-full object-cover"*/}
-                {/*        />*/}
-                {/*        <input*/}
-                {/*            type="file"*/}
-                {/*            id="image"*/}
-                {/*            name="image"*/}
-                {/*            accept="image/*"*/}
-                {/*            onChange={handleChange}*/}
-                {/*            className="absolute inset-0 opacity-0 cursor-pointer"*/}
-                {/*        />*/}
-                {/*    </div>*/}
-                {/*</div>*/}
             </div>
 
             <div className="flex justify-center mt-3">
@@ -197,6 +196,6 @@ export default function FormEditProduk({ updateProductsState, id }) {
 }
 
 FormEditProduk.propTypes = {
-    updateProductsState: PropTypes.func,
-    id: PropTypes.number.isRequired
+    updateProductsState: PropTypes.func.isRequired,
+    id: PropTypes.number.isRequired,
 };

@@ -1,14 +1,10 @@
 import { useEffect, useState } from "react";
-import { getAllProductTransaktion } from "../../services/TransaksiService.jsx";
 import { FilterProdukAddTransaksi } from "./filter_components/FilterProdukAddTransaksi.jsx";
 import {toast} from "react-toastify";
 import PropTypes from "prop-types";
 
-export function ProductSelectionTable({ onProductSelect }) {
-    const [pilihProduct, setPilihProduct] = useState([]);
-    const [isAuth, setAuth] = useState(false);
-    const [isLoading, setLoading] = useState(true);
-    const [error, setError] = useState("");
+export function ProductSelectionTable({ onProductSelect, pilihProduct,
+                                          fecthProductsState, isLoading, error, isAuth }) {
     const [counts, setCounts] = useState({});
     const [checklist, setChecklist] = useState({});
     const [searchQuery, setSearchQuery] = useState('');
@@ -73,22 +69,6 @@ export function ProductSelectionTable({ onProductSelect }) {
             count: counts[product.id] || 0
         }));
         onProductSelect(selectedProducts);
-    };
-
-
-    const fecthProductsState = async () => {
-        try {
-            setLoading(true);
-            const result = await getAllProductTransaktion();
-            setPilihProduct(result.data);
-            setAuth(true);
-            console.log(pilihProduct)
-        } catch (e) {
-            console.log(e);
-            setError(e.response.data.error);
-        } finally {
-            setLoading(false);
-        }
     };
 
     useEffect(() => {
@@ -184,4 +164,15 @@ export function ProductSelectionTable({ onProductSelect }) {
 
 ProductSelectionTable.propTypes = {
     onProductSelect: PropTypes.func,
+    pilihProduct: PropTypes.arrayOf(PropTypes.shape({
+        id: PropTypes.number,
+        name: PropTypes.string,
+        selling_price: PropTypes.number,
+        quantity: PropTypes.number
+    })),
+    fecthProductsState: PropTypes.func,
+    isLoading: PropTypes.bool,
+    error: PropTypes.string,
+    isAuth: PropTypes.bool
 };
+

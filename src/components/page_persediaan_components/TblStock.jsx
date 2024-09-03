@@ -114,11 +114,11 @@ export default function TblStock({ products, handleDelete, updateProductsState, 
 
 TblStock.propTypes = {
     products: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        name: PropTypes.string.isRequired,
-        quantity: PropTypes.number.isRequired,
-        purchase_price: PropTypes.number.isRequired,
-        selling_price: PropTypes.number.isRequired,
+        id: PropTypes.number,
+        name: PropTypes.string,
+            quantity: PropTypes.number,
+        purchase_price: PropTypes.number,
+        selling_price: PropTypes.number,
         category: PropTypes.string.isRequired,
         image: PropTypes.string,
     })),

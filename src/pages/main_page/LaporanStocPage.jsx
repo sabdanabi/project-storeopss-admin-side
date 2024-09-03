@@ -104,7 +104,7 @@ export default function LaporanStockPage() {
                                     />
                                 </div>
                             ) : isAuth ? (
-                                <TblLaporanStock products={filteredProducts} selectedMonth={selectedMonth} selectedYear={selectedYear}/>
+                                <TblLaporanStock pagination={pagination} products={filteredProducts} selectedMonth={selectedMonth} selectedYear={selectedYear}/>
                             ) : (
                                 <div className="flex items-center justify-center h-full w-full">
                                     <p className="text-xl">{error}</p>

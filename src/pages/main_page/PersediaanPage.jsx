@@ -64,7 +64,7 @@ export default function PersediaanPage() {
     });
 
     const handlePageChange = (page) => {
-        fetchProducts(page, searchQuery, stockFilter);
+        fetchProducts(page);
     };
 
     const handleDelete = async (productId) => {
@@ -77,10 +77,14 @@ export default function PersediaanPage() {
         try {
             setLoading(true);
             const result = await getAllProduct(page, searchQuery, stockFilter, category);
-            setProducts(result.data);
-            console.log(result)
+            const productsWithIndex = result.data.map((product, index) => ({
+                ...product,
+                no: (page - 1) * pagination.per_page + index + 1
+            }));
+            setProducts(productsWithIndex);
             setAuth(true);
             setPagination(result.meta);
+
         } catch (e) {
             console.log(e);
             setError(e.response.data.error);

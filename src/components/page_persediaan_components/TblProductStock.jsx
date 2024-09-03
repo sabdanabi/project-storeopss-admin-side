@@ -3,9 +3,7 @@ import BtnRestockProduk from "./button/BtnRestockProduk.jsx";
 import BtnEditPorduk from "./button/BtnEditPorduk.jsx";
 import { BtnDeleteNew } from "./button/BtnDeleteNew.jsx";
 
-export default function TblProductStock({ products, handleDelete, pagination, refreshProducts }) {
-
-    const { current_page = 1, per_page = 10 } = pagination || {};
+export default function TblProductStock({ products, handleDelete, refreshProducts }) {
 
     return (
         <div className="bg-white flex border-b-[3px] border-gray-200 overflow-auto h-80">
@@ -25,19 +23,26 @@ export default function TblProductStock({ products, handleDelete, pagination, re
                 </tr>
                 </thead>
                 <tbody className="font-semibold text-blue-gray-700">
-                {products.map((product, index) => (
+                {products.map((product) => (
                     <tr className="border-b-2 h-13 text-[15px]" key={product.id}>
-                        <td className="px-4"><p className="mr-3">{(current_page - 1) * per_page + index + 1}</p></td>
+                        <td className="px-4">
+                            <p className="mr-3 text-blue-gray-700">
+                                {product.no}                            </p>
+                        </td>
                         <td>
                             <div className="flex py-3">
-                                {/*<img src={product.image ? product.image : "/assets_img/placeholder_image.jpg"} className="h-12 mr-3" alt="product-image" />*/}
+                                {/* <img src={product.image ? product.image : "/assets_img/placeholder_image.jpg"} className="h-12 mr-3" alt="product-image" /> */}
                                 <p className="mr-24">{product.name}</p>
                             </div>
                         </td>
                         <td></td>
-                        <td>{product.purchase_price ? (product.purchase_price).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) : 'N/A'}</td>
+                        <td>
+                            {(product.purchase_price).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}
+                        </td>
                         <td></td>
-                        <td>{product.selling_price ? (product.selling_price).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' }) : 'N/A'}</td>
+                        <td>
+                            {(product.selling_price).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}
+                        </td>
                         <td></td>
                         <td>{product.quantity ?? 0}</td>
                         <td></td>
@@ -58,15 +63,14 @@ export default function TblProductStock({ products, handleDelete, pagination, re
 
 TblProductStock.propTypes = {
     products: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.number.isRequired,
-        // image: PropTypes.string.isRequired,
-        name: PropTypes.string.isRequired,
+        id: PropTypes.number,
+        name: PropTypes.string,
         purchase_price: PropTypes.number,
         selling_price: PropTypes.number,
         quantity: PropTypes.number,
     })),
-    handleDelete: PropTypes.func.isRequired,
-    updateProductState: PropTypes.func,
+    handleDelete: PropTypes.func,
+    refreshProducts: PropTypes.func,
     pagination: PropTypes.shape({
         current_page: PropTypes.number,
         per_page: PropTypes.number,

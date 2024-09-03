@@ -101,7 +101,7 @@ export function HistoryRestockCard({ restockHistory, pagination }) {
                             <div className="flex text-xs font-medium text-[#403E8A] mb-2 mt-3 ml-4 mr-4">
                                 <p className="text-[13px]  w-[130px] text-blue-gray-500">Jumlah</p>
                                 <p className="">:</p>
-                                <p className="font-semibold text-[#8C8BB4] text-[13px] ml-5 ">{selectedEntry.product.new_quantity} pcs/kg</p>
+                                <p className="font-semibold text-[#8C8BB4] text-[13px] ml-5 ">{selectedEntry.product.new_quantity}</p>
                             </div>
 
                             <div className="flex text-xs font-medium text-[#403E8A] mb-2 mt-3 ml-4 mr-4">

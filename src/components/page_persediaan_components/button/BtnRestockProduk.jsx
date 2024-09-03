@@ -13,7 +13,7 @@ export default function BtnRestockProduk({id, refreshProductss}) {
                 {close => (
                     <div className='modal'>
                         <div className="fixed inset-0 flex justify-center items-center h-screen bg-black/40">
-                            <div className="bg-white rounded-xl shadow p-5 transition-all w-[600px] h-[620px]">
+                            <div className="bg-white rounded-xl shadow p-5 transition-all w-[600px] h-[450px]">
                                 <div className="flex justify-between">
                                     <p className="font-semibold text-lg mb-7 m-auto">Restock  Produk</p>
                                     <button onClick={() => close()} className="h-7">

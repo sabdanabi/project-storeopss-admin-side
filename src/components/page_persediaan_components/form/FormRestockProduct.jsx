@@ -69,7 +69,7 @@ export function FormRestockProduct({ id, updateProductsState }) {
                         </div>
 
                         <div className="mb-4">
-                            <label className="text-sm">Stock/unit</label>
+                            <label className="text-sm">Stock</label>
                             <br/>
                             <input
                                 placeholder="Masukkan stock produk...."

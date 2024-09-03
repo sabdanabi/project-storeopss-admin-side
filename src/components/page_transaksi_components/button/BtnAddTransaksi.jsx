@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 import { FaTrash } from "react-icons/fa"
 import {ProductSelectionTable} from "../ProductSelectionTable.jsx";
 import {Spinner} from "@chakra-ui/react";
+import {getAllProductTransaktion} from "../../../services/TransaksiService.jsx";
 
 export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
     const [selectedValueRD1, setSelectedValueRD1] = useState('');
@@ -13,6 +14,10 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
     const [selectedValueRD3, setSelectedValueRD3] = useState('');
     const [selectedProducts, setSelectedProducts] = useState([]);
     const [loading, setLoading] = useState(false);
+    const [pilihProduct, setPilihProduct] = useState([]);
+    const [isAuth, setAuth] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
+    const [error, setError] = useState("");
     const [formData, setFormData] = useState({
         note: '',
         customer_phone: '',
@@ -84,6 +89,20 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
 
     };
 
+    const fecthProductsState = async () => {
+        try {
+            setIsLoading(true);
+            const result = await getAllProductTransaktion();
+            setPilihProduct(result.data);
+            setAuth(true);
+        } catch (e) {
+            console.log(e);
+            setError(e.response.data.error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     const resetForm = () => {
         setFormData({
             note: '',
@@ -96,6 +115,7 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
         setSelectedValueRD2('');
         setSelectedValueRD3('');
         setSelectedProducts([]);
+        fecthProductsState()
     };
 
     const totalHarga = selectedProducts.reduce((total, product) => total + product.selling_price * product.count, 0);
@@ -133,7 +153,9 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                     </div>
                                     <p className="font-medium mb-2 ml-7">Pilih Produk</p>
                                     <div className="flex ml-7">
-                                        <ProductSelectionTable onProductSelect={handleProductSelect}/>
+                                        <ProductSelectionTable onProductSelect={handleProductSelect}
+                                                               pilihProduct={pilihProduct} isAuth={isAuth}
+                                                               isLoading={isLoading} error={error} fecthProductsState={fecthProductsState}/>
                                         {/*<div className="flex gap-2">*/}
                                         {/*    <BtnPilihProduk onProductSelect={handleProductSelect}/>*/}
                                         {/*</div>*/}
