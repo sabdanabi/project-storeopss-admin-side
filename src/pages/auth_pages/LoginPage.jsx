@@ -10,7 +10,7 @@ export default function LoginPage() {
                 </div>
                 <p className="text-gray-500 font-semibold text-3xl ml-14">
                     Kelola bisnis anda dengan mudah
-                    <span className="text-[#1A4F8B]">dimana pun</span> <br/> dan <span
+                    <span className="text-[#1A4F8B]"> dimana pun</span> <br/> dan <span
                     className="text-[#1A4F8B]">kapan pun</span></p>
             </div>
 
