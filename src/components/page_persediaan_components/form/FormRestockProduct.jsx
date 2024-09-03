@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { toast, ToastContainer } from 'react-toastify';
+import { toast} from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { addRestockProduct } from '../../../services/RestockService.jsx';
 import PropTypes from "prop-types";
+import {Button, Menu, MenuButton, MenuItem, MenuList} from "@chakra-ui/react";
 
 export function FormRestockProduct({ id, updateProductsState }) {
     const [formData, setFormData] = useState({
@@ -33,6 +34,11 @@ export function FormRestockProduct({ id, updateProductsState }) {
             toast.error('Produk tidak ditemukan.', { position: 'top-center', autoClose: 10000 });
         }
     };
+
+    const handleMethodPaymentChange = (method) => {
+        setFormData({ ...formData, payment_method: method });
+    };
+
 
 
     return (
@@ -143,15 +149,31 @@ export function FormRestockProduct({ id, updateProductsState }) {
                         <div className="mb-4">
                             <label className="text-sm">Metode Pembayaran</label>
                             <br/>
-                            <input
-                                placeholder="Masukkan metode pembayaran...."
-                                type="text"
-                                name="payment_method"
-                                value={formData.payment_method}
-                                onChange={handleChange}
-                                required
-                                className="border-2 w-full h-10 rounded-lg mt-3 text-xs p-3"
-                            />
+                            <Menu>
+                                <MenuButton
+                                    as={Button}
+                                    className="h-12 border bg-white hover:bg-[#1a4f8bcd] w-64"
+                                    rightIcon={
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                             strokeWidth={1.5}
+                                             stroke="currentColor" className="w-5 h-5 text-black">
+                                            <path strokeLinecap="round" strokeLinejoin="round"
+                                                  d="m19.5 8.25-7.5 7.5-7.5-7.5"/>
+                                        </svg>
+                                    }
+                                >
+                                    <div className="flex items-center px-0 py-2 group rounded-lg">
+                                    <span className="text-black font-normal text-[14px]">
+                                        {formData.payment_method || 'Metode Pembayaran'}
+                                    </span>
+                                    </div>
+                                </MenuButton>
+                                <MenuList className="max-h-60 overflow-y-auto">
+                                    <MenuItem onClick={() => handleMethodPaymentChange('Cash')}>Cash</MenuItem>
+                                    <MenuItem onClick={() => handleMethodPaymentChange('Transfer Bank')}>Transfer Bank</MenuItem>
+                                </MenuList>
+
+                            </Menu>
                         </div>
                     </div>
                 </div>
