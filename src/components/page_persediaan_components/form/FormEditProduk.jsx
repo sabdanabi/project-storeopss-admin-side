@@ -104,7 +104,7 @@ export default function FormEditProduk({ updateProductsState, id }) {
                     </div>
 
                     <div className="mb-4">
-                        <label className="text-sm">Harga Beli</label>
+                        <label className="text-sm">Harga Beli<span className="text-xs">/satuan</span></label>
                         <br />
                         <input
                             placeholder="Masukkan harga beli produk...."
@@ -117,8 +117,8 @@ export default function FormEditProduk({ updateProductsState, id }) {
                     </div>
 
                     <div className="mb-4">
-                        <label className="text-sm">Harga Jual</label>
-                        <br />
+                        <label className="text-sm">Harga Jual<span className="text-xs">/satuan</span></label>
+                        <br/>
                         <input
                             placeholder="Masukkan harga jual produk...."
                             type="number"

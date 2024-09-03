@@ -63,15 +63,17 @@ export function CardHistoryAddProduct({ addProductHistory, selectedEntry, curren
                             </div>
 
                             <div className="flex text-xs font-medium text-[#403E8A] mb-2 relative mt-3 ml-4 mr-4">
-                                <p className="text-[13px]  text-blue-gray-500">Harga Beli</p>
+                                <p className="text-[13px]  text-blue-gray-500">Harga Beli<span
+                                    className="text-xs">/satuan</span></p>
                                 <p className="absolute left-28">:</p>
-                                <p className="font-semibold text-[#8C8BB4] text-[13px] absolute left-32">Rp {selectedEntry.purchase_price} total</p>
+                                <p className="font-semibold text-[#8C8BB4] text-[13px] absolute left-32">Rp {selectedEntry.purchase_price}</p>
                             </div>
 
                             <div className="flex text-xs font-medium text-[#403E8A] mb-2 relative mt-3 ml-4 mr-4">
-                                <p className="text-[13px]  text-blue-gray-500">Harga Jual</p>
+                                <p className="text-[13px]  text-blue-gray-500">Harga Jual<span
+                                    className="text-xs">/satuan</span></p>
                                 <p className="absolute left-28">:</p>
-                                <p className="font-semibold text-[#8C8BB4] text-[13px] absolute left-32">Rp {selectedEntry.selling_price}/satuan</p>
+                                <p className="font-semibold text-[#8C8BB4] text-[13px] absolute left-32">Rp {selectedEntry.selling_price}</p>
                             </div>
 
                             <div className="flex text-xs font-medium text-[#403E8A] mb-2 relative mt-3 ml-4 mr-4">

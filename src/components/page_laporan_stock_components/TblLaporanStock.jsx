@@ -85,7 +85,7 @@ export default function TblLaporanStock({ products, selectedMonth, selectedYear,
             )}
 
             <Popup open={!!selectedProduct} onClose={() => setSelectedProduct(null)} modal nested>
-                <div className="modal bg-white p-5 px-8 rounded-lg shadow-lg w-[950px] h-[450px]">
+                <div className="modal bg-white p-5 px-8 rounded-lg shadow-lg w-[1000px] h-[450px]">
                     <div className="flex justify-between">
                         <p className="font-semibold text-lg mb-4">Detail Laporan Stock</p>
                         <button onClick={() => setSelectedProduct(null)} className="h-7 close">
@@ -114,22 +114,24 @@ export default function TblLaporanStock({ products, selectedMonth, selectedYear,
                             <h2 className="text-base font-semibold mb-2">{selectedProduct.name}</h2>
                             <p>Stock Akhir: {selectedProduct.quantity || 'N/A'}</p>
                             <p>Kategori Produk: {selectedProduct.category || 'N/A'}</p>
-                            <div className="flex">
-                                <div>
-                                    <h3 className="mt-4 font-semibold">Aktivitas Produk:</h3>
-                                    <div className="h-56 overflow-auto w-96">
+                            <div className="">
+                                <div className="flex">
+                                    <div className="h-56 overflow-auto w-[450px]">
+                                        <h3 className="mt-4 font-semibold">Transaksi:</h3>
                                         <table className="w-full">
                                             <thead className="h-10 border-b-2">
-                                            <tr className="text-sm text-[#9CA4AE]">
-                                                <td>Tanggal Transaksi</td>
-                                                <td>Jumlah Produk Transaksi</td>
+                                            <tr className="text-xs text-[#9CA4AE]">
+                                                <td className="pl-9">Tanggal</td>
+                                                <td className="pl-24">Invoice</td>
+                                                <td className="pl-9">Jumlah Produk</td>
                                             </tr>
                                             </thead>
                                             <tbody>
                                             {selectedProduct.transactions && selectedProduct.transactions.length > 0 ? (
                                                 selectedProduct.transactions.map(trans => (
-                                                    <tr key={trans.id} className="border-b-2 text-sm">
+                                                    <tr key={trans.id} className="border-b-2 text-xs">
                                                         <td className="py-2">{trans.date}</td>
+                                                        <td className="pl-16">{trans.invoice}</td>
                                                         <td className="pl-16">{trans.quantity}</td>
                                                     </tr>
                                                 ))
@@ -141,32 +143,32 @@ export default function TblLaporanStock({ products, selectedMonth, selectedYear,
                                             </tbody>
                                         </table>
                                     </div>
-                                </div>
-                                <div className=" ml-8">
+                                    <div className=" ml-8">
                                     <h3 className="mt-4 font-semibold">Restok:</h3>
-                                    <div className="h-56 overflow-auto w-96">
-                                        <table className="w-full">
-                                            <thead className="h-10 border-b-2">
-                                            <tr className="text-sm text-[#9CA4AE]">
-                                                <td>Tanggal Restock</td>
-                                                <td>Jumlah Produk Restock</td>
-                                            </tr>
-                                            </thead>
-                                            <tbody>
-                                            {selectedProduct.restock && selectedProduct.restock.length > 0 ? (
-                                                selectedProduct.restock.map(restock => (
-                                                    <tr key={restock.id} className="border-b-2 text-sm">
-                                                        <td className="py-2">{restock.date}</td>
-                                                        <td className="pl-16">{restock.quantity}</td>
-                                                    </tr>
-                                                ))
-                                            ) : (
-                                                <tr>
-                                                    <td colSpan="2">Tidak ada restok</td>
+                                        <div className="h-56 overflow-auto w-96">
+                                            <table className="w-full">
+                                                <thead className="h-10 border-b-2">
+                                                <tr className="text-xs text-[#9CA4AE]">
+                                                    <td>Tanggal Restock</td>
+                                                    <td>Jumlah Produk Restock</td>
                                                 </tr>
-                                            )}
-                                            </tbody>
-                                        </table>
+                                                </thead>
+                                                <tbody>
+                                                {selectedProduct.restock && selectedProduct.restock.length > 0 ? (
+                                                    selectedProduct.restock.map(restock => (
+                                                        <tr key={restock.id} className="border-b-2 text-sm">
+                                                            <td className="py-2">{restock.date}</td>
+                                                            <td className="pl-16">{restock.quantity}</td>
+                                                        </tr>
+                                                    ))
+                                                ) : (
+                                                    <tr>
+                                                        <td colSpan="2">Tidak ada restok</td>
+                                                    </tr>
+                                                )}
+                                                </tbody>
+                                            </table>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

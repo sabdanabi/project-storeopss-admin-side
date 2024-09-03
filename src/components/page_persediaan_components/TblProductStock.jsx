@@ -9,15 +9,15 @@ export default function TblProductStock({ products, handleDelete, refreshProduct
 
     return (
         <div className="bg-white flex border-b-[3px] border-gray-200 overflow-auto h-80">
-            <table className="w-full">
+            <table className="w-full h-10">
                 <thead className="h-10 border-b-2">
                 <tr className="text-sm text-[#9CA4AE]">
                     <td className="px-4">No</td>
                     <td>Produk</td>
                     <td><img src="/assets_img/icon_row_table.png" className="mx-3" alt="sort-icon" /></td>
-                    <td>Harga Beli</td>
+                    <td>Harga Beli<span className="text-[11px]">(Satuan)</span></td>
                     <td><img src="/assets_img/icon_row_table.png" className="mr-3" alt="sort-icon" /></td>
-                    <td>Harga Jual</td>
+                    <td>Harga Jual<span className="text-[11px]">(Satuan)</span></td>
                     <td><img src="/assets_img/icon_row_table.png" className="mr-3" alt="sort-icon" /></td>
                     <td>Stock</td>
                     <td><img src="/assets_img/icon_row_table.png" className="mr-5" alt="sort-icon" /></td>
@@ -26,7 +26,7 @@ export default function TblProductStock({ products, handleDelete, refreshProduct
                 </thead>
                 <tbody className="font-semibold text-blue-gray-700">
                 {products.map((product, index) => (
-                    <tr className="border-b-2 h-13 text-[15px]" key={product.id}>
+                    <tr className="border-b-2  text-[15px]" key={product.id}>
                         <td className="px-4">
                             <p className="mr-3 text-blue-gray-700">
                                 {(current_page - 1) * per_page + index + 1}

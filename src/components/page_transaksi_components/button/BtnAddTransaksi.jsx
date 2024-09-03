@@ -179,7 +179,7 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                                     <div key={index}
                                                          className="flex justify-between items-center border p-2 rounded-md">
                                                         <div className="flex items-center space-x-1">
-                                                            <span className="w-40">{product.name}</span>
+                                                            <span className="w-36">{product.name}</span>
                                                             <span className="text-center">{product.count}x</span>
                                                             <span className="text-center">Rp{product.selling_price}</span>
                                                         </div>

@@ -116,7 +116,7 @@ export function ProductSelectionTable({ onProductSelect, pilihProduct,
                                                     ? `${product.name.split(" ").slice(0, 2).join(" ")}...`
                                                     : product.name}
                                             </td>
-                                            <td className="text-center">{product.selling_price}</td>
+                                            <td className="text-center">{(product.selling_price).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
                                             <td className="text-center">{product.quantity}</td>
                                             <td className="text-center">
                                                 <button type="button" onClick={() => decrementCount(product.id)}

@@ -105,7 +105,7 @@ export function HistoryRestockCard({ restockHistory, pagination }) {
                             </div>
 
                             <div className="flex text-xs font-medium text-[#403E8A] mb-2 mt-3 ml-4 mr-4">
-                                <p className="text-[13px] w-[130px] text-blue-gray-500">Harga</p>
+                                <p className="text-[13px] w-[130px] text-blue-gray-500">Harga Total</p>
                                 <p className="">:</p>
                                 <p className="font-semibold text-[#8C8BB4] text-[13px] ml-5 ">{(selectedEntry.product.total_puchase_price).toLocaleString('id-ID', {
                                     style: 'currency',
