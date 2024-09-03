@@ -3,7 +3,9 @@ import BtnRestockProduk from "./button/BtnRestockProduk.jsx";
 import BtnEditPorduk from "./button/BtnEditPorduk.jsx";
 import { BtnDeleteNew } from "./button/BtnDeleteNew.jsx";
 
-export default function TblProductStock({ products, handleDelete, refreshProducts }) {
+export default function TblProductStock({ products, handleDelete, refreshProducts, pagination }) {
+    const { current_page, per_page } = pagination || {};
+
 
     return (
         <div className="bg-white flex border-b-[3px] border-gray-200 overflow-auto h-80">
@@ -23,11 +25,12 @@ export default function TblProductStock({ products, handleDelete, refreshProduct
                 </tr>
                 </thead>
                 <tbody className="font-semibold text-blue-gray-700">
-                {products.map((product) => (
+                {products.map((product, index) => (
                     <tr className="border-b-2 h-13 text-[15px]" key={product.id}>
                         <td className="px-4">
                             <p className="mr-3 text-blue-gray-700">
-                                {product.no}                            </p>
+                                {(current_page - 1) * per_page + index + 1}
+                            </p>
                         </td>
                         <td>
                             <div className="flex py-3">

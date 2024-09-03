@@ -3,10 +3,9 @@ import { Spinner, Tabs, TabList, TabPanels, Tab, TabPanel } from "@chakra-ui/rea
 import DescPageComponent from "../components_reused/DescPageComponent.jsx";
 import TblProductStock from "./TblProductStock.jsx";
 import PropTypes from "prop-types";
-import { ToastContainer } from "react-toastify";
 import { SearchBarStock } from "./SearchBarStock.jsx";
 export default function TblStock({ products, handleDelete, updateProductsState, handleSearchChange, handleSearchKeyDown,
-                                     searchQuery, exportToExcel, error, isAuth, isLoading, onSearchClick, stockFilter, onStockFilterChange, category, onCategoryChange }) {
+                                     searchQuery, exportToExcel, error, isAuth, pagination, isLoading, onSearchClick, onStockFilterChange, category, onCategoryChange }) {
     const [selectedTab, setSelectedTab] = useState(0);
 
     const handleTabChange = (index) => {
@@ -70,33 +69,33 @@ export default function TblStock({ products, handleDelete, updateProductsState, 
                         <TabPanels>
                             <TabPanel>
                                 <TblProductStock
+                                    pagination={pagination}
                                     products={products}
                                     handleDelete={handleDelete}
-                                    stockFilter={stockFilter}
                                     refreshProducts={updateProductsState}
                                 />
                             </TabPanel>
                             <TabPanel>
                                 <TblProductStock
+                                    pagination={pagination}
                                     products={products}
                                     handleDelete={handleDelete}
-                                    stockFilter={stockFilter}
                                     refreshProducts={updateProductsState}
                                 />
                             </TabPanel>
                             <TabPanel>
                                 <TblProductStock
+                                    pagination={pagination}
                                     products={products}
                                     handleDelete={handleDelete}
-                                    stockFilter={stockFilter}
                                     refreshProducts={updateProductsState}
                                 />
                             </TabPanel>
                             <TabPanel>
                                 <TblProductStock
+                                    pagination={pagination}
                                     products={products}
                                     handleDelete={handleDelete}
-                                    stockFilter={stockFilter}
                                     refreshProducts={updateProductsState}
                                 />
                             </TabPanel>
@@ -138,5 +137,7 @@ TblStock.propTypes = {
     isLoading: PropTypes.bool,
     onSearchClick: PropTypes.func,
     stockFilter: PropTypes.string,
+    category: PropTypes.string,
     onStockFilterChange: PropTypes.func,
+    onCategoryChange: PropTypes.func,
 };

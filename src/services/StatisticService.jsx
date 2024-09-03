@@ -6,7 +6,7 @@ const baseUrl = import.meta.env.VITE_BASE_URL;
 const token = localStorage.getItem("token");
 
 
-const getStatisticProductSell = async (year = null, month = null, sort = 'asc', page = 1, stockCategory = '') => {
+const getStatisticProductSell = async (year = null, month = null, sort = 'desc', page = 1, stockCategory = '') => {
     try {
         const response = await axios.get(`${baseUrl}/api/transactions/income/statistic`, {
             params: {

@@ -42,7 +42,7 @@ export default function StatisticPage() {
     const fetchData = async (page = 1, year = null, month = null, category = '') => {
         setLoading(true);
         try {
-            const result = await getStatisticProductSell(year, month, 'asc', page, category);
+            const result = await getStatisticProductSell(year, month, 'desc', page, category);
             const products = result.data.products;
             const sortedProducts = [...products].sort((a, b) => b.quantity - a.quantity);
             const mostSoldProduct = sortedProducts[0];

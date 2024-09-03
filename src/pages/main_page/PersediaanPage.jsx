@@ -77,11 +77,7 @@ export default function PersediaanPage() {
         try {
             setLoading(true);
             const result = await getAllProduct(page, searchQuery, stockFilter, category);
-            const productsWithIndex = result.data.map((product, index) => ({
-                ...product,
-                no: (page - 1) * pagination.per_page + index + 1
-            }));
-            setProducts(productsWithIndex);
+            setProducts(result.data);
             setAuth(true);
             setPagination(result.meta);
 

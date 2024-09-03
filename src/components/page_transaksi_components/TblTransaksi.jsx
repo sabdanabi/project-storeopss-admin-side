@@ -46,10 +46,14 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                             <tbody className="font-semibold">
                             {filteredTransaksi.map((transaction, index) => (
                                 <tr className="border-b-2 h-10" key={transaction.id}>
-                                    <td className="px-4"><p className="mr-3 text-blue-gray-700">{(current_page - 1) * per_page + index + 1}</p></td>
+                                    <td className="px-4"><p className="mr-3 text-blue-gray-700">
+                                        {(current_page - 1) * per_page + index + 1}
+                                    </p></td>
                                     <td>
                                         <div className="flex py-3">
-                                            <p className="mr-24 text-blue-gray-700">{transaction.customer.name ?? "Customer Name"}</p>
+                                            <p className="mr-24 text-blue-gray-700">
+                                                {transaction.customer.name ?? "Customer Name"}
+                                            </p>
                                         </div>
                                     </td>
                                     <td></td>
