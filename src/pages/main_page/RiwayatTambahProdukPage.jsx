@@ -56,11 +56,7 @@ export default function RiwayatTambahProdukPage() {
         }
     };
 
-    const filteredHistory = addProductHistory.filter((entry) => {
-        const matchesName = entry.name.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesDate = entry.date.includes(searchQuery);
-        return matchesName || matchesDate;
-    });
+
 
     const fetchAddProductHistory = async (page = 1, range = null, searchQuery = '') => {
         try {
@@ -138,9 +134,9 @@ export default function RiwayatTambahProdukPage() {
                                     />
                                 </div>
                             ) : isAuth ? (
-                                filteredHistory.length > 0 ? (
+                                addProductHistory.length > 0 ? (
                                     <CardHistoryAddProduct
-                                        addProductHistory={filteredHistory}
+                                        addProductHistory={addProductHistory}
                                         pagination={pagination}
                                         selectedEntry={selectedEntry}
                                         setSelectedEntry={setSelectedEntry}

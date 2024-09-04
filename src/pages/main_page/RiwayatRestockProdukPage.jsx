@@ -53,11 +53,11 @@ export default function RiwayatRestockProdukPage() {
         fetchRestockHistory(1, range === 'Semua' ? '' : range, searchQuery);
     };
 
-    const filteredHistory = restockHistory.filter((entry) => {
-        const matchesName = entry.product.name.toLowerCase().includes(searchQuery.toLowerCase());
-        const matchesDate = entry.date.includes(searchQuery);
-        return matchesName || matchesDate;
-    });
+    // const filteredHistory = restockHistory.filter((entry) => {
+    //     const matchesName = entry.product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    //     const matchesDate = entry.date.includes(searchQuery);
+    //     return matchesName || matchesDate;
+    // });
 
     const fetchRestockHistory = async (page = 1,  range = null, searchQuery = '') => {
         try {
@@ -138,8 +138,8 @@ export default function RiwayatRestockProdukPage() {
                                     />
                                 </div>
                             ) : isAuth ? (
-                                filteredHistory.length > 0 ? (
-                                    <HistoryRestockCard restockHistory={filteredHistory} pagination={pagination} />
+                                restockHistory.length > 0 ? (
+                                    <HistoryRestockCard restockHistory={restockHistory} pagination={pagination} />
                                 ) : (
                                     <div className="flex-col items-center justify-center">
                                         <img src="/assets_img/notfound_transaction_img.png" className="m-auto mt-10 w-[200px]" />

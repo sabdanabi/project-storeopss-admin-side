@@ -78,12 +78,12 @@ export default function NotaPage() {
         fetchNotaTransaksi(1, range, selectedPaid, searchQuery);
     };
 
-    const filteredNota = nota.filter((entry) => {
-        const customerName = entry.customer?.name || '';
-        const nameMatch = customerName.toLowerCase().includes(searchQuery.toLowerCase());
-        const dateMatch = entry.date?.includes(searchQuery) || false;
-        return nameMatch || dateMatch;
-    });
+    // const filteredNota = nota.filter((entry) => {
+    //     const customerName = entry.customer?.name || '';
+    //     const nameMatch = customerName.toLowerCase().includes(searchQuery.toLowerCase());
+    //     const dateMatch = entry.date?.includes(searchQuery) || false;
+    //     return nameMatch || dateMatch;
+    // });
 
     const fetchNotaTransaksi = async (page = 1, range = null, paid = null, searchQuery = '') => {
         try {
@@ -180,7 +180,7 @@ export default function NotaPage() {
                                     </tr>
                                     </thead>
                                     <tbody className="text-sm font-semibold text-blue-gray-700">
-                                    {filteredNota.map((nota, index) => (
+                                    {nota.map((nota, index) => (
                                         <tr className="border-b-2 h-10 text-xs" key={`${nota.id}-${index}`}>
                                             <td className="px-4">{(current_page - 1) * per_page + index + 1}</td>
                                             <td className="px-4 py-2">{nota.customer.name}</td>
@@ -292,9 +292,17 @@ export default function NotaPage() {
                                                             {selectedNota.payment_method}
                                                         </p>
                                                     </div>
+                                                    <div
+                                                        className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
+                                                        <p className="font-semibold text-blue-gray-700 bold">Opsi
+                                                            Pengambilan</p>
+                                                        <p className="text-[15px] font-semibold text-blue-gray-700 bold">
+                                                            {selectedNota.products[0].option}
+                                                        </p>
+                                                    </div>
                                                     <div id="status"
                                                          className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-2 relative ml-4 mb-3 mr-4">
-                                                        <p className="font-semibold text-blue-gray-700 bold">Status</p>
+                                                        <p className="font-semibold text-blue-gray-700 bold">Status Pembelian</p>
                                                         <div className={` 
                                             ${selectedNota.status}`}>
                                                             <p className={`text-sm  

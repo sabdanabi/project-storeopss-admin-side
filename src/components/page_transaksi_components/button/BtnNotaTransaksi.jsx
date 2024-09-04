@@ -101,7 +101,7 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
                                 <div className="flex ml-4 mr-5 mt-3 justify-between items-center">
                                     <p className="font-semibold text-[17px] text-blue-gray-700 bold">Toko Adel Jaya</p>
                                     <p className={`text-[14px] font-semibold ${filteredTransaksi.is_finished ? "text-[#2B713A]" : "text-[#7A3636]"}`}>
-                                        { filteredTransaksi.is_finished ? "Selesai" : "Belum selesai" }
+                                        {filteredTransaksi.is_finished ? "Selesai" : "Belum selesai"}
                                     </p>
                                 </div>
                                 <div
@@ -155,9 +155,16 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
                                         {filteredTransaksi.payment_method}
                                     </p>
                                 </div>
+                                <div
+                                    className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
+                                    <p className="font-semibold text-blue-gray-700 bold">Opsi Pengambilan</p>
+                                    <p className="text-[15px] font-semibold text-blue-gray-700 bold">
+                                        {filteredTransaksi.products[0].option}
+                                    </p>
+                                </div>
                                 <div id="status"
                                      className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-2 relative ml-4 mb-3 mr-4">
-                                    <p className="font-semibold text-blue-gray-700 bold">Status</p>
+                                    <p className="font-semibold text-blue-gray-700 bold">Status Transaksi</p>
                                     <div className={` 
                                             ${filteredTransaksi.status}`}>
                                         <p className={`text-sm  
@@ -167,7 +174,7 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
                             </div>
                         </div>
                         <button onClick={() => printNotaTransaksi(close)}
-                                className="flex items-center px-7 py-2 bg-[#1A4F8B] ml-40 rounded-lg shadow-sm hover:bg-gray-50 hover:border-[#1A4F8B] hover:border-2">
+                                className="flex items-center px-7 py-2 bg-[#1A4F8B] group ml-40 rounded-lg shadow-sm hover:bg-gray-50 hover:border-[#1A4F8B] hover:border-2">
                             <span className="text-white font-medium text-sm group-hover:text-[#1A4F8B]">Cetak</span>
                         </button>
                     </div>
@@ -180,18 +187,21 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
 BtnNotaTransaksi.propTypes = {
     filteredTransaksi: PropTypes.shape({
         customer: PropTypes.shape({
-            name: PropTypes.string,
-        }),
-        date: PropTypes.string,
-        status: PropTypes.string,
-        payment_method: PropTypes.string,
+            name: PropTypes.string.isRequired,
+        }).isRequired,
+        date: PropTypes.string.isRequired,
+        status: PropTypes.string.isRequired,
+        payment_method: PropTypes.string.isRequired,
         additional_cost: PropTypes.number,
+        is_finished: PropTypes.bool.isRequired, // Added validation for is_finished
+        invoice: PropTypes.string.isRequired, // Added validation for invoice
         products: PropTypes.arrayOf(
             PropTypes.shape({
-                name: PropTypes.string,
-                quantity: PropTypes.number,
-                price: PropTypes.number,
-            })
+                name: PropTypes.string.isRequired,
+                quantity: PropTypes.number.isRequired,
+                price: PropTypes.number.isRequired,
+                option: PropTypes.string.isRequired,
+            }).isRequired
         ).isRequired,
     }).isRequired,
 };

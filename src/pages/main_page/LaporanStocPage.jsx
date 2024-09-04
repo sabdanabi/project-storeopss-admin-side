@@ -21,11 +21,14 @@ export default function LaporanStockPage() {
     const [isSearch, setIsSearch] = useState(false);
 
     const handlePageChange = (page) => {
-        fetchRecapProducts(page);
+        fetchRecapProducts(page, selectedYear, selectedMonth, searchQuery);
     };
 
     const handleSearchChange = (e) => {
         setSearchQuery(e.target.value);
+        if (e.target.value === '') {
+            fetchRecapProducts(1, selectedYear, selectedMonth);
+        }
     };
 
     const onSearchClick = () => {
@@ -69,19 +72,13 @@ export default function LaporanStockPage() {
         }
     };
 
-
-
-    const filteredProducts = products.filter((product) =>
-        product.name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
-
     return (
         <div className="flex h-screen overflow-hidden bg-gray-100">
             <SideNavbarComponent />
             <div className="flex flex-col flex-1 w-full">
                 <PartTop />
                 <NamePageComponent nama={"Laporan Stock"} subtitle={"dapatkan laporan stock anda secara real time"} />
-                <main className="flex-1 px-10 pt-5 ">
+                <main className="flex-1 px-10 pt-5">
                     <div className="bg-white rounded-t-lg overflow-hidden border-[3px] border-gray-200 mb-7">
                         <DescPageComponent
                             desc={`Laporan stok ini mencakup pada ${selectedMonth} ${selectedYear}`}/>
@@ -104,7 +101,7 @@ export default function LaporanStockPage() {
                                     />
                                 </div>
                             ) : isAuth ? (
-                                <TblLaporanStock pagination={pagination} products={filteredProducts} selectedMonth={selectedMonth} selectedYear={selectedYear}/>
+                                <TblLaporanStock pagination={pagination} products={products} selectedMonth={selectedMonth} selectedYear={selectedYear}/>
                             ) : (
                                 <div className="flex items-center justify-center h-full w-full">
                                     <p className="text-xl">{error}</p>

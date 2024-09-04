@@ -11,7 +11,7 @@ import * as XLSX from 'xlsx';
 import { getAllProductTransaktion } from "../../services/TransaksiService.jsx";
 
 export default function PersediaanPage() {
-    const [products, setProducts] = useState([]);
+    const [products, setProducts] = useState([]); // Produk yang dimuat dari server
     const [isAuth, setAuth] = useState(false);
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -19,15 +19,19 @@ export default function PersediaanPage() {
     const [stockFilter, setStockFilter] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [category, setCategory] = useState('');
+    const [currentPage, setCurrentPage] = useState(1); // Halaman saat ini
 
     useEffect(() => {
-        if (searchQuery === '') {
-            fetchProducts(1, '', stockFilter, category);
-        }
-    }, [searchQuery, stockFilter, category]);
+        fetchProducts(1, '', stockFilter, category); // Memuat produk pertama kali
+    }, [stockFilter, category]);
 
     const updateProductState = () => {
-        fetchProducts(pagination.current_page, searchQuery, stockFilter, category);
+        fetchProducts(currentPage, searchQuery, stockFilter, category);
+    };
+
+    const handleStockFilterChange = (filter) => {
+        setStockFilter(filter);
+        fetchProducts(1, searchQuery, filter, category);
     };
 
     const handleSearchChange = (e) => {
@@ -41,13 +45,8 @@ export default function PersediaanPage() {
 
     const handleSearchKeyDown = (e) => {
         if (e.key === 'Enter') {
-            fetchProducts(1, searchQuery, stockFilter, category);
+            onSearchClick(); // Pencarian hanya dilakukan saat menekan tombol "Enter"
         }
-    };
-
-    const handleStockFilterChange = (filter) => {
-        setStockFilter(filter);
-        fetchProducts(1, searchQuery, filter, category);
     };
 
     const handleCategoryChange = (selectedCategory) => {
@@ -55,16 +54,12 @@ export default function PersediaanPage() {
     };
 
     const onSearchClick = () => {
-        fetchProducts(1, searchQuery, stockFilter);
+        fetchProducts(1, searchQuery, stockFilter, category); // Melakukan pencarian produk ke server
     };
 
-    const filteredHistory = products.filter((entry) => {
-        const nameMatch = entry.name.toLowerCase().includes(searchQuery.toLowerCase());
-        return nameMatch;
-    });
-
     const handlePageChange = (page) => {
-        fetchProducts(page);
+        setCurrentPage(page);
+        fetchProducts(page, searchQuery, stockFilter, category); // Memuat produk berdasarkan halaman baru
     };
 
     const handleDelete = async (productId) => {
@@ -73,11 +68,11 @@ export default function PersediaanPage() {
         toast.success("Data berhasil dihapus!");
     };
 
-    const fetchProducts = async (page = 1, searchQuery = '', stockFilter = '',  category = '') => {
+    const fetchProducts = async (page = 1, searchQuery = '', stockFilter = '', category = '') => {
         try {
             setLoading(true);
             const result = await getAllProduct(page, searchQuery, stockFilter, category);
-            setProducts(result.data);
+            setProducts(result.data); // Mengupdate semua produk yang dimuat dari server
             setAuth(true);
             setPagination(result.meta);
 
@@ -134,7 +129,7 @@ export default function PersediaanPage() {
 
                 <div>
                     <TblStock
-                        products={filteredHistory}
+                        products={products} // Menggunakan produk yang sudah dimuat dari server
                         handleDelete={handleDelete}
                         searchQuery={searchQuery}
                         updateProductsState={updateProductState}

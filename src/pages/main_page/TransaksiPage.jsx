@@ -17,14 +17,12 @@ export default function TransaksiPage() {
     const [selectedPaid, setSelectedPaid] = useState(null);
 
     useEffect(() => {
-        if (searchQuery === '') {
-            fetchDataTransaksi(1, selectedRange, selectedPaid, '');
-        }
-
-    }, [selectedRange, selectedPaid, searchQuery]);
+        // Fetch data when component mounts or filters change
+        fetchDataTransaksi(1, selectedRange, selectedPaid, searchQuery);
+    }, [selectedRange, selectedPaid]);
 
     const handlePageChange = (page) => {
-        fetchDataTransaksi(page);
+        fetchDataTransaksi(page, selectedRange, selectedPaid, searchQuery);
     };
 
     const updateProductState = () => {
@@ -35,6 +33,7 @@ export default function TransaksiPage() {
         setSelectedPaid(paid);
         fetchDataTransaksi(1, selectedRange, paid, searchQuery);
     };
+
     const handleRangeChange = (range) => {
         setSelectedRange(range);
         fetchDataTransaksi(1, range, selectedPaid, searchQuery);
@@ -44,6 +43,7 @@ export default function TransaksiPage() {
         const query = e.target.value;
         setSearchQuery(query);
 
+        // Automatically load products when the search query is empty
         if (query === '') {
             fetchDataTransaksi(1, selectedRange, selectedPaid, '');
         }
@@ -58,15 +58,6 @@ export default function TransaksiPage() {
             fetchDataTransaksi(1, selectedRange, selectedPaid, searchQuery);
         }
     };
-
-    const filteredTransaksi = transaksi.filter((entry) => {
-        const customerName = entry.customer?.name || '';
-        const invoice = entry.invoice || '';
-        const nameMatch = customerName.toLowerCase().includes(searchQuery.toLowerCase());
-        const invoiceMatch = invoice.toLowerCase().includes(searchQuery.toLowerCase());
-        const dateMatch = entry.date?.includes(searchQuery) || false;
-        return nameMatch || invoiceMatch || dateMatch;
-    });
 
     const fetchDataTransaksi = async (page = 1, range = null, paid = null, searchQuery = '') => {
         try {
@@ -87,14 +78,14 @@ export default function TransaksiPage() {
         <div className="flex h-screen overflow-hidden bg-gray-100">
             <SideNavbarComponent />
             <div className="flex flex-col flex-1 w-full overflow-hidden">
-                <PartTop/>
-                <BtnAddTransaksi addIncome={addIncome} updateProductsState={fetchDataTransaksi}/>
+                <PartTop />
+                <BtnAddTransaksi addIncome={addIncome} updateProductsState={updateProductState} />
 
                 <div>
                     <TblTransaksi
                         handleSearchChange={handleSearchChange}
                         searchQuery={searchQuery}
-                        filteredTransaksi={filteredTransaksi}
+                        filteredTransaksi={transaksi}
                         updateProductsState={updateProductState}
                         onFilterChange={onFilterChange}
                         pagination={pagination}
@@ -103,13 +94,13 @@ export default function TransaksiPage() {
                         isLoading={isLoading}
                         handleRangeChange={handleRangeChange}
                         selectedRange={selectedRange}
-                        handleStatusFilterChange={onFilterChange}
                         handleSearchClick={handleSearchClick}
                         handleKeyDown={handleKeyDown}
                     />
-                    <PaginationTransaksiProduk pagination={pagination} onPageChange={handlePageChange}/>
+                    <PaginationTransaksiProduk pagination={pagination} onPageChange={handlePageChange} />
                 </div>
             </div>
         </div>
     );
 }
+
