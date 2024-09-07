@@ -59,10 +59,20 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                                     <td></td>
                                     <td><p className="text-blue-gray-700 lg:text-sm">{transaction.date}</p></td>
                                     <td></td>
-                                    <td><p className="text-blue-gray-700 lg:text-sm"> {(transaction.selling_price).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</p></td>
+                                    <td>
+                                        <p className="text-blue-gray-700 lg:text-sm">
+                                            {transaction.selling_price
+                                                ? (transaction.selling_price).toLocaleString('id-ID', {
+                                                    style: 'currency',
+                                                    currency: 'IDR'
+                                                })
+                                                : "Harga tidak tersedia"}
+                                        </p>
+                                    </td>
                                     <td></td>
                                     <td>
-                                        <div className={`flex justify-center lg:p-1 rounded ${transaction.status === 'Belum lunas' ? 'bg-[#FFA9B3]' : 'bg-[#BEDBCF]'}`}>
+                                        <div
+                                            className={`flex justify-center lg:p-1 rounded ${transaction.status === 'Belum lunas' ? 'bg-[#FFA9B3]' : 'bg-[#BEDBCF]'}`}>
                                             <p className={`xl:text-sm lg:text-xs ${transaction.status === 'Belum lunas' ? 'text-[#7A3636]' : 'text-[#2B713A]'}`}>
                                                 {transaction.status}
                                             </p>

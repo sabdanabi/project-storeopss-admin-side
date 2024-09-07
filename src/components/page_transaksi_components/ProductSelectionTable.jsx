@@ -4,9 +4,8 @@ import {toast} from "react-toastify";
 import PropTypes from "prop-types";
 
 export function ProductSelectionTable({ onProductSelect, pilihProduct,
-                                          fecthProductsState, isLoading, error, isAuth }) {
-    const [counts, setCounts] = useState({});
-    const [checklist, setChecklist] = useState({});
+                                          fecthProductsState, isLoading, error, isAuth, setChecklist, checklist, toggleChecklist, setCounts, counts }) {
+
     const [searchQuery, setSearchQuery] = useState('');
 
 
@@ -52,16 +51,6 @@ export function ProductSelectionTable({ onProductSelect, pilihProduct,
         });
     };
 
-    const toggleChecklist = (id) => {
-        if (counts[id] > 0) {
-            setChecklist((prevChecklist) => ({
-                ...prevChecklist,
-                [id]: !prevChecklist[id]
-            }));
-        } else {
-            toast.error("Tentukan quantity sebelum memilih produk.");
-        }
-    };
 
     const handleSelect = () => {
         const selectedProducts = pilihProduct.filter((product) => checklist[product.id]).map((product) => ({

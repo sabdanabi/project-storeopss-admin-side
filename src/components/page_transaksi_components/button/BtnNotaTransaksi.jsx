@@ -12,7 +12,7 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
             const printWindow = window.open("", "_blank");
             printWindow.document.write(`
                 <html>
-                    <head>
+                    <head> 
                         <style>
                             @media print {
                                 body, html {

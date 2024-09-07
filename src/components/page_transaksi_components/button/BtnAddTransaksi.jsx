@@ -18,6 +18,8 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
     const [isAuth, setAuth] = useState(false);
     const [isLoading, setIsLoading] = useState(true);
     const [error, setError] = useState("");
+    const [counts, setCounts] = useState({});
+    const [checklist, setChecklist] = useState({});
     const [formData, setFormData] = useState({
         note: '',
         customer_phone: '',
@@ -103,6 +105,37 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
         }
     };
 
+    const toggleChecklist = (id) => {
+        if (counts[id] > 0) {
+            setChecklist((prevChecklist) => {
+                const updatedChecklist = {
+                    ...prevChecklist,
+                    [id]: !prevChecklist[id]
+                };
+
+                if (updatedChecklist[id]) {
+                    const selectedProduct = pilihProduct.find(product => product.id === id);
+                    if (selectedProduct) {
+                        setSelectedProducts(prevProducts => {
+                            const existingProduct = prevProducts.find(product => product.id === id);
+                            if (existingProduct) {
+                                return prevProducts.map(product =>
+                                    product.id === id ? { ...product, count: product.count + counts[id] } : product
+                                );
+                            } else {
+                                return [...prevProducts, { ...selectedProduct, count: counts[id] }];
+                            }
+                        });
+                    }
+                }
+
+                return updatedChecklist;
+            });
+        } else {
+            toast.error("Tentukan quantity sebelum memilih produk.");
+        }
+    };
+
     const resetForm = () => {
         setFormData({
             note: '',
@@ -155,12 +188,14 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                     <div className="flex ml-7">
                                         <ProductSelectionTable onProductSelect={handleProductSelect}
                                                                pilihProduct={pilihProduct} isAuth={isAuth}
-                                                               isLoading={isLoading} error={error} fecthProductsState={fecthProductsState}/>
+                                                               isLoading={isLoading} error={error}
+                                                               fecthProductsState={fecthProductsState}
+                                                               setCounts={setCounts} checklist={checklist}
+                                                               counts={counts} setChecklist={setChecklist}
+                                                               toggleChecklist={toggleChecklist}/>
                                         {/*<div className="flex gap-2">*/}
                                         {/*    <BtnPilihProduk onProductSelect={handleProductSelect}/>*/}
                                         {/*</div>*/}
-                                        <div className="text-sm">
-                                        </div>
                                         <div className="p-5 w-[335px] h-[490px] shadow-xl ml-5 flex flex-col"
                                             style={{
                                                 scrollbarWidth: 'thin',
@@ -215,17 +250,31 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                                         className="border-b-2 h-[40px] border-[#828282] flex mb-4 w-full mt-2 rounded-[8px]"
                                                     />
                                                 </div>
-                                                <label className="text-sm">Kontak Opsional</label>
-                                                <div>
-                                                    <div className="flex">
-                                                        <input
-                                                            type="number"
-                                                            name="customer_phone"
-                                                            value={formData.customer_phone}
-                                                            onChange={handleChange}
-                                                            className="border-b-2 h-[40px] border-[#828282] flex mb-4 w-full mt-2 rounded-[8px]"
-                                                        />
-                                                    </div>
+                                                <div className="flex gap-28">
+                                                    <label className="text-sm">Kontak</label>
+                                                    <label className="text-sm ml-1">Nominal Tambahan</label>
+                                                </div>
+                                                <div className="flex gap-5">
+                                                        <div className="flex">
+                                                            <input
+                                                                type="number"
+                                                                name="customer_phone"
+                                                                placeholder="Opsinal..."
+                                                                value={formData.customer_phone}
+                                                                onChange={handleChange}
+                                                                className="border-b-2 h-[40px] border-[#828282] flex mb-4 w-full mt-2 rounded-[8px] text-xs"
+                                                            />
+                                                        </div>
+                                                        <div className="flex">
+                                                            <input
+                                                                type="number"
+                                                                placeholder="Opsinal..."
+                                                                // name="customer_phone"
+                                                                // value={formData.customer_phone}
+                                                                // onChange={handleChange}
+                                                                className="border-b-2 h-[40px] border-[#828282] flex mb-4 w-full mt-2 rounded-[8px] text-xs"
+                                                            />
+                                                        </div>
                                                 </div>
                                                 <label className="text-sm">Metode Pembayaran</label>
                                                 <div>

@@ -17,7 +17,6 @@ export default function TransaksiPage() {
     const [selectedPaid, setSelectedPaid] = useState(null);
 
     useEffect(() => {
-        // Fetch data when component mounts or filters change
         fetchDataTransaksi(1, selectedRange, selectedPaid, searchQuery);
     }, [selectedRange, selectedPaid]);
 
