@@ -1,36 +1,54 @@
-import {Bar, BarChart, CartesianGrid, ResponsiveContainer, Tooltip, XAxis, YAxis} from "recharts";
+import {
+    Bar,
+    BarChart,
+    CartesianGrid,
+    Legend,
+    Line,
+    LineChart,
+    ResponsiveContainer,
+    Tooltip,
+    XAxis,
+    YAxis
+} from "recharts";
 import PropTypes from "prop-types";
 
-export function BarChartProductSell({data}) {
-
+export function BarChartProductSell({ data }) {
     const chartData = data.map(product => ({
         name: product.name,
         quantity: product.quantity
     }));
 
-    const customTooltipFormatter = (value, name,) => {
-        return [`${value} Produk Terjual`, name];
+    // Function to truncate long names and add ellipsis
+    const truncateLabel = (label) => {
+        const words = label.split(' ');
+        if (words.length > 2) {
+            return words.slice(0, 2).join(' ') + '...';
+        }
+        return label;
     };
 
     return (
-        <div className="h-[390px] w-full">
-            <ResponsiveContainer width="100%" height="100%" >
-                <BarChart
-                    width={500}
-                    height={400}
-                    data={chartData}
-                    margin={{right: 40}}
-                >
-                    <CartesianGrid strokeDasharray="3 3"/>
-                    <XAxis dataKey="name" fontSize="10px" tickFormatter={(value) => value.length > 10 ? `${value.substring(0, 10)}...` : value} />
-                    <YAxis/>
-                    <Tooltip formatter={customTooltipFormatter} />
-                    <legend/>
-                    <Bar dataKey="quantity" fill="#2762A4" />
-                </BarChart>
+        <div className="h-[370px] w-full">
+            <ResponsiveContainer>
+                <LineChart data={chartData} margin={{ top: 5, right: 30, bottom: 20 }}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis
+                        className="text-xs"
+                        dataKey="name"
+                        angle={-45}
+                        textAnchor="end"
+                        interval={0}
+                        dy={10} // Adjust as needed
+                        tickFormatter={truncateLabel} // Apply label truncation
+                    />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Line type="monotone" dataKey="quantity" stroke="#8884d8" />
+                </LineChart>
             </ResponsiveContainer>
         </div>
-    )
+    );
 }
 
 BarChartProductSell.propTypes = {

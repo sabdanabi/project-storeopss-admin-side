@@ -5,7 +5,8 @@ import { BtnNotaTransaksi } from "./button/BtnNotaTransaksi.jsx";
 import { BtnEditTransaksi } from "./button/BtnEditTransaksi.jsx";
 import { Spinner } from "@chakra-ui/react";
 
-export default function TblTransaksi({ handleSearchChange, searchQuery, filteredTransaksi, updateProductsState, handleStatusFilterChange,pagination, isLoading, isAuth, error, handleRangeChange, selectedRange, onFilterChange, handleSearchClick, handleKeyDown }) {
+export default function TblTransaksi({ handleSearchChange, searchQuery, filteredTransaksi, updateProductsState, handleStatusFilterChange,pagination, isLoading, isAuth, error,
+                                         handleRangeChange, selectedRange, onFilterChange, handleSearchClick, handleKeyDown, fromDate, handleFromDateChange, toDate, handleToDateChange }) {
     const { current_page, per_page } = pagination || {};
 
     return (
@@ -14,7 +15,11 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                 <DescPageComponent desc={"Selamat datang di admin dashboard Anda."} />
                 <FilterTransaksiComponents handleSearchChange={handleSearchChange} searchQuery={searchQuery}
                                            handleStatusFilterChange={handleStatusFilterChange} handleRangeChange={handleRangeChange}
-                                           selectedRange={selectedRange} onFilterChange={onFilterChange} handleSearchClick={handleSearchClick} handleKeyDown={handleKeyDown}/>
+                                           selectedRange={selectedRange} onFilterChange={onFilterChange}
+                                           handleSearchClick={handleSearchClick} handleKeyDown={handleKeyDown}
+                                           handleFromDateChange={handleFromDateChange}
+                                           handleToDateChange={handleToDateChange}
+                                           fromDate={fromDate} toDate={toDate}/>
 
                 <div className="bg-white border-b-[3px] border-gray-200 overflow-y-auto h-80">
                     {isLoading ? (
@@ -61,8 +66,8 @@ export default function TblTransaksi({ handleSearchChange, searchQuery, filtered
                                     <td></td>
                                     <td>
                                         <p className="text-blue-gray-700 lg:text-sm">
-                                            {transaction.selling_price
-                                                ? (transaction.selling_price).toLocaleString('id-ID', {
+                                            {transaction.total_price
+                                                ? (transaction.total_price).toLocaleString('id-ID', {
                                                     style: 'currency',
                                                     currency: 'IDR'
                                                 })

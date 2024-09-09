@@ -17,31 +17,39 @@ export function HistoryRestockCard({ restockHistory, pagination }) {
         <>
             <table className="w-full h-12">
                 <thead className="h-10 border-b-2">
-                    <tr className="text-sm text-[#9CA4AE]">
-                        <td className="px-4">No</td>
-                        <td className="px-4">Nama Produk</td>
-                        <td className="px-4">Tanggal</td>
-                        <td className="px-4">Pemasok</td>
-                        <td className="px-4">Jumlah</td>
-                        <td className="px-4">Aksi</td>
-                    </tr>
+                <tr className="text-xs text-[#9CA4AE]">
+                    <td className="px-4">No</td>
+                    <td className="px-4">Nama Produk</td>
+                    <td className="px-4">Pemasok</td>
+                    <td className="px-4">Alamat Pemasok</td>
+                    <td className="px-4">Kontak</td>
+                    <td className="px-4">Tanggal</td>
+                    <td className="px-4">Metode Pembayaran</td>
+                    <td className="px-4">Jumlah Stock</td>
+                    <td className="px-4">Harga Total</td>
+                    {/*<td className="px-4">Aksi</td>*/}
+                </tr>
                 </thead>
                 <tbody className="font-semibold text-[15px] text-blue-gray-700">
                     {restockHistory.map((entry, index) => (
                         <tr className="border-b-2 h-13 text-xs" key={`${entry.id}-${index}`}>
                             <td className="px-4">{(current_page - 1) * per_page + index + 1}</td>
                             <td className="py-2 px-4 border-b">{entry.product.name}</td>
-                            <td className="py-2 px-4 border-b">{entry.date}</td>         
-                            <td className="py-2 px-4 border-b">{entry.supplier.name}</td>          
+                            <td className="py-2 px-4 border-b">{entry.supplier.name}</td>
+                            <td className="py-2 px-4 border-b">{entry.supplier.address}</td>
+                            <td className="py-2 px-4 border-b">{entry.supplier.phone}</td>
+                            <td className="py-2 px-4 border-b">{entry.date}</td>
+                            <td className="py-2 px-4 border-b">{entry.payment_method}</td>
                             <td className="py-2 px-4 border-b">{entry.product.new_quantity}</td>
-                            <td className="py-2 px-4 border-b">
-                                <button
-                                    className="text-[10px] hover:bg-[#d7e0e8] text-blue-gray-500 bg-[#dde6efc6] h-[33px] w-[68px] rounded-lg font-semibold"
-                                    onClick={() => handleDetailClick(entry)}
-                                >
-                                    Detail
-                                </button>
-                            </td>
+                            <td className="py-2 px-4 border-b">{entry.product.total_puchase_price}</td>
+                            {/*<td className="py-2 px-4 border-b">*/}
+                            {/*    <button*/}
+                            {/*        className="text-[10px] hover:bg-[#d7e0e8] text-blue-gray-500 bg-[#dde6efc6] h-[33px] w-[68px] rounded-lg font-semibold"*/}
+                            {/*        onClick={() => handleDetailClick(entry)}*/}
+                            {/*    >*/}
+                            {/*        Detail*/}
+                            {/*    </button>*/}
+                            {/*</td>*/}
                         </tr>
                     ))}
                 </tbody>

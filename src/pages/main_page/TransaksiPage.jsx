@@ -15,53 +15,62 @@ export default function TransaksiPage() {
     const [pagination, setPagination] = useState({});
     const [selectedRange, setSelectedRange] = useState('Semua');
     const [selectedPaid, setSelectedPaid] = useState(null);
+    const [from, setFrom] = useState(null);
+    const [to, setTo] = useState(null);
 
     useEffect(() => {
-        fetchDataTransaksi(1, selectedRange, selectedPaid, searchQuery);
-    }, [selectedRange, selectedPaid]);
+        fetchDataTransaksi(1, selectedRange, selectedPaid, searchQuery, from, to);
+    }, [selectedRange, selectedPaid, from, to]);
 
     const handlePageChange = (page) => {
-        fetchDataTransaksi(page, selectedRange, selectedPaid, searchQuery);
+        fetchDataTransaksi(page, selectedRange, selectedPaid, searchQuery, from, to);
     };
 
     const updateProductState = () => {
-        fetchDataTransaksi(pagination.current_page, selectedRange, selectedPaid, searchQuery);
+        fetchDataTransaksi(pagination.current_page, selectedRange, selectedPaid, searchQuery, from, to);
     };
 
     const onFilterChange = (paid) => {
         setSelectedPaid(paid);
-        fetchDataTransaksi(1, selectedRange, paid, searchQuery);
+        fetchDataTransaksi(1, selectedRange, paid, searchQuery, from, to);
     };
 
     const handleRangeChange = (range) => {
         setSelectedRange(range);
-        fetchDataTransaksi(1, range, selectedPaid, searchQuery);
+        fetchDataTransaksi(1, range, selectedPaid, searchQuery, from, to);
     };
 
     const handleSearchChange = (e) => {
         const query = e.target.value;
         setSearchQuery(query);
 
-        // Automatically load products when the search query is empty
         if (query === '') {
-            fetchDataTransaksi(1, selectedRange, selectedPaid, '');
+            fetchDataTransaksi(1, selectedRange, selectedPaid, '', from, to);
         }
     };
 
     const handleSearchClick = () => {
-        fetchDataTransaksi(1, selectedRange, selectedPaid, searchQuery);
+        fetchDataTransaksi(1, selectedRange, selectedPaid, searchQuery, from, to);
     };
 
     const handleKeyDown = (e) => {
         if (e.key === 'Enter') {
-            fetchDataTransaksi(1, selectedRange, selectedPaid, searchQuery);
+            fetchDataTransaksi(1, selectedRange, selectedPaid, searchQuery, from, to);
         }
     };
 
-    const fetchDataTransaksi = async (page = 1, range = null, paid = null, searchQuery = '') => {
+    const handleFromDateChange = (date) => {
+        setFrom(date);
+    };
+
+    const handleToDateChange = (date) => {
+        setTo(date);
+    };
+
+    const fetchDataTransaksi = async (page = 1, range = null, paid = null, searchQuery = '', from = null, to = null) => {
         try {
             setLoading(true);
-            const result = await getAllTransaksi(page, range, paid, searchQuery);
+            const result = await getAllTransaksi(page, range, paid, searchQuery, from, to);
             setTransaksi(result.data);
             setAuth(true);
             setPagination(result.meta);
@@ -95,6 +104,9 @@ export default function TransaksiPage() {
                         selectedRange={selectedRange}
                         handleSearchClick={handleSearchClick}
                         handleKeyDown={handleKeyDown}
+                        handleFromDateChange={handleFromDateChange}
+                        handleToDateChange={handleToDateChange}
+                        fromDate={from} toDate={to}
                     />
                     <PaginationTransaksiProduk pagination={pagination} onPageChange={handlePageChange} />
                 </div>

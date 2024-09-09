@@ -26,7 +26,6 @@ const addNewProduct = async (formData) => {
     }
 };
 
-
 const getAllProduct = async (page = 1, searchQuery = '', stockFilter = '', stockCategory = '') => {
     try {
         const response = await axios.get(`${baseUrl}/api/products`, {
@@ -76,6 +75,37 @@ const deleteProduct = async (productId) => {
             }, 3000);
         } else {
             handleAxiosError(error);
+        }
+    }
+};
+
+const adjustStock = async (productId, adjustmentData) => {
+    try {
+        const response = await axios.post(`${baseUrl}/api/products/${productId}/adjust`, adjustmentData, {
+            headers: {
+                AUTHORIZATION: token,
+                "Content-Type": "application/json",
+                "ngrok-skip-browser-warning": true
+            },
+        });
+        return response.data;
+    } catch (error) {
+        if (error.response) {
+            console.error('Error response:', error.response);
+
+            if (error.response.status === 401) {
+                toast.error("Anda belum login. Silakan login terlebih dahulu.");
+                setTimeout(() => {
+                    window.location.href = "/login-page";
+                }, 3000);
+            } else if (error.response.data && error.response.data.error) {
+                toast.error(error.response.data.error);
+            } else {
+                toast.error("Terjadi kesalahan saat menyesuaikan stock.");
+            }
+        } else {
+            toast.error("Terjadi kesalahan jaringan atau server.");
+            console.error('Error:', error);
         }
     }
 };
@@ -217,4 +247,4 @@ const handleAxiosError = (error) => {
 
 export { getAllProduct, addNewProduct, deleteProduct,
     editProduct, getProductById, getHistoryAddProduct, importProductExcel,
-    getHistoryAddProductAll};
+    getHistoryAddProductAll, adjustStock};

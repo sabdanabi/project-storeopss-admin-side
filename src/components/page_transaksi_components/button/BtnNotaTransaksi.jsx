@@ -18,30 +18,69 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
                                 body, html {
                                     margin: 0;
                                     padding: 0;
-                                    width: 50mm;
+                                    width: 58mm;
                                     height: auto;
                                 }
                                 .notaTransaksi {
                                     width: 58mm;
-                                    margin: 0;
                                     max-height: 100%;
-                                    padding: 0;  
+                                }
+                                #header {
+                                    margin-bottom: 20px;
+                                }
+                                #transaksiInfo p {
+                                    margin-bottom: 8px; 
+                                }
+                                #transaksiInfo {
+                                    margin-bottom: 10px; 
+                                }
+                                #produkTransaksi{
+                                    margin-top: 20px;
+                                    margin-bottom: 20px;
+                                }
+                                #totalTransaksi{
+                                    margin-top: 15px;
+                                    margin-bottom: 15px;
+                                }
+                                #infoTambahanTransaksi div p {
+                                    margin-top: 10px;
+                                }
+                                #namaProduk {
+                                  font-size: 15px;
+                                  white-space: nowrap; /* Mencegah teks dari membungkus ke baris baru */
+                                  overflow: hidden; /* Menyembunyikan teks yang melampaui lebar elemen */
+                                  text-overflow: ellipsis; /* Menambahkan ... jika teks terpotong */
+                                  width: 100px; /* Menentukan lebar elemen sesuai kebutuhan */
+                                  display: inline-block; /* Mengaktifkan properti overflow pada elemen p */
+                                  }
+                                #kali{
+                                font-size: 15px;
+                                margin-right: 3px;
+                                }
+                                #jumlah{
+                                font-size: 15px;
+                                margin-right: 3px;
+                                }  
+                                #harga{
+                                font-size: 15px;
                                 }
                                 .flex {
                                     display: flex;
                                     justify-content: space-between;
-                                    align-items: center;
+                                    margin: 0;
+                                    padding: 0;
                                 }
                                 .bold {
                                     font-weight: 400;
                                 }
-                                * {
-                                    box-sizing: border-box;
-                                }
                                 hr {
-                                border: 0;
-                                height: 2px; 
-                                background: black; 
+                                    border: 0;
+                                    height: 2px; 
+                                    border-top: 2px dashed #000;
+                                }
+                                p {
+                                    margin: 0; 
+                                    padding: 0;
                                 }
                             }
                         </style>
@@ -96,16 +135,14 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
                         </div>
 
                         <div className="flex justify-center p-3 w-96">
-                            <div id="notaTransaksi"
-                                 className="bg-white w-72 py-2 px-1 rounded-[10px] shadow-md notaTransaksi">
-                                <div className="flex ml-4 mr-5 mt-3 justify-between items-center">
+                            <div id="notaTransaksi" className="bg-white w-72 py-2 px-1 rounded-[10px] shadow-md">
+                                <div id="header" className="flex ml-4 mr-5 mt-3 justify-between items-center" >
                                     <p className="font-semibold text-[17px] text-blue-gray-700 bold">Toko Adel Jaya</p>
-                                    <p className={`text-[14px] font-semibold ${filteredTransaksi.is_finished ? "text-[#2B713A]" : "text-[#7A3636]"}`}>
-                                        {filteredTransaksi.is_finished ? "Selesai" : "Belum selesai"}
-                                    </p>
+                                    {/*<p className={`text-[14px] font-semibold ${filteredTransaksi.is_finished ? "text-[#2B713A]" : "text-[#7A3636]"}`}>*/}
+                                    {/*    {filteredTransaksi.is_finished ? "Selesai" : "Belum selesai"}*/}
+                                    {/*</p>*/}
                                 </div>
-                                <div
-                                    className="text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
+                                <div id="transaksiInfo" className="text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
                                     <p className="font-semibold text-blue-gray-700 bold">{filteredTransaksi.invoice}</p>
                                     <p className="font-semibold text-blue-gray-700 bold">Resi
                                         kostumer {filteredTransaksi.customer.name}</p>
@@ -114,16 +151,16 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
                                 <hr className="my-1 mt-5 border-t-2 border-blue-gray-300 mb-1 border-dashed"/>
                                 <hr className="my-1 mt-0 border-t-2 border-blue-gray-300 mb-3 border-dashed"/>
 
-                                <div>
+                                <div id="produkTransaksi">
                                     {filteredTransaksi.products && filteredTransaksi.products.length > 0 ? filteredTransaksi.products.map((product, index) => (
                                         <div key={index}
                                              className="justify-between flex ml-4 text-[15px] font-medium text-blue-gray-700">
                                             <div className="flex gap-2">
-                                                <p className="mr-3 bold">x</p>
-                                                <p className="mr-2 bold">{product.quantity}</p>
-                                                <p className="bold">{product.name}</p>
+                                                <p className="mr-3 bold" id="kali">x</p>
+                                                <p className="mr-2 bold" id="jumlah">{product.quantity}</p>
+                                                <p className="bold" id="namaProduk">{product.name}</p>
                                             </div>
-                                            <p className="mr-4 bold">
+                                            <p className="mr-4 bold" id="harga">
                                                 {(product.price * product.quantity).toLocaleString('id-ID', {
                                                     style: 'currency',
                                                     currency: 'IDR'
@@ -137,7 +174,7 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
                                     )}
                                 </div>
                                 <hr className="my-1 mt-3 border-t-2 border-blue-gray-300 mb-3 border-dashed"/>
-                                <div
+                                <div id="totalTransaksi"
                                     className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
                                     <p className="font-semibold text-blue-gray-900 bold">Total</p>
                                     <p className="text-[15px] font-semibold text-blue-gray-900 bold">
@@ -148,27 +185,29 @@ export function BtnNotaTransaksi({ filteredTransaksi }) {
                                     </p>
                                 </div>
                                 <hr className="my-1 mt-3 border-t-2 border-blue-gray-300 mb-3 border-dashed"/>
-                                <div
-                                    className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
-                                    <p className="font-semibold text-blue-gray-700 bold">Metode Pembayaran</p>
-                                    <p className="text-[15px] font-semibold text-blue-gray-700 bold">
-                                        {filteredTransaksi.payment_method}
-                                    </p>
-                                </div>
-                                <div
-                                    className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
-                                    <p className="font-semibold text-blue-gray-700 bold">Opsi Pengambilan</p>
-                                    <p className="text-[15px] font-semibold text-blue-gray-700 bold">
-                                        {filteredTransaksi.products[0].option}
-                                    </p>
-                                </div>
-                                <div id="status"
-                                     className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-2 relative ml-4 mb-3 mr-4">
-                                    <p className="font-semibold text-blue-gray-700 bold">Status Transaksi</p>
-                                    <div className={` 
+                                <div id="infoTambahanTransaksi">
+                                    <div
+                                        className="flex justify-between text-[13px] font-medium text-blue-gray-300 relative ml-4 mr-4">
+                                        <p className="font-semibold text-blue-gray-700 bold">Metode Pembayaran</p>
+                                        <p className="text-[15px] font-semibold text-blue-gray-700 bold">
+                                            {filteredTransaksi.payment_method}
+                                        </p>
+                                    </div>
+                                    <div
+                                        className="flex justify-between text-[13px] font-medium text-blue-gray-300  relative ml-4 mr-4">
+                                        <p className="font-semibold text-blue-gray-700 bold">Opsi Pengambilan</p>
+                                        <p className="text-[13px] font-semibold text-blue-gray-700 bold">
+                                            {filteredTransaksi.products && filteredTransaksi.products[0]?.option ? filteredTransaksi.products[0].option : 'Tidak ada opsi'}
+                                        </p>
+                                    </div>
+                                    <div id="status"
+                                         className="flex justify-between text-[13px] font-medium text-blue-gray-300  relative ml-4  mr-4">
+                                        <p className="font-semibold text-blue-gray-700 bold">Status Transaksi</p>
+                                        <div className={` 
                                             ${filteredTransaksi.status}`}>
-                                        <p className={`text-sm  
+                                            <p className={`text-sm  
                                                 ${filteredTransaksi.status === 'Belum lunas' ? 'text-[#7A3636]' : 'text-[#2B713A]'} bold`}>{filteredTransaksi.status}</p>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -1,11 +1,15 @@
 import axios from "axios";
 import {toast} from "react-toastify";
+import dayjs from "dayjs";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const token = localStorage.getItem("token");
 
-const getAllTransaksi = async (page = 1, range = null, paid = null, searchQuery = '') => {
+const getAllTransaksi = async (page = 1, range = null, paid = null, searchQuery = '', from = null, to = null) => {
     try {
+        const formattedFromDate = from ? dayjs(from).format('YYYY-MM-DD') : null;
+        const formattedToDate = to ? dayjs(to).format('YYYY-MM-DD') : null;
+
         const response = await axios.get(`${baseUrl}/api/transactions/income`, {
             headers: {
                 AUTHORIZATION: token,
@@ -16,6 +20,8 @@ const getAllTransaksi = async (page = 1, range = null, paid = null, searchQuery 
                 ...(range && { range }),
                 ...(paid !== null && { paid }),
                 ...(searchQuery && { search: searchQuery }),
+                ...(formattedFromDate && { from: formattedFromDate }),
+                ...(formattedToDate && { to: formattedToDate }),
             }
         });
 
@@ -32,9 +38,10 @@ const getAllTransaksi = async (page = 1, range = null, paid = null, searchQuery 
             console.error('Error:', error.message);
             toast.error("Terjadi kesalahan. Silakan coba lagi.");
         }
-        return null;  // Pastikan untuk mengembalikan null jika terjadi kesalahan
+        return null;
     }
 };
+
 
 
 const addIncome = async (data) => {

@@ -20,6 +20,16 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
     const [error, setError] = useState("");
     const [counts, setCounts] = useState({});
     const [checklist, setChecklist] = useState({});
+    const [nominals, setNominals] = useState([
+        {
+            name: 'Pengiriman',
+            amount: 0
+        },
+        {
+            name: 'Lunas',
+            amount: 0
+        }
+    ]);
     const [formData, setFormData] = useState({
         note: '',
         customer_phone: '',
@@ -72,6 +82,7 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
             payment_method: selectedValueRD2,
             option: selectedValueRD3 === 'Dikirim' ? 2 : 1,
             products: productList,
+            nominals: nominals
         };
         try {
             const response = await addIncome(data);
@@ -136,6 +147,12 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
         }
     };
 
+    const handleNominalChange = (index, field, value) => {
+        const updatedNominals = [...nominals];
+        updatedNominals[index][field] = value;
+        setNominals(updatedNominals);
+    };
+
     const resetForm = () => {
         setFormData({
             note: '',
@@ -144,6 +161,16 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
             status: '',
             payment_method: ''
         });
+        setNominals([
+            {
+                name: 'Pengiriman',
+                amount: 0
+            },
+            {
+                name: 'Lunas',
+                amount: 0
+            }
+        ]);
         setSelectedValueRD1('');
         setSelectedValueRD2('');
         setSelectedValueRD3('');
@@ -213,10 +240,10 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                                 {selectedProducts.map((product, index) => (
                                                     <div key={index}
                                                          className="flex justify-between items-center border p-2 rounded-md">
-                                                        <div className="flex items-center space-x-1">
-                                                            <span className="w-36">{product.name}</span>
-                                                            <span className="text-center">{product.count}x</span>
-                                                            <span className="text-center">Rp{product.selling_price}</span>
+                                                        <div className="flex items-center">
+                                                            <span className="w-32">{product.name}</span>
+                                                            <span className="text-center mr-3">{product.count}x</span>
+                                                            <span className="text-center">{(product.selling_price).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</span>
                                                         </div>
                                                         <button
                                                             type="button"
@@ -240,22 +267,21 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
 
                                         <div>
                                             <div className="p-5 w-[335px] h-[540px] shadow-xl ml-5">
-                                                <label className="text-sm">Nama Pelanggan</label>
                                                 <div>
-                                                    <input
-                                                        type="text"
-                                                        name="customer_name"
-                                                        value={formData.customer_name}
-                                                        onChange={handleChange}
-                                                        className="border-b-2 h-[40px] border-[#828282] flex mb-4 w-full mt-2 rounded-[8px]"
-                                                    />
-                                                </div>
-                                                <div className="flex gap-28">
-                                                    <label className="text-sm">Kontak</label>
-                                                    <label className="text-sm ml-1">Nominal Tambahan</label>
-                                                </div>
-                                                <div className="flex gap-5">
-                                                        <div className="flex">
+                                                    <div className="flex gap-5">
+                                                        <div>
+                                                            <label className="text-sm">Nama Pelanggan</label>
+                                                            <input
+                                                                type="text"
+                                                                name="customer_name"
+                                                                placeholder="Tambahkan nama..."
+                                                                value={formData.customer_name}
+                                                                onChange={handleChange}
+                                                                className="border-b-2 h-[40px] border-[#828282] flex mb-4 w-full mt-2 rounded-[8px] text-xs"
+                                                            />
+                                                        </div>
+                                                        <div className="flex-col">
+                                                            <label className="text-sm">Kontak</label>
                                                             <input
                                                                 type="number"
                                                                 name="customer_phone"
@@ -265,16 +291,31 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                                                 className="border-b-2 h-[40px] border-[#828282] flex mb-4 w-full mt-2 rounded-[8px] text-xs"
                                                             />
                                                         </div>
-                                                        <div className="flex">
-                                                            <input
-                                                                type="number"
-                                                                placeholder="Opsinal..."
-                                                                // name="customer_phone"
-                                                                // value={formData.customer_phone}
-                                                                // onChange={handleChange}
-                                                                className="border-b-2 h-[40px] border-[#828282] flex mb-4 w-full mt-2 rounded-[8px] text-xs"
-                                                            />
-                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div className="flex gap-5">
+                                                    <div className="flex-col">
+                                                        <label className="text-sm">Nominal Lunas</label>
+                                                        <input
+                                                            type="number"
+                                                            name=""
+                                                            value={nominals[0].amount}
+                                                            onChange={(e) => handleNominalChange(0, 'amount', e.target.value)}
+                                                            placeholder="Opsinal..."
+                                                            className="border-b-2 h-[40px] border-[#828282] flex mb-4 w-full mt-2 rounded-[8px] text-xs"
+                                                        />
+                                                    </div>
+                                                    <div className="flex-col">
+                                                        <label className="text-sm ml-1">Nominal Tambahan</label>
+                                                        <input
+                                                            type="number"
+                                                            placeholder="Opsinal..."
+                                                            name=""
+                                                            value={nominals[1].amount}
+                                                            onChange={(e) => handleNominalChange(1, 'amount', e.target.value)}
+                                                            className="border-b-2 h-[40px] border-[#828282] flex mb-4 w-full mt-2 rounded-[8px] text-xs"
+                                                        />
+                                                    </div>
                                                 </div>
                                                 <label className="text-sm">Metode Pembayaran</label>
                                                 <div>
@@ -286,7 +327,8 @@ export default function BtnAddTransaksi({ addIncome, updateProductsState }) {
                                                                 name="payment_method"
                                                                 value="Tunai"
                                                                 color="blue"
-                                                                label={<span className="text-[15px] font-normal">Tunai</span>}
+                                                                label={<span
+                                                                    className="text-[15px] font-normal">Tunai</span>}
                                                                 checked={selectedValueRD2 === 'Tunai'}
                                                                 onChange={handleRadioChangeRD2}
                                                                 className="w-4 h-4"

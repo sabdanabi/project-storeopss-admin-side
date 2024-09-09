@@ -11,7 +11,7 @@ import * as XLSX from 'xlsx';
 import { getAllProductTransaktion } from "../../services/TransaksiService.jsx";
 
 export default function PersediaanPage() {
-    const [products, setProducts] = useState([]); // Produk yang dimuat dari server
+    const [products, setProducts] = useState([]);
     const [isAuth, setAuth] = useState(false);
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState("");
@@ -19,10 +19,10 @@ export default function PersediaanPage() {
     const [stockFilter, setStockFilter] = useState('');
     const [searchQuery, setSearchQuery] = useState('');
     const [category, setCategory] = useState('');
-    const [currentPage, setCurrentPage] = useState(1); // Halaman saat ini
+    const [currentPage, setCurrentPage] = useState(1);
 
     useEffect(() => {
-        fetchProducts(1, '', stockFilter, category); // Memuat produk pertama kali
+        fetchProducts(1, '', stockFilter, category);
     }, [stockFilter, category]);
 
     const updateProductState = () => {
@@ -45,7 +45,7 @@ export default function PersediaanPage() {
 
     const handleSearchKeyDown = (e) => {
         if (e.key === 'Enter') {
-            onSearchClick(); // Pencarian hanya dilakukan saat menekan tombol "Enter"
+            onSearchClick();
         }
     };
 
@@ -54,12 +54,12 @@ export default function PersediaanPage() {
     };
 
     const onSearchClick = () => {
-        fetchProducts(1, searchQuery, stockFilter, category); // Melakukan pencarian produk ke server
+        fetchProducts(1, searchQuery, stockFilter, category);
     };
 
     const handlePageChange = (page) => {
         setCurrentPage(page);
-        fetchProducts(page, searchQuery, stockFilter, category); // Memuat produk berdasarkan halaman baru
+        fetchProducts(page, searchQuery, stockFilter, category);
     };
 
     const handleDelete = async (productId) => {
@@ -72,7 +72,7 @@ export default function PersediaanPage() {
         try {
             setLoading(true);
             const result = await getAllProduct(page, searchQuery, stockFilter, category);
-            setProducts(result.data); // Mengupdate semua produk yang dimuat dari server
+            setProducts(result.data);
             setAuth(true);
             setPagination(result.meta);
 
@@ -129,7 +129,7 @@ export default function PersediaanPage() {
 
                 <div>
                     <TblStock
-                        products={products} // Menggunakan produk yang sudah dimuat dari server
+                        products={products}
                         handleDelete={handleDelete}
                         searchQuery={searchQuery}
                         updateProductsState={updateProductState}

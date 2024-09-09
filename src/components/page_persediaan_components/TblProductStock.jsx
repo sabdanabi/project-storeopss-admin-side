@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import BtnRestockProduk from "./button/BtnRestockProduk.jsx";
 import BtnEditPorduk from "./button/BtnEditPorduk.jsx";
 import { BtnDeleteNew } from "./button/BtnDeleteNew.jsx";
+import {BtnAdjust} from "./button/BtnAdjust.jsx";
 
 export default function TblProductStock({ products, handleDelete, refreshProducts, pagination }) {
     const { current_page, per_page } = pagination || {};
@@ -50,8 +51,9 @@ export default function TblProductStock({ products, handleDelete, refreshProduct
                         <td>{product.quantity ?? 0}</td>
                         <td></td>
                         <td>
-                            <div className="flex gap-4 items-center">
+                            <div className="flex gap-2 items-center">
                                 <BtnRestockProduk id={product.id} refreshProductss={refreshProducts} />
+                                <BtnAdjust id={product.id} refreshProductss={refreshProducts}/>
                                 <BtnEditPorduk id={product.id} updateProductsState={refreshProducts} />
                                 <BtnDeleteNew handleDelete={handleDelete} id={product.id} />
                             </div>

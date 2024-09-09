@@ -19,8 +19,10 @@ export function CardHistoryAddProduct({ addProductHistory, selectedEntry, curren
                         <td className="px-4">No</td>
                         <td className="px-4">Nama Produk</td>
                         <td className="px-4">Tanggal</td>
+                        <td className="px-4">Harga Beli/satuan</td>
+                        <td className="px-4">Harga Jual/satuan</td>
                         <td className="px-4">Stok</td>
-                        <td className="px-4">Aksi</td>
+                        {/*<td className="px-4">Aksi</td>*/}
                     </tr>
                 </thead>
                 <tbody className="font-semibold text-[15px] text-blue-gray-700">
@@ -29,15 +31,17 @@ export function CardHistoryAddProduct({ addProductHistory, selectedEntry, curren
                             <td className="px-4"><p className="mr-3">{(current_page - 1) * per_page + index + 1}</p></td>
                             <td className="py-2 px-4 border-b">{entry.name}</td>
                             <td className="py-2 px-4 border-b">{entry.date}</td>
+                            <td className="py-2 px-4 border-b">{(entry.purchase_price).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
+                            <td className="py-2 px-4 border-b">{(entry.selling_price).toLocaleString('id-ID', { style: 'currency', currency: 'IDR' })}</td>
                             <td className="py-2 px-4 border-b">{entry.quantity}</td>
-                            <td className="py-2 px-4 border-b">
-                                <button
-                                    className="text-[10px] hover:bg-[#d7e0e8] text-blue-gray-500 bg-[#dde6efc6] h-[33px] w-[68px] rounded-lg font-semibold"
-                                    onClick={() => handleDetailClick(entry)}
-                                >
-                                    Detail
-                                </button>
-                            </td>
+                            {/*<td className="py-2 px-4 border-b">*/}
+                            {/*    <button*/}
+                            {/*        className="text-[10px] hover:bg-[#d7e0e8] text-blue-gray-500 bg-[#dde6efc6] h-[33px] w-[68px] rounded-lg font-semibold"*/}
+                            {/*        onClick={() => handleDetailClick(entry)}*/}
+                            {/*    >*/}
+                            {/*        Detail*/}
+                            {/*    </button>*/}
+                            {/*</td>*/}
                         </tr>
                     ))}
                 </tbody>
