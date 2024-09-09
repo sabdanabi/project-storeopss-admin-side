@@ -3,12 +3,13 @@ import {
     MenuButton,
     MenuList,
     MenuItem,
-    Button,
+    Button, Input,
 } from '@chakra-ui/react'
 import PropTypes from "prop-types";
+import dayjs from "dayjs";
 
 export default function FilterComponentRestock({handleSearchChange, searchQuery, exportToExcel, handleRangeChange, selectedRange,
-                                                      handleSearchClick, handleKeyDown}) {
+                                                      handleSearchClick, handleKeyDown, fromDate, handleFromDateChange, toDate, handleToDateChange }) {
 
     const getRangeText = () => {
         switch (selectedRange) {
@@ -47,7 +48,7 @@ export default function FilterComponentRestock({handleSearchChange, searchQuery,
             }} className="ml-2 h-36"><p className="text-[#1a4f8b]">Cari</p></Button>
 
             <div className='ml-2'>
-                <Menu>
+                <Menu closeOnSelect={false}>
                     <MenuButton as={Button} rightIcon={
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
                              stroke="currentColor" className="w-5 h-5 text-[#727E91]">
@@ -61,6 +62,26 @@ export default function FilterComponentRestock({handleSearchChange, searchQuery,
                         <MenuItem onClick={() => handleRangeChange('daily')}>Harian</MenuItem>
                         <MenuItem onClick={() => handleRangeChange('weekly')}>Mingguan</MenuItem>
                         <MenuItem onClick={() => handleRangeChange('monthly')}>Bulanan</MenuItem>
+                        <MenuItem>
+                            <div className="flex items-center">
+                                <p className="mr-2 text-xs">Dari Tanggal:</p>
+                                <Input
+                                    type="date"
+                                    value={fromDate ? dayjs(fromDate).format('YYYY-MM-DD') : ""}
+                                    onChange={(e) => handleFromDateChange(e.target.value)}
+                                    placeholder="Pilih Tanggal Awal"
+                                />
+                            </div>
+                        </MenuItem>
+                        <MenuItem>
+                            <p className="mx-2 text-xs">Sampai:</p>
+                            <Input
+                                type="date"
+                                value={toDate ? dayjs(toDate).format('YYYY-MM-DD') : ""}
+                                onChange={(e) => handleToDateChange(e.target.value)}
+                                placeholder="Pilih Tanggal Akhir"
+                            />
+                        </MenuItem>
                     </MenuList>
                 </Menu>
             </div>

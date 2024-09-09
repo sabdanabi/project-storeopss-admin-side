@@ -20,6 +20,8 @@ export default function RiwayatTambahProdukPage() {
     const [selectedEntry, setSelectedEntry] = useState(null);
     const { current_page, per_page } = pagination || {};
     const [selectedRange, setSelectedRange] = useState('Semua');
+    const [from, setFrom] = useState(null);
+    const [to, setTo] = useState(null);
 
 
     const handlePageChange = (page) => {
@@ -28,9 +30,9 @@ export default function RiwayatTambahProdukPage() {
 
     useEffect(() => {
         if (searchQuery === '') {
-            fetchAddProductHistory(1, selectedRange, '');
+            fetchAddProductHistory(1, selectedRange, '', from, to);
         }
-    }, [selectedRange, searchQuery]);
+    }, [selectedRange, searchQuery, from, to]);
 
     const handleSearchChange = (e) => {
         const query = e.target.value;
@@ -56,12 +58,19 @@ export default function RiwayatTambahProdukPage() {
         }
     };
 
+    const handleFromDateChange = (date) => {
+        setFrom(date);
+    };
+
+    const handleToDateChange = (date) => {
+        setTo(date);
+    };
 
 
-    const fetchAddProductHistory = async (page = 1, range = null, searchQuery = '') => {
+    const fetchAddProductHistory = async (page = 1, range = null, searchQuery = '', from = null, to = null) => {
         try {
             setLoading(true);
-            const data = await getHistoryAddProduct(page, range, searchQuery);
+            const data = await getHistoryAddProduct(page, range, searchQuery, from, to);
             setAddProductHistory(data.data);
             setAuth(true);
             setPagination(data.meta);
@@ -121,6 +130,9 @@ export default function RiwayatTambahProdukPage() {
                             selectedRange={selectedRange}
                             handleSearchClick={handleSearchClick}
                             handleKeyDown={handleKeyDown}
+                            handleFromDateChange={handleFromDateChange}
+                            handleToDateChange={handleToDateChange}
+                            fromDate={from} toDate={to}
                         />
                         <div className="bg-white border-b-[3px] border-gray-200 overflow-auto h-80">
                             {isLoading ? (

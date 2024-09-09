@@ -21,13 +21,15 @@ export default function NotaPage() {
     const { current_page, per_page } = pagination || {};
     const [selectedRange, setSelectedRange] = useState('Semua');
     const [selectedPaid, setSelectedPaid] = useState(null);
+    const [from, setFrom] = useState(null);
+    const [to, setTo] = useState(null);
 
     useEffect(() => {
         if (searchQuery === '') {
-            fetchNotaTransaksi(1, selectedRange, selectedPaid, '');
+            fetchNotaTransaksi(1, selectedRange, selectedPaid, '', from, to);
         }
 
-    }, [selectedRange, selectedPaid, searchQuery]);
+    }, [selectedRange, selectedPaid, searchQuery, from, to]);
 
     const handleSearchChange = (e) => {
         const query = e.target.value;
@@ -78,6 +80,14 @@ export default function NotaPage() {
         fetchNotaTransaksi(1, range, selectedPaid, searchQuery);
     };
 
+    const handleFromDateChange = (date) => {
+        setFrom(date);
+    };
+
+    const handleToDateChange = (date) => {
+        setTo(date);
+    };
+
     // const filteredNota = nota.filter((entry) => {
     //     const customerName = entry.customer?.name || '';
     //     const nameMatch = customerName.toLowerCase().includes(searchQuery.toLowerCase());
@@ -85,10 +95,10 @@ export default function NotaPage() {
     //     return nameMatch || dateMatch;
     // });
 
-    const fetchNotaTransaksi = async (page = 1, range = null, paid = null, searchQuery = '') => {
+    const fetchNotaTransaksi = async (page = 1, range = null, paid = null, searchQuery = '', from = null, to = null) => {
         try {
             setLoading(true);
-            const result = await getAllTransaksi(page, range, paid, searchQuery);
+            const result = await getAllTransaksi(page, range, paid, searchQuery, from, to);
             setNota(result.data);
             setAuth(true);
             setPagination(result.meta);
@@ -155,6 +165,9 @@ export default function NotaPage() {
                             onFilterChange={onFilterChange}
                             handleSearchClick={handleSearchClick}
                             handleKeyDown={handleKeyDown}
+                            handleFromDateChange={handleFromDateChange}
+                            handleToDateChange={handleToDateChange}
+                            fromDate={from} toDate={to}
                         />
 
                         <div className="bg-white border-b-[3px] border-gray-200 overflow-auto h-80">

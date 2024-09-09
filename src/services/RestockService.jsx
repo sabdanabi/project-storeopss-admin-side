@@ -1,5 +1,6 @@
 import axios from "axios";
 import {toast} from "react-toastify";
+import dayjs from "dayjs";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const token = localStorage.getItem("token");
@@ -26,8 +27,11 @@ const addRestockProduct = async (productId, restockData) => {
     }
 }
 
-const getRestockHistory = async (page = 1, range = null, searchQuery = '') => {
+const getRestockHistory = async (page = 1, range = null, searchQuery = '', from = null, to = null) => {
     try {
+        const formattedFromDate = from ? dayjs(from).format('YYYY-MM-DD') : null;
+        const formattedToDate = to ? dayjs(to).format('YYYY-MM-DD') : null;
+
         const response = await axios.get(`${baseUrl}/api/products/histories/restock`, {
             headers: {
                 Authorization: token,
@@ -37,6 +41,8 @@ const getRestockHistory = async (page = 1, range = null, searchQuery = '') => {
                 ...(page && { page }),
                 ...(range && { range }),
                 ...(searchQuery && { search: searchQuery }),
+                ...(formattedFromDate && { from: formattedFromDate }),
+                ...(formattedToDate && { to: formattedToDate }),
             }
         });
         return response.data;

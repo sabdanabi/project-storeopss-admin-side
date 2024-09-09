@@ -18,6 +18,8 @@ export default function RiwayatRestockProdukPage() {
     const [searchQuery, setSearchQuery] = useState('');
     const [pagination, setPagination] = useState({});
     const [selectedRange, setSelectedRange] = useState('Semua');
+    const [from, setFrom] = useState(null);
+    const [to, setTo] = useState(null);
 
     const handlePageChange = (page) => {
         fetchRestockHistory(page);
@@ -25,9 +27,9 @@ export default function RiwayatRestockProdukPage() {
 
     useEffect(() => {
         if (searchQuery === '') {
-            fetchRestockHistory(1,selectedRange, '');
+            fetchRestockHistory(1,selectedRange, '', from, to);
         }
-    }, [selectedRange, searchQuery]);
+    }, [selectedRange, searchQuery, from, to]);
 
     const handleSearchChange = (e) => {
         const query = e.target.value;
@@ -53,16 +55,24 @@ export default function RiwayatRestockProdukPage() {
         fetchRestockHistory(1, range === 'Semua' ? '' : range, searchQuery);
     };
 
+    const handleFromDateChange = (date) => {
+        setFrom(date);
+    };
+
+    const handleToDateChange = (date) => {
+        setTo(date);
+    };
+
     // const filteredHistory = restockHistory.filter((entry) => {
     //     const matchesName = entry.product.name.toLowerCase().includes(searchQuery.toLowerCase());
     //     const matchesDate = entry.date.includes(searchQuery);
     //     return matchesName || matchesDate;
     // });
 
-    const fetchRestockHistory = async (page = 1,  range = null, searchQuery = '') => {
+    const fetchRestockHistory = async (page = 1,  range = null, searchQuery = '', from = null, to = null) => {
         try {
             setLoading(true);
-            const data = await getRestockHistory(page, range, searchQuery);
+            const data = await getRestockHistory(page, range, searchQuery, from, to);
             setRestockHistory(data.data);
             setAuth(true);
             setPagination(data.meta);
@@ -124,6 +134,9 @@ export default function RiwayatRestockProdukPage() {
                             selectedRange={selectedRange}
                             handleSearchClick={handleSearchClick}
                             handleKeyDown={handleKeyDown}
+                            handleFromDateChange={handleFromDateChange}
+                            handleToDateChange={handleToDateChange}
+                            fromDate={from} toDate={to}
                         />
 
                         <div className="flex justify-center h-80 overflow-auto">

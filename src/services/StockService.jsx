@@ -1,5 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import dayjs from "dayjs";
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
 const token = localStorage.getItem("token");
@@ -161,7 +162,10 @@ const getProductById = async (productId) => {
     }
 };
 
-const getHistoryAddProduct = async (page = 1, range = null, searchQuery = '') => {
+const getHistoryAddProduct = async (page = 1, range = null, searchQuery = '', from = null, to = null) => {
+    const formattedFromDate = from ? dayjs(from).format('YYYY-MM-DD') : null;
+    const formattedToDate = to ? dayjs(to).format('YYYY-MM-DD') : null;
+
     try {
         const response = await axios.get(`${baseUrl}/api/products/histories/add`, {
             headers: {
@@ -172,6 +176,8 @@ const getHistoryAddProduct = async (page = 1, range = null, searchQuery = '') =>
                 ...(page && { page }),
                 ...(range && { range }),
                 ...(searchQuery && { search: searchQuery }),
+                ...(formattedFromDate && { from: formattedFromDate }),
+                ...(formattedToDate && { to: formattedToDate }),
 
             }
         });
