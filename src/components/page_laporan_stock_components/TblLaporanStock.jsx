@@ -85,7 +85,7 @@ export default function TblLaporanStock({ products, selectedMonth, selectedYear,
             )}
 
             <Popup open={!!selectedProduct} onClose={() => setSelectedProduct(null)} modal nested>
-                <div className="modal bg-white p-5 px-8 rounded-lg shadow-lg w-[1000px] h-[450px]">
+                <div className="modal bg-white p-5 px-8 rounded-lg shadow-lg w-[1000px] h-[480px]">
                     <div className="flex justify-between">
                         <p className="font-semibold text-lg mb-4">Detail Laporan Stock</p>
                         <button onClick={() => setSelectedProduct(null)} className="h-7 close">
@@ -115,60 +115,37 @@ export default function TblLaporanStock({ products, selectedMonth, selectedYear,
                             <p>Stock Akhir: {selectedProduct.quantity || 'N/A'}</p>
                             <p>Kategori Produk: {selectedProduct.category || 'N/A'}</p>
                             <div className="">
-                                <div className="flex">
-                                    <div className="h-56 overflow-auto w-[450px]">
-                                        <h3 className="mt-4 font-semibold">Transaksi:</h3>
-                                        <table className="w-full">
+                                <div className="flex-col">
+                                    <h3 className="mt-4 font-semibold mb-4">Aktivitas Stock</h3>
+                                    <div className="h-64 overflow-auto w-[940px]">
+                                        <table className="w-full border">
                                             <thead className="h-10 border-b-2">
                                             <tr className="text-xs text-[#9CA4AE]">
-                                                <td className="pl-9">Tanggal</td>
-                                                <td className="pl-24">Invoice</td>
-                                                <td className="pl-9">Jumlah Produk</td>
+                                                <td className="pl-9">Tipe</td>
+                                                <td className="pl-24">Date</td>
+                                                <td className="pl-9">Invoice</td>
+                                                <td className="pl-9">Note</td>
+                                                <td className="pl-9">Quantity</td>
                                             </tr>
                                             </thead>
-                                            <tbody>
-                                            {selectedProduct.transactions && selectedProduct.transactions.length > 0 ? (
-                                                selectedProduct.transactions.map(trans => (
-                                                    <tr key={trans.id} className="border-b-2 text-xs">
-                                                        <td className="py-2">{trans.date}</td>
+                                            <tbody className="">
+                                            {selectedProduct.timeline && selectedProduct.timeline.length > 0 ? (
+                                                selectedProduct.timeline.map(trans => (
+                                                    <tr key={trans.id} className="border-b-2 text-xs p-10">
+                                                        <td className="p-4">{trans.type}</td>
+                                                        <td className="pl-16">{trans.date}</td>
                                                         <td className="pl-16">{trans.invoice}</td>
-                                                        <td className="pl-16">{trans.quantity}</td>
+                                                        <td className="pl-16">{trans.note}</td>
+                                                        <td className="pl-14">{trans.quantity}</td>
                                                     </tr>
                                                 ))
                                             ) : (
                                                 <tr>
-                                                    <td colSpan="2">Tidak ada transaksi</td>
+                                                    <td colSpan="2">Tidak ada aktivitas</td>
                                                 </tr>
                                             )}
                                             </tbody>
                                         </table>
-                                    </div>
-                                    <div className=" ml-8">
-                                    <h3 className="mt-4 font-semibold">Restok:</h3>
-                                        <div className="h-56 overflow-auto w-96">
-                                            <table className="w-full">
-                                                <thead className="h-10 border-b-2">
-                                                <tr className="text-xs text-[#9CA4AE]">
-                                                    <td>Tanggal Restock</td>
-                                                    <td>Jumlah Produk Restock</td>
-                                                </tr>
-                                                </thead>
-                                                <tbody>
-                                                {selectedProduct.restock && selectedProduct.restock.length > 0 ? (
-                                                    selectedProduct.restock.map(restock => (
-                                                        <tr key={restock.id} className="border-b-2 text-sm">
-                                                            <td className="py-2">{restock.date}</td>
-                                                            <td className="pl-16">{restock.quantity}</td>
-                                                        </tr>
-                                                    ))
-                                                ) : (
-                                                    <tr>
-                                                        <td colSpan="2">Tidak ada restok</td>
-                                                    </tr>
-                                                )}
-                                                </tbody>
-                                            </table>
-                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -290,7 +290,7 @@ export default function NotaPage() {
                                                         className="flex justify-between text-[13px] font-medium text-blue-gray-300 mt-3 relative ml-4 mr-4">
                                                         <p className="font-semibold text-blue-gray-900 bold">Total</p>
                                                         <p className="text-[15px] font-semibold text-blue-gray-900 bold">
-                                                            {selectedNota.products ? `${calculateTotal(selectedNota.products).toLocaleString('id-ID', {
+                                                            {selectedNota.total_price ? `${(selectedNota.total_price).toLocaleString('id-ID', {
                                                                 style: 'currency',
                                                                 currency: 'IDR'
                                                             })}` : ''}

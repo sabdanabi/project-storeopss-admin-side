@@ -227,16 +227,23 @@ const importProductExcel = async (formData) => {
         });
         return response.data;
     } catch (error) {
-        if (error.response && error.response.status === 401) {
-            toast.error("Anda belum login. Silakan login terlebih dahulu.");
-            setTimeout(() => {
-                window.location.href = "/login-page";
-            }, 3000);
+        if (error.response) {
+            if (error.response.status === 401) {
+                toast.error("Anda belum login. Silakan login terlebih dahulu.");
+                setTimeout(() => {
+                    window.location.href = "/login-page";
+                }, 3000);
+            } else if (error.response.status === 400) {
+                toast.error("File tidak sesuai format. Silakan periksa file Anda.");
+            } else {
+                handleAxiosError(error);
+            }
         } else {
             handleAxiosError(error);
         }
     }
 };
+
 
 const handleAxiosError = (error) => {
     if (error.response) {
